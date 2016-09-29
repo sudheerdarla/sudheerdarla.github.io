@@ -19,6 +19,9 @@ body {
 	color: #fff;
     padding: 30px;
 }
+#intro img:hover {
+    background-color: #222;
+}
 #name {
     text-transform: none;
     color: #444;
@@ -30,7 +33,7 @@ body {
 #column2 {
     padding: 30px 15px;
     padding-right: 10px;
-    color: #555;
+    color: #333;
     width: 78%;
     margin-left: 16%;
 }
@@ -76,10 +79,18 @@ a {
 a:hover {
     color: #FD5143;
 }
+p a {
+    color: #FD5143;
+}
+p a:hover {
+    //text-decoration: underline;
+    border-bottom: 2px solid #FD5143;
+    color: #ff1300;
+}
 p {
-    color: #616161;
+    color: #333;
     line-height: 1.75;
-    font-size: 17px;
+    font-size: 1.2rem;
 }
 
 @media only screen and (max-width: 960px) {
