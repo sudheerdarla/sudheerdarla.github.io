@@ -1,0 +1,108 @@
+body {
+	font-family: 'Noto Sans', sans-serif;
+    width: 100%;
+}
+#column1 {
+	width: 15%;
+    background: #2B2B2B;
+    position: fixed;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    overflow-x: hidden;
+    overflow-y: scroll;
+}
+#intro {
+	//margin: 35px;
+	font-size: 1.7em;
+    border-bottom: 1px solid #444;
+	color: #fff;
+    padding: 30px;
+}
+#intro img:hover {
+    background-color: #222;
+}
+#name {
+    text-transform: none;
+    color: #444;
+    letter-spacing: -.02em;
+    font-size: 30px;
+    line-height: 1.1;
+    font-weight: 400;
+}
+#column2 {
+    padding: 30px 15px;
+    padding-right: 10px;
+    color: #333;
+    width: 78%;
+    margin-left: 16%;
+}
+h2 {
+    font-size: 1.2em;
+    color: #888;
+}
+hr {
+    background: none;
+    border: medium none;
+    border-bottom: 1px solid #ccc;
+    margin: 1em 10px 1em  0;
+}
+small {
+    font-size: 0.5em;
+    font-weight: normal;
+}
+#list1 ,#list2, #list3 {
+    margin: 10px 0;
+    font-size: 0.8em;
+}
+#list1 li, #list2 li {
+    padding: 10px 35px;
+    list-style-type: square outside;
+}
+#list2 {
+    background-color: #333;
+    padding: 20px 0;
+}
+#list3 {
+    padding: 10px 35px;
+}
+#list3 li {
+    float: left;
+    padding-right: 10px;
+    font-size: 1.4em;
+    opacity: 0.5;
+}
+a {
+    text-decoration: none;
+    color: #eee;
+}
+a:hover {
+    color: #FD5143;
+}
+p a {
+    color: #FD5143;
+}
+p a:hover {
+    //text-decoration: underline;
+    border-bottom: 2px solid #FD5143;
+    color: #ff1300;
+}
+p {
+    color: #333;
+    line-height: 1.75;
+    font-size: 1.1rem;
+}
+
+@media only screen and (max-width: 960px) {
+    body {
+        margin: 0 auto;
+    }
+    #column1 {
+        display: none;
+    }
+    #column2 {
+        width: 90%;
+        padding: 10px;
+        margin-left: 4%;
+    }
+}
