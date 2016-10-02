@@ -31,7 +31,6 @@ body {
 #name {
     text-transform: none;
     color: #444;
-    letter-spacing: -.02em;
     font-size: 1.5em;
     line-height: 1.1;
     font-weight: 400;
@@ -45,13 +44,13 @@ body {
 }
 #column2 ul {
     width: 45%;
-    padding: 15px;
     float: left;
     margin: 10px;
 }
-#column2 ul li {
-    margin: 15px 20px;
-    list-style-type: circle;
+
+#column2 .fronttech ul li{
+  margin: 15px;
+  list-style-type: circle;
 }
 #column2 i {
     color: #ef3a2e;
@@ -65,10 +64,6 @@ hr {
     border: medium none;
     border-bottom: 1px solid #ccc;
     margin: 1em 10px 1em  0;
-}
-small {
-    font-size: 0.5em;
-    font-weight: normal;
 }
 #list1 ,#list2, #list3 {
     margin: 10px 0;
@@ -283,4 +278,84 @@ small {
 .website a {
   color: white;
 }
+
+
+
+
+
+ // skill bars
+
+body { background: #E9E5E2 ; }
+
+#skill { 
+  list-style: none;
+  font: 12px "Helvetica Neue", Arial, Helvetica, Geneva, sans-serif;
+  width: 296px;
+  margin: 50px auto 0;
+  position: relative;
+  line-height: 2em;
+  padding: 30px 0;
+}
+
+#skill li { 
+  margin-bottom:50px; 
+  background:#e9e5e2;
+  background-image: -webkit-gradient(linear, left top, left bottom, from(#e1ddd9), to(#e9e5e2));
+  background-image: -webkit-linear-gradient(top, #e1ddd9, #e9e5e2);
+  background-image: -moz-linear-gradient(top, #e1ddd9, #e9e5e2);
+  background-image: -ms-linear-gradient(top, #e1ddd9, #e9e5e2);
+  background-image: -o-linear-gradient(top, #e1ddd9, #e9e5e2);
+  background-image: linear-gradient(top, #e1ddd9, #e9e5e2);  
+  height:15px;   
+}
+
+#skill li h3 { 
+  position:relative; 
+  top:-25px;
+  font-size: 1.2em;
+}
+
+.bar { 
+  height:15px; 
+  position:absolute;
+}
+
+.graphic-design {
+  width:90%; 
+  -moz-animation:graphic-design 2s ease-out;
+  -webkit-animation:graphic-design 2s ease-out;
+   background-color: #5BC38E;
+}
+
+.html-css {
+  width:95%;
+  -moz-animation:html-css 2s ease-out;
+  -webkit-animation:html-css 2s ease-out;
+  background-color: #E34C26;
+}
+
+.jquery {
+  width:65%;
+  -moz-animation:jquery 2s ease-out;
+  -webkit-animation:jquery 2s ease-out;
+  background-color: #F0DB4F;
+}
+
+.wordpress {
+  width:65%;
+  -moz-animation:wordpress 2s ease-out;
+  -webkit-animation:wordpress 2s ease-out;
+  background-color: #00749A;
+
+}
+
+@-moz-keyframes graphic-design {0%  { width:0px;} 100%{ width:90%;}  }
+@-moz-keyframes html-css        { 0%  { width:0px;} 100%{ width:95%;}  }
+@-moz-keyframes jquery      { 0%  { width:0px;} 100%{ width:65%;}  }
+@-moz-keyframes wordpress   { 0%  { width:0px;} 100%{ width:65%;}  }
+
+@-webkit-keyframes graphic-design       { 0%  { width:0px;} 100%{ width:90%;}  }
+@-webkit-keyframes html-css        { 0%  { width:0px;} 100%{ width:95%;}  }
+@-webkit-keyframes jquery      { 0%  { width:0px;} 100%{ width:65%;}  }
+@-webkit-keyframes wordpress   { 0%  { width:0px;} 100%{ width:65%;}  }
 
