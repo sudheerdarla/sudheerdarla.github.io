@@ -43,9 +43,7 @@ body {
     margin-left: 16%;
 }
 #column2 ul {
-    width: 45%;
     float: left;
-    margin: 10px;
 }
 
 #column2 .fronttech ul li{
@@ -62,7 +60,7 @@ h2 {
 hr {
     background: none;
     border: medium none;
-    border-bottom: 1px solid #ccc;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
     margin: 1em 10px 1em  0;
 }
 #list1 ,#list2, #list3 {
@@ -247,7 +245,6 @@ button {
   background: #FD5143;
   border: 4px solid #444;
   outline: none;
-  width: 15%;
   padding: 15px;
   margin: 15px;
   margin-left: 0;
