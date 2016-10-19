@@ -11,10 +11,38 @@
         <link rel="shortcut icon" href="img/flaticon.png">
 
         <script src="https://use.fontawesome.com/2af641d54d.js"></script>
+        <style>
+            
+#test2 {
+  width:80px;
+  margin-left:8px;
+  margin-top:15px;
+}
+#moon {
+  transition: all 55s ease-in-out;
+}
+#moon:hover {
+  transform: rotateZ(3600deg);
+}
+#moon {
+  width:160px;
+  position:fixed;
+  left:10px;
+  top:10px;
+}
+
+    </style>
+
     </head>
     <body>
         <div id="column1">
-            <div id="intro"><a href="index.html"><img src="img/space/planet-earth-1.png" width="107" alt=""></a></div>
+            <div id="intro">
+                <a href="index.html">
+                    <!-- <img src="img/space/planet-earth-1.png" width="107" alt=""> -->
+                    <img id="test2" src="https://s20.postimg.org/3tkrpobwp/test_2.png" alt="" width="80" />
+                    <img id="moon" src="https://s20.postimg.org/ys0jbmp1p/cleanshot.png" alt="" width="70" />
+                </a>
+            </div>
             <ul id="list1">
                 <li><a href="index.html" class="active">Home</a></li>
                 <li><a href="about.html">About</a></li>
@@ -66,12 +94,21 @@
                         </li>
                         <li><a href="https://www.youtube.com/playlist?list=PL6gx4Cwl9DGBxQO2r_kmxn-0UqL_Rkj0t" target="_blank">SASS-SCSS </a>(10/5)</li>
                         <li><a href="https://www.skillshare.com/classes/business/Minimum-Viable-Product-Validate-Your-Startup-Idea-for-Less-than-1000/514516183/classroom/discussions?via=user-profile&enrolledRedirect=1" target="_blank">MVP-SKILLSHARE </a>(10/4)</li>
+                        <li>got sick (5-10)</li>
                     </ul>
                 </div>
             </div>
         </div>
 
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
     <script src= "https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-alpha/js/bootstrap.min.js"></script>
+
+    <script>
+        $(document).ready(function(){
+            $("#moon").css("transform", "rotateZ(3600deg)");
+        });
+    </script>
     </body>
 </html>
