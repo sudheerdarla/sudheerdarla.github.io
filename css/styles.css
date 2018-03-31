@@ -229,7 +229,7 @@ Features
 ========================================================================== */
 .features-wrapper, .team-wrapper { margin: 70px 0 0; }
 .fa {color:#FD5143;}
-.icon { height: 175px; width: 175px; line-height: 175px; max-width: 100%; background: #2e3737; border-radius: 50%; -o-border-radius: 50%; -moz-border-radius: 50%; -webkit-border-radius: 50%; display: block; color: #fff; font-size: 55px; text-align: center; vertical-align: middle; position: relative; margin: 0 auto 50px; }
+.icon { height: 175px; width: 175px; line-height: 175px; max-width: 100%; background: #2e3737; border-radius: 50%; -o-border-radius: 50%; -moz-border-radius: 50%; -webkit-border-radius: 50%; display: block; color: #fd5143; font-size: 55px; text-align: center; vertical-align: middle; position: relative; margin: 0 auto 50px; }
 /* ==========================================================================
 iPhone Section
 ========================================================================== */
