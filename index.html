@@ -8,7 +8,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <!-- portfolio v3 2026-09-25 panel-fix -->
+  <!-- portfolio v4 2026-09-25 lightbox -->
   <style>
     :root {
       --bg: #0a0a0a;
@@ -20,7 +20,7 @@
     * { box-sizing: border-box; margin: 0; padding: 0; }
     html, body { background: var(--bg); color: var(--text); font-family: Inter, system-ui, sans-serif; }
     body { line-height: 1.55; min-height: 100vh; }
-    body.panel-open { overflow: hidden; }
+    body.panel-open, body.lb-open { overflow: hidden; }
     a { color: inherit; text-decoration: none; }
     button { font: inherit; color: inherit; background: none; border: 0; cursor: pointer; }
     .page { display: flex; min-height: 100vh; }
@@ -86,10 +86,23 @@
     .drawer-body ul, .drawer-body ol { padding-left: 18px; display: flex; flex-direction: column; gap: 8px; }
     .shot { width: 100%; border-radius: 4px; display: block; }
     .shot-row { display: flex; justify-content: center; }
-    .shot-row img { max-width: 280px; width: 100%; border-radius: 4px; }
+    .shot-row img, .shot-row .lb-hit img { max-width: 280px; width: 100%; border-radius: 4px; }
     .long-study { width: 100%; height: auto; border-radius: 4px; display: block; }
+    .lb-hit { position: relative; display: block; width: 100%; cursor: zoom-in; border: 0; background: none; padding: 0; color: inherit; }
+    .lb-hit .view-fs { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; opacity: 0; transition: opacity .15s; border-radius: 4px; }
+    .lb-hit:hover .view-fs { opacity: 1; }
+    .lb-hit .view-fs span { background: rgba(10,10,10,.8); color: #b0b0b0; font-size: 14px; padding: 6px 12px; border-radius: 4px; }
     .scrim { display: none; position: fixed; inset: 0; right: var(--drawer-w); background: rgba(0,0,0,.35); z-index: 30; }
     .scrim.on { display: block; }
+    .lightbox { display: none; position: fixed; inset: 0; z-index: 80; background: rgba(0,0,0,.85); overflow-y: auto; overscroll-behavior: contain; cursor: grab; user-select: none; }
+    .lightbox.on { display: block; }
+    .lightbox.grabbing { cursor: grabbing; }
+    .lb-bar { position: sticky; top: 16px; z-index: 2; display: flex; justify-content: flex-end; padding: 0 16px; }
+    .lb-icon { color: #9a9a9a; padding: 8px; border-radius: 6px; background: rgba(0,0,0,.5); line-height: 0; cursor: pointer; }
+    .lb-icon:hover { color: #fff; }
+    .lightbox img { display: block; margin: 16px auto 80px; max-width: min(920px, calc(100% - 32px)); height: auto; }
+    .lb-nav { position: fixed; bottom: 16px; left: 0; right: 0; z-index: 2; display: none; justify-content: center; gap: 16px; padding: 16px; }
+    .lb-nav.show { display: flex; }
     @media (max-width: 900px) {
       :root { --drawer-w: 100vw; }
       body.panel-open .main { margin-right: 0; }
@@ -201,110 +214,22 @@
     </div>
     <div class="drawer-body" id="d-body"></div>
   </aside>
-  <script>
-    const ASSET = 'https://puppy-micro-41275756.figma.site/assets/';
-    const studies = {
-      pstake: {
-        title: 'pSTAKE Finance',
-        sub: 'Web3 staking platform',
-        html: `
-          <p class="meta-line">2022, Dubai, United Arab Emirates · On-site</p>
-          <p>Crypto holders were stitching together staking, swaps, explorers, and spreadsheets. pSTAKE was designed so they could see an asset, act on it, and know what state it was in — without becoming a protocol expert.</p>
-          <div class="shot-row"><img class="shot" alt="pSTAKE staking interface" src="${ASSET}496a1.png"></div>
-          <div><h3>About the project</h3><p>One surface to hold, stake, unstake, use DeFi, and read history — with chain context built in. I owned dashboard, network switch, stake / unstake (including 14-day vs instant), DeFi tab (create / add to pools), and how rewards and activity showed up. I did not own contracts, APY math, or which chains launched.</p></div>
-          <div><h3>Problem statements</h3><ol>
-            <li>Idle tokens in a wallet, and no trusted next step inside the same app.</li>
-            <li>“I signed. Now what?” — pending tx with no translation.</li>
-            <li>Unstaked yesterday, balance unchanged (still in the 14-day window).</li>
-            <li>Same token name on two chains; user acts on the wrong network.</li>
-            <li>Rewards exist but it is unclear whether to claim, leave, or restake.</li>
-            <li>Pool return vs staking yield mixed into one story, so people cannot compare actions.</li>
-          </ol></div>
-          <div><h3>IA — User flows</h3>
-            <p>Mental model we designed for:</p>
-            <p><strong>Network → Asset → State → Action</strong></p>
-            <p>States: Available · Staked · Unstaking · Pool · Rewards</p>
-            <p>Actions: Stake · Unstake (14d or instant) · Add to pool · Claim · Restake</p>
-          </div>
-          <div class="shot-row"><img class="shot" alt="pSTAKE unstake interface" src="${ASSET}2cc46.png"></div>
-          <div><h3>Flow A — First useful action</h3><p>Pick network → see assets on that network → choose Stake or DeFi → confirm → dashboard state updates.</p></div>
-          <div><h3>Flow B — Exit</h3><p>Staked → Unstake → choose 14-day (shows unlock date, status = Unstaking) or instant + fee (shows fee, status = Available) → activity records the tx.</p></div>
-          <div><h3>Flow C — Read the system</h3><p>Dashboard lists each state separately. Transactions answer “what did I just do?” Empty state if the asset lives on another chain: switch network, don't invent a balance.</p></div>
-          <img class="shot" alt="Flow C" src="${ASSET}pstake-flow-c-CPmBU3xu.png">
-          <div><h3>What we shipped</h3><ul>
-            <li>One dashboard for funds, staked, unstaking, pools, rewards, and transactions</li>
-            <li>Network switcher that filters assets and actions to the selected chain</li>
-            <li>Stake plus two honest exits: 14-day wait, or instant with the fee on the confirm sheet</li>
-            <li>DeFi tab to create or add to pools without pretending a pool is a stake</li>
-            <li>Claim / restake so rewards do not become a fourth forgotten balance</li>
-          </ul></div>
-          <img class="shot" alt="What we shipped" src="${ASSET}pstake-shipped-Cp9C59_z.png">
-          <img class="shot" alt="pSTAKE additional screen" src="${ASSET}pstake-last-Bcvq6mRY.png">
-          <div><h3>Outcomes</h3><ul>
-            <li>One product for stake, unstake, pools, and history.</li>
-            <li>Named money states.</li>
-            <li>14-day vs instant fee shown before confirm.</li>
-            <li>Chain switch stops wrong-network actions.</li>
-            <li>Product reached ~$30M AUM.</li>
-            <li>No saved funnel metrics — success was “I can tell what state this asset is in.”</li>
-          </ul></div>
-          <div><h3>Learnings</h3><ul>
-            <li>State beats APY copy.</li>
-            <li>Waits and fees must be visible before the click.</li>
-            <li>Network first.</li>
-            <li>Don't merge pool and stake into one Earn button.</li>
-            <li>Pending needs a screen.</li>
-          </ul></div>`
-      },
-      comdex: {
-        title: 'Comdex',
-        sub: 'Commodity Trading platform',
-        html: `<img class="long-study" alt="Comdex case study" src="${ASSET}CMDX_CS-1-CHCgaiju.png">`
-      },
-      captl: {
-        title: 'CAPTL',
-        sub: 'Investor portfolio platform',
-        html: `<img class="long-study" alt="CAPTL case study" src="${ASSET}CAPTL_CS-Be1OK8O2.png">`
-      }
-    };
-    const drawer = document.getElementById('drawer');
-    const scrim = document.getElementById('scrim');
-    const closeBtn = document.getElementById('close');
-    function openStudy(key) {
-      const s = studies[key];
-      if (!s) return;
-      document.getElementById('d-title').textContent = s.title;
-      document.getElementById('d-sub').textContent = s.sub;
-      document.getElementById('d-body').innerHTML = s.html;
-      drawer.classList.add('open');
-      drawer.setAttribute('aria-hidden', 'false');
-      scrim.classList.add('on');
-      document.body.classList.add('panel-open');
-      drawer.scrollTop = 0;
-      if (history.replaceState) history.replaceState(null, '', '#' + key);
-    }
-    function closeStudy() {
-      drawer.classList.remove('open');
-      drawer.setAttribute('aria-hidden', 'true');
-      scrim.classList.remove('on');
-      document.body.classList.remove('panel-open');
-      if (history.replaceState) history.replaceState(null, '', location.pathname);
-    }
-    document.querySelectorAll('[data-open]').forEach(btn => {
-      btn.addEventListener('click', (e) => {
-        e.preventDefault();
-        e.stopPropagation();
-        openStudy(btn.getAttribute('data-open'));
-      });
-    });
-    closeBtn.addEventListener('click', closeStudy);
-    scrim.addEventListener('click', closeStudy);
-    document.addEventListener('keydown', e => { if (e.key === 'Escape') closeStudy(); });
-    document.querySelectorAll('[data-acc]').forEach(acc => {
-      acc.querySelector('.acc-head').addEventListener('click', () => acc.classList.toggle('open'));
-    });
-    const hash = (location.hash || '').replace('#','');
-    if (studies[hash]) openStudy(hash);
-  </script>
+  <div class="lightbox" id="lightbox" aria-hidden="true">
+    <div class="lb-bar">
+      <button class="lb-icon" type="button" id="lb-close" aria-label="Close lightbox">
+        <svg width="20" height="20" viewBox="0 0 16 16" fill="none"><path d="M3 3l10 10M13 3L3 13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+      </button>
+    </div>
+    <img id="lb-img" alt="Case study" draggable="false">
+    <div class="lb-nav" id="lb-nav">
+      <button class="lb-icon" type="button" id="lb-prev" aria-label="Previous">
+        <svg width="20" height="20" viewBox="0 0 16 16" fill="none"><path d="M10 3L6 8l4 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+      <button class="lb-icon" type="button" id="lb-next" aria-label="Next">
+        <svg width="20" height="20" viewBox="0 0 16 16" fill="none"><path d="M6 3l4 5-4 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+    </div>
+  </div>
+  <script src="app.js?v=4"></script>
 </body>
 </html>
