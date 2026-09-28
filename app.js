@@ -203,3 +203,25 @@ document.querySelectorAll('[data-acc]').forEach(acc => {
 const hash = (location.hash || '').replace('#','');
 if (hash === 'comdex' || hash === 'captl') openLightbox(galleries[hash], 0);
 else if (studies[hash]) openStudy(hash);
+
+(function starfield() {
+  var svg = document.getElementById('starfield');
+  if (!svg) return;
+  var ns = 'http://www.w3.org/2000/svg';
+  for (var i = 0; i < 220; i++) {
+    var c = document.createElementNS(ns, 'circle');
+    c.setAttribute('cy', String(Math.random() * 100));
+    c.setAttribute('r', String(Math.random() * 0.03 + 0.01));
+    c.setAttribute('fill', 'white');
+    c.setAttribute('opacity', String(Math.random() * 0.5 + 0.1));
+    var a = document.createElementNS(ns, 'animate');
+    a.setAttribute('attributeName', 'cx');
+    a.setAttribute('from', '-2');
+    a.setAttribute('to', '102');
+    a.setAttribute('dur', (Math.random() * 30 + 20) + 's');
+    a.setAttribute('begin', (-Math.random() * 50) + 's');
+    a.setAttribute('repeatCount', 'indefinite');
+    c.appendChild(a);
+    svg.appendChild(c);
+  }
+})();
