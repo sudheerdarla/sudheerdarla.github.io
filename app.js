@@ -7,8 +7,8 @@ const galleries = {
     ASSET + 'pstake-shipped-Cp9C59_z.png',
     ASSET + 'pstake-last-Bcvq6mRY.png'
   ],
-  comdex: [ASSET + 'Frame_38-1-Dw4Lnx4l.png'],
-  captl: [ASSET + 'Frame_42wq-Bid05syW.png']
+  comdex: [ASSET + 'comdex-lightbox-CHCgaiju.png'],
+  captl: [ASSET + 'captl-lightbox-Be1OK8O2.png']
 };
 function fsBtn(gallery, index, src, alt, extraClass) {
   return '<button class="lb-hit" type="button" data-gallery="' + gallery + '" data-index="' + index + '" aria-label="View full screen">' +
