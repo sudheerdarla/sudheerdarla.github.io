@@ -167,6 +167,7 @@ document.getElementById('lb-next').addEventListener('click', (e) => {
   showLbImage();
 });
 lightbox.addEventListener('mousedown', (e) => {
+  if (e.button !== 0) return;
   if (e.target.closest('.lb-icon')) return;
   dragging = true;
   didDrag = false;
