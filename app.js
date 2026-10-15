@@ -11,7 +11,7 @@ const galleries = {
   captl: [ASSET + 'captl-lightbox-Be1OK8O2.png']
 };
 function fsBtn(gallery, index, src, alt, extraClass) {
-  return '<img class="' + extraClass + '" alt="' + alt + '" src="' + src + '">';
+  return '<img class="' + extraClass + '" alt="' + alt + '" loading="lazy" decoding="async" src="' + src + '">';
 }
 const studies = {
   pstake: {
@@ -81,7 +81,12 @@ const drawer = document.getElementById('drawer');
 const scrim = document.getElementById('scrim');
 const closeBtn = document.getElementById('close');
 
-function openStudy(key) {
+let lastFocus = null;
+const mainEl = document.getElementById('main');
+function focusables() {
+  return drawer.querySelectorAll('a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])');
+}
+function openStudy(key, fromUser) {
   const s = studies[key];
   if (!s) return;
   document.getElementById('d-title').textContent = s.title;
@@ -93,6 +98,8 @@ function openStudy(key) {
   document.body.classList.add('panel-open');
   drawer.scrollTop = 0;
   if (history.replaceState) history.replaceState(null, '', '#' + key);
+  if (mainEl) mainEl.setAttribute('inert', '');
+  if (fromUser !== false) { lastFocus = document.activeElement; closeBtn.focus({ preventScroll: true }); }
 }
 function closeStudy() {
   drawer.classList.remove('open');
@@ -100,6 +107,8 @@ function closeStudy() {
   scrim.classList.remove('on');
   document.body.classList.remove('panel-open');
   if (history.replaceState) history.replaceState(null, '', location.pathname);
+  if (mainEl) mainEl.removeAttribute('inert');
+  if (lastFocus && lastFocus.focus) { lastFocus.focus({ preventScroll: true }); lastFocus = null; }
 }
 
 document.querySelectorAll('[data-open]').forEach(btn => {
@@ -112,19 +121,33 @@ document.querySelectorAll('[data-open]').forEach(btn => {
 });
 closeBtn.addEventListener('click', closeStudy);
 scrim.addEventListener('click', closeStudy);
-document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeStudy(); });
+document.addEventListener('keydown', (e) => {
+  if (!drawer.classList.contains('open')) return;
+  if (e.key === 'Escape') { closeStudy(); return; }
+  if (e.key === 'Tab') {
+    const f = focusables();
+    if (!f.length) return;
+    const first = f[0], last = f[f.length - 1];
+    if (e.shiftKey && (document.activeElement === first || document.activeElement === drawer)) { e.preventDefault(); last.focus(); }
+    else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+  }
+});
 document.querySelectorAll('[data-acc]').forEach(acc => {
-  acc.querySelector('.acc-head').addEventListener('click', () => acc.classList.toggle('open'));
+  const head = acc.querySelector('.acc-head');
+  head.addEventListener('click', () => {
+    const open = acc.classList.toggle('open');
+    head.setAttribute('aria-expanded', open ? 'true' : 'false');
+  });
 });
 const hash = (location.hash || '').replace('#','');
-if (studies[hash]) openStudy(hash);
+if (studies[hash]) openStudy(hash, false);
 
 (function starfield() {
   var cv = document.getElementById('starfield');
   if (!cv) return;
   var ctx = cv.getContext('2d');
   var reduce = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
-  var W, H, cx, cy, dpr, stars = [], N = 140, DEPTH = 1000, SPEED = 0.35;
+  var W, H, cx, cy, dpr, stars = [], N = 140, DEPTH = 1000, SPEED = 0.21;
   function reset(s, fresh) {
     s.x = (Math.random() - 0.5) * 2 * W;
     s.y = (Math.random() - 0.5) * 2 * H;
@@ -132,7 +155,7 @@ if (studies[hash]) openStudy(hash);
     s.pz = s.z;
   }
   function resize() {
-    dpr = Math.min(window.devicePixelRatio || 1, 2);
+    dpr = Math.min(window.devicePixelRatio || 1, 1.5);
     W = window.innerWidth; H = window.innerHeight; cx = W / 2; cy = H / 2;
     cv.width = W * dpr; cv.height = H * dpr;
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
