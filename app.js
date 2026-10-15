@@ -2,7 +2,7 @@ const ASSET = 'https://puppy-micro-41275756.figma.site/assets/';
 const galleries = {
   pstake: [
     'img/pstake-stake.jpg',
-    ASSET + '2cc46.png',
+    'img/pstake-unstake.jpg',
     ASSET + 'pstake-flow-c-CPmBU3xu.png',
     ASSET + 'pstake-shipped-Cp9C59_z.png',
     ASSET + 'pstake-last-Bcvq6mRY.png'
@@ -36,7 +36,7 @@ const studies = {
         <p>States: Available · Staked · Unstaking · Pool · Rewards</p>
         <p>Actions: Stake · Unstake (14d or instant) · Add to pool · Claim · Restake</p>
       </div>
-      <div class="shot-row">${fsBtn('pstake', 1, galleries.pstake[1], 'pSTAKE unstake interface', 'shot')}</div>
+      ${fsBtn('pstake', 1, galleries.pstake[1], 'pSTAKE Unstake screen: flash or regular unstake', 'shot')}
       <div><h3>Flow A — First useful action</h3><p>Pick network → see assets on that network → choose Stake or DeFi → confirm → dashboard state updates.</p></div>
       <div><h3>Flow B — Exit</h3><p>Staked → Unstake → choose 14-day (shows unlock date, status = Unstaking) or instant + fee (shows fee, status = Available) → activity records the tx.</p></div>
       <div><h3>Flow C — Read the system</h3><p>Dashboard lists each state separately. Transactions answer “what did I just do?” Empty state if the asset lives on another chain: switch network, don't invent a balance.</p></div>
@@ -124,7 +124,7 @@ if (studies[hash]) openStudy(hash);
   if (!cv) return;
   var ctx = cv.getContext('2d');
   var reduce = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
-  var W, H, cx, cy, dpr, stars = [], N = 420, DEPTH = 1000, SPEED = 3.2;
+  var W, H, cx, cy, dpr, stars = [], N = 140, DEPTH = 1000, SPEED = 0.35;
   function reset(s, fresh) {
     s.x = (Math.random() - 0.5) * 2 * W;
     s.y = (Math.random() - 0.5) * 2 * H;
@@ -142,7 +142,7 @@ if (studies[hash]) openStudy(hash);
   for (var i = 0; i < N; i++) { var s = {}; reset(s, true); stars.push(s); }
   window.addEventListener('resize', resize);
   function frame() {
-    ctx.fillStyle = 'rgba(0,0,0,0.28)';
+    ctx.fillStyle = 'rgba(0,0,0,0.5)';
     ctx.fillRect(0, 0, W, H);
     ctx.lineCap = 'round';
     for (var i = 0; i < N; i++) {
@@ -156,7 +156,7 @@ if (studies[hash]) openStudy(hash);
       if (x < -50 || x > W + 50 || y < -50 || y > H + 50) { reset(s, false); continue; }
       var depth = 1 - s.z / DEPTH;
       ctx.strokeStyle = 'rgba(255,255,255,' + (0.15 + depth * 0.85) + ')';
-      ctx.lineWidth = 0.4 + depth * 1.8;
+      ctx.lineWidth = 0.3 + depth * 0.9;
       ctx.beginPath(); ctx.moveTo(px, py); ctx.lineTo(x, y); ctx.stroke();
     }
     if (!reduce) requestAnimationFrame(frame);
