@@ -100,11 +100,6 @@
     .lightbox img { display:block; margin:16px auto 80px; max-width:min(920px, calc(100% - 32px)); height:auto; }
     .lb-nav { position:fixed; bottom:16px; left:0; right:0; z-index:2; display:none; justify-content:center; gap:16px; padding:16px; }
     .lb-nav.show { display:flex; }
-    .pdfbox { display:none; position:fixed; inset:0; z-index:85; background:rgba(0,0,0,.85); padding:60px 16px 16px; }
-    .pdfbox.on { display:block; }
-    .pdfbox iframe { display:block; width:min(1100px,100%); height:100%; margin:0 auto; border:0; border-radius:4px; background:#fff; }
-    .pdf-bar { position:absolute; top:12px; right:16px; display:flex; gap:8px; align-items:center; }
-    .pdf-new { font-size:13px; line-height:20px; padding:8px 12px; }
     @media (max-width:900px) { :root { --drawer-w:100vw; } body.panel-open .main { margin-right:0; } .drawer { width:100%; min-width:0; } .scrim { right:0; background:rgba(0,0,0,.5); } .job { flex-direction:column; } }
     @media (max-width:600px) { .header { flex-wrap:wrap; } .socials { flex-basis:100%; justify-content:flex-start; padding-left:88px; } }
   </style>
@@ -142,10 +137,10 @@
             </article>
             <article class="project">
               <div><h3>Comdex</h3><p class="sub">Commodity Trading platform</p></div>
-              <button class="card-btn" type="button" data-open="comdex" aria-label="View case study: Comdex">
+              <a class="card-btn" href="Comdex_Case_Study.pdf" target="_blank" rel="noopener" aria-label="View case study: Comdex (PDF, opens in a new tab)">
                 <div class="thumb-frame"><img alt="Comdex preview" src="img/comdex-thumb.jpg"></div>
                 <div class="hover-label"><span>View case study</span></div>
-              </button>
+              </a>
             </article>
             <article class="project">
               <div><h3>CAPTL</h3><p class="sub">Investor portfolio platform</p></div>
@@ -201,13 +196,6 @@
       <button class="lb-icon" type="button" id="lb-next" aria-label="Next"><svg width="20" height="20" viewBox="0 0 16 16" fill="none"><path d="M6 3l4 5-4 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
     </div>
   </div>
-  <div class="pdfbox" id="pdfbox" role="dialog" aria-modal="true" aria-label="Comdex case study" aria-hidden="true">
-    <div class="pdf-bar">
-      <a class="lb-icon pdf-new" id="pdf-new" href="Comdex_Case_Study.pdf" target="_blank" rel="noopener">Open in new tab</a>
-      <button class="lb-icon" type="button" id="pdf-close" aria-label="Close case study"><svg width="20" height="20" viewBox="0 0 16 16" fill="none"><path d="M3 3l10 10M13 3L3 13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></button>
-    </div>
-    <iframe id="pdf-frame" title="Comdex case study"></iframe>
-  </div>
-  <script src="app.js?v=9"></script>
+  <script src="app.js?v=10"></script>
 </body>
 </html>
