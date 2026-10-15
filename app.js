@@ -83,6 +83,29 @@ const drawer = document.getElementById('drawer');
 const scrim = document.getElementById('scrim');
 const closeBtn = document.getElementById('close');
 const lightbox = document.getElementById('lightbox');
+const pdfbox = document.getElementById('pdfbox');
+const pdfFrame = document.getElementById('pdf-frame');
+const PDF_URL = 'Comdex_Case_Study.pdf';
+let pdfReturnFocus = null;
+function openPdf() {
+  // Phones and browsers without a built-in PDF viewer: open the PDF directly.
+  if (window.matchMedia('(max-width: 700px)').matches || navigator.pdfViewerEnabled === false) {
+    window.open(PDF_URL, '_blank', 'noopener');
+    return;
+  }
+  pdfReturnFocus = document.activeElement;
+  if (!pdfFrame.getAttribute('src')) pdfFrame.setAttribute('src', PDF_URL + '#view=FitH');
+  pdfbox.classList.add('on');
+  pdfbox.setAttribute('aria-hidden', 'false');
+  document.body.classList.add('lb-open');
+  document.getElementById('pdf-close').focus();
+}
+function closePdf() {
+  pdfbox.classList.remove('on');
+  pdfbox.setAttribute('aria-hidden', 'true');
+  document.body.classList.remove('lb-open');
+  if (pdfReturnFocus) pdfReturnFocus.focus();
+}
 const lbImg = document.getElementById('lb-img');
 const lbNav = document.getElementById('lb-nav');
 let lbItems = [];
@@ -149,11 +172,14 @@ document.querySelectorAll('[data-open]').forEach(btn => {
     e.preventDefault();
     e.stopPropagation();
     const key = btn.getAttribute('data-open');
-    if (key === 'comdex' || key === 'captl') openLightbox(galleries[key], 0);
+    if (key === 'comdex') openPdf();
+    else if (key === 'captl') openLightbox(galleries[key], 0);
     else openStudy(key);
   });
 });
 closeBtn.addEventListener('click', closeStudy);
+document.getElementById('pdf-close').addEventListener('click', closePdf);
+pdfbox.addEventListener('click', (e) => { if (e.target === pdfbox) closePdf(); });
 scrim.addEventListener('click', closeStudy);
 document.getElementById('lb-close').addEventListener('click', (e) => { e.stopPropagation(); closeLightbox(); });
 document.getElementById('lb-prev').addEventListener('click', (e) => {
@@ -190,6 +216,7 @@ window.addEventListener('mouseup', () => {
 });
 lbImg.addEventListener('click', (e) => e.stopPropagation());
 document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape' && pdfbox.classList.contains('on')) { closePdf(); return; }
   if (e.key === 'Escape') {
     if (lightbox.classList.contains('on')) closeLightbox();
     else closeStudy();
@@ -202,7 +229,8 @@ document.querySelectorAll('[data-acc]').forEach(acc => {
   acc.querySelector('.acc-head').addEventListener('click', () => acc.classList.toggle('open'));
 });
 const hash = (location.hash || '').replace('#','');
-if (hash === 'comdex' || hash === 'captl') openLightbox(galleries[hash], 0);
+if (hash === 'comdex') openPdf();
+else if (hash === 'captl') openLightbox(galleries[hash], 0);
 else if (studies[hash]) openStudy(hash);
 
 (function starfield() {
