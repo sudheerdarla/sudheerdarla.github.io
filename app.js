@@ -1,7 +1,7 @@
 const ASSET = 'https://puppy-micro-41275756.figma.site/assets/';
 const galleries = {
   pstake: [
-    ASSET + '496a1.png',
+    'img/pstake-stake.jpg',
     ASSET + '2cc46.png',
     ASSET + 'pstake-flow-c-CPmBU3xu.png',
     ASSET + 'pstake-shipped-Cp9C59_z.png',
@@ -22,7 +22,7 @@ const studies = {
     html: `
       <p class="meta-line">2022, Dubai, United Arab Emirates · On-site</p>
       <p>Crypto holders were stitching together staking, swaps, explorers, and spreadsheets. pSTAKE was designed so they could see an asset, act on it, and know what state it was in — without becoming a protocol expert.</p>
-      <div class="shot-row">${fsBtn('pstake', 0, galleries.pstake[0], 'pSTAKE staking interface', 'shot')}</div>
+      ${fsBtn('pstake', 0, galleries.pstake[0], 'pSTAKE Stake screen: stake OSMO, receive stkOSMO', 'shot')}
       <div><h3>About the project</h3><p>One surface to hold, stake, unstake, use DeFi, and read history — with chain context built in. I owned dashboard, network switch, stake / unstake (including 14-day vs instant), DeFi tab (create / add to pools), and how rewards and activity showed up. I did not own contracts, APY math, or which chains launched.</p></div>
       <div><h3>Problem statements</h3><ol>
         <li>Idle tokens in a wallet, and no trusted next step inside the same app.</li>
