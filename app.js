@@ -119,6 +119,39 @@ document.querySelectorAll('[data-open]').forEach(btn => {
     openStudy(key);
   });
 });
+const modal = document.getElementById('modal');
+const modalImg = document.getElementById('modal-img');
+const modalClose = document.getElementById('modal-close');
+const images = { comdex: 'img/comdex-case-study.jpg' };
+let modalFocus = null;
+function openModal(key) {
+  if (!images[key]) return;
+  if (modalImg.getAttribute('src') !== images[key]) modalImg.src = images[key];
+  modalFocus = document.activeElement;
+  modal.classList.add('on');
+  modal.setAttribute('aria-hidden', 'false');
+  modal.scrollTop = 0;
+  document.body.style.overflow = 'hidden';
+  if (mainEl) mainEl.setAttribute('inert', '');
+  modalClose.focus({ preventScroll: true });
+}
+function closeModal() {
+  modal.classList.remove('on');
+  modal.setAttribute('aria-hidden', 'true');
+  document.body.style.overflow = '';
+  if (mainEl) mainEl.removeAttribute('inert');
+  if (modalFocus && modalFocus.focus) modalFocus.focus({ preventScroll: true });
+}
+document.querySelectorAll('[data-image]').forEach(btn => {
+  btn.addEventListener('click', () => openModal(btn.getAttribute('data-image')));
+});
+modalClose.addEventListener('click', closeModal);
+modal.addEventListener('click', (e) => { if (e.target === modal) closeModal(); });
+document.addEventListener('keydown', (e) => {
+  if (!modal.classList.contains('on')) return;
+  if (e.key === 'Escape') closeModal();
+  if (e.key === 'Tab') { e.preventDefault(); modalClose.focus(); }
+});
 closeBtn.addEventListener('click', closeStudy);
 scrim.addEventListener('click', closeStudy);
 document.addEventListener('keydown', (e) => {
