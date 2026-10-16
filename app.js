@@ -122,7 +122,7 @@ document.querySelectorAll('[data-open]').forEach(btn => {
 const modal = document.getElementById('modal');
 const modalImg = document.getElementById('modal-img');
 const modalClose = document.getElementById('modal-close');
-const images = { comdex: 'img/comdex-case-study.jpg' };
+const images = { comdex: 'img/comdex-case-study.jpg?v=2' };
 let modalFocus = null;
 function openModal(key) {
   if (!images[key]) return;
