@@ -122,11 +122,17 @@ document.querySelectorAll('[data-open]').forEach(btn => {
 const modal = document.getElementById('modal');
 const modalImg = document.getElementById('modal-img');
 const modalClose = document.getElementById('modal-close');
-const images = { comdex: 'img/comdex-case-study.jpg?v=2' };
+const images = {
+  comdex: { src: 'img/comdex-case-study.jpg?v=2', w: 1312, h: 8000, alt: 'Comdex case study: a global commodity trading platform, from research to handoff, covering the problem, process, key screens and outcomes' },
+  captl: { src: 'img/captl-case-study.jpg', w: 943, h: 8000, alt: 'CAPTL case study: an investor operating system for fund managers, covering the problem, user roles, product flows, key screens and learnings' }
+};
 let modalFocus = null;
 function openModal(key) {
   if (!images[key]) return;
-  if (modalImg.getAttribute('src') !== images[key]) modalImg.src = images[key];
+  const im = images[key];
+  modal.setAttribute('aria-label', (key === 'captl' ? 'CAPTL' : 'Comdex') + ' case study');
+  modalImg.alt = im.alt; modalImg.width = im.w; modalImg.height = im.h;
+  if (modalImg.getAttribute('src') !== im.src) { modalImg.removeAttribute('src'); modalImg.src = im.src; }
   modalFocus = document.activeElement;
   modal.classList.add('on');
   modal.setAttribute('aria-hidden', 'false');
