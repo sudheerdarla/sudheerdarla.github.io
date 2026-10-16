@@ -109,11 +109,11 @@
     .scrim.on { opacity:1; pointer-events:auto; }
     .modal { position:fixed; inset:0; z-index:60; display:none; background:rgba(0,0,0,.4); overflow-y:auto; overscroll-behavior:contain; padding:56px 24px 48px; }
     .modal.on { display:block; }
-    .modal-img { display:block; width:100%; max-width:920px; height:auto; margin:0 auto; border-radius:8px; background:#0d0d0d; box-shadow:0 20px 60px rgba(0,0,0,.5); }
+    .modal-img { display:block; width:70vw; max-width:none; height:auto; margin:0 auto; border-radius:8px; background:#0d0d0d; box-shadow:0 20px 60px rgba(0,0,0,.5); }
     .modal-close { position:fixed; top:16px; right:16px; z-index:61; width:44px; height:44px; display:grid; place-items:center; border-radius:50%; background:rgba(20,20,20,.9); color:#d0d0d0; border:1px solid var(--line); }
     .modal-close:hover { color:#fff; background:#222; }
     @media (prefers-reduced-motion:reduce) { *, *::before, *::after { transition-duration:.01ms !important; scroll-behavior:auto !important; } }
-    @media (max-width:900px) { :root { --drawer-w:100vw; } .drawer { width:100%; min-width:0; } .scrim { background:rgba(0,0,0,.5); } .job { flex-direction:column; } }
+    @media (max-width:900px) { .modal-img { width:100%; } .modal { padding:64px 12px 32px; } :root { --drawer-w:100vw; } .drawer { width:100%; min-width:0; } .scrim { background:rgba(0,0,0,.5); } .job { flex-direction:column; } }
     @media (max-width:600px) { .header { flex-wrap:wrap; } .socials { flex-basis:100%; justify-content:flex-start; padding-left:78px; margin:0 0 0 0; } }
   </style>
 </head>
@@ -206,6 +206,6 @@
     <button class="modal-close" type="button" id="modal-close" aria-label="Close case study"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true" focusable="false"><path d="M18 6L6 18M6 6l12 12"/></svg></button>
     <img class="modal-img" id="modal-img" width="1312" height="8000" alt="Comdex case study: a global commodity trading platform, from research to handoff, covering the problem, process, key screens and outcomes" decoding="async">
   </div>
-  <script src="app.js?v=17" defer></script>
+  <script src="app.js?v=18" defer></script>
 </body>
 </html>
