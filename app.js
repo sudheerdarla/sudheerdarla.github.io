@@ -2,7 +2,7 @@ const studies = {
   pstake: {
     title: 'pSTAKE Finance',
     sub: 'Web3 staking platform',
-    html: '<img class="long-study" width="931" height="8000" alt="pSTAKE case study: a Web3 staking platform where people can see an asset, act on it and know its state, covering the problem, mental model, key flows and learnings" decoding="async" src="img/pstake-case-study.jpg?v=2">'
+    html: '<img class="long-study seam" width="2304" height="8000" alt="pSTAKE case study, part 1: staking people can actually read. Overview, scope, the problem holders faced and six moments where people got stuck" decoding="async" src="img/pstake-cs-1.jpg"><img class="long-study seam" width="2304" height="7095" alt="pSTAKE case study, part 2: the Network, Asset, State, Action mental model and the stake and unstake key decisions" decoding="async" loading="lazy" src="img/pstake-cs-2.jpg"><img class="long-study seam" width="2304" height="4910" alt="pSTAKE case study, part 3: how a chain switch changes everything, learnings and closing" decoding="async" loading="lazy" src="img/pstake-cs-3.jpg">'
   },
   comdex: {
     title: 'Comdex',

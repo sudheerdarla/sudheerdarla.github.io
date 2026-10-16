@@ -104,7 +104,11 @@
     .shot { width:100%; height:auto; border-radius:4px; display:block; background:#0d0d0d; }
     .shot-row { display:flex; justify-content:center; }
     .shot-row img { max-width:280px; width:100%; border-radius:4px; }
-    .long-study { width:100%; height:auto; border-radius:4px; display:block; }
+    .long-study { width:100%; height:auto; border-radius:4px; display:block; background:#0a0a0d; }
+    .drawer-body .seam { border-radius:0; }
+    .drawer-body .seam + .seam { margin-top:-28px; }
+    .drawer-body .seam:first-child { border-radius:4px 4px 0 0; }
+    .drawer-body .seam:last-child { border-radius:0 0 4px 4px; }
     .scrim { position:fixed; inset:0; background:rgba(0,0,0,.4); z-index:30; opacity:0; pointer-events:none; transition:opacity .3s ease; }
     .scrim.on { opacity:1; pointer-events:auto; }
     @media (prefers-reduced-motion:reduce) { *, *::before, *::after { transition-duration:.01ms !important; scroll-behavior:auto !important; } }
@@ -197,6 +201,6 @@
     </div>
     <div class="drawer-body" id="d-body"></div>
   </aside>
-  <script src="app.js?v=26" defer></script>
+  <script src="app.js?v=27" defer></script>
 </body>
 </html>
