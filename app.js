@@ -7,8 +7,6 @@ const galleries = {
     ASSET + 'pstake-shipped-Cp9C59_z.png',
     ASSET + 'pstake-last-Bcvq6mRY.png'
   ],
-  comdex: [ASSET + 'comdex-lightbox-CHCgaiju.png'],
-  captl: [ASSET + 'captl-lightbox-Be1OK8O2.png']
 };
 function fsBtn(gallery, index, src, alt, extraClass) {
   return '<img class="' + extraClass + '" alt="' + alt + '" loading="lazy" decoding="async" src="' + src + '">';
@@ -69,12 +67,12 @@ const studies = {
   comdex: {
     title: 'Comdex',
     sub: 'Commodity Trading platform',
-    html: fsBtn('comdex', 0, galleries.comdex[0], 'Comdex case study', 'long-study')
+    html: '<img class="long-study" width="1312" height="8000" alt="Comdex case study: a global commodity trading platform, from research to handoff, covering the problem, process, key screens and outcomes" decoding="async" src="img/comdex-case-study.jpg?v=2">'
   },
   captl: {
     title: 'CAPTL',
     sub: 'Investor portfolio platform',
-    html: fsBtn('captl', 0, galleries.captl[0], 'CAPTL case study', 'long-study')
+    html: '<img class="long-study" width="943" height="8000" alt="CAPTL case study: an investor operating system for fund managers, covering the problem, user roles, product flows, key screens and learnings" decoding="async" src="img/captl-case-study.jpg?v=2">'
   }
 };
 const drawer = document.getElementById('drawer');
@@ -118,45 +116,6 @@ document.querySelectorAll('[data-open]').forEach(btn => {
     const key = btn.getAttribute('data-open');
     openStudy(key);
   });
-});
-const modal = document.getElementById('modal');
-const modalImg = document.getElementById('modal-img');
-const modalClose = document.getElementById('modal-close');
-const images = {
-  comdex: { src: 'img/comdex-case-study.jpg?v=2', w: 1312, h: 8000, alt: 'Comdex case study: a global commodity trading platform, from research to handoff, covering the problem, process, key screens and outcomes' },
-  captl: { src: 'img/captl-case-study.jpg?v=2', w: 943, h: 8000, alt: 'CAPTL case study: an investor operating system for fund managers, covering the problem, user roles, product flows, key screens and learnings' }
-};
-let modalFocus = null;
-function openModal(key) {
-  if (!images[key]) return;
-  const im = images[key];
-  modal.setAttribute('aria-label', (key === 'captl' ? 'CAPTL' : 'Comdex') + ' case study');
-  modalImg.alt = im.alt; modalImg.width = im.w; modalImg.height = im.h;
-  if (modalImg.getAttribute('src') !== im.src) { modalImg.removeAttribute('src'); modalImg.src = im.src; }
-  modalFocus = document.activeElement;
-  modal.classList.add('on');
-  modal.setAttribute('aria-hidden', 'false');
-  modal.scrollTop = 0;
-  document.body.style.overflow = 'hidden';
-  if (mainEl) mainEl.setAttribute('inert', '');
-  modalClose.focus({ preventScroll: true });
-}
-function closeModal() {
-  modal.classList.remove('on');
-  modal.setAttribute('aria-hidden', 'true');
-  document.body.style.overflow = '';
-  if (mainEl) mainEl.removeAttribute('inert');
-  if (modalFocus && modalFocus.focus) modalFocus.focus({ preventScroll: true });
-}
-document.querySelectorAll('[data-image]').forEach(btn => {
-  btn.addEventListener('click', () => openModal(btn.getAttribute('data-image')));
-});
-modalClose.addEventListener('click', closeModal);
-modal.addEventListener('click', (e) => { if (e.target === modal) closeModal(); });
-document.addEventListener('keydown', (e) => {
-  if (!modal.classList.contains('on')) return;
-  if (e.key === 'Escape') closeModal();
-  if (e.key === 'Tab') { e.preventDefault(); modalClose.focus(); }
 });
 closeBtn.addEventListener('click', closeStudy);
 scrim.addEventListener('click', closeStudy);
