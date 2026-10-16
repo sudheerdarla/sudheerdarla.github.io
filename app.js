@@ -124,7 +124,7 @@ const modalImg = document.getElementById('modal-img');
 const modalClose = document.getElementById('modal-close');
 const images = {
   comdex: { src: 'img/comdex-case-study.jpg?v=2', w: 1312, h: 8000, alt: 'Comdex case study: a global commodity trading platform, from research to handoff, covering the problem, process, key screens and outcomes' },
-  captl: { src: 'img/captl-case-study.jpg', w: 943, h: 8000, alt: 'CAPTL case study: an investor operating system for fund managers, covering the problem, user roles, product flows, key screens and learnings' }
+  captl: { src: 'img/captl-case-study.jpg?v=2', w: 943, h: 8000, alt: 'CAPTL case study: an investor operating system for fund managers, covering the problem, user roles, product flows, key screens and learnings' }
 };
 let modalFocus = null;
 function openModal(key) {
