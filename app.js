@@ -12,7 +12,7 @@ const studies = {
   captl: {
     title: 'CAPTL',
     sub: 'Investor portfolio platform',
-    html: '<img class="long-study" width="943" height="8000" alt="CAPTL case study: an investor operating system for fund managers, covering the problem, user roles, product flows, key screens and learnings" decoding="async" src="img/captl-case-study.jpg?v=2">'
+    html: '<img class="long-study seam" width="2304" height="6409" alt="CAPTL case study, part 1: Investor OS overview, the project, problem statements and four roles with four frictions" decoding="async" src="img/captl-cs-1.jpg"><img class="long-study seam" width="2304" height="6987" alt="CAPTL case study, part 2: product timeline, user flows, what shipped and the first annotated key screens" decoding="async" loading="lazy" src="img/captl-cs-2.jpg"><img class="long-study seam" width="2304" height="6122" alt="CAPTL case study, part 3: annotated Add Fund, Fund Network and Fund Management screens, learnings and outcomes" decoding="async" loading="lazy" src="img/captl-cs-3.jpg">'
   }
 };
 const drawer = document.getElementById('drawer');
