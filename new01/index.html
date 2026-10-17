@@ -7,6 +7,12 @@
   <meta name="description" content="Product Designer based in Hyderabad. 7+ years. 0–1 Fintech/SaaS. Complex and high-stakes flows.">
   <meta name="color-scheme" content="light dark">
   <meta name="robots" content="noindex">
+  <meta name="theme-color" content="#ffffff" id="theme-color">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Sudheer Darla — Product Designer">
+  <meta property="og:description" content="Product Designer. 7+ years. 0–1 Fintech/SaaS. Complex and high-stakes flows.">
+  <meta property="og:image" content="https://sudheerdarla.github.io/img/pstake-thumb.jpg">
+  <meta name="twitter:card" content="summary_large_image">
   <link rel="icon" href="../favicon.ico" sizes="any">
   <link rel="icon" type="image/png" sizes="32x32" href="../favicon-32.png">
   <link rel="apple-touch-icon" href="../apple-touch-icon.png">
@@ -64,7 +70,11 @@
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
-    html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+    html { color-scheme: light; scroll-behavior: smooth; scrollbar-gutter: stable; -webkit-text-size-adjust: 100%; }
+    html[data-theme="dark"] { color-scheme: dark; }
+    .sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+    h1, h2, h3, .tagline { text-wrap: balance; }
+    .bio p, .desc, .meta { text-wrap: pretty; }
     body {
       background-color: var(--bg);
       background-image: radial-gradient(circle, var(--dot) 0.75px, transparent 0.75px);
@@ -110,8 +120,8 @@
     .avatar { width: 96px; height: 96px; border-radius: 50%; object-fit: cover; background: var(--bg-3); border: 2px solid #ffffff; flex: none; }
     .name { font-size: 28px; line-height: 28.56px; font-weight: 700; letter-spacing: -0.84px; }
     .tagline { margin-top: var(--s-sm); font-size: 16px; line-height: 26.4px; color: var(--muted); max-width: 400px; }
-    .social { display: flex; gap: var(--s-xl); margin-left: auto; flex: none; }
-    .nav-link { font-family: var(--font-mono); font-size: 15px; line-height: 15px; color: var(--fg-1); padding: 6px 0; border-bottom: 1px solid transparent; transition: border-color .15s var(--ease-out), color .15s; }
+    .social { display: flex; gap: var(--s-xs); margin: 0 -6px 0 auto; flex: none; }
+    .nav-link { display: inline-flex; align-items: center; min-height: 32px; min-width: 32px; justify-content: center; font-family: var(--font-mono); font-size: 15px; line-height: 15px; color: var(--fg-1); padding: 0 6px; border-bottom: 1px solid transparent; transition: border-color .15s var(--ease-out), color .15s; }
     .nav-link:hover { color: var(--fg); border-bottom-color: var(--fg); }
 
     .bio { margin-top: var(--s-3xl); display: flex; flex-direction: column; gap: var(--s-lg); font-size: 16px; line-height: 26.4px; color: var(--fg-2); }
@@ -134,7 +144,7 @@
 
     /* Eyebrow */
     .eyebrow { font-family: var(--font-mono); font-size: 11px; line-height: 16.5px; letter-spacing: .04em; text-transform: uppercase; color: var(--fg-1); }
-    .eyebrow b { font-weight: 400; color: var(--muted); margin-right: var(--s-sm); }
+    .eyebrow b { font-weight: 400; color: var(--muted); margin-right: var(--s-xs); }
 
     /* Projects */
     .projects { display: flex; flex-direction: column; gap: var(--s-4xl); }
@@ -150,6 +160,8 @@
       text-transform: uppercase; padding: 4px 8px; border-radius: var(--r-md); background: var(--accent); color: var(--accent-ink);
       opacity: 0; transform: translateY(4px); transition: opacity .15s var(--ease-out), transform .15s var(--ease-out); }
     .slot:hover .slot-tag, .slot:focus-visible .slot-tag { opacity: 1; transform: none; }
+
+    @media (hover: none) { .slot-tag { opacity: 1; transform: none; } }
 
     /* Experience / Education */
     .row { display: flex; align-items: center; justify-content: space-between; gap: var(--s-lg); padding: var(--s-lg) 0; border-bottom: 1px solid var(--line); }
@@ -196,10 +208,11 @@
       .col { padding: 0 var(--s-lg) var(--s-4xl); }
       .header { align-items: flex-start; flex-direction: column; gap: var(--s-lg); }
       .header { flex-wrap: wrap; }
-      .social { margin-left: 0; flex-basis: 100%; }
+      .social { margin: 0 0 0 -6px; flex-basis: 100%; }
       .row { flex-direction: column; align-items: flex-start; gap: var(--s-sm); }
       .skills { grid-template-columns: 1fr; }
     }
+    @media print { body { background: #fff; color: #000; } .topbar, .skip, .scrim, .drawer, .slot-tag { display: none !important; } .sec-body { display: block !important; } .slot { break-inside: avoid; } .sec-head .chev { display: none; } }
     @media (prefers-reduced-motion: reduce) { *, *::before, *::after { transition-duration: .01ms !important; scroll-behavior: auto !important; } }
   </style>
 </head>
@@ -292,8 +305,8 @@
             <h2 class="sec-title"><button class="sec-head" type="button" id="h-skills" aria-expanded="false" aria-controls="p-skills">Skills <svg class="chev" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M6 15l6-6 6 6"/></svg></button></h2>
             <div class="sec-body" id="p-skills" role="region" aria-labelledby="h-skills">
               <div class="skills">
-                <div><h3 class="eyebrow"><b>01</b>Design</h3><ul><li>Product Design</li><li>Figma</li><li>Rapid Prototyping</li><li>Design Systems</li><li>User Experience Design (UED)</li><li>Illustrator</li></ul></div>
-                <div><h3 class="eyebrow"><b>02</b>Engineering</h3><ul><li>HTML/CSS/JS/React JS</li><li>Python</li><li>Git</li></ul></div>
+                <div><h3 class="eyebrow"><b>01</b> Design</h3><ul><li>Product Design</li><li>Figma</li><li>Rapid Prototyping</li><li>Design Systems</li><li>User Experience Design (UED)</li><li>Illustrator</li></ul></div>
+                <div><h3 class="eyebrow"><b>02</b> Engineering</h3><ul><li>HTML/CSS/JS/React JS</li><li>Python</li><li>Git</li></ul></div>
               </div>
             </div>
           </section>
@@ -310,7 +323,6 @@
     </div>
     <div class="drawer-body" id="d-body"></div>
   </aside>
-  <style>.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}</style>
-  <script src="app.js" defer></script>
+    <script src="app.js" defer></script>
 </body>
 </html>
