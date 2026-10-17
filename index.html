@@ -3,196 +3,321 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link rel="icon" href="/favicon.ico?v=2" sizes="any">
-  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png?v=2">
-  <link rel="icon" type="image/png" sizes="192x192" href="/favicon-192.png?v=2">
-  <link rel="apple-touch-icon" href="/apple-touch-icon.png?v=2">
   <title>Sudheer Darla — Product Designer</title>
-  <meta name="description" content="Product designer based in Hyderabad. 7+ years. 0–1 consumer fintech/SaaS. Complex and high-stakes flows.">
-  <meta name="theme-color" content="#000000">
-  <meta name="color-scheme" content="dark">
-  <link rel="canonical" href="https://sudheerdarla.github.io/">
+  <meta name="description" content="Product Designer based in Hyderabad. 7+ years. 0–1 Fintech/SaaS. Complex and high-stakes flows.">
+  <meta name="color-scheme" content="light dark">
+  <meta name="theme-color" content="#ffffff" id="theme-color">
   <meta property="og:type" content="website">
   <meta property="og:title" content="Sudheer Darla — Product Designer">
-  <meta property="og:description" content="Product designer based in Hyderabad. 7+ years. 0–1 consumer fintech/SaaS. Complex and high-stakes flows.">
-  <meta property="og:url" content="https://sudheerdarla.github.io/">
-  <meta property="og:image" content="https://sudheerdarla.github.io/img/pstake-stake.jpg">
+  <meta property="og:description" content="Product Designer. 7+ years. 0–1 Fintech/SaaS. Complex and high-stakes flows.">
+  <meta property="og:image" content="https://sudheerdarla.github.io/img/pstake-thumb.jpg">
   <meta name="twitter:card" content="summary_large_image">
-  <script type="application/ld+json">{"@context":"https://schema.org","@type":"Person","name":"Sudheer Darla","jobTitle":"Product Designer","url":"https://sudheerdarla.github.io/","address":{"@type":"PostalAddress","addressLocality":"Hyderabad","addressCountry":"IN"},"sameAs":["https://x.com/sudheerdarla_","https://www.linkedin.com/in/sudheer-darla-a9496956/"]}</script>
-  <link rel="preconnect" href="https://puppy-micro-41275756.figma.site" crossorigin>
+  <link rel="icon" href="favicon.ico" sizes="any">
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" media="print" onload="this.media='all'">
-  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"></noscript>
-  <!-- portfolio v12 2026-10-10 Port001 sync: header row with socials on the right -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;700;800;900&family=JetBrains+Mono:wght@400&display=swap" media="print" onload="this.media='all'">
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;700;800;900&family=JetBrains+Mono:wght@400&display=swap"></noscript>
+  <script>
+    /* Set the theme before first paint so there is no flash. */
+    (function () {
+      var t = null;
+      try { t = localStorage.getItem('theme'); } catch (e) {}
+      if (t !== 'light' && t !== 'dark') {
+        t = window.matchMedia && matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+      }
+      document.documentElement.setAttribute('data-theme', t);
+    })();
+  </script>
   <style>
-    :root { --bg:#000; --text:#f7f7f7; --muted:#9a9a9a; --line:rgba(255,255,255,.1); --drawer-w:60vw; }
-    * { box-sizing:border-box; margin:0; padding:0; }
-    html { color-scheme:dark; scroll-behavior:smooth; }
-    html, body { background:var(--bg); color:var(--text); font-family:Inter,system-ui,sans-serif; }
-    body { line-height:1.55; min-height:100vh; -webkit-font-smoothing:antialiased; text-rendering:optimizeLegibility; }
-    body.panel-open { overflow:hidden; }
-    a { color:inherit; text-decoration:none; }
-    button { font:inherit; color:inherit; background:none; border:0; cursor:pointer; }
-    .stars { position:fixed; inset:0; width:100%; height:100%; pointer-events:none; z-index:0; }
-    :focus-visible { outline:2px solid #fff; outline-offset:3px; border-radius:4px; }
-    .skip { position:absolute; left:16px; top:-60px; z-index:100; background:#fff; color:#000; padding:10px 16px; border-radius:8px; font-size:14px; font-weight:600; }
-    .skip:focus { top:16px; }
-    .page { position:relative; z-index:1; display:flex; min-height:100vh; }
-    .main { flex:1; min-width:0; }
-    .wrap { max-width:720px; margin:0 auto; padding:56px 24px 96px; }
-    .header { display:flex; gap:16px; align-items:flex-end; padding-bottom:28px; border-bottom:1px solid var(--line); }
-    .avatar { width:72px; height:72px; border-radius:50%; object-fit:cover; }
-    .name { font-size:28px; font-weight:700; letter-spacing:-.03em; }
-    .header-text { flex:1; min-width:0; }
-    .tagline { color:var(--muted); margin-top:6px; font-size:14px; max-width:398px; }
-    .socials { display:flex; justify-content:flex-end; gap:4px; flex-shrink:0; margin:0 -10px -6px 0; color:#9a9a9a; }
-    .socials a { display:grid; place-items:center; width:44px; height:44px; border-radius:8px; transition:color .15s; }
-    .socials a:hover { color:#fff; }
-    .socials svg { width:14px; height:14px; fill:currentColor; display:block; }
-    .about { padding:28px 0 20px; font-size:16px; }
-    .about p + p { margin-top:16px; }
-    .chips { list-style:none; display:flex; flex-wrap:wrap; gap:8px; padding-bottom:28px; border-bottom:1px solid var(--line); }
-    .chip { border:1px solid #2a2a2a; border-radius:8px; padding:6px 10px; font-size:13px; color:#d0d0d0; }
-    .acc-title { font-size:inherit; font-weight:inherit; }
-    .acc-head { width:100%; text-align:left; display:flex; justify-content:space-between; align-items:center; padding:16px 0; border-bottom:1px solid var(--line); font-size:15px; }
-    .acc-head .chev { color:#8a8a8a; flex:none; transition:transform .25s ease, color .2s; }
-    .acc-head:hover .chev, .acc-head:focus-visible .chev { color:#fff; }
-    .acc:not(.open) .acc-head .chev { transform:rotate(180deg); }
-    
-    .acc-body { display:none; }
-    .acc.open .acc-body { display:block; }
-    .job { display:flex; justify-content:space-between; gap:16px; padding:16px 0; border-bottom:1px solid var(--line); }
-    .job-left { display:flex; gap:12px; }
-    .logo { width:36px; height:36px; border-radius:50%; background:#2a2a2a; display:grid; place-items:center; font-size:11px; font-weight:600; color:#ccc; }
-    .job h3 { font-size:15px; font-weight:600; }
-    .role { color:var(--muted); font-size:13px; }
-    .dates { color:#8a8a8a; font-size:13px; white-space:nowrap; padding-top:8px; }
-    .project { padding:20px 0 8px; display:flex; flex-direction:column; gap:12px; }
-    .project h3 { font-size:18px; font-weight:500; }
-    .project .sub { color:#a3a3a3; font-size:15px; }
-    .card-btn { width:100%; position:relative; cursor:pointer; text-align:left; display:block; border-radius:4px; }
-    .thumb-frame { width:100%; aspect-ratio:16/9; max-height:400px; overflow:hidden; border-radius:2px; background:#111; }
-    .thumb-frame img { transition:transform .5s ease; width:100%; height:100%; object-fit:cover; object-position:top center; display:block; pointer-events:none; }
-    .card-btn:hover .thumb-frame img, .card-btn:hover .laptop img { transform:scale(1.015); }
-    .hover-label { position:absolute; inset:0; display:flex; align-items:center; justify-content:center; opacity:0; transition:opacity .15s; background:rgba(0,0,0,.18); }
-    .card-btn:hover .hover-label, .card-btn:focus-visible .hover-label { opacity:1; }
-    .hover-label span { background:rgba(10,10,10,.85); color:#d0d0d0; font-size:14px; padding:6px 12px; border-radius:4px; }
-    .pstake-card { background:linear-gradient(#0a090f,#14121f); padding:40px 16px 20px; border-radius:2px; overflow:hidden; }
-    .pstake-card h4, .pstake-card .h { display:block; text-align:center; font-weight:600; font-size:16px; margin-bottom:6px; }
-    .pstake-card .p { display:block; text-align:center; color:#9ca3af; font-size:13px; max-width:300px; margin:0 auto 20px; }
-    .laptop { width:100%; border-radius:12px; overflow:hidden; border:1px solid #4d4e54; background:#08080c; aspect-ratio:737/466; }
-    .laptop img { width:100%; height:100%; object-fit:cover; display:block; }
-    .edu { padding:16px 0; border-bottom:1px solid var(--line); }
-    .edu h3 { font-size:15px; }
-    .edu .meta { color:var(--muted); font-size:13px; }
-    .skill-grid { display:grid; grid-template-columns:1fr 1fr; gap:8px 32px; padding:12px 0 20px; }
-    .skill-col h3 { font-size:12px; letter-spacing:.08em; color:#888; margin-bottom:8px; }
-    .skill-col li { list-style:none; padding:4px 0; font-size:14px; }
-    .drawer { position:fixed; top:0; right:0; height:100%; height:100dvh; visibility:hidden; z-index:40; width:var(--drawer-w); min-width:320px; box-shadow:-24px 0 60px rgba(0,0,0,.5); background:#141414; border-left:1px solid var(--line); overflow-y:auto; transform:translateX(100%); transition:transform .3s ease, visibility 0s .3s; overscroll-behavior:contain; }
-    .drawer.open { transform:translateX(0); visibility:visible; transition:transform .3s ease, visibility 0s; }
-    .drawer-head { position:sticky; top:0; background:#141414; z-index:2; display:flex; justify-content:space-between; gap:16px; padding:22px 24px; border-bottom:1px solid var(--line); }
-    .drawer-head h2 { font-size:20px; font-weight:600; }
-    .drawer-head .sub { color:var(--muted); font-size:14px; margin-top:2px; }
-    .close { color:#9a9a9a; width:44px; height:44px; margin:-10px -10px 0 0; display:grid; place-items:center; border-radius:8px; flex:none; }
-    .close:hover { color:#fff; }
-    .drawer-body { padding:28px 24px 48px; display:flex; flex-direction:column; gap:28px; }
-    .meta-line { color:#8a8a8a; font-size:14px; }
-    .drawer-body h3 { font-size:12px; letter-spacing:.08em; text-transform:uppercase; color:#a39d97; margin-bottom:10px; }
-    .drawer-body p, .drawer-body li { font-size:15px; color:#e8e8e8; }
-    .drawer-body ul, .drawer-body ol { padding-left:18px; display:flex; flex-direction:column; gap:8px; }
-    .shot { width:100%; height:auto; border-radius:4px; display:block; background:#0d0d0d; }
-    .shot-row { display:flex; justify-content:center; }
-    .shot-row img { max-width:280px; width:100%; border-radius:4px; }
-    .long-study { width:100%; height:auto; border-radius:4px; display:block; background:#0a0a0d; }
-    .drawer-body .seam { border-radius:0; }
-    .drawer-body .seam + .seam { margin-top:-28px; }
-    .drawer-body .seam:first-child { border-radius:4px 4px 0 0; }
-    .drawer-body .seam:last-child { border-radius:0 0 4px 4px; }
-    .scrim { position:fixed; inset:0; background:rgba(0,0,0,.4); z-index:30; opacity:0; pointer-events:none; transition:opacity .3s ease; }
-    .scrim.on { opacity:1; pointer-events:auto; }
-    @media (prefers-reduced-motion:reduce) { *, *::before, *::after { transition-duration:.01ms !important; scroll-behavior:auto !important; } }
-    @media (max-width:900px) { :root { --drawer-w:100vw; } .drawer { width:100%; min-width:0; } .scrim { background:rgba(0,0,0,.5); } .job { flex-direction:column; } }
-    @media (max-width:600px) { .header { flex-wrap:wrap; } .socials { flex-basis:100%; justify-content:flex-start; padding-left:78px; margin:0 0 0 0; } }
+    /* ---------- Actuity tokens (from DESIGN_actuity.md) ---------- */
+    :root {
+      --font-sans: "Geist", system-ui, -apple-system, "Segoe UI", sans-serif;
+      --font-mono: "JetBrains Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+
+      --bg: #ffffff;        --bg-1: #fafafa;      --bg-3: #f2f2f3;
+      --surface: #ffffff;   --surface-2: #fafafa; --elevated: #ffffff;
+      --line: #ebebed;      --line-1: #e1e1e4;    --line-strong: #c9c9ce;
+      --fg: #0b0b0c;        --fg-1: #1f1f22;      --fg-2: #45454a;
+      --muted: #6e6e75;     --muted-2: #9a9aa0;   --muted-3: #c6c6c9;
+      --accent: #0b0b0c;    --accent-2: #2c2c30;  --accent-ink: #ffffff;
+      --accent-soft: #0b0b0c0f;
+      --danger: #b42318;
+      --dot: #e1e1e4;
+
+      --r-md: 2px;
+      --shadow-md: 0 12px 28px -12px #0a0a0c29;
+      --ease-out: cubic-bezier(.2, .7, .2, 1);
+      --ease-in-out: cubic-bezier(.65, 0, .35, 1);
+
+      --s-xs: 4px; --s-sm: 8px; --s-md: 12px; --s-lg: 16px; --s-xl: 20px;
+      --s-2xl: 24px; --s-3xl: 32px; --s-4xl: 56px; --s-5xl: 92px;
+      --drawer-w: 60vw;
+    }
+    [data-theme="dark"] {
+      --bg: #0b0b0c;        --bg-1: #101012;      --bg-3: #1f1f22;
+      --surface: #101012;   --surface-2: #1f1f22; --elevated: #1f1f22;
+      --line: #232327;      --line-1: #2c2c30;    --line-strong: #45454a;
+      --fg: #fafafa;        --fg-1: #f2f2f3;      --fg-2: #c9c9ce;
+      --muted: #9a9aa0;     --muted-2: #6e6e75;   --muted-3: #45454a;
+      --accent: #ffffff;    --accent-2: #ebebed;  --accent-ink: #0b0b0c;
+      --accent-soft: #ffffff0f;
+      --danger: #f97066;
+      --dot: #232327;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { color-scheme: light; scroll-behavior: smooth; scrollbar-gutter: stable; -webkit-text-size-adjust: 100%; }
+    html[data-theme="dark"] { color-scheme: dark; }
+    .sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+    h1, h2, h3, .tagline { text-wrap: balance; }
+    .bio p, .desc, .meta { text-wrap: pretty; }
+    body {
+      background-color: var(--bg);
+      background-image: radial-gradient(circle, var(--dot) 0.75px, transparent 0.75px);
+      background-size: 24px 24px;
+      background-position: 12px 12px;
+      background-attachment: fixed;
+      color: var(--fg);
+      font-family: var(--font-sans);
+      font-size: 16px; line-height: 24px;
+      -webkit-font-smoothing: antialiased;
+      min-height: 100vh;
+      transition: background-color .2s var(--ease-out), color .2s var(--ease-out);
+    }
+    body.panel-open { overflow: hidden; }
+    a { color: inherit; text-decoration: none; }
+    button { font: inherit; color: inherit; background: none; border: 0; cursor: pointer; }
+    ul { list-style: none; }
+    :focus-visible { outline: 2px solid var(--fg); outline-offset: 3px; border-radius: var(--r-md); }
+
+    .skip { position: absolute; left: 16px; top: -64px; z-index: 100; background: var(--accent); color: var(--accent-ink);
+      padding: 10px 16px; border-radius: var(--r-md); font-size: 13px; font-weight: 500; }
+    .skip:focus { top: 16px; }
+
+    /* ---------- Layout ---------- */
+    .page { position: relative; }
+    .col { max-width: 720px; margin: 0 auto; padding: 0 var(--s-2xl); }
+
+    /* Top bar + theme toggle */
+    .topbar { display: flex; justify-content: flex-end; padding: var(--s-lg) 0; }
+    .toggle { display: inline-flex; align-items: center; gap: var(--s-sm); min-height: 32px; padding: 0 2px; }
+    .toggle-label { font-family: var(--font-mono); font-size: 10px; line-height: 15px; letter-spacing: .04em; color: var(--muted); text-transform: uppercase; }
+    .track { position: relative; width: 30px; height: 16px; border-radius: var(--r-md); background: var(--bg-3);
+      border: 1px solid var(--line-strong); transition: background-color .2s var(--ease-out), border-color .2s var(--ease-out); }
+    .knob { position: absolute; top: 2px; left: 2px; width: 10px; height: 10px; border-radius: var(--r-md); background: var(--fg);
+      transition: transform .2s var(--ease-out), background-color .2s var(--ease-out); }
+    .toggle[aria-pressed="true"] .track { background: var(--accent); border-color: var(--accent); }
+    .toggle[aria-pressed="true"] .knob { transform: translateX(14px); background: var(--accent-ink); }
+    .toggle:hover .toggle-label { color: var(--fg); }
+
+    /* Header */
+    .header { display: flex; align-items: flex-end; gap: var(--s-2xl); padding-top: var(--s-3xl); }
+    .header-text { flex: 1; min-width: 0; }
+    .avatar { width: 96px; height: 96px; border-radius: 50%; object-fit: cover; background: var(--bg-3); border: 2px solid #ffffff; flex: none; }
+    .name { font-size: 28px; line-height: 28.56px; font-weight: 700; letter-spacing: -0.84px; }
+    .tagline { margin-top: var(--s-sm); font-size: 16px; line-height: 26.4px; color: var(--muted); max-width: 400px; }
+    .social { display: flex; gap: var(--s-xs); margin: 0 -6px 0 auto; flex: none; }
+    .nav-link { display: inline-flex; align-items: center; min-height: 32px; min-width: 32px; justify-content: center; font-family: var(--font-mono); font-size: 15px; line-height: 15px; color: var(--fg-1); padding: 0 6px; border-bottom: 1px solid transparent; transition: border-color .15s var(--ease-out), color .15s; }
+    .nav-link:hover { color: var(--fg); border-bottom-color: var(--fg); }
+
+    .bio { margin-top: var(--s-3xl); display: flex; flex-direction: column; gap: var(--s-lg); font-size: 16px; line-height: 26.4px; color: var(--fg-2); }
+
+    .tags { margin-top: var(--s-3xl); display: flex; flex-wrap: wrap; gap: var(--s-sm); }
+    .tag { font-family: var(--font-mono); font-size: 11px; line-height: 16.5px; padding: 4px 8px; border: 1px solid var(--line-1); border-radius: var(--r-md); background: var(--bg); color: var(--fg-1); }
+
+    .sections { margin-top: var(--s-3xl); display: flex; flex-direction: column; gap: 0; }
+
+    /* Section header (accordion) */
+    .sec-title { font-size: inherit; font-weight: inherit; line-height: inherit; }
+    .sec-head { width: 100%; display: flex; align-items: center; justify-content: space-between; text-align: left;
+      padding: var(--s-lg) 0; border-top: 1px solid var(--line-strong); border-top-color: color-mix(in srgb, var(--line-strong) 40%, transparent); font-size: 16px; line-height: 24px; font-weight: 500; letter-spacing: 0; }
+    .sec-head:hover { color: var(--fg); }
+    .chev { flex: none; color: var(--muted); transition: transform .25s var(--ease-in-out), color .15s; }
+    .sec-head:hover .chev { color: var(--fg); }
+    .sec:not(.open) .chev { transform: rotate(180deg); }
+    .sec-body { display: none; padding: var(--s-xs) 0 var(--s-2xl); }
+    .sec.open .sec-body { display: block; }
+
+    /* Eyebrow */
+    .eyebrow { font-family: var(--font-mono); font-size: 11px; line-height: 16.5px; letter-spacing: .04em; text-transform: uppercase; color: var(--fg-1); }
+    .eyebrow b { font-weight: 400; color: var(--muted); margin-right: var(--s-xs); }
+
+    /* Projects */
+    .projects { display: flex; flex-direction: column; gap: var(--s-4xl); }
+    .project h3 { font-size: 24px; line-height: 26.4px; font-weight: 800; letter-spacing: -0.6px; }
+    .project .desc { margin-top: var(--s-xs); font-size: 16px; line-height: 24px; color: var(--muted); }
+    .slot { position: relative; display: block; width: 100%; aspect-ratio: 2 / 1; margin-top: var(--s-lg); overflow: hidden;
+      border: 1px solid var(--line); border-radius: var(--r-md); background: var(--bg-3); text-align: left;
+      transition: border-color .15s var(--ease-out), box-shadow .25s var(--ease-out); }
+    .slot img { width: 100%; height: 100%; object-fit: cover; object-position: top center; display: block; transition: transform .5s var(--ease-out); }
+    .slot:hover { border-color: var(--line-strong); box-shadow: var(--shadow-md); }
+    .slot:hover img { transform: scale(1.015); }
+    .slot-tag { position: absolute; right: var(--s-md); bottom: var(--s-md); font-family: var(--font-mono); font-size: 11px; line-height: 16.5px; letter-spacing: .04em;
+      text-transform: uppercase; padding: 4px 8px; border-radius: var(--r-md); background: var(--accent); color: var(--accent-ink);
+      opacity: 0; transform: translateY(4px); transition: opacity .15s var(--ease-out), transform .15s var(--ease-out); }
+    .slot:hover .slot-tag, .slot:focus-visible .slot-tag { opacity: 1; transform: none; }
+
+    @media (hover: none) { .slot-tag { opacity: 1; transform: none; } }
+
+    /* Experience / Education */
+    .row { display: flex; align-items: center; justify-content: space-between; gap: var(--s-lg); padding: var(--s-lg) 0; border-bottom: 1px solid var(--line); }
+    .row:first-child { padding-top: 0; }
+    .row:last-child, .edu:last-child { border-bottom: 0; }
+    .row-left { display: flex; align-items: center; gap: var(--s-md); min-width: 0; }
+    .badge { width: 36px; height: 36px; flex: none; display: grid; place-items: center; border: 1px solid var(--line-1); border-radius: var(--r-md);
+      background: var(--bg-3); font-family: var(--font-mono); font-size: 11px; color: var(--fg-1); }
+    .row h3 { font-size: 16px; line-height: 26.4px; font-weight: 500; }
+    .meta { font-size: 13px; line-height: 19.5px; color: var(--muted); }
+    .dates { font-size: 13px; line-height: 19.5px; color: var(--muted); white-space: nowrap; }
+    .edu { padding: var(--s-lg) 0; border-bottom: 1px solid var(--line); }
+    .edu:first-child { padding-top: 0; }
+    .edu h3 { font-size: 16px; line-height: 26.4px; font-weight: 500; }
+
+    /* Skills */
+    .skills { display: grid; grid-template-columns: 1fr 1fr; gap: var(--s-3xl); }
+    .skills ul { margin-top: var(--s-md); display: flex; flex-direction: column; gap: var(--s-md); }
+    .skills li { font-size: 16px; line-height: 24px; color: var(--fg-2); }
+
+    .footer { margin-top: var(--s-4xl); padding: var(--s-2xl) 0 60px; display: flex; justify-content: center; }
+
+    /* ---------- Case study panel ---------- */
+    .scrim { position: fixed; inset: 0; z-index: 30; background: rgba(10,10,12,.4); opacity: 0; pointer-events: none; transition: opacity .3s var(--ease-out); }
+    .scrim.on { opacity: 1; pointer-events: auto; }
+    .drawer { position: fixed; top: 0; right: 0; z-index: 40; height: 100vh; height: 100dvh; width: var(--drawer-w); min-width: 320px; overflow-y: auto; overscroll-behavior: contain;
+      background: var(--surface); border-left: 1px solid var(--line-strong); box-shadow: -24px 0 60px -24px rgba(10,10,12,.35);
+      visibility: hidden; transform: translateX(100%); transition: transform .3s var(--ease-in-out), visibility 0s .3s; }
+    .drawer.open { visibility: visible; transform: none; transition: transform .3s var(--ease-in-out), visibility 0s; }
+    .drawer-head { position: sticky; top: 0; z-index: 2; display: flex; justify-content: space-between; align-items: flex-start; gap: var(--s-lg);
+      padding: var(--s-xl) var(--s-2xl); background: var(--surface); border-bottom: 1px solid var(--line); }
+    .drawer-head h2 { font-size: 24px; line-height: 26.4px; font-weight: 800; letter-spacing: -0.6px; }
+    .drawer-head .sub { margin-top: var(--s-xs); font-size: 13px; line-height: 19.5px; color: var(--muted); }
+    .close { width: 44px; height: 44px; margin: -8px -10px 0 0; display: grid; place-items: center; flex: none; color: var(--muted); border-radius: var(--r-md); }
+    .close:hover { color: var(--fg); background: var(--bg-3); }
+    .drawer-body { padding: var(--s-2xl); }
+    .drawer-body img { display: block; width: 100%; height: auto; background: var(--bg-3); }
+    .drawer-body img + img { margin-top: -1px; }
+    .drawer-body img:first-child { border-radius: var(--r-md) var(--r-md) 0 0; }
+    .drawer-body img:last-child { border-radius: 0 0 var(--r-md) var(--r-md); }
+    .drawer-body img:only-child { border-radius: var(--r-md); }
+
+    @media (max-width: 900px) { :root { --drawer-w: 100vw; } .drawer { min-width: 0; } }
+    @media (max-width: 640px) {
+      .col { padding: 0 var(--s-lg); }
+      .header { align-items: flex-start; flex-direction: column; gap: var(--s-lg); }
+      .header { flex-wrap: wrap; }
+      .social { margin: 0 0 0 -6px; flex-basis: 100%; }
+      .row { flex-direction: column; align-items: flex-start; gap: var(--s-sm); }
+      .skills { grid-template-columns: 1fr; }
+    }
+    @media print { body { background: #fff; color: #000; } .topbar, .skip, .scrim, .drawer, .slot-tag { display: none !important; } .sec-body { display: block !important; } .slot { break-inside: avoid; } .sec-head .chev { display: none; } }
+    @media (prefers-reduced-motion: reduce) { *, *::before, *::after { transition-duration: .01ms !important; scroll-behavior: auto !important; } }
   </style>
 </head>
 <body>
   <a class="skip" href="#main">Skip to content</a>
-  <canvas id="starfield" class="stars" aria-hidden="true"></canvas>
   <div class="page">
-    <main class="main" id="main">
-      <div class="wrap">
+    <main id="main" class="main">
+      <div class="col">
+        <div class="topbar">
+          <button class="toggle" type="button" id="theme" aria-pressed="false" aria-label="Switch to dark mode">
+            <span class="toggle-label" id="theme-label">Dark mode</span>
+            <span class="track" aria-hidden="true"><span class="knob"></span></span>
+          </button>
+        </div>
+
         <header class="header">
-          <img class="avatar" width="72" height="72" fetchpriority="high" decoding="async" alt="Sudheer Darla" src="https://puppy-micro-41275756.figma.site/assets/Avatar_sudheer-CEEz89PL.jpg" />
+          <img class="avatar" width="96" height="96" fetchpriority="high" decoding="async" alt="Portrait of Sudheer Darla" src="img/avatar-sudheer.jpg">
           <div class="header-text">
             <h1 class="name">Sudheer Darla</h1>
             <p class="tagline">Product Designer · 7+ years · 0–1 Fintech/SaaS · Complex and high-stakes flows.</p>
           </div>
-          <div class="socials">
-            <a href="https://x.com/sudheerdarla_" aria-label="Sudheer on X (opens in a new tab)" target="_blank" rel="noopener"><svg viewBox="1.5 2 21.5 20" aria-hidden="true" focusable="false"><path d="M18.9 2H22l-6.8 7.8L23 22h-6.4l-5-6.6L6 22H3l7.3-8.4L1.5 2H8l4.5 6L18.9 2zm-1.1 18h1.8L6.3 3.9H4.4L17.8 20z"/></svg></a>
-            <a href="https://www.linkedin.com/in/sudheer-darla-a9496956/" aria-label="Sudheer on LinkedIn (opens in a new tab)" target="_blank" rel="noopener"><svg viewBox="3.5 3.5 17.5 17.5" aria-hidden="true" focusable="false"><path d="M4.98 3.5A2.5 2.5 0 1 1 5 8.5a2.5 2.5 0 0 1 0-5zM3.5 9h3V21h-3zM9 9h2.9v1.6h.1c.4-.8 1.5-1.7 3.1-1.7 3.3 0 3.9 2.2 3.9 5V21h-3v-5.3c0-1.3 0-3-1.8-3s-2.1 1.4-2.1 2.9V21H9z"/></svg></a>
-          </div>
+          <nav class="social" aria-label="Social links">
+            <a class="nav-link" href="https://www.linkedin.com/in/sudheer-darla-a9496956/" target="_blank" rel="noopener">LinkedIn<span class="sr"> (opens in a new tab)</span></a>
+            <a class="nav-link" href="https://x.com/sudheerdarla_" target="_blank" rel="noopener">X<span class="sr"> (opens in a new tab)</span></a>
+          </nav>
         </header>
-        <section class="about">
-          <p>A Product Designer based in Hyderabad. I solve and design core flows, interfaces, and the systems under them, from how a product is structured to how it feels in use. Most of my work sits in fintech, Web3, and operational SaaS.</p>
-          <p>I took complex money products from idea to shipped UI. Commodity trading, then a staking wallet that held $20–30M AUM. And I'm coming back to product design with a focus on trust-heavy, multi-step flows that people actually depend on.</p>
+
+        <section class="bio" aria-label="About">
+          <p>Product designer with 7+ years of experience taking fintech, Web3 and SaaS products from zero to one. I design the core flows, interfaces and systems behind them, from how a product is structured to how it feels in use.</p>
+          <p>I’ve shipped a commodity trading platform, a private equity fund workspace, and a liquid staking product that held $20–30M in assets under management. My focus is trust-heavy, multi-step products where clarity of state, cost and risk matters most.</p>
         </section>
-        <ul class="chips" aria-label="Core skills"><li class="chip">Product Design</li><li class="chip">Figma</li><li class="chip">Rapid Prototyping</li><li class="chip">User Experience Design</li></ul>
-        <section class="acc open" data-acc>
-          <h2 class="acc-title"><button class="acc-head" type="button" id="h-projects" aria-expanded="true" aria-controls="p-projects">Projects <svg class="chev" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 15l6-6 6 6"/></svg></button></h2>
-          <div class="acc-body" id="p-projects" role="region" aria-labelledby="h-projects">
-            <article class="project">
-              <div><h3>pSTAKE Finance</h3><p class="sub">Web3 staking platform</p></div>
-              <button class="card-btn" type="button" data-open="pstake" aria-haspopup="dialog" aria-label="View case study: pSTAKE Finance">
-                <span class="thumb-frame" style="display:block"><img alt="pSTAKE staking dashboard with network and unstaking method selectors" width="1440" height="1024" decoding="async" src="img/pstake-thumb.jpg?v=3"></span>
-                <span class="hover-label" aria-hidden="true"><span>View case study</span></span>
-              </button>
-            </article>
-            <article class="project">
-              <div><h3>Comdex</h3><p class="sub">Commodity Trading platform</p></div>
-              <button class="card-btn" type="button" data-open="comdex" aria-haspopup="dialog" aria-label="View case study: Comdex">
-                <span class="thumb-frame" style="display:block"><img alt="Comdex commodity trading dashboard" width="1600" height="971" loading="lazy" decoding="async" src="img/comdex-thumb.jpg"></span>
-                <span class="hover-label" aria-hidden="true"><span>View case study</span></span>
-              </button>
-            </article>
-            <article class="project">
-              <div><h3>CAPTL</h3><p class="sub">Investor portfolio platform</p></div>
-              <button class="card-btn" type="button" data-open="captl" aria-haspopup="dialog" aria-label="View case study: CAPTL">
-                <span class="thumb-frame" style="display:block"><img alt="CAPTL investor portfolio screens" width="1440" height="1024" loading="lazy" decoding="async" src="img/captl-thumb.jpg"></span>
-                <span class="hover-label" aria-hidden="true"><span>View case study</span></span>
-              </button>
-            </article>
-          </div>
-        </section>
-        <section class="acc" data-acc>
-          <h2 class="acc-title"><button class="acc-head" type="button" id="h-experience" aria-expanded="false" aria-controls="p-experience">Experience <svg class="chev" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 15l6-6 6 6"/></svg></button></h2>
-          <div class="acc-body" id="p-experience" role="region" aria-labelledby="h-experience">
-            <div class="job"><div class="job-left"><div class="logo" aria-hidden="true">IV</div><div><h3>Independent ventures — Hyderabad</h3><div class="role">Founder</div></div></div><div class="dates">2023 – 2026</div></div>
-            <div class="job"><div class="job-left"><div class="logo" aria-hidden="true">HC</div><div><h3>Hive Consultancy Services — Bengaluru</h3><div class="role">Product Designer</div></div></div><div class="dates">Apr 2023 – Aug 2023</div></div>
-            <div class="job"><div class="job-left"><div class="logo" aria-hidden="true">WL</div><div><h3>Wise Log Solutions - Dubai</h3><div class="role">UI/UX Designer</div></div></div><div class="dates">Jul 2022 – Mar 2023</div></div>
-            <div class="job"><div class="job-left"><div class="logo" aria-hidden="true">CM</div><div><h3>CMMT Technologies - Bengaluru</h3><div class="role">UI/UX Designer</div></div></div><div class="dates">Feb 2020 – Jun 2022</div></div>
-            <div class="job"><div class="job-left"><div class="logo" aria-hidden="true">CT</div><div><h3>Cosmic Tech Labs - Hyderabad</h3><div class="role">User Experience Designer</div></div></div><div class="dates">Jul 2018 – Oct 2019</div></div>
-          </div>
-        </section>
-        <section class="acc" data-acc>
-          <h2 class="acc-title"><button class="acc-head" type="button" id="h-education" aria-expanded="false" aria-controls="p-education">Education <svg class="chev" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 15l6-6 6 6"/></svg></button></h2>
-          <div class="acc-body" id="p-education" role="region" aria-labelledby="h-education">
-            <div class="edu"><h3>Mahatma Gandhi Institute of Technology, Hyderabad</h3><div class="meta">Bachelor of Technology, Computer Science</div><div class="meta">2013 – 2016</div></div>
-            <div class="edu"><h3>Polytechnic College, Kothagudem</h3><div class="meta">Diploma in Electrical and Electronics Engineering</div><div class="meta">2010 – 2013</div></div>
-          </div>
-        </section>
-        <section class="acc" data-acc>
-          <h2 class="acc-title"><button class="acc-head" type="button" id="h-skills" aria-expanded="false" aria-controls="p-skills">Skills <svg class="chev" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 15l6-6 6 6"/></svg></button></h2>
-          <div class="acc-body" id="p-skills" role="region" aria-labelledby="h-skills">
-            <div class="skill-grid">
-              <div class="skill-col"><h3>DESIGN</h3><ul><li>Product Design</li><li>Figma</li><li>Rapid Prototyping</li><li>Design Systems</li><li>User Experience Design (UED)</li><li>Illustrator</li></ul></div>
-              <div class="skill-col"><h3>ENGINEERING</h3><ul><li>HTML/CSS/JS/React JS</li><li>Python</li><li>Git</li></ul></div>
+
+        <ul class="tags" aria-label="Core skills">
+          <li class="tag">Product Design</li><li class="tag">Figma</li><li class="tag">Rapid Prototyping</li><li class="tag">User Experience Design</li><li class="tag">AI Driven</li>
+        </ul>
+
+        <div class="sections">
+          <section class="sec open" data-acc>
+            <h2 class="sec-title"><button class="sec-head" type="button" id="h-projects" aria-expanded="true" aria-controls="p-projects">Projects <svg class="chev" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M6 15l6-6 6 6"/></svg></button></h2>
+            <div class="sec-body" id="p-projects" role="region" aria-labelledby="h-projects">
+              <div class="projects">
+                <article class="project">
+                  <h3>pSTAKE Finance</h3>
+                  <p class="desc">Web3 staking platform</p>
+                  <button class="slot" type="button" data-open="pstake" aria-haspopup="dialog" aria-label="View case study: pSTAKE Finance">
+                    <img alt="pSTAKE staking dashboard with network and unstaking method selectors" width="1440" height="1024" decoding="async" src="img/pstake-thumb.jpg?v=3">
+                    <span class="slot-tag" aria-hidden="true">View case study</span>
+                  </button>
+                </article>
+                <article class="project">
+                  <h3>Comdex</h3>
+                  <p class="desc">Commodity Trading platform</p>
+                  <button class="slot" type="button" data-open="comdex" aria-haspopup="dialog" aria-label="View case study: Comdex">
+                    <img alt="Comdex commodity trading dashboard" width="1600" height="971" loading="lazy" decoding="async" src="img/comdex-thumb.jpg">
+                    <span class="slot-tag" aria-hidden="true">View case study</span>
+                  </button>
+                </article>
+                <article class="project">
+                  <h3>CAPTL</h3>
+                  <p class="desc">Investor portfolio platform</p>
+                  <button class="slot" type="button" data-open="captl" aria-haspopup="dialog" aria-label="View case study: CAPTL">
+                    <img alt="CAPTL investor portfolio screens" width="1440" height="1024" loading="lazy" decoding="async" src="img/captl-thumb.jpg">
+                    <span class="slot-tag" aria-hidden="true">View case study</span>
+                  </button>
+                </article>
+              </div>
             </div>
-          </div>
-        </section>
+          </section>
+
+          <section class="sec" data-acc>
+            <h2 class="sec-title"><button class="sec-head" type="button" id="h-experience" aria-expanded="false" aria-controls="p-experience">Experience <svg class="chev" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M6 15l6-6 6 6"/></svg></button></h2>
+            <div class="sec-body" id="p-experience" role="region" aria-labelledby="h-experience">
+              <div class="row"><div class="row-left"><div class="badge" aria-hidden="true">IV</div><div><h3>Independent ventures — Hyderabad</h3><div class="meta">Founder</div></div></div><div class="dates">2023 – 2026</div></div>
+              <div class="row"><div class="row-left"><div class="badge" aria-hidden="true">HC</div><div><h3>Hive Consultancy Services — Bengaluru</h3><div class="meta">Product Designer</div></div></div><div class="dates">Apr 2023 – Aug 2023</div></div>
+              <div class="row"><div class="row-left"><div class="badge" aria-hidden="true">WL</div><div><h3>Wise Log Solutions — Dubai</h3><div class="meta">UI/UX Designer</div></div></div><div class="dates">Jul 2022 – Mar 2023</div></div>
+              <div class="row"><div class="row-left"><div class="badge" aria-hidden="true">CM</div><div><h3>CMMT Technologies — Bengaluru</h3><div class="meta">UI/UX Designer</div></div></div><div class="dates">Feb 2020 – Jun 2022</div></div>
+              <div class="row"><div class="row-left"><div class="badge" aria-hidden="true">CT</div><div><h3>Cosmic Tech Labs — Hyderabad</h3><div class="meta">User Experience Designer</div></div></div><div class="dates">Jul 2018 – Oct 2019</div></div>
+            </div>
+          </section>
+
+          <section class="sec" data-acc>
+            <h2 class="sec-title"><button class="sec-head" type="button" id="h-education" aria-expanded="false" aria-controls="p-education">Education <svg class="chev" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M6 15l6-6 6 6"/></svg></button></h2>
+            <div class="sec-body" id="p-education" role="region" aria-labelledby="h-education">
+              <div class="edu"><h3>Mahatma Gandhi Institute of Technology, Hyderabad</h3><div class="meta">Bachelor of Technology, Computer Science</div><div class="meta">2013 – 2016</div></div>
+              <div class="edu"><h3>Polytechnic College, Kothagudem</h3><div class="meta">Diploma in Electrical and Electronics Engineering</div><div class="meta">2010 – 2013</div></div>
+            </div>
+          </section>
+
+          <section class="sec" data-acc>
+            <h2 class="sec-title"><button class="sec-head" type="button" id="h-skills" aria-expanded="false" aria-controls="p-skills">Skills <svg class="chev" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M6 15l6-6 6 6"/></svg></button></h2>
+            <div class="sec-body" id="p-skills" role="region" aria-labelledby="h-skills">
+              <div class="skills">
+                <div><h3 class="eyebrow"><b>01</b> Design</h3><ul><li>Product Design</li><li>Figma</li><li>Rapid Prototyping</li><li>Design Systems</li><li>User Experience Design (UED)</li><li>Illustrator</li></ul></div>
+                <div><h3 class="eyebrow"><b>02</b> Engineering</h3><ul><li>HTML/CSS/JS/React JS</li><li>Python</li><li>Git</li></ul></div>
+              </div>
+            </div>
+          </section>
+        </div>
+
+        <footer class="footer">
+          <a class="nav-link" href="mailto:sudheer.darla11@gmail.com">Say hi<span class="sr"> (opens your email app)</span></a>
+        </footer>
       </div>
     </main>
   </div>
+
   <div class="scrim" id="scrim"></div>
   <aside class="drawer" id="drawer" role="dialog" aria-modal="true" aria-labelledby="d-title" aria-hidden="true" tabindex="-1">
     <div class="drawer-head">
@@ -201,6 +326,6 @@
     </div>
     <div class="drawer-body" id="d-body"></div>
   </aside>
-  <script src="app.js?v=28" defer></script>
+    <script src="app.js" defer></script>
 </body>
 </html>
