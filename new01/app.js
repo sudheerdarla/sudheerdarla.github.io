@@ -48,7 +48,11 @@
     },
     comdex: {
       title: 'Comdex', sub: 'Commodity Trading platform',
-      html: '<img width="1312" height="8000" alt="Comdex case study: a global commodity trading platform, from research to handoff, covering the problem, process, key screens and outcomes" decoding="async" src="../img/comdex-case-study.jpg?v=2">'
+      html: slices('comdex-cs-', 3, [
+        'Comdex case study, part 1: the blockchain platform for global commodity trade, impact at a glance, the problem and the four-phase process',
+        'Comdex case study, part 2: the closed loop from sign-up to settlement and the key decisions on Comdex ID and KYC and the new sell order',
+        'Comdex case study, part 3: fiat deposit, the outcome of days of email becoming one session, next steps and learnings'
+      ], [[2304, 5576], [2304, 5147], [2304, 6090]])
     },
     captl: {
       title: 'CAPTL', sub: 'Investor portfolio platform',
