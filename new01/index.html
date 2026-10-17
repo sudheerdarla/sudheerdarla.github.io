@@ -107,7 +107,7 @@
     /* Header */
     .header { display: flex; align-items: flex-end; gap: var(--s-2xl); padding-top: var(--s-3xl); }
     .header-text { flex: 1; min-width: 0; }
-    .avatar { width: 96px; height: 96px; border-radius: 50%; object-fit: cover; background: var(--bg-3); border: 2px solid var(--muted-2); flex: none; }
+    .avatar { width: 96px; height: 96px; border-radius: 50%; object-fit: cover; background: var(--bg-3); border: 2px solid #ffffff; flex: none; }
     .name { font-size: 28px; line-height: 28.56px; font-weight: 700; letter-spacing: -0.84px; }
     .tagline { margin-top: var(--s-sm); font-size: 16px; line-height: 26.4px; color: var(--muted); max-width: 400px; }
     .social { display: flex; gap: var(--s-xl); margin-left: auto; flex: none; }
@@ -129,9 +129,6 @@
     .chev { flex: none; color: var(--muted); transition: transform .25s var(--ease-in-out), color .15s; }
     .sec-head:hover .chev { color: var(--fg); }
     .sec:not(.open) .chev { transform: rotate(180deg); }
-    /* No closing rule under the last item of Projects and Education. */
-    .sec.open.no-end + .sec .sec-head { border-top-color: transparent; }
-    .sec.no-end .edu:last-child { border-bottom: 0; }
     .sec-body { display: none; padding: var(--s-xs) 0 var(--s-2xl); }
     .sec.open .sec-body { display: block; }
 
@@ -240,7 +237,7 @@
         </ul>
 
         <div class="sections">
-          <section class="sec open no-end" data-acc>
+          <section class="sec open" data-acc>
             <h2 class="sec-title"><button class="sec-head" type="button" id="h-projects" aria-expanded="true" aria-controls="p-projects">Projects <svg class="chev" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M6 15l6-6 6 6"/></svg></button></h2>
             <div class="sec-body" id="p-projects" role="region" aria-labelledby="h-projects">
               <div class="projects">
@@ -283,7 +280,7 @@
             </div>
           </section>
 
-          <section class="sec no-end" data-acc>
+          <section class="sec" data-acc>
             <h2 class="sec-title"><button class="sec-head" type="button" id="h-education" aria-expanded="false" aria-controls="p-education">Education <svg class="chev" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M6 15l6-6 6 6"/></svg></button></h2>
             <div class="sec-body" id="p-education" role="region" aria-labelledby="h-education">
               <div class="edu"><h3>Mahatma Gandhi Institute of Technology, Hyderabad</h3><div class="meta">Bachelor of Technology, Computer Science</div><div class="meta">2013 – 2016</div></div>
