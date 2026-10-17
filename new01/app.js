@@ -5,7 +5,10 @@
   var toggle = document.getElementById('theme');
   function applyTheme(t, persist) {
     root.setAttribute('data-theme', t);
-    toggle.setAttribute('aria-checked', t === 'dark' ? 'true' : 'false');
+    toggle.setAttribute('aria-pressed', t === 'dark' ? 'true' : 'false');
+    /* The label names the mode you will switch to. */
+    document.getElementById('theme-label').textContent = t === 'dark' ? 'Light mode' : 'Dark mode';
+    toggle.setAttribute('aria-label', t === 'dark' ? 'Switch to light mode' : 'Switch to dark mode');
     if (persist) { try { localStorage.setItem('theme', t); } catch (e) {} }
   }
   applyTheme(root.getAttribute('data-theme') || 'light', false);
