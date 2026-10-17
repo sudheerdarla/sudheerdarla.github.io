@@ -99,7 +99,7 @@
 
     /* ---------- Layout ---------- */
     .page { position: relative; }
-    .col { max-width: 720px; margin: 0 auto; padding: 0 var(--s-2xl) var(--s-5xl); }
+    .col { max-width: 720px; margin: 0 auto; padding: 0 var(--s-2xl); }
 
     /* Top bar + theme toggle */
     .topbar { display: flex; justify-content: flex-end; padding: var(--s-lg) 0; }
@@ -180,7 +180,7 @@
     .skills ul { margin-top: var(--s-md); display: flex; flex-direction: column; gap: var(--s-md); }
     .skills li { font-size: 16px; line-height: 24px; color: var(--fg-2); }
 
-    .footer { margin-top: var(--s-4xl); padding-top: var(--s-2xl); display: flex; justify-content: center; border-top: 1px solid color-mix(in srgb, var(--line-strong) 40%, transparent); }
+    .footer { margin-top: var(--s-4xl); padding: var(--s-2xl) 0 60px; display: flex; justify-content: center; }
 
     /* ---------- Case study panel ---------- */
     .scrim { position: fixed; inset: 0; z-index: 30; background: rgba(10,10,12,.4); opacity: 0; pointer-events: none; transition: opacity .3s var(--ease-out); }
@@ -204,7 +204,7 @@
 
     @media (max-width: 900px) { :root { --drawer-w: 100vw; } .drawer { min-width: 0; } }
     @media (max-width: 640px) {
-      .col { padding: 0 var(--s-lg) var(--s-4xl); }
+      .col { padding: 0 var(--s-lg); }
       .header { align-items: flex-start; flex-direction: column; gap: var(--s-lg); }
       .header { flex-wrap: wrap; }
       .social { margin: 0 0 0 -6px; flex-basis: 100%; }
