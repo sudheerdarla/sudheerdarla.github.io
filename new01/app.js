@@ -40,11 +40,8 @@
   var studies = {
     pstake: {
       title: 'pSTAKE Finance', sub: 'Web3 staking platform',
-      html: slices('pstake-cs-', 3, [
-        'pSTAKE case study, part 1: staking people can actually read. Overview, scope, the problem holders faced and six moments where people got stuck',
-        'pSTAKE case study, part 2: the Network, Asset, State, Action mental model and the stake and unstake key decisions',
-        'pSTAKE case study, part 3: how a chain switch changes everything, learnings and closing'
-      ], [[2304, 8000], [2304, 7095], [2304, 4910]])
+      bleed: true,
+      html: window.PSTAKE_CS || ''
     },
     comdex: {
       title: 'Comdex', sub: 'Commodity Trading platform',
@@ -75,7 +72,9 @@
     if (!s) return;
     document.getElementById('d-title').textContent = s.title;
     document.getElementById('d-sub').textContent = s.sub;
-    document.getElementById('d-body').innerHTML = s.html;
+    var body = document.getElementById('d-body');
+    body.innerHTML = s.html;
+    body.classList.toggle('bleed', !!s.bleed);
     drawer.classList.add('open');
     drawer.setAttribute('aria-hidden', 'false');
     scrim.classList.add('on');
