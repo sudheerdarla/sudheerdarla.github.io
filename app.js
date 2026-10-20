@@ -40,27 +40,18 @@
   var studies = {
     pstake: {
       title: 'pSTAKE Finance', sub: 'Web3 staking platform',
-      html: slices('pstake-cs-', 3, [
-        'pSTAKE case study, part 1: staking people can actually read. Overview, scope, the problem holders faced and six moments where people got stuck',
-        'pSTAKE case study, part 2: the Network, Asset, State, Action mental model and the stake and unstake key decisions',
-        'pSTAKE case study, part 3: how a chain switch changes everything, learnings and closing'
-      ], [[2304, 8000], [2304, 7095], [2304, 4910]])
+      bleed: true,
+      html: window.PSTAKE_CS || ''
     },
     comdex: {
       title: 'Comdex', sub: 'Commodity Trading platform',
-      html: slices('comdex-cs-', 3, [
-        'Comdex case study, part 1: the blockchain platform for global commodity trade, impact at a glance, the problem and the four-phase process',
-        'Comdex case study, part 2: the closed loop from sign-up to settlement and the key decisions on Comdex ID and KYC and the new sell order',
-        'Comdex case study, part 3: fiat deposit, the outcome of days of email becoming one session, next steps and learnings'
-      ], [[2304, 5576], [2304, 5147], [2304, 6090]])
+      bleed: true,
+      html: window.COMDEX_CS || ''
     },
     captl: {
       title: 'CAPTL', sub: 'Investor portfolio platform',
-      html: slices('captl-cs-', 3, [
-        'CAPTL case study, part 1: Investor OS overview, the project, problem statements and four roles with four frictions',
-        'CAPTL case study, part 2: product timeline, user flows, what shipped and the first annotated key screens',
-        'CAPTL case study, part 3: annotated Add Fund, Fund Network and Fund Management screens, learnings and outcomes'
-      ], [[2304, 6409], [2304, 6987], [2304, 6122]])
+      bleed: true,
+      html: window.CAPTL_CS || ''
     }
   };
 
@@ -75,7 +66,9 @@
     if (!s) return;
     document.getElementById('d-title').textContent = s.title;
     document.getElementById('d-sub').textContent = s.sub;
-    document.getElementById('d-body').innerHTML = s.html;
+    var body = document.getElementById('d-body');
+    body.innerHTML = s.html;
+    body.classList.toggle('bleed', !!s.bleed);
     drawer.classList.add('open');
     drawer.setAttribute('aria-hidden', 'false');
     scrim.classList.add('on');
