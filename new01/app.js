@@ -45,19 +45,13 @@
     },
     comdex: {
       title: 'Comdex', sub: 'Commodity Trading platform',
-      html: slices('comdex-cs-', 3, [
-        'Comdex case study, part 1: the blockchain platform for global commodity trade, impact at a glance, the problem and the four-phase process',
-        'Comdex case study, part 2: the closed loop from sign-up to settlement and the key decisions on Comdex ID and KYC and the new sell order',
-        'Comdex case study, part 3: fiat deposit, the outcome of days of email becoming one session, next steps and learnings'
-      ], [[2304, 5576], [2304, 5147], [2304, 6090]])
+      bleed: true,
+      html: window.COMDEX_CS || ''
     },
     captl: {
       title: 'CAPTL', sub: 'Investor portfolio platform',
-      html: slices('captl-cs-', 3, [
-        'CAPTL case study, part 1: Investor OS overview, the project, problem statements and four roles with four frictions',
-        'CAPTL case study, part 2: product timeline, user flows, what shipped and the first annotated key screens',
-        'CAPTL case study, part 3: annotated Add Fund, Fund Network and Fund Management screens, learnings and outcomes'
-      ], [[2304, 6409], [2304, 6987], [2304, 6122]])
+      bleed: true,
+      html: window.CAPTL_CS || ''
     }
   };
 
