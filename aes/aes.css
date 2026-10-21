@@ -1,0 +1,37 @@
+/* /aes — background inspired by an engineering-grid hero: hairline lattice, dashed column guides, soft corner glows. */
+body { background-image: none; position: relative; }
+body::before, body::after { content: ""; position: fixed; inset: 0; pointer-events: none; z-index: -1; }
+
+/* Lattice + dashed guides */
+body::before {
+  --grid: rgba(11,11,12,.055);
+  --guide: rgba(11,11,12,.16);
+  background:
+    repeating-linear-gradient(to bottom, var(--guide) 0 4px, transparent 4px 9px) calc(50% - 360px) 0 / 1px 100% no-repeat,
+    repeating-linear-gradient(to bottom, var(--guide) 0 4px, transparent 4px 9px) calc(50% + 360px) 0 / 1px 100% no-repeat,
+    linear-gradient(to right, var(--grid) 1px, transparent 1px) 0 0 / 160px 160px,
+    linear-gradient(to bottom, var(--grid) 1px, transparent 1px) 0 0 / 160px 160px;
+  -webkit-mask-image: radial-gradient(120% 90% at 50% 0%, #000 35%, transparent 100%);
+          mask-image: radial-gradient(120% 90% at 50% 0%, #000 35%, transparent 100%);
+}
+/* Soft corner glows */
+body::after {
+  background:
+    radial-gradient(55% 45% at 0% 100%, rgba(224,130,40,.16), transparent 70%),
+    radial-gradient(45% 40% at 38% 108%, rgba(190,60,130,.10), transparent 70%),
+    radial-gradient(55% 45% at 100% 100%, rgba(40,130,200,.16), transparent 70%);
+}
+[data-theme="dark"] body { background-color: #09090a; }
+[data-theme="dark"] body::before { --grid: rgba(255,255,255,.045); --guide: rgba(255,255,255,.13); }
+[data-theme="dark"] body::after {
+  background:
+    radial-gradient(55% 45% at 0% 100%, rgba(200,100,20,.28), transparent 70%),
+    radial-gradient(45% 40% at 38% 108%, rgba(160,40,110,.22), transparent 70%),
+    radial-gradient(55% 45% at 100% 100%, rgba(30,110,170,.30), transparent 70%);
+}
+@media (max-width: 760px) {
+  body::before { background:
+    linear-gradient(to right, var(--grid) 1px, transparent 1px) 0 0 / 120px 120px,
+    linear-gradient(to bottom, var(--grid) 1px, transparent 1px) 0 0 / 120px 120px; }
+}
+@media print { body::before, body::after { display: none; } }
