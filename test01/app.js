@@ -6,7 +6,7 @@
   function applyTheme(t, persist) {
     root.setAttribute('data-theme', t);
     var meta = document.getElementById('theme-color');
-    if (meta) meta.setAttribute('content', t === 'dark' ? '#12100d' : '#f2ede3');
+    if (meta) meta.setAttribute('content', t === 'dark' ? '#0d1823' : '#e3eae2');
     toggle.setAttribute('aria-pressed', t === 'dark' ? 'true' : 'false');
     document.getElementById('theme-label').textContent = t === 'dark' ? 'Light' : 'Dark';
     toggle.setAttribute('aria-label', t === 'dark' ? 'Switch to light mode' : 'Switch to dark mode');
@@ -15,15 +15,14 @@
   applyTheme(root.getAttribute('data-theme') || 'light', false);
   toggle.addEventListener('click', function () { applyTheme(root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark', true); });
 
-  /* Reveal on scroll */
-  var rv = document.querySelectorAll('.rv');
-  var reduce = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
-  if ('IntersectionObserver' in window && !reduce) {
-    var io = new IntersectionObserver(function (es) {
-      es.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
-    }, { rootMargin: '0px 0px -8% 0px', threshold: 0.05 });
-    rv.forEach(function (el) { io.observe(el); });
-  } else { rv.forEach(function (el) { el.classList.add('in'); }); }
+  /* Work preview follows hover and focus (desktop) */
+  var prev = document.querySelectorAll('.pg-prev img');
+  function showPreview(key) { prev.forEach(function (im) { im.classList.toggle('on', im.getAttribute('data-p') === key); }); }
+  document.querySelectorAll('.pg-row').forEach(function (r) {
+    var k = r.getAttribute('data-p');
+    r.addEventListener('mouseenter', function () { showPreview(k); });
+    r.addEventListener('focus', function () { showPreview(k); });
+  });
 
   /* Case studies */
   var studies = {

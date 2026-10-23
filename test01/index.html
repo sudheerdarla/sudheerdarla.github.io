@@ -7,14 +7,15 @@
   <meta name="description" content="Product designer with 7+ years taking fintech, Web3 and SaaS products from zero to one.">
   <meta name="color-scheme" content="light dark">
   <meta name="robots" content="noindex">
-  <meta name="theme-color" content="#f2ede3" id="theme-color">
+  <meta name="theme-color" content="#e3eae2" id="theme-color">
   <link rel="icon" href="../favicon.ico" sizes="any">
   <link rel="icon" type="image/png" sizes="32x32" href="../favicon-32.png">
   <link rel="apple-touch-icon" href="../apple-touch-icon.png">
+  <link rel="preload" href="rosette.svg" as="image" type="image/svg+xml">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400&family=Instrument+Sans:wght@400;500;600&family=Instrument+Serif:ital@0;1&display=swap" media="print" onload="this.media='all'">
-  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400&family=Instrument+Sans:wght@400;500;600&family=Instrument+Serif:ital@0;1&display=swap"></noscript>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=Source+Serif+4:opsz,wght@8..60,400..600&display=swap" media="print" onload="this.media='all'">
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=Source+Serif+4:opsz,wght@8..60,400..600&display=swap"></noscript>
   <script>
     (function () {
       var t = null;
@@ -24,148 +25,143 @@
     })();
   </script>
   <style>
+    /* Cheque paper, pen-blue ink, security-print linework. */
     :root {
-      --font-serif: "Instrument Serif", "Iowan Old Style", Georgia, "Times New Roman", serif;
-      --font-sans: "Instrument Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
-      --font-mono: "DM Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
-      --bg: #f2ede3; --bg-2: #e9e3d6; --surface: #f8f5ee;
-      --fg: #17140f; --fg-2: #3d372d; --muted: #6f675a;
-      --line: #d6cfbf; --line-strong: #17140f;
-      --accent: #cf3f1d; --accent-ink: #fff;
+      --sans: "Archivo", "Helvetica Neue", Arial, sans-serif;
+      --serif: "Source Serif 4", "Iowan Old Style", Georgia, serif;
+      --font-sans: var(--sans);
+      --font-mono: ui-monospace, "SFMono-Regular", Menlo, monospace;
+      --paper: #e3eae2; --paper-2: #d4ded5; --surface: #eef3ec;
+      --ink: #0f1d2b; --ink-2: #33424f; --muted: #54656f;
+      --rule: rgba(15, 29, 43, .22); --rule-strong: #0f1d2b;
+      --pen: #1f3fd1;
+      --ros: rgba(52, 96, 76, .5);
       --ease: cubic-bezier(.2, .7, .2, 1);
-      --pad: clamp(20px, 5vw, 64px);
+      --gut: clamp(20px, 4.2vw, 56px);
     }
     [data-theme="dark"] {
-      --bg: #12100d; --bg-2: #1b1813; --surface: #1a1712;
-      --fg: #f1ebdf; --fg-2: #cfc7b6; --muted: #948b7a;
-      --line: #2c2820; --line-strong: #f1ebdf;
-      --accent: #ff6a45;
+      --paper: #0d1823; --paper-2: #16242f; --surface: #101d29;
+      --ink: #e6eee6; --ink-2: #bccac5; --muted: #93a39f;
+      --rule: rgba(230, 238, 230, .2); --rule-strong: #e6eee6;
+      --pen: #8fa4ff;
+      --ros: rgba(120, 178, 150, .42);
     }
     *, *::before, *::after { box-sizing: border-box; }
-    html { color-scheme: light; scroll-behavior: smooth; scroll-padding-top: 72px; -webkit-text-size-adjust: 100%; }
+    html { color-scheme: light; scroll-behavior: smooth; scroll-padding-top: 24px; -webkit-text-size-adjust: 100%; }
     html[data-theme="dark"] { color-scheme: dark; }
-    body { margin: 0; background: var(--bg); color: var(--fg); font: 400 17px/1.6 var(--font-sans); -webkit-font-smoothing: antialiased; transition: background-color .25s, color .25s; }
+    body { margin: 0; background: var(--paper); color: var(--ink); font: 400 18px/1.6 var(--serif); font-optical-sizing: auto; -webkit-font-smoothing: antialiased; transition: background-color .25s, color .25s; }
     h1, h2, h3, p, ul, ol, dl, dd, figure { margin: 0; padding: 0; }
     ul, ol { list-style: none; }
     img { display: block; max-width: 100%; }
+    button { font: inherit; color: inherit; background: none; border: 0; padding: 0; text-align: left; cursor: pointer; }
     a { color: inherit; }
-    button { font: inherit; color: inherit; background: none; border: 0; padding: 0; cursor: pointer; }
-    :focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
-    .sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
-    .skip { position: fixed; top: 8px; left: 8px; z-index: 100; padding: 10px 14px; background: var(--fg); color: var(--bg); transform: translateY(-200%); }
-    .skip:focus { transform: none; }
-    .w { max-width: 1240px; margin: 0 auto; padding: 0 var(--pad); }
-    .lbl { font: 400 12px/1.4 var(--font-mono); letter-spacing: .04em; text-transform: uppercase; color: var(--muted); }
+    :focus-visible { outline: 2px solid var(--pen); outline-offset: 3px; }
+    .pg-sr { position: absolute; left: 0; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+    .pg-skip { position: fixed; top: 8px; left: 8px; z-index: 100; padding: 10px 14px; background: var(--ink); color: var(--paper); font: 500 15px/1 var(--sans); transform: translateY(-200%); }
+    .pg-skip:focus { transform: none; }
+    .pg-in { max-width: 1240px; margin: 0 auto; padding-inline: var(--gut); }
+    .pg-ui { font-family: var(--sans); }
 
-    /* Header */
-    .bar { position: sticky; top: 0; z-index: 20; background: color-mix(in srgb, var(--bg) 88%, transparent); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border-bottom: 1px solid var(--line); }
-    .bar .w { display: flex; align-items: center; justify-content: space-between; gap: 16px; min-height: 64px; }
-    .mark { font: 400 22px/1 var(--font-serif); text-decoration: none; }
-    .nav { display: flex; align-items: center; gap: clamp(14px, 3vw, 32px); font-size: 14px; }
-    .nav a { text-decoration: none; padding: 10px 0; border-bottom: 1px solid transparent; transition: border-color .15s; }
-    .nav a:hover { border-bottom-color: var(--fg); }
-    .nav .hide-sm { display: inline; }
-    .toggle { display: inline-flex; align-items: center; gap: 8px; min-height: 40px; padding: 0 12px; border: 1px solid var(--line-strong); border-radius: 999px; font: 400 11px/1 var(--font-mono); letter-spacing: .04em; text-transform: uppercase; transition: background-color .15s, color .15s; }
-    .toggle:hover { background: var(--fg); color: var(--bg); }
-    .toggle .dot { width: 10px; height: 10px; border-radius: 50%; background: currentColor; }
-    [data-theme="dark"] .toggle .dot { background: none; border: 1.5px solid currentColor; }
+    /* Top bar */
+    .pg-bar { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding-block: 22px; font: 500 15px/1 var(--sans); }
+    .pg-bar nav { display: flex; align-items: center; gap: clamp(10px, 3vw, 36px); }
+    @media (max-width: 480px) { .pg-bar { font-size: 14px; } .pg-name { font-size: 15px; } }
+    .pg-bar a, .pg-bar button { padding: 10px 0; text-decoration: none; background: linear-gradient(currentColor, currentColor) 0 100% / 0 1px no-repeat; transition: background-size .2s var(--ease); }
+    .pg-bar a:hover, .pg-bar button:hover { background-size: 100% 1px; }
+    .pg-name { white-space: nowrap; font-weight: 700; font-stretch: 85%; font-size: 17px; letter-spacing: .005em; }
 
-    /* Hero */
-    .intro { padding-block: clamp(56px, 11vw, 140px) clamp(48px, 8vw, 96px); }
-    .intro h1 { font: 400 clamp(44px, 9.2vw, 132px)/.98 var(--font-serif); letter-spacing: -.02em; max-width: 13em; text-wrap: balance; }
-    .intro h1 em { color: var(--accent); }
-    .hero-grid { margin-top: clamp(40px, 7vw, 88px); display: grid; gap: 36px; grid-template-columns: 1fr; align-items: start; }
-    .who { display: flex; align-items: center; gap: 16px; }
-    .who img { width: 76px; height: 76px; border-radius: 50%; object-fit: cover; border: 1px solid var(--line-strong); }
-    .who b { display: block; font-weight: 500; font-size: 16px; }
-    .who span { display: block; font-size: 14px; color: var(--muted); }
-    .bio p { font-size: clamp(18px, 1.7vw, 21px); line-height: 1.55; color: var(--fg-2); max-width: 34em; text-wrap: pretty; }
-    .bio p + p { margin-top: 1em; }
-    .skilltags { margin-top: 26px; display: flex; flex-wrap: wrap; gap: 8px 22px; }
-    .skilltags li { font: 400 12px/1 var(--font-mono); letter-spacing: .04em; text-transform: uppercase; color: var(--muted); }
-    .skilltags li::before { content: "/ "; color: var(--accent); }
-    @media (min-width: 860px) { .hero-grid { grid-template-columns: 1fr 1.5fr; gap: 64px; } }
+    /* Lead */
+    .pg-lead { position: relative; overflow: hidden; }
+    .pg-lead-in { position: relative; z-index: 1; display: flex; flex-direction: column; justify-content: center; min-height: min(78vh, 780px); padding-block: clamp(40px, 8vw, 96px); }
+    .pg-lead h1 { font: 800 clamp(46px, 8.6vw, 132px)/.92 var(--sans); font-stretch: 66%; letter-spacing: -.012em; max-width: 8.2em; text-wrap: balance; }
+    .pg-lead p { margin-top: clamp(24px, 3.4vw, 40px); max-width: 27em; font-size: clamp(19px, 1.8vw, 23px); line-height: 1.5; color: var(--ink-2); }
+    .pg-lead a { color: var(--ink); text-underline-offset: 4px; text-decoration-color: var(--pen); text-decoration-thickness: 2px; }
+    .pg-ros { position: absolute; z-index: 0; right: calc(-1 * clamp(40px, 11vw, 190px)); top: 50%; width: min(64vw, 800px); aspect-ratio: 1; transform: translateY(-50%);
+      background: var(--ros); -webkit-mask: url(rosette.svg) center / contain no-repeat; mask: url(rosette.svg) center / contain no-repeat;
+      animation: pg-bloom 2.6s var(--ease) .1s both; pointer-events: none; }
+    @keyframes pg-bloom { from { clip-path: circle(0% at 50% 50%); } to { clip-path: circle(75% at 50% 50%); } }
+    @media (max-width: 780px) { .pg-ros { width: 120vw; right: -42vw; top: 28%; opacity: .7; } .pg-lead-in { min-height: 0; padding-top: 110px; } }
 
-    /* Facts */
-    .glance { border-block: 1px solid var(--line-strong); }
-    .glance ul { display: grid; grid-template-columns: repeat(3, 1fr); }
-    .glance li { padding: 22px 0; display: flex; flex-direction: column; gap: 4px; }
-    .glance li + li { padding-left: clamp(14px, 3vw, 40px); border-left: 1px solid var(--line); }
-    .glance strong { font: 400 clamp(30px, 5vw, 56px)/1 var(--font-serif); }
-    .glance span { font-size: 13px; color: var(--muted); }
-
-    /* Section heads */
-    .blk { padding-block: clamp(64px, 10vw, 130px) 0; }
-    .blk-head { display: flex; align-items: baseline; justify-content: space-between; gap: 16px; padding-bottom: 18px; border-bottom: 1px solid var(--line-strong); }
-    .blk-head h2 { font: 400 clamp(32px, 4.6vw, 56px)/1 var(--font-serif); letter-spacing: -.01em; }
+    /* Sections */
+    .pg-sec { padding-block: clamp(56px, 9vw, 120px) 0; }
+    .pg-h { font: 700 clamp(22px, 2.2vw, 28px)/1.1 var(--sans); font-stretch: 85%; letter-spacing: .005em; }
+    .pg-split { display: grid; gap: 24px 48px; }
+    @media (min-width: 900px) { .pg-split { grid-template-columns: minmax(150px, 2.2fr) 9fr; } }
 
     /* Work */
-    .work { display: block; }
-    .proj { display: grid; gap: 24px; padding: clamp(32px, 5vw, 56px) 0; border-bottom: 1px solid var(--line); align-items: center; }
-    .proj-text { display: flex; flex-direction: column; gap: 14px; }
-    .proj .n { font: 400 italic 20px/1 var(--font-serif); color: var(--accent); }
-    .proj h3 { font: 400 clamp(36px, 5.4vw, 72px)/1 var(--font-serif); letter-spacing: -.015em; }
-    .proj p { color: var(--fg-2); max-width: 26em; }
-    .proj .go { margin-top: 6px; align-self: flex-start; display: inline-flex; align-items: center; gap: 10px; font-weight: 500; font-size: 15px; padding-bottom: 4px; border-bottom: 1px solid var(--fg); }
-    .proj .go svg { transition: transform .2s var(--ease); }
-    .thumb { position: relative; display: block; width: 100%; border: 1px solid var(--line-strong); background: var(--bg-2); overflow: hidden; text-align: left; }
-    .thumb img { width: 100%; height: auto; transition: transform .6s var(--ease); }
-    .proj:hover .thumb img, .thumb:focus-visible img { transform: scale(1.03); }
-    .proj:hover .go svg, .thumb:focus-visible ~ * .go svg { transform: translate(3px, -3px); }
-    @media (min-width: 900px) {
-      .proj { grid-template-columns: 5fr 7fr; gap: clamp(32px, 6vw, 88px); }
-      .proj:nth-child(even) .proj-text { order: 2; }
+    .pg-work { margin-top: 28px; display: grid; gap: 28px 56px; align-items: start; }
+    .pg-prev { display: none; }
+    .pg-rows { border-bottom: 1px solid var(--rule-strong); }
+    .pg-row { display: grid; width: 100%; grid-template-columns: 1fr auto; gap: 6px 24px; padding: 26px 0; border-top: 1px solid var(--rule-strong); transition: opacity .2s; }
+    .pg-row-name { font: 800 clamp(30px, 4vw, 56px)/.98 var(--sans); font-stretch: 68%; letter-spacing: -.008em; }
+    .pg-row-fig { grid-row: span 2; text-align: right; font-family: var(--sans); font-variant-numeric: tabular-nums; }
+    .pg-row-fig b { display: block; font-weight: 700; font-stretch: 85%; font-size: clamp(22px, 2.4vw, 32px); line-height: 1.1; }
+    .pg-row-fig span { display: block; margin-top: 4px; font-size: 14px; line-height: 1.3; color: var(--muted); max-width: 11em; margin-left: auto; }
+    .pg-row-desc { color: var(--ink-2); font-size: 17px; line-height: 1.45; max-width: 30em; }
+    .pg-row-go { grid-column: 1 / -1; margin-top: 10px; width: max-content; font: 600 15px/1.3 var(--sans); color: var(--pen); text-decoration: underline; text-underline-offset: 4px; text-decoration-thickness: 1.5px; }
+    .pg-row-img { grid-column: 1 / -1; margin-top: 14px; width: 100%; height: auto; border: 1px solid var(--rule); }
+    @media (min-width: 940px) {
+      .pg-work { grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); }
+      .pg-prev { display: block; position: sticky; top: 24px; aspect-ratio: 1440 / 1024; border: 1px solid var(--rule-strong); background: var(--paper-2); overflow: hidden; }
+      .pg-prev img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; transition: opacity .35s var(--ease); }
+      .pg-prev img.on { opacity: 1; }
+      .pg-row-img { display: none; }
+      .pg-rows:hover .pg-row:not(:hover), .pg-rows:focus-within .pg-row:not(:focus-visible):not(:hover) { opacity: .5; }
     }
 
-    /* Experience & education */
-    .rows li { display: grid; grid-template-columns: 1fr; gap: 4px 24px; padding: 22px 0; border-bottom: 1px solid var(--line); }
-    .rows h3 { font: 400 clamp(22px, 2.6vw, 32px)/1.15 var(--font-serif); }
-    .rows .role { color: var(--fg-2); font-size: 15px; }
-    .rows .when { font: 400 12px/1.6 var(--font-mono); letter-spacing: .04em; text-transform: uppercase; color: var(--muted); }
-    @media (min-width: 760px) {
-      .rows li { grid-template-columns: 1.4fr 1fr 11em; align-items: baseline; }
-      .rows .when { text-align: right; }
+    /* Tables */
+    .pg-table { width: 100%; border-collapse: collapse; font-family: var(--sans); }
+    .pg-table th, .pg-table td { text-align: left; vertical-align: baseline; padding: 16px 16px 16px 0; border-top: 1px solid var(--rule); font-weight: 400; }
+    .pg-table tr:first-child td, .pg-table tbody tr:first-child th { border-top: 1px solid var(--rule-strong); }
+    .pg-table tbody tr:last-child td, .pg-table tbody tr:last-child th { border-bottom: 1px solid var(--rule); }
+    .pg-table .yrs { width: 9.5em; color: var(--muted); font-variant-numeric: tabular-nums; font-size: 15px; white-space: nowrap; }
+    .pg-table .co { font-weight: 600; font-size: 18px; }
+    .pg-table .role { color: var(--ink-2); font-size: 16px; }
+    @media (max-width: 640px) {
+      .pg-table, .pg-table tbody, .pg-table tr, .pg-table th, .pg-table td { display: block; }
+      .pg-table tr { padding: 16px 0 14px; border-top: 1px solid var(--rule); }
+      .pg-table tr:first-child { border-top-color: var(--rule-strong); }
+      .pg-table th, .pg-table td, .pg-table tbody tr:last-child td { padding: 0; border: 0; }
+      .pg-table tbody tr:last-child { border-bottom: 1px solid var(--rule); }
+      .pg-table .yrs { order: -1; width: auto; margin-bottom: 2px; }
+      .pg-table tr { display: flex; flex-direction: column; }
     }
-    .pair { display: grid; gap: clamp(40px, 6vw, 80px); }
-    @media (min-width: 900px) { .pair { grid-template-columns: 1fr 1fr; } }
-    .pair .blk-head h2 { font-size: clamp(28px, 3.4vw, 40px); }
-    .skills { margin-top: 8px; }
-    .skills h3 { margin-top: 26px; font: 400 12px/1 var(--font-mono); letter-spacing: .06em; text-transform: uppercase; color: var(--muted); }
-    .skills li { padding: 12px 0; border-bottom: 1px solid var(--line); font: 400 clamp(20px, 2.2vw, 26px)/1.2 var(--font-serif); }
 
-    /* Closing */
-    .close-sec { padding-block: clamp(80px, 13vw, 180px) clamp(40px, 6vw, 72px); }
-    .say { display: inline-block; font: 400 clamp(64px, 17vw, 240px)/.9 var(--font-serif); letter-spacing: -.03em; text-decoration: none; transition: color .2s; }
-    .say em { color: var(--accent); }
-    .say:hover { color: var(--accent); }
-    .foot { margin-top: clamp(40px, 7vw, 88px); padding-top: 20px; border-top: 1px solid var(--line-strong); display: flex; flex-wrap: wrap; gap: 12px 28px; justify-content: space-between; align-items: center; font-size: 14px; }
-    .foot nav { display: flex; gap: 24px; }
-    .foot a { text-decoration: none; border-bottom: 1px solid var(--line-strong); padding-bottom: 2px; }
-    .foot a:hover { color: var(--accent); border-color: var(--accent); }
+    /* About */
+    .pg-about { display: grid; gap: 28px 40px; }
+    .pg-about img { width: 132px; height: 132px; object-fit: cover; border-radius: 2px; border: 1px solid var(--rule-strong); }
+    .pg-about p { max-width: 33em; }
+    .pg-about p + p { margin-top: 1em; }
+    .pg-about-text { font-size: clamp(19px, 1.7vw, 21px); line-height: 1.65; }
+    .pg-skills { margin-top: 36px; display: grid; gap: 24px 40px; font-family: var(--sans); font-size: 16px; }
+    .pg-skills dt { font-weight: 700; font-stretch: 85%; font-size: 15px; margin-bottom: 8px; }
+    .pg-skills dd { color: var(--ink-2); line-height: 1.7; }
+    @media (min-width: 640px) { .pg-skills { grid-template-columns: 1fr 1fr; } .pg-about { grid-template-columns: auto 1fr; } }
 
-    /* Reveal */
-    .rv { opacity: 0; transform: translateY(14px); transition: opacity .7s var(--ease), transform .7s var(--ease); }
-    .rv.in { opacity: 1; transform: none; }
-    @media (prefers-reduced-motion: reduce) { .rv { opacity: 1; transform: none; transition: none; } html { scroll-behavior: auto; } .thumb img { transition: none; } }
-    .no-js .rv { opacity: 1; transform: none; }
+    /* Contact */
+    .pg-mail { display: block; margin-top: 20px; font: 800 clamp(20px, 5.2vw, 80px)/1.05 var(--sans); font-stretch: 68%; letter-spacing: -.01em; text-decoration: underline; text-decoration-color: var(--pen); text-decoration-thickness: .06em; text-underline-offset: .14em; overflow-wrap: anywhere; }
+    .pg-mail:hover { text-decoration-thickness: .11em; }
+    .pg-foot { margin-top: clamp(64px, 10vw, 128px); padding-block: 22px 40px; border-top: 1px solid var(--rule-strong); display: flex; flex-wrap: wrap; gap: 8px 32px; font: 500 15px/1.4 var(--sans); }
+    .pg-foot a { padding: 8px 0; text-underline-offset: 4px; }
+    .pg-foot span { margin-left: auto; color: var(--muted); padding: 8px 0; }
+    @media (max-width: 560px) { .pg-foot span { margin-left: 0; width: 100%; } }
 
     /* Case study panel */
-    .scrim { position: fixed; inset: 0; z-index: 30; background: rgba(10,8,5,.5); opacity: 0; pointer-events: none; transition: opacity .3s var(--ease); }
-    .scrim.on { opacity: 1; pointer-events: auto; }
-    .drawer { position: fixed; top: 0; right: 0; z-index: 40; height: 100vh; height: 100dvh; width: 60vw; min-width: 320px; overflow-y: auto; overscroll-behavior: contain;
-      background: var(--surface); border-left: 1px solid var(--line-strong); visibility: hidden; transform: translateX(100%); transition: transform .35s cubic-bezier(.65,0,.35,1), visibility 0s .35s; }
-    .drawer.open { visibility: visible; transform: none; transition: transform .35s cubic-bezier(.65,0,.35,1), visibility 0s; }
-    .drawer-head { position: sticky; top: 0; z-index: 2; display: flex; justify-content: space-between; align-items: center; gap: 16px; padding: 14px 24px; background: var(--surface); border-bottom: 1px solid var(--line); }
-    .drawer-head h2 { font: 400 28px/1 var(--font-serif); }
-    .drawer-head .sub { margin-top: 4px; font-size: 13px; color: var(--muted); }
-    .close { width: 44px; height: 44px; display: grid; place-items: center; flex: none; border: 1px solid var(--line-strong); border-radius: 50%; transition: background-color .15s, color .15s; }
-    .close:hover { background: var(--fg); color: var(--bg); }
-    .drawer-body { padding: 24px; }
-    .drawer-body img { display: block; width: 100%; height: auto; }
+    .pg-scrim { position: fixed; inset: 0; z-index: 30; background: rgba(8, 14, 20, .5); opacity: 0; pointer-events: none; transition: opacity .3s var(--ease); }
+    .pg-scrim.on { opacity: 1; pointer-events: auto; }
+    .pg-drawer { position: fixed; top: 0; right: 0; z-index: 40; height: 100vh; height: 100dvh; width: 60vw; min-width: 320px; overflow-y: auto; overscroll-behavior: contain;
+      background: var(--surface); border-left: 1px solid var(--rule-strong); visibility: hidden; transform: translateX(100%); transition: transform .35s cubic-bezier(.65, 0, .35, 1), visibility 0s .35s; }
+    .pg-drawer.open { visibility: visible; transform: none; transition: transform .35s cubic-bezier(.65, 0, .35, 1), visibility 0s; }
+    .pg-drawer-head { position: sticky; top: 0; z-index: 2; display: flex; justify-content: space-between; align-items: center; gap: 16px; padding: 14px 24px; background: var(--surface); border-bottom: 1px solid var(--rule); }
+    .pg-drawer-head h2 { font: 800 30px/1 var(--sans); font-stretch: 70%; }
+    .pg-drawer-head p { margin-top: 4px; font: 400 14px/1.3 var(--sans); color: var(--muted); }
+    .pg-close { width: 44px; height: 44px; display: grid; place-items: center; flex: none; border: 1px solid var(--rule-strong); border-radius: 2px; }
+    .pg-close:hover { background: var(--ink); color: var(--surface); }
+    .pg-drawer-body img { display: block; width: 100%; height: auto; }
     body.panel-open { overflow: hidden; }
-    @media (max-width: 900px) { .drawer { width: 100vw; min-width: 0; } }
-    @media (max-width: 560px) { .nav .hide-sm { display: none; } .toggle .t { display: none; } .toggle { padding: 0 11px; } }
-    @media print { .bar, .skip, .scrim, .drawer { display: none !important; } .rv { opacity: 1; transform: none; } }
+    @media (max-width: 900px) { .pg-drawer { width: 100vw; min-width: 0; } }
+    @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } .pg-ros { animation: none; } .pg-prev img, .pg-row, .pg-scrim, .pg-drawer { transition: none; } }
+    @media print { .pg-bar, .pg-skip, .pg-scrim, .pg-drawer, .pg-ros { display: none !important; } }
   </style>
   <link rel="stylesheet" href="pstake.css?v=2">
   <link rel="stylesheet" href="comdex.css?v=1">
@@ -173,138 +169,134 @@
   <link rel="stylesheet" href="refine.css?v=2">
 </head>
 <body>
-  <a class="skip" href="#main-content">Skip to content</a>
-
+  <a class="pg-skip" href="#content">Skip to content</a>
   <div id="main">
-    <header class="bar">
-      <div class="w">
-        <a class="mark" href="#top" aria-label="Sudheer Darla, back to top">Sudheer Darla</a>
-        <nav class="nav" aria-label="Primary">
-          <a href="#work">Work</a>
-          <a class="hide-sm" href="#experience">Experience</a>
-          <a class="hide-sm" href="#skills">Skills</a>
-          <a href="#hello">Say hi</a>
-          <button class="toggle" type="button" id="theme" aria-pressed="false" aria-label="Switch to dark mode">
-            <span class="dot" aria-hidden="true"></span><span class="t" id="theme-label">Dark</span>
-          </button>
-        </nav>
-      </div>
-    </header>
-
-    <main id="main-content">
-      <section class="intro w" id="top" aria-labelledby="h1">
-        <h1 id="h1" class="rv">Product designer for the flows people <em>trust</em> with their money.</h1>
-        <div class="hero-grid">
-          <div class="who rv">
-            <img width="76" height="76" fetchpriority="high" decoding="async" alt="Portrait of Sudheer Darla" src="../img/avatar-sudheer.jpg">
-            <div><b>Sudheer Darla</b><span>Product Designer · 7+ years</span></div>
-          </div>
-          <div class="bio rv">
-            <p>Product designer with 7+ years of experience taking fintech, Web3 and SaaS products from zero to one. I design the core flows, interfaces and systems behind them, from how a product is structured to how it feels in use.</p>
-            <p>I’ve shipped a commodity trading platform, a private equity fund workspace, and a liquid staking product that held $20–30M in assets under management. My focus is trust-heavy, multi-step products where clarity of state, cost and risk matters most.</p>
-            <ul class="skilltags" aria-label="Core skills"><li>Product Design</li><li>Figma</li><li>Rapid Prototyping</li><li>User Experience Design</li><li>AI Driven</li></ul>
-          </div>
-        </div>
-      </section>
-
-      <section class="glance" aria-label="At a glance">
-        <div class="w">
-          <ul>
-            <li><strong>7+</strong><span>years designing</span></li>
-            <li><strong>$20–30M</strong><span>assets held in pSTAKE</span></li>
-            <li><strong>3</strong><span>products shipped, 0 to 1</span></li>
-          </ul>
-        </div>
-      </section>
-
-      <section class="blk w" id="work" aria-labelledby="h-work">
-        <div class="blk-head"><h2 id="h-work">Selected work</h2><span class="lbl">03 case studies</span></div>
-        <div class="work">
-          <article class="proj rv">
-            <div class="proj-text">
-              <span class="n" aria-hidden="true">01</span>
-              <h3>pSTAKE Finance</h3>
-              <p>Web3 staking platform. A liquid staking wallet that held $20–30M AUM, designed as the only designer.</p>
-              <button class="go" type="button" data-open="pstake" aria-haspopup="dialog" aria-label="Read case study: pSTAKE Finance">Read case study <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M7 17L17 7M8 7h9v9"/></svg></button>
-            </div>
-            <button class="thumb" type="button" data-open="pstake" aria-haspopup="dialog" tabindex="-1" aria-hidden="true"><img alt="" width="1440" height="1024" decoding="async" src="../img/pstake-thumb.jpg?v=3"></button>
-          </article>
-          <article class="proj rv">
-            <div class="proj-text">
-              <span class="n" aria-hidden="true">02</span>
-              <h3>Comdex</h3>
-              <p>Commodity trading platform. One desktop product that takes a deal from discovery to settlement.</p>
-              <button class="go" type="button" data-open="comdex" aria-haspopup="dialog" aria-label="Read case study: Comdex">Read case study <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M7 17L17 7M8 7h9v9"/></svg></button>
-            </div>
-            <button class="thumb" type="button" data-open="comdex" aria-haspopup="dialog" tabindex="-1" aria-hidden="true"><img alt="" width="1600" height="971" loading="lazy" decoding="async" src="../img/comdex-thumb.jpg"></button>
-          </article>
-          <article class="proj rv">
-            <div class="proj-text">
-              <span class="n" aria-hidden="true">03</span>
-              <h3>CAPTL</h3>
-              <p>Investor portfolio platform. One workspace to stand up a fund, attach LPs and portfolio companies, and hand work to the people who owe it.</p>
-              <button class="go" type="button" data-open="captl" aria-haspopup="dialog" aria-label="Read case study: CAPTL">Read case study <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M7 17L17 7M8 7h9v9"/></svg></button>
-            </div>
-            <button class="thumb" type="button" data-open="captl" aria-haspopup="dialog" tabindex="-1" aria-hidden="true"><img alt="" width="1440" height="1024" loading="lazy" decoding="async" src="../img/captl-thumb.jpg"></button>
-          </article>
-        </div>
-      </section>
-
-      <section class="blk w" id="experience" aria-labelledby="h-exp">
-        <div class="blk-head"><h2 id="h-exp">Experience</h2><span class="lbl">2018 – 2026</span></div>
-        <ol class="rows">
-          <li class="rv"><h3>Independent ventures — Hyderabad</h3><span class="role">Founder</span><span class="when">2023 – 2026</span></li>
-          <li class="rv"><h3>Hive Consultancy Services — Bengaluru</h3><span class="role">Product Designer</span><span class="when">Apr 2023 – Aug 2023</span></li>
-          <li class="rv"><h3>Wise Log Solutions — Dubai</h3><span class="role">UI/UX Designer</span><span class="when">Jul 2022 – Mar 2023</span></li>
-          <li class="rv"><h3>CMMT Technologies — Bengaluru</h3><span class="role">UI/UX Designer</span><span class="when">Feb 2020 – Jun 2022</span></li>
-          <li class="rv"><h3>Cosmic Tech Labs — Hyderabad</h3><span class="role">User Experience Designer</span><span class="when">Jul 2018 – Oct 2019</span></li>
-        </ol>
-      </section>
-
-      <div class="blk w pair">
-        <section id="skills" aria-labelledby="h-skills">
-          <div class="blk-head"><h2 id="h-skills">Skills</h2></div>
-          <div class="skills">
-            <h3>Design</h3>
-            <ul><li>Product Design</li><li>Figma</li><li>Rapid Prototyping</li><li>Design Systems</li><li>User Experience Design (UED)</li><li>Illustrator</li></ul>
-            <h3>Engineering</h3>
-            <ul><li>HTML/CSS/JS/React JS</li><li>Python</li><li>Git</li></ul>
-          </div>
-        </section>
-        <section id="education" aria-labelledby="h-edu">
-          <div class="blk-head"><h2 id="h-edu">Education</h2></div>
-          <ol class="rows">
-            <li style="grid-template-columns:1fr"><h3>Mahatma Gandhi Institute of Technology, Hyderabad</h3><span class="role">Bachelor of Technology, Computer Science</span><span class="when" style="text-align:left">2013 – 2016</span></li>
-            <li style="grid-template-columns:1fr"><h3>Polytechnic College, Kothagudem</h3><span class="role">Diploma in Electrical and Electronics Engineering</span><span class="when" style="text-align:left">2010 – 2013</span></li>
-          </ol>
-        </section>
-      </div>
-
-      <section class="close-sec w" id="hello" aria-labelledby="h-hi">
-        <h2 id="h-hi" class="sr">Get in touch</h2>
-        <a class="say" href="mailto:sudheer.darla11@gmail.com">Say <em>hi.</em><span class="sr"> (opens your email app)</span></a>
-        <div class="foot">
-          <span class="lbl">Sudheer Darla · Product Designer</span>
-          <nav aria-label="Social links">
-            <a href="https://www.linkedin.com/in/sudheer-darla-a9496956/" target="_blank" rel="noopener">LinkedIn<span class="sr"> (opens in a new tab)</span></a>
-            <a href="https://x.com/sudheerdarla_" target="_blank" rel="noopener">X<span class="sr"> (opens in a new tab)</span></a>
+    <main id="content">
+      <div class="pg-lead">
+      <div class="pg-ros" aria-hidden="true"></div>
+      <div class="pg-in">
+        <header class="pg-bar">
+          <a class="pg-name" href="#top" aria-label="Sudheer Darla, top of page">Sudheer Darla</a>
+          <nav aria-label="Primary">
+            <a href="#work">Work</a>
+            <a href="#about">About</a>
+            <a href="#experience">Experience</a>
+            <a href="#contact">Contact</a>
+            <button type="button" id="theme" aria-pressed="false" aria-label="Switch to dark mode"><span id="theme-label">Dark</span></button>
           </nav>
+        </header>
+      </div>
+        <div class="pg-in pg-lead-in" id="top">
+          <h1>I design the screens where people move money.</h1>
+          <p>Product designer, 7+ years. I take fintech, Web3 and SaaS products from zero to one. <a href="#work">See the work</a>.</p>
         </div>
-      </section>
+      </div>
+
+        <section class="pg-in pg-sec" id="work" aria-labelledby="h-work">
+          <h2 class="pg-h" id="h-work">Work</h2>
+          <div class="pg-work">
+            <div class="pg-prev" aria-hidden="true">
+              <img class="on" data-p="pstake" alt="" width="1440" height="1024" decoding="async" src="../img/pstake-thumb.jpg?v=3">
+              <img data-p="comdex" alt="" width="1600" height="971" loading="lazy" decoding="async" src="../img/comdex-thumb.jpg">
+              <img data-p="captl" alt="" width="1440" height="1024" loading="lazy" decoding="async" src="../img/captl-thumb.jpg">
+            </div>
+            <ul class="pg-rows">
+              <li><button class="pg-row" type="button" data-open="pstake" data-p="pstake" aria-haspopup="dialog">
+                <span class="pg-row-name">pSTAKE Finance</span>
+                <span class="pg-row-fig"><b>$20–30M</b><span>held in the wallet</span></span>
+                <span class="pg-row-desc">Web3 staking platform, 2022. Sole designer.</span>
+                <img class="pg-row-img" alt="" width="1440" height="1024" decoding="async" loading="lazy" src="../img/pstake-thumb.jpg?v=3">
+                <span class="pg-row-go">Read the case study</span>
+              </button></li>
+              <li><button class="pg-row" type="button" data-open="comdex" data-p="comdex" aria-haspopup="dialog">
+                <span class="pg-row-name">Comdex</span>
+                <span class="pg-row-fig"><b>$10M+</b><span>pilot trade volume</span></span>
+                <span class="pg-row-desc">Commodity trading platform, 2019. Sole product designer.</span>
+                <img class="pg-row-img" alt="" width="1600" height="971" decoding="async" loading="lazy" src="../img/comdex-thumb.jpg">
+                <span class="pg-row-go">Read the case study</span>
+              </button></li>
+              <li><button class="pg-row" type="button" data-open="captl" data-p="captl" aria-haspopup="dialog">
+                <span class="pg-row-name">CAPTL</span>
+                <span class="pg-row-fig"><b>12</b><span>surfaces shipped</span></span>
+                <span class="pg-row-desc">Investor portfolio platform, 2020. Brand, site, IA and key flows.</span>
+                <img class="pg-row-img" alt="" width="1440" height="1024" decoding="async" loading="lazy" src="../img/captl-thumb.jpg">
+                <span class="pg-row-go">Read the case study</span>
+              </button></li>
+            </ul>
+          </div>
+        </section>
+
+        <section class="pg-in pg-sec pg-split" id="about" aria-labelledby="h-about">
+          <h2 class="pg-h" id="h-about">About</h2>
+          <div>
+            <div class="pg-about">
+              <img width="132" height="132" decoding="async" loading="lazy" alt="Portrait of Sudheer Darla" src="../img/avatar-sudheer.jpg">
+              <div class="pg-about-text">
+                <p>Product designer with 7+ years of experience taking fintech, Web3 and SaaS products from zero to one. I design the core flows, interfaces and systems behind them, from how a product is structured to how it feels in use.</p>
+                <p>I’ve shipped a commodity trading platform, a private equity fund workspace, and a liquid staking product that held $20–30M in assets under management. My focus is trust-heavy, multi-step products where clarity of state, cost and risk matters most.</p>
+              </div>
+            </div>
+            <dl class="pg-skills">
+              <div><dt>Design</dt><dd>Product design, Figma, rapid prototyping, design systems, user experience design (UED), Illustrator, AI-driven workflows</dd></div>
+              <div><dt>Engineering</dt><dd>HTML, CSS, JavaScript, React JS, Python, Git</dd></div>
+            </dl>
+          </div>
+        </section>
+
+        <section class="pg-in pg-sec pg-split" id="experience" aria-labelledby="h-exp">
+          <h2 class="pg-h" id="h-exp">Experience</h2>
+          <div>
+            <table class="pg-table">
+              <caption class="pg-sr">Work experience</caption>
+              <thead class="pg-sr"><tr><th scope="col">Dates</th><th scope="col">Company</th><th scope="col">Role</th></tr></thead>
+              <tbody>
+                <tr><td class="yrs">2023 – 2026</td><th scope="row" class="co">Independent ventures, Hyderabad</th><td class="role">Founder</td></tr>
+                <tr><td class="yrs">Apr – Aug 2023</td><th scope="row" class="co">Hive Consultancy Services, Bengaluru</th><td class="role">Product Designer</td></tr>
+                <tr><td class="yrs">Jul 2022 – Mar 2023</td><th scope="row" class="co">Wise Log Solutions, Dubai</th><td class="role">UI/UX Designer</td></tr>
+                <tr><td class="yrs">Feb 2020 – Jun 2022</td><th scope="row" class="co">CMMT Technologies, Bengaluru</th><td class="role">UI/UX Designer</td></tr>
+                <tr><td class="yrs">Jul 2018 – Oct 2019</td><th scope="row" class="co">Cosmic Tech Labs, Hyderabad</th><td class="role">User Experience Designer</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <section class="pg-in pg-sec pg-split" id="education" aria-labelledby="h-edu">
+          <h2 class="pg-h" id="h-edu">Education</h2>
+          <div>
+            <table class="pg-table">
+              <caption class="pg-sr">Education</caption>
+              <thead class="pg-sr"><tr><th scope="col">Dates</th><th scope="col">Institution</th><th scope="col">Qualification</th></tr></thead>
+              <tbody>
+                <tr><td class="yrs">2013 – 2016</td><th scope="row" class="co">Mahatma Gandhi Institute of Technology, Hyderabad</th><td class="role">Bachelor of Technology, Computer Science</td></tr>
+                <tr><td class="yrs">2010 – 2013</td><th scope="row" class="co">Polytechnic College, Kothagudem</th><td class="role">Diploma in Electrical and Electronics Engineering</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <section class="pg-in pg-sec" id="contact" aria-labelledby="h-contact">
+          <h2 class="pg-h" id="h-contact">Contact</h2>
+          <a class="pg-mail" href="mailto:sudheer.darla11@gmail.com">sudheer.darla11@gmail.com<span class="pg-sr"> (opens your email app)</span></a>
+          <div class="pg-foot">
+            <a href="https://www.linkedin.com/in/sudheer-darla-a9496956/" target="_blank" rel="noopener">LinkedIn<span class="pg-sr"> (opens in a new tab)</span></a>
+            <a href="https://x.com/sudheerdarla_" target="_blank" rel="noopener">X<span class="pg-sr"> (opens in a new tab)</span></a>
+            <span>Sudheer Darla, product designer</span>
+          </div>
+        </section>
     </main>
   </div>
 
-  <div class="scrim" id="scrim"></div>
-  <aside class="drawer" id="drawer" role="dialog" aria-modal="true" aria-labelledby="d-title" aria-hidden="true" tabindex="-1">
-    <div class="drawer-head">
-      <div><h2 id="d-title"></h2><div class="sub" id="d-sub"></div></div>
-      <button class="close" type="button" id="close" aria-label="Close case study"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true" focusable="false"><path d="M18 6L6 18M6 6l12 12"/></svg></button>
+  <div class="pg-scrim" id="scrim"></div>
+  <aside class="pg-drawer" id="drawer" role="dialog" aria-modal="true" aria-labelledby="d-title" aria-hidden="true" tabindex="-1">
+    <div class="pg-drawer-head">
+      <div><h2 id="d-title"></h2><p id="d-sub"></p></div>
+      <button class="pg-close" type="button" id="close" aria-label="Close case study"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true" focusable="false"><path d="M18 6L6 18M6 6l12 12"/></svg></button>
     </div>
-    <div class="drawer-body" id="d-body"></div>
+    <div class="pg-drawer-body" id="d-body"></div>
   </aside>
   <script src="pstake-cs.js?v=2" defer></script>
   <script src="comdex-cs.js?v=1" defer></script>
   <script src="captl-cs.js?v=1" defer></script>
-  <script src="app.js?v=1" defer></script>
+  <script src="app.js?v=3" defer></script>
 </body>
 </html>
