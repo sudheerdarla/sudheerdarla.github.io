@@ -59,8 +59,8 @@
         { label: 'Brand and design system', title: 'I built the brand and the system behind every screen.',
           lede: 'I owned the pSTAKE brand and its design system: the colours, type and shared components that every screen is built from. One system kept staking, unstaking and DeFi feeling like one product.',
           blocks: [{ type: 'system',
-            colors: [['Night', '#0E0D12', 'Background'], ['Surface', '#18171D', 'Panels and cards'], ['Raised', '#201E26', 'Inputs and menus'], ['Coral', '#E15365', 'Primary action'], ['Mint', '#3CC47C', 'Yield and success'], ['Fog', '#8E8C96', 'Secondary text']],
-            typo: [['Display', '32 / Bold', '33.99 OSMO'], ['Heading', '20 / Semibold', 'Select network'], ['Body', '14 / Regular', 'Estimated annual yield'], ['Label', '11 / Mono caps', 'Unstaking method']],
+            colors: [['Night', '#0E0D12', 'bg/base', 'App background'], ['Surface', '#18171D', 'bg/surface', 'Panels and cards'], ['Raised', '#201E26', 'bg/raised', 'Inputs, menus, chips'], ['Coral', '#E15365', 'accent/primary', 'The one primary action'], ['Mint', '#3CC47C', 'status/positive', 'Yield and success'], ['Fog', '#8E8C96', 'text/secondary', 'Labels and helper text']],
+            typo: [['Display', '32', '40', 'Bold', '33.99 OSMO'], ['Title', '20', '28', 'Semibold', 'Select network'], ['Body', '14', '20', 'Regular', 'Estimated annual yield'], ['Label', '11', '16', 'Mono, caps', 'Unstaking method']],
             principles: [['Dark and calm', 'A quiet dark base, so balances and states stand out.'], ['One coral action', 'Coral marks the single next step on each screen.'], ['Numbers first', 'Amounts are the largest text, labels stay small.']] }] },
         { label: 'Outcome', title: 'People trusted it with more than $30M.',
           lede: 'More than $30M in staked assets went through pSTAKE. Each of the six moments where people got stuck now has a clear answer on screen.',
@@ -278,20 +278,44 @@
       return '<div class="cs-chips"><h3 class="cs-label">' + b.title + '</h3><ul>' + b.items.map(function (t) { return '<li>' + t + '</li>'; }).join('') + '</ul></div>';
     },
     system: function (b) {
-      var sw = b.colors.map(function (c) { return '<li><span class="ds-chip" style="background:' + c[1] + '"></span><b>' + c[0] + '</b><code>' + c[1] + '</code><span>' + c[2] + '</span></li>'; }).join('');
-      var ty = b.typo.map(function (t, i) { return '<li><span class="ds-t ds-t' + i + '">' + t[2] + '</span><span class="ds-tmeta">' + t[0] + ' / ' + t[1] + '</span></li>'; }).join('');
-      var comp = '<div class="ds-comps" aria-hidden="true">' +
-        '<div class="ds-row"><span class="ds-btn is-pri">Liquid Stake</span><span class="ds-btn">Connect wallet</span><span class="ds-btn is-off">Enter an amount</span></div>' +
-        '<div class="ds-row"><span class="ds-tabs"><span class="is-on">Stake</span><span>Unstake</span></span><span class="ds-pill"><i class="ds-dot" style="background:#E15365">P</i>Persistence</span><span class="ds-pill"><i class="ds-dot" style="background:#7761F3">O</i>OSMO</span></div>' +
-        '<div class="ds-row ds-grid2"><div class="ds-card is-sel"><span class="ds-radio is-on"></span><div><b>Flash Unstake</b><small>Instantly · 0.5% fee</small></div><div class="ds-r"><b>~99.50 ATOM</b><small>You receive</small></div></div>' +
-        '<div class="ds-card"><span class="ds-radio"></span><div><b>Regular Unstake</b><small>21–25 days · 0% fee</small></div><div class="ds-r"><b>~100.00 ATOM</b><small>You receive</small></div></div></div>' +
-        '<div class="ds-row ds-grid2"><div class="ds-stat"><small>APY</small><b class="is-mint">9.92%</b><small>Estimated annual yield</small></div>' +
-        '<div class="ds-toast"><span class="ds-ok">✓</span><div><b>Stake confirmed</b><small>3.998656 stkOSMO added to your balance</small></div></div></div></div>';
-      return '<div class="ds"><div class="ds-brand"><span class="ds-mark">PSTAKE</span><span class="ds-tag">Wordmark</span></div>' +
-        '<div class="ds-cols"><div><p class="ds-h">Colour</p><ul class="ds-swatches">' + sw + '</ul></div><div><p class="ds-h">Type</p><ul class="ds-type">' + ty + '</ul></div></div>' +
-        '<p class="ds-h">Components</p>' + comp +
-        '<p class="sr">Sample components from the pSTAKE design system: primary, secondary and disabled buttons, the stake and unstake tabs, network and token chips, selectable unstaking method cards, an APY stat card and a stake confirmation toast.</p></div>' +
-        '<ul class="cs-cards c3 ds-principles">' + b.principles.map(function (p) { return '<li class="cs-card"><h3>' + p[0] + '</h3><p>' + p[1] + '</p></li>'; }).join('') + '</ul>';
+      function cell(n, name, variants, body, wide) {
+        return '<div class="ds-cell' + (wide ? ' is-wide' : '') + '"><div class="ds-cell-head"><span>' + n + '</span><b>' + name + '</b><em>' + variants + '</em></div><div class="ds-canvas">' + body + '</div></div>';
+      }
+      function cap(t) { return '<span class="ds-cap">' + t + '</span>'; }
+      var colors = b.colors.map(function (c) {
+        return '<li><span class="ds-sw" style="background:' + c[1] + '"></span><div class="ds-sw-meta"><b>' + c[0] + '</b><code>' + c[2].replace('/', '/<wbr>') + '</code><span>' + c[1] + '</span></div><p>' + c[3] + '</p></li>';
+      }).join('');
+      var typo = b.typo.map(function (t, i) {
+        return '<tr><td><span class="ds-ts ds-ts' + i + '">' + t[4] + '</span></td><th scope="row">' + t[0] + '</th><td>' + t[1] + '/' + t[2] + '</td><td>' + t[3] + '</td></tr>';
+      }).join('');
+      var caret = '<svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>';
+      var comps =
+        cell('01', 'Button', 'Primary, secondary, disabled',
+          '<div class="ds-stack is-v"><div class="ds-col"><span class="ds-btn is-pri">Liquid Stake</span>' + cap('Primary') + '</div><div class="ds-col"><span class="ds-btn">Connect wallet</span>' + cap('Secondary') + '</div><div class="ds-col"><span class="ds-btn is-off">Enter an amount</span>' + cap('Disabled') + '</div></div>') +
+        cell('02', 'Segmented control', 'Selected, default',
+          '<div class="ds-seg"><span class="is-on">Stake</span><span>Unstake</span></div>') +
+        cell('03', 'Chips', 'Network, token, tag',
+          '<div class="ds-stack"><span class="ds-chip"><i style="background:#E15365">P</i>Persistence' + caret + '</span><span class="ds-chip"><i style="background:#7761F3">O</i>OSMO' + caret + '</span><span class="ds-tag">MAX</span></div>') +
+        cell('04', 'Amount field', 'Input with balance',
+          '<div class="ds-field"><div class="ds-field-top"><span>You stake</span><span>Available <b>4.7346 OSMO</b> <span class="ds-tag">MAX</span></span></div><div class="ds-field-main"><span class="ds-chip"><i style="background:#7761F3">O</i>OSMO' + caret + '</span><span class="ds-amt">4</span></div><div class="ds-field-sub">≈ $3.06</div></div>') +
+        cell('05', 'Option card', 'Selected, default',
+          '<div class="ds-opts"><div class="ds-opt is-sel"><span class="ds-radio"></span><div><b>Flash Unstake</b><small>Instantly · 0.5% fee</small></div><div class="ds-opt-r"><b>~99.50 ATOM</b><small>You receive</small></div></div><div class="ds-opt"><span class="ds-radio"></span><div><b>Regular Unstake</b><small>21–25 days · 0% fee</small></div><div class="ds-opt-r"><b>~100.00 ATOM</b><small>You receive</small></div></div></div>', true) +
+        cell('06', 'Stat', 'Metric with helper',
+          '<div class="ds-stat"><small>APY</small><b>9.92%</b><small>Estimated annual yield</small></div>') +
+        cell('07', 'Toast', 'Success',
+          '<div class="ds-toast"><span class="ds-ok"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span><div><b>Stake confirmed</b><small>3.998656 stkOSMO added to your balance</small></div></div>');
+      return '<div class="ds" role="group" aria-label="pSTAKE brand and design system">' +
+        '<div class="ds-top"><span class="ds-word">PSTAKE</span><span class="ds-top-r">Design system</span></div>' +
+        '<div class="ds-part"><p class="ds-h"><span>A</span>Brand</p><div class="ds-brand">' +
+          '<div class="ds-logo is-dark"><span class="ds-word">PSTAKE</span><em>On dark</em></div>' +
+          '<div class="ds-logo is-light"><span class="ds-word">PSTAKE</span><em>On light</em></div>' +
+          '<div class="ds-logo is-coral"><span class="ds-word">PSTAKE</span><em>On accent</em></div></div></div>' +
+        '<div class="ds-part"><p class="ds-h"><span>B</span>Colour</p><ul class="ds-colors">' + colors + '</ul></div>' +
+        '<div class="ds-part"><p class="ds-h"><span>C</span>Type</p><table class="ds-type"><thead><tr><th scope="col"><span class="sr">Sample</span></th><th scope="col">Style</th><th scope="col">Size/Line</th><th scope="col">Weight</th></tr></thead><tbody>' + typo + '</tbody></table></div>' +
+        '<div class="ds-part"><p class="ds-h"><span>D</span>Components</p><div class="ds-cells" aria-hidden="true">' + comps + '</div>' +
+        '<p class="sr">Components: primary, secondary and disabled buttons; a stake and unstake segmented control; network and token chips with a MAX tag; an amount field with available balance; selected and default unstaking option cards; an APY stat; a stake confirmed toast.</p></div>' +
+        '</div>' +
+        '<ul class="ds-principles">' + b.principles.map(function (p, i) { return '<li><span>0' + (i + 1) + '</span><h3>' + p[0] + '</h3><p>' + p[1] + '</p></li>'; }).join('') + '</ul>';
     },
     numbered: function (b) {
       return '<ol class="cs-numbered">' + b.items.map(function (r) { return '<li><h3>' + r[0] + '</h3><p>' + r[1] + '</p></li>'; }).join('') + '</ol>';
