@@ -307,6 +307,66 @@
       .cs-compare-arrow { display: grid; place-items: center; }
     }
 
+
+    /* Brand + design system specimen (always shown in the product's own dark theme) */
+    .ds { --n: #0E0D12; --s1: #18171D; --s2: #201E26; --ln: rgba(255,255,255,.08); --tx: #F5F5F6; --mu: #8E8C96; --co: #E15365; --mi: #3CC47C;
+      padding: clamp(20px, 4cqw, 36px); border: 1px solid var(--line); border-radius: var(--r-md); background: var(--n); color: var(--tx); }
+    .ds-h { margin: var(--s-3xl) 0 var(--s-md); font-family: var(--font-mono); font-size: 11px; line-height: 16.5px; letter-spacing: .06em; text-transform: uppercase; color: var(--mu); }
+    .ds-brand { display: flex; align-items: baseline; justify-content: space-between; gap: var(--s-lg); padding-bottom: var(--s-2xl); border-bottom: 1px solid var(--ln); }
+    .ds-mark { font-size: clamp(28px, 6cqw, 44px); line-height: 1; font-weight: 800; letter-spacing: .02em; }
+    .ds-tag { font-family: var(--font-mono); font-size: 11px; letter-spacing: .06em; text-transform: uppercase; color: var(--mu); }
+    .ds-cols { display: grid; gap: 0 var(--s-3xl); }
+    .ds-swatches { display: grid; grid-template-columns: repeat(2, 1fr); gap: var(--s-md); }
+    .ds-swatches li { display: grid; grid-template-columns: 36px 1fr; column-gap: var(--s-md); align-items: center; }
+    .ds-chip { grid-row: span 3; width: 36px; height: 36px; border-radius: 6px; border: 1px solid var(--ln); }
+    .ds-swatches b { font-size: 13px; line-height: 18px; font-weight: 600; }
+    .ds-swatches code { font-family: var(--font-mono); font-size: 11px; line-height: 15px; color: var(--mu); }
+    .ds-swatches span:not(.ds-chip) { font-size: 11.5px; line-height: 15px; color: var(--mu); }
+    .ds-type li { display: flex; justify-content: space-between; align-items: baseline; gap: var(--s-md); padding: 10px 0; border-bottom: 1px solid var(--ln); }
+    .ds-type li:first-child { padding-top: 0; }
+    .ds-t0 { font-size: 30px; line-height: 1.1; font-weight: 700; letter-spacing: -.02em; }
+    .ds-t1 { font-size: 20px; line-height: 1.2; font-weight: 600; }
+    .ds-t2 { font-size: 14px; line-height: 1.4; color: #c9c8ce; }
+    .ds-t3 { font-family: var(--font-mono); font-size: 11px; letter-spacing: .06em; text-transform: uppercase; color: var(--mu); }
+    .ds-tmeta { flex: none; font-family: var(--font-mono); font-size: 10.5px; color: var(--mu); white-space: nowrap; }
+    .ds-comps { display: grid; gap: var(--s-md); padding: var(--s-xl); border-radius: 12px; background: var(--s1); border: 1px solid var(--ln); }
+    .ds-row { display: flex; flex-wrap: wrap; align-items: center; gap: var(--s-sm); }
+    .ds-grid2 { display: grid; grid-template-columns: 1fr; gap: var(--s-sm); }
+    .ds-btn { display: inline-flex; align-items: center; min-height: 38px; padding: 0 18px; border-radius: 10px; font-size: 13px; font-weight: 600; background: var(--s2); border: 1px solid var(--ln); color: var(--tx); }
+    .ds-btn.is-pri { background: var(--co); border-color: var(--co); color: #fff; box-shadow: 0 6px 18px -8px rgba(225,83,101,.7); }
+    .ds-btn.is-off { color: #5d5b65; background: transparent; }
+    .ds-tabs { display: inline-flex; padding: 3px; border-radius: 10px; background: var(--n); border: 1px solid var(--ln); font-size: 13px; font-weight: 600; }
+    .ds-tabs span { padding: 7px 18px; border-radius: 8px; color: var(--mu); }
+    .ds-tabs .is-on { background: #fff; color: #0E0D12; }
+    .ds-pill { display: inline-flex; align-items: center; gap: 8px; padding: 5px 12px 5px 5px; border-radius: 999px; background: var(--s2); border: 1px solid var(--ln); font-size: 13px; font-weight: 600; }
+    .ds-dot { width: 20px; height: 20px; border-radius: 50%; display: grid; place-items: center; font-size: 10px; font-style: normal; font-weight: 700; color: #fff; }
+    .ds-card { display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: var(--s-md); padding: 12px 14px; border-radius: 12px; background: var(--s2); border: 1px solid var(--ln); }
+    .ds-card.is-sel { border-color: var(--co); background: #2a1a20; }
+    .ds-card b { display: block; font-size: 13.5px; font-weight: 600; }
+    .ds-card small, .ds-stat small, .ds-toast small { display: block; font-size: 11.5px; line-height: 16px; color: var(--mu); }
+    .ds-r { text-align: right; }
+    .ds-radio { width: 18px; height: 18px; border-radius: 50%; border: 1.5px solid #5d5b65; }
+    .ds-radio.is-on { border: 0; background: var(--co); box-shadow: inset 0 0 0 5px var(--co), inset 0 0 0 9px #fff; }
+    .ds-stat { padding: 14px; border-radius: 12px; background: var(--s2); border: 1px solid var(--ln); }
+    .ds-stat b { display: block; margin: 4px 0 2px; font-size: 24px; line-height: 1.1; font-weight: 700; }
+    .ds-stat .is-mint { color: var(--mi); }
+    .ds-toast { display: flex; align-items: center; gap: var(--s-md); padding: 14px; border-radius: 12px; background: var(--n); border: 1px solid var(--ln); }
+    .ds-toast b { display: block; font-size: 13.5px; font-weight: 600; }
+    .ds-ok { width: 32px; height: 32px; flex: none; display: grid; place-items: center; border-radius: 8px; background: #1c3a2a; color: var(--mi); font-weight: 700; }
+    .ds-principles { margin-top: var(--s-md) !important; }
+    @container (min-width: 620px) {
+      .ds-cols { grid-template-columns: 1fr 1fr; }
+      .ds-grid2 { grid-template-columns: 1fr 1fr; }
+      .ds-swatches { grid-template-columns: repeat(2, 1fr); }
+    }
+    @container (max-width: 460px) {
+      .ds-swatches { grid-template-columns: 1fr; }
+      .ds-type li { flex-direction: column; align-items: flex-start; gap: 4px; }
+      .ds-t0 { font-size: 26px; }
+      .ds-card { grid-template-columns: auto 1fr; }
+      .ds-r { grid-column: 2; text-align: left; }
+      .ds-comps { padding: var(--s-md); }
+    }
     /* Zoomable images + lightbox */
     .cs-zoom { position: relative; display: block; width: 100%; padding: 0; border: 0; background: none; cursor: zoom-in; border-radius: var(--r-md); }
     .cs-zoom-hint { position: absolute; top: var(--s-md); right: var(--s-md); width: 32px; height: 32px; display: grid; place-items: center; border: 1px solid var(--line-1); border-radius: var(--r-md); background: var(--bg); color: var(--fg); opacity: 0; transform: translateY(-2px); transition: opacity .15s var(--ease-out), transform .15s var(--ease-out); }
@@ -356,7 +416,7 @@
     <button class="lb-close" type="button" id="lb-close" aria-label="Close image viewer"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true" focusable="false"><path d="M18 6L6 18M6 6l12 12"/></svg></button>
     <figure><img id="lb-img" alt=""><figcaption id="lb-cap"></figcaption></figure>
   </dialog>
-  <script src="cases.js?v=4"></script>
+  <script src="cases.js?v=6"></script>
   <script src="app.js?v=2" defer></script>
   <script src="work.js?v=3" defer></script>
 </body>

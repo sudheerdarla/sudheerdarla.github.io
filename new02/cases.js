@@ -56,6 +56,12 @@
               text: 'Your assets and actions depend on the network. So the current network and your connected wallet stay visible, and changing either one is a deliberate step.',
               images: [{ src: 'pstake-ui-menus.jpg', w: 939, h: 687, alt: 'Header menus: the network list with Persistence checked, and the wallet menu with the connected address, balance, copy address, view on explorer and disconnect.' }, { src: 'pstake-ui-wallet.jpg', w: 939, h: 687, alt: 'The connect wallet dialog, with popular wallets grouped above more wallets and the installed one tagged Detected.' }],
               points: [['Network in the header', 'The header shows the current network, and the menu marks it with a check.'], ['Wallet tools together', 'Balance, copy address and explorer link sit together. Disconnect is kept apart.'], ['Easy to connect', 'Wallets are grouped, and the one you already have installed is marked Detected.']] }] },
+        { label: 'Brand and design system', title: 'I built the brand and the system behind every screen.',
+          lede: 'I owned the pSTAKE brand and its design system: the colours, type and shared components that every screen is built from. One system kept staking, unstaking and DeFi feeling like one product.',
+          blocks: [{ type: 'system',
+            colors: [['Night', '#0E0D12', 'Background'], ['Surface', '#18171D', 'Panels and cards'], ['Raised', '#201E26', 'Inputs and menus'], ['Coral', '#E15365', 'Primary action'], ['Mint', '#3CC47C', 'Yield and success'], ['Fog', '#8E8C96', 'Secondary text']],
+            typo: [['Display', '32 / Bold', '33.99 OSMO'], ['Heading', '20 / Semibold', 'Select network'], ['Body', '14 / Regular', 'Estimated annual yield'], ['Label', '11 / Mono caps', 'Unstaking method']],
+            principles: [['Dark and calm', 'A quiet dark base, so balances and states stand out.'], ['One coral action', 'Coral marks the single next step on each screen.'], ['Numbers first', 'Amounts are the largest text, labels stay small.']] }] },
         { label: 'Outcome', title: 'People trusted it with more than $30M.',
           lede: 'More than $30M in staked assets went through pSTAKE. Each of the six moments where people got stuck now has a clear answer on screen.',
           blocks: [{ type: 'cards', cols: 2, items: [
@@ -270,6 +276,22 @@
     figure: function (b) { return '<figure class="cs-figure">' + img(b.img, true) + (b.caption ? '<figcaption>' + b.caption + '</figcaption>' : '') + '</figure>'; },
     chips: function (b) {
       return '<div class="cs-chips"><h3 class="cs-label">' + b.title + '</h3><ul>' + b.items.map(function (t) { return '<li>' + t + '</li>'; }).join('') + '</ul></div>';
+    },
+    system: function (b) {
+      var sw = b.colors.map(function (c) { return '<li><span class="ds-chip" style="background:' + c[1] + '"></span><b>' + c[0] + '</b><code>' + c[1] + '</code><span>' + c[2] + '</span></li>'; }).join('');
+      var ty = b.typo.map(function (t, i) { return '<li><span class="ds-t ds-t' + i + '">' + t[2] + '</span><span class="ds-tmeta">' + t[0] + ' / ' + t[1] + '</span></li>'; }).join('');
+      var comp = '<div class="ds-comps" aria-hidden="true">' +
+        '<div class="ds-row"><span class="ds-btn is-pri">Liquid Stake</span><span class="ds-btn">Connect wallet</span><span class="ds-btn is-off">Enter an amount</span></div>' +
+        '<div class="ds-row"><span class="ds-tabs"><span class="is-on">Stake</span><span>Unstake</span></span><span class="ds-pill"><i class="ds-dot" style="background:#E15365">P</i>Persistence</span><span class="ds-pill"><i class="ds-dot" style="background:#7761F3">O</i>OSMO</span></div>' +
+        '<div class="ds-row ds-grid2"><div class="ds-card is-sel"><span class="ds-radio is-on"></span><div><b>Flash Unstake</b><small>Instantly · 0.5% fee</small></div><div class="ds-r"><b>~99.50 ATOM</b><small>You receive</small></div></div>' +
+        '<div class="ds-card"><span class="ds-radio"></span><div><b>Regular Unstake</b><small>21–25 days · 0% fee</small></div><div class="ds-r"><b>~100.00 ATOM</b><small>You receive</small></div></div></div>' +
+        '<div class="ds-row ds-grid2"><div class="ds-stat"><small>APY</small><b class="is-mint">9.92%</b><small>Estimated annual yield</small></div>' +
+        '<div class="ds-toast"><span class="ds-ok">✓</span><div><b>Stake confirmed</b><small>3.998656 stkOSMO added to your balance</small></div></div></div></div>';
+      return '<div class="ds"><div class="ds-brand"><span class="ds-mark">PSTAKE</span><span class="ds-tag">Wordmark</span></div>' +
+        '<div class="ds-cols"><div><p class="ds-h">Colour</p><ul class="ds-swatches">' + sw + '</ul></div><div><p class="ds-h">Type</p><ul class="ds-type">' + ty + '</ul></div></div>' +
+        '<p class="ds-h">Components</p>' + comp +
+        '<p class="sr">Sample components from the pSTAKE design system: primary, secondary and disabled buttons, the stake and unstake tabs, network and token chips, selectable unstaking method cards, an APY stat card and a stake confirmation toast.</p></div>' +
+        '<ul class="cs-cards c3 ds-principles">' + b.principles.map(function (p) { return '<li class="cs-card"><h3>' + p[0] + '</h3><p>' + p[1] + '</p></li>'; }).join('') + '</ul>';
     },
     numbered: function (b) {
       return '<ol class="cs-numbered">' + b.items.map(function (r) { return '<li><h3>' + r[0] + '</h3><p>' + r[1] + '</p></li>'; }).join('') + '</ol>';
