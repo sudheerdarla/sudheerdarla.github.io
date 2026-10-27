@@ -3,7 +3,7 @@ window.COMDEX_CS = (function () {
   var arr = '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M7 17L17 7M8 7h9v9"/></svg>';
   var big = '<svg class="arrow" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 12h14M13 6l6 6-6 6"/></svg>';
   function eb(n, t) { return '<p class="eyebrow"><b>' + n + '</b><i></i>' + t + '</p>'; }
-  function img(f, w, h, alt, eager) { return '<img class="ui" src="img/' + f + '" width="' + w + '" height="' + h + '"' + (eager ? ' fetchpriority="high"' : ' loading="lazy"') + ' decoding="async" alt="' + alt + '">'; }
+  function img(f, w, h, alt, eager) { return '<img class="ui" src="../img/' + f + '" width="' + w + '" height="' + h + '"' + (eager ? ' fetchpriority="high"' : ' loading="lazy"') + ' decoding="async" alt="' + alt + '">'; }
   function row(a, b) { return '<div class="rw"><em>' + a + '</em><b>' + b + '</b></div>'; }
   function phase(n, t, items) { return '<li class="phase"><small>Phase ' + n + '</small><h4>' + t + '</h4><ul>' + items.map(function (x) { return '<li>' + x + '</li>'; }).join('') + '</ul></li>'; }
   function step(n, name, items, cls) { return '<li class="step' + (cls ? ' ' + cls : '') + '"><span class="chip"><i>' + n + '</i>' + name + '</span><ul>' + items.map(function (x) { return '<li>' + x + '</li>'; }).join('') + '</ul></li>'; }

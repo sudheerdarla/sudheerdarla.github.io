@@ -3,7 +3,7 @@ window.CAPTL_CS = (function () {
   var arr = '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M7 17L17 7M8 7h9v9"/></svg>';
   var ck = '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>';
   function tag(t) { return '<p><span class="tagp">' + t + '</span></p>'; }
-  function img(f, w, h, alt, eager) { return '<img class="ui" src="img/' + f + '" width="' + w + '" height="' + h + '"' + (eager ? ' fetchpriority="high"' : ' loading="lazy"') + ' decoding="async" alt="' + alt + '">'; }
+  function img(f, w, h, alt, eager) { return '<img class="ui" src="../img/' + f + '" width="' + w + '" height="' + h + '"' + (eager ? ' fetchpriority="high"' : ' loading="lazy"') + ' decoding="async" alt="' + alt + '">'; }
   function list(a, fn) { return a.map(fn).join(''); }
   function path(l, name, steps) { return '<li class="path"><div><span class="l" aria-hidden="true">' + l + '</span>' + name + '</div><ol>' + steps.map(function (s) { return '<li>' + s + '</li>'; }).join('') + '</ol></li>'; }
   function scr(n, h, p, bullets, file, w, h2, alt, rev) {

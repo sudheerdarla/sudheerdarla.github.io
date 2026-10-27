@@ -71,7 +71,7 @@
     html { color-scheme: light; scroll-behavior: smooth; scrollbar-gutter: stable; -webkit-text-size-adjust: 100%; }
     html[data-theme="dark"] { color-scheme: dark; }
     .sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
-    h1, h2, h3, .tagline { text-wrap: balance; }
+    h1, h2, h3 { text-wrap: balance; }
     .bio p, .desc, .meta { text-wrap: pretty; }
     body {
       background-color: var(--bg);
@@ -118,7 +118,7 @@
     .header-text { flex: 1; min-width: 0; }
     .avatar { width: 96px; height: 96px; border-radius: 50%; object-fit: cover; background: var(--bg-3); border: 2px solid #ffffff; flex: none; }
     .name { font-size: 28px; line-height: 28.56px; font-weight: 700; letter-spacing: -0.84px; }
-    .tagline { margin-top: var(--s-sm); font-size: 16px; line-height: 26.4px; color: var(--muted); max-width: 400px; }
+    .tagline { margin-top: var(--s-sm); font-size: 16px; line-height: 22px; color: var(--muted); }
     .social { display: flex; gap: var(--s-xs); margin: 0 -6px 0 auto; flex: none; }
     .nav-link { display: inline-flex; align-items: center; min-height: 32px; min-width: 32px; justify-content: center; font-family: var(--font-mono); font-size: 15px; line-height: 15px; color: var(--fg-1); padding: 0 6px; border-bottom: 1px solid transparent; transition: border-color .15s var(--ease-out), color .15s; }
     .nav-link:hover { color: var(--fg); border-bottom-color: var(--fg); }
@@ -204,7 +204,7 @@
           <img class="avatar" width="96" height="96" fetchpriority="high" decoding="async" alt="Portrait of Sudheer Darla" src="../img/avatar-sudheer.jpg">
           <div class="header-text">
             <h1 class="name">Sudheer Darla</h1>
-            <p class="tagline">Product Designer · 7+ years · 0–1 Fintech/SaaS · Complex and high-stakes flows.</p>
+            <p class="tagline">Product Designer · 7+ years<br>0–1 Fintech/SaaS · Complex and high-stakes flows.</p>
           </div>
           <nav class="social" aria-label="Social links">
             <a class="nav-link" href="https://www.linkedin.com/in/sudheerdarla/" target="_blank" rel="noopener">LinkedIn<span class="sr"> (opens in a new tab)</span></a>

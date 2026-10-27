@@ -25,7 +25,7 @@
       var t = null;
       try { t = localStorage.getItem('theme'); } catch (e) {}
       if (t !== 'light' && t !== 'dark') {
-        t = window.matchMedia && matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+        t = 'light';
       }
       document.documentElement.setAttribute('data-theme', t);
     })();
@@ -53,7 +53,6 @@
 
       --s-xs: 4px; --s-sm: 8px; --s-md: 12px; --s-lg: 16px; --s-xl: 20px;
       --s-2xl: 24px; --s-3xl: 32px; --s-4xl: 56px; --s-5xl: 92px;
-      --drawer-w: 60vw;
     }
     [data-theme="dark"] {
       --bg: #0b0b0c;        --bg-1: #101012;      --bg-3: #1f1f22;
@@ -71,7 +70,7 @@
     html { color-scheme: light; scroll-behavior: smooth; scrollbar-gutter: stable; -webkit-text-size-adjust: 100%; }
     html[data-theme="dark"] { color-scheme: dark; }
     .sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
-    h1, h2, h3, .tagline { text-wrap: balance; }
+    h1, h2, h3 { text-wrap: balance; }
     .bio p, .desc, .meta { text-wrap: pretty; }
     body {
       background-color: var(--bg);
@@ -86,7 +85,6 @@
       min-height: 100vh;
       transition: background-color .2s var(--ease-out), color .2s var(--ease-out);
     }
-    body.panel-open { overflow: hidden; }
     a { color: inherit; text-decoration: none; }
     button { font: inherit; color: inherit; background: none; border: 0; cursor: pointer; }
     ul { list-style: none; }
@@ -101,7 +99,9 @@
     .col { max-width: 720px; margin: 0 auto; padding: 0 var(--s-2xl); }
 
     /* Top bar + theme toggle */
-    .topbar { display: flex; justify-content: flex-end; padding: var(--s-lg) 0; }
+    /* Theme toggle, fixed bottom left (same spot as on the case study page) */
+    .toggle-fixed { position: fixed; z-index: 20; left: max(24px, calc((100vw - 1160px) / 2)); bottom: var(--s-2xl); }
+    @media (max-width: 960px) { .toggle-fixed { left: var(--s-lg); bottom: var(--s-lg); padding: 6px 10px; border: 1px solid var(--line); border-radius: var(--r-md); background: var(--bg); } }
     .toggle { display: inline-flex; align-items: center; gap: var(--s-sm); min-height: 32px; padding: 0 2px; }
     .toggle-label { font-family: var(--font-mono); font-size: 10px; line-height: 15px; letter-spacing: .04em; color: var(--muted); text-transform: uppercase; }
     .track { position: relative; width: 30px; height: 16px; border-radius: var(--r-md); background: var(--bg-3);
@@ -113,11 +113,11 @@
     .toggle:hover .toggle-label { color: var(--fg); }
 
     /* Header */
-    .header { display: flex; align-items: flex-end; gap: var(--s-2xl); padding-top: var(--s-3xl); }
+    .header { display: flex; align-items: flex-end; gap: var(--s-2xl); padding-top: var(--s-4xl); }
     .header-text { flex: 1; min-width: 0; }
     .avatar { width: 96px; height: 96px; border-radius: 50%; object-fit: cover; background: var(--bg-3); border: 2px solid #ffffff; flex: none; }
     .name { font-size: 28px; line-height: 28.56px; font-weight: 700; letter-spacing: -0.84px; }
-    .tagline { margin-top: var(--s-sm); font-size: 16px; line-height: 26.4px; color: var(--muted); max-width: 400px; }
+    .tagline { margin-top: var(--s-sm); font-size: 16px; line-height: 22px; color: var(--muted); }
     .social { display: flex; gap: var(--s-xs); margin: 0 -6px 0 auto; flex: none; }
     .nav-link { display: inline-flex; align-items: center; min-height: 32px; min-width: 32px; justify-content: center; font-family: var(--font-mono); font-size: 15px; line-height: 15px; color: var(--fg-1); padding: 0 6px; border-bottom: 1px solid transparent; transition: border-color .15s var(--ease-out), color .15s; }
     .nav-link:hover { color: var(--fg); border-bottom-color: var(--fg); }
@@ -146,7 +146,7 @@
 
     /* Projects */
     .projects { display: flex; flex-direction: column; gap: var(--s-4xl); }
-    .project h3 { font-size: 24px; line-height: 26.4px; font-weight: 800; letter-spacing: -0.6px; }
+    .project h3 { font-size: 22px; line-height: 26.4px; font-weight: 800; letter-spacing: 0; text-transform: uppercase; }
     .project .desc { margin-top: var(--s-xs); font-size: 16px; line-height: 24px; color: var(--muted); }
     .slot { position: relative; display: block; width: 100%; aspect-ratio: 2 / 1; margin-top: var(--s-lg); overflow: hidden;
       border: 1px solid var(--line); border-radius: var(--r-md); background: var(--bg-3); text-align: left;
@@ -182,27 +182,6 @@
 
     .footer { margin-top: var(--s-4xl); padding: var(--s-2xl) 0 60px; display: flex; justify-content: center; }
 
-    /* ---------- Case study panel ---------- */
-    .scrim { position: fixed; inset: 0; z-index: 30; background: rgba(10,10,12,.4); opacity: 0; pointer-events: none; transition: opacity .3s var(--ease-out); }
-    .scrim.on { opacity: 1; pointer-events: auto; }
-    .drawer { position: fixed; top: 0; right: 0; z-index: 40; height: 100vh; height: 100dvh; width: var(--drawer-w); min-width: 320px; overflow-y: auto; overscroll-behavior: contain;
-      background: var(--surface); border-left: 1px solid var(--line-strong); box-shadow: -24px 0 60px -24px rgba(10,10,12,.35);
-      visibility: hidden; transform: translateX(100%); transition: transform .3s var(--ease-in-out), visibility 0s .3s; }
-    .drawer.open { visibility: visible; transform: none; transition: transform .3s var(--ease-in-out), visibility 0s; }
-    .drawer-head { position: sticky; top: 0; z-index: 2; display: flex; justify-content: space-between; align-items: flex-start; gap: var(--s-lg);
-      padding: var(--s-xl) var(--s-2xl); background: var(--surface); border-bottom: 1px solid var(--line); }
-    .drawer-head h2 { font-size: 24px; line-height: 26.4px; font-weight: 800; letter-spacing: -0.6px; }
-    .drawer-head .sub { margin-top: var(--s-xs); font-size: 13px; line-height: 19.5px; color: var(--muted); }
-    .close { width: 44px; height: 44px; margin: -8px -10px 0 0; display: grid; place-items: center; flex: none; color: var(--muted); border-radius: var(--r-md); }
-    .close:hover { color: var(--fg); background: var(--bg-3); }
-    .drawer-body { padding: var(--s-2xl); }
-    .drawer-body img { display: block; width: 100%; height: auto; background: var(--bg-3); }
-    .drawer-body img + img { margin-top: -1px; }
-    .drawer-body img:first-child { border-radius: var(--r-md) var(--r-md) 0 0; }
-    .drawer-body img:last-child { border-radius: 0 0 var(--r-md) var(--r-md); }
-    .drawer-body img:only-child { border-radius: var(--r-md); }
-
-    @media (max-width: 900px) { :root { --drawer-w: 100vw; } .drawer { min-width: 0; } }
     @media (max-width: 640px) {
       .col { padding: 0 var(--s-lg); }
       .header { align-items: flex-start; flex-direction: column; gap: var(--s-lg); }
@@ -211,41 +190,30 @@
       .row { flex-direction: column; align-items: flex-start; gap: var(--s-sm); }
       .skills { grid-template-columns: 1fr; }
     }
-    @media print { body { background: #fff; color: #000; } .topbar, .skip, .scrim, .drawer, .slot-tag { display: none !important; } .sec-body { display: block !important; } .slot { break-inside: avoid; } .sec-head .chev { display: none; } }
+    @media print { body { background: #fff; color: #000; } .toggle-fixed, .skip, .slot-tag { display: none !important; } .sec-body { display: block !important; } .slot { break-inside: avoid; } .sec-head .chev { display: none; } }
     @media (prefers-reduced-motion: reduce) { *, *::before, *::after { transition-duration: .01ms !important; scroll-behavior: auto !important; } }
   </style>
-  <link rel="stylesheet" href="pstake.css?v=2">
-  <link rel="stylesheet" href="comdex.css?v=1">
-  <link rel="stylesheet" href="captl.css?v=2">
-  <link rel="stylesheet" href="refine.css?v=2">
 </head>
 <body>
   <a class="skip" href="#main">Skip to content</a>
   <div class="page">
     <main id="main" class="main">
       <div class="col">
-        <div class="topbar">
-          <button class="toggle" type="button" id="theme" aria-pressed="false" aria-label="Switch to dark mode">
-            <span class="toggle-label" id="theme-label">Dark mode</span>
-            <span class="track" aria-hidden="true"><span class="knob"></span></span>
-          </button>
-        </div>
-
         <header class="header">
           <img class="avatar" width="96" height="96" fetchpriority="high" decoding="async" alt="Portrait of Sudheer Darla" src="img/avatar-sudheer.jpg">
           <div class="header-text">
             <h1 class="name">Sudheer Darla</h1>
-            <p class="tagline">Product Designer · 7+ years · 0–1 Fintech/SaaS · Complex and high-stakes flows.</p>
+            <p class="tagline">Product Designer · 7+ years<br>0–1 Fintech/SaaS · Complex and high-stakes flows.</p>
           </div>
           <nav class="social" aria-label="Social links">
-            <a class="nav-link" href="https://www.linkedin.com/in/sudheer-darla-a9496956/" target="_blank" rel="noopener">LinkedIn<span class="sr"> (opens in a new tab)</span></a>
+            <a class="nav-link" href="https://www.linkedin.com/in/sudheerdarla/" target="_blank" rel="noopener">LinkedIn<span class="sr"> (opens in a new tab)</span></a>
             <a class="nav-link" href="https://x.com/sudheerdarla_" target="_blank" rel="noopener">X<span class="sr"> (opens in a new tab)</span></a>
           </nav>
         </header>
 
         <section class="bio" aria-label="About">
           <p>Product designer with 7+ years of experience taking fintech, Web3 and SaaS products from zero to one. I design the core flows, interfaces and systems behind them, from how a product is structured to how it feels in use.</p>
-          <p>I’ve shipped a commodity trading platform, a private equity fund workspace, and a liquid staking product that held $20–30M in assets under management. My focus is trust-heavy, multi-step products where clarity of state, cost and risk matters most.</p>
+          <p>I’ve shipped a commodity trading platform, a private equity fund workspace, and a liquid staking product that unlocked more than $30M in staked assets value. My focus is trust-heavy, multi-step products where clarity of state, cost and risk matters most.</p>
         </section>
 
         <ul class="tags" aria-label="Core skills">
@@ -260,26 +228,26 @@
                 <article class="project">
                   <h3>pSTAKE Finance</h3>
                   <p class="desc">Web3 staking platform</p>
-                  <button class="slot" type="button" data-open="pstake" aria-haspopup="dialog" aria-label="View case study: pSTAKE Finance">
+                  <a class="slot" href="work.html#pstake" aria-label="Read the case study: pSTAKE Finance">
                     <img alt="pSTAKE staking dashboard with network and unstaking method selectors" width="1440" height="1024" decoding="async" src="img/pstake-thumb.jpg?v=3">
-                    <span class="slot-tag" aria-hidden="true">View case study</span>
-                  </button>
+                    <span class="slot-tag" aria-hidden="true">Read case study</span>
+                  </a>
                 </article>
                 <article class="project">
                   <h3>Comdex</h3>
-                  <p class="desc">Commodity Trading platform</p>
-                  <button class="slot" type="button" data-open="comdex" aria-haspopup="dialog" aria-label="View case study: Comdex">
+                  <p class="desc">Commodity trading platform</p>
+                  <a class="slot" href="work.html#comdex" aria-label="Read the case study: Comdex">
                     <img alt="Comdex commodity trading dashboard" width="1600" height="971" loading="lazy" decoding="async" src="img/comdex-thumb.jpg">
-                    <span class="slot-tag" aria-hidden="true">View case study</span>
-                  </button>
+                    <span class="slot-tag" aria-hidden="true">Read case study</span>
+                  </a>
                 </article>
                 <article class="project">
                   <h3>CAPTL</h3>
                   <p class="desc">Investor portfolio platform</p>
-                  <button class="slot" type="button" data-open="captl" aria-haspopup="dialog" aria-label="View case study: CAPTL">
+                  <a class="slot" href="work.html#captl" aria-label="Read the case study: CAPTL">
                     <img alt="CAPTL investor portfolio screens" width="1440" height="1024" loading="lazy" decoding="async" src="img/captl-thumb.jpg">
-                    <span class="slot-tag" aria-hidden="true">View case study</span>
-                  </button>
+                    <span class="slot-tag" aria-hidden="true">Read case study</span>
+                  </a>
                 </article>
               </div>
             </div>
@@ -322,17 +290,10 @@
     </main>
   </div>
 
-  <div class="scrim" id="scrim"></div>
-  <aside class="drawer" id="drawer" role="dialog" aria-modal="true" aria-labelledby="d-title" aria-hidden="true" tabindex="-1">
-    <div class="drawer-head">
-      <div><h2 id="d-title"></h2><div class="sub" id="d-sub"></div></div>
-      <button class="close" type="button" id="close" aria-label="Close case study"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true" focusable="false"><path d="M18 6L6 18M6 6l12 12"/></svg></button>
-    </div>
-    <div class="drawer-body" id="d-body"></div>
-  </aside>
-    <script src="pstake-cs.js?v=2" defer></script>
-    <script src="comdex-cs.js?v=1" defer></script>
-    <script src="captl-cs.js?v=1" defer></script>
-    <script src="app.js?v=3" defer></script>
+    <button class="toggle toggle-fixed" type="button" id="theme" aria-pressed="false" aria-label="Switch to dark mode">
+            <span class="toggle-label" id="theme-label">Dark mode</span>
+            <span class="track" aria-hidden="true"><span class="knob"></span></span>
+          </button>
+    <script src="app.js?v=4" defer></script>
 </body>
 </html>

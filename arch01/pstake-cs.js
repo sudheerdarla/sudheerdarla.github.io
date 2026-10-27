@@ -14,7 +14,7 @@ window.PSTAKE_CS = (function () {
     return '<li class="ia-col' + (act ? ' act' : '') + '"><div class="ia-head"><em>0' + n + '</em><strong>' + name + '</strong><span>' + q + '</span></div><ul>' +
       items.map(function (x) { return '<li' + (x[1] ? ' data-c="' + x[1] + '"' : '') + '>' + x[0] + '</li>'; }).join('') + '</ul></li>';
   }
-  function img(f, w, h, alt) { return '<img class="ui" src="img/' + f + '" width="' + w + '" height="' + h + '" loading="lazy" decoding="async" alt="' + alt + '">'; }
+  function img(f, w, h, alt) { return '<img class="ui" src="../img/' + f + '" width="' + w + '" height="' + h + '" loading="lazy" decoding="async" alt="' + alt + '">'; }
 
   return '<article class="cs">' +
   '<section class="sec hero"><div class="wrap">' +
@@ -22,7 +22,7 @@ window.PSTAKE_CS = (function () {
     '<h1>Staking people can actually <span class="acc">read.</span></h1>' +
     '<div class="hero-grid"><p>pSTAKE Finance is a liquid staking wallet that held $20–30M AUM. As its only designer, I shaped how holders see an asset, act on it, and know what state it is in, without becoming protocol experts.</p>' +
     '<dl class="facts"><div><dt>Role</dt><dd>Product Designer</dd></div><div><dt>Year · Location</dt><dd>2022 · Dubai, on-site</dd></div><div><dt>Platform</dt><dd>Desktop web app</dd></div><div><dt>Scope</dt><dd>Dashboard · Network · Stake · Unstake · DeFi</dd></div></dl></div>' +
-    '<figure>' + '<img class="ui" src="img/pstake-ui-hero.jpg" width="2162" height="858" fetchpriority="high" decoding="async" alt="The pSTAKE stake screen: choose OSMO, see the stkOSMO you receive, the exchange rate and network fee, with the network menu, unstaking method card and a stake-confirmed message">' + '</figure>' +
+    '<figure>' + '<img class="ui" src="../img/pstake-ui-hero.jpg" width="2162" height="858" fetchpriority="high" decoding="async" alt="The pSTAKE stake screen: choose OSMO, see the stkOSMO you receive, the exchange rate and network fee, with the network menu, unstaking method card and a stake-confirmed message">' + '</figure>' +
   '</div></section>' +
   '<ul class="stats" aria-label="Key figures"><li><strong><span class="acc">$</span>20–30M</strong><span>AUM held in the wallet</span></li><li><strong>01</strong><span>Sole product designer</span></li><li><strong>05</strong><span>Surfaces owned end to end</span></li><li><strong>02</strong><span>Exit paths made explicit</span></li></ul>' +
 
