@@ -311,9 +311,9 @@
       --tx: #F5F5F6; --tx2: #C9C8CE; --mu: #8E8C96; --co: #E15365; --mi: #3CC47C;
       border: 1px solid var(--line); border-radius: var(--r-md); background: var(--n); color: var(--tx); overflow: hidden; font-feature-settings: "tnum"; }
     .ds-top { display: flex; justify-content: space-between; align-items: center; padding: 14px clamp(16px, 3.5cqw, 28px); border-bottom: 1px solid var(--ln); background: var(--s1); }
-    .ds-top .ds-word { font-size: 13px; }
+    .ds-top-logo { display: flex; color: #fff; --logo-inner: #1F1D2B; }
+    .ds-top-logo svg { height: 16px; width: auto; }
     .ds-top-r { font-family: var(--font-mono); font-size: 10.5px; letter-spacing: .08em; text-transform: uppercase; color: var(--mu); }
-    .ds-word { font-weight: 800; letter-spacing: .14em; line-height: 1; }
     .ds-part { padding: clamp(20px, 4cqw, 32px) clamp(16px, 3.5cqw, 28px); }
     .ds-part + .ds-part { border-top: 1px solid var(--ln); }
     .ds-h { display: flex; align-items: center; gap: 10px; margin-bottom: 18px; font-size: 13px; font-weight: 600; letter-spacing: -.005em; color: var(--tx); }
@@ -321,12 +321,11 @@
 
     .ds-brand { display: grid; grid-template-columns: 1fr; gap: 8px; }
     .ds-logo { position: relative; display: grid; place-items: center; aspect-ratio: 16 / 6; border-radius: 6px; border: 1px solid var(--ln); }
-    .ds-logo .ds-word { font-size: clamp(20px, 4cqw, 28px); }
+    .ds-logo-svg { display: block; width: clamp(110px, 26cqw, 168px); height: auto; }
     .ds-logo em { position: absolute; left: 10px; bottom: 8px; font-family: var(--font-mono); font-size: 9.5px; font-style: normal; letter-spacing: .06em; text-transform: uppercase; opacity: .55; }
-    .ds-logo.is-dark { background: var(--s2); color: var(--tx); }
-    .ds-logo.is-light { background: #F5F5F6; color: #0E0D12; border-color: transparent; }
-    .ds-logo.is-coral { background: var(--co); color: #fff; border-color: transparent; }
-
+    .ds-logo.is-dark { background: var(--s2); color: #fff; --logo-inner: #1F1D2B; }
+    .ds-logo.is-light { background: #F5F5F6; color: #1F1D2B; --logo-inner: #fff; border-color: transparent; }
+    
     .ds-colors { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; }
     .ds-colors li { border: 1px solid var(--ln); border-radius: 6px; overflow: hidden; background: var(--s1); }
     .ds-sw { display: block; height: 64px; border-bottom: 1px solid var(--ln); }
@@ -403,7 +402,7 @@
     .ds-principles p { margin-top: 2px; font-size: 14px; line-height: 21px; color: var(--fg-2); }
 
     @container (min-width: 520px) {
-      .ds-brand { grid-template-columns: repeat(3, 1fr); }
+      .ds-brand { grid-template-columns: 1fr 1fr; }
       .ds-colors { grid-template-columns: repeat(3, 1fr); }
       .ds-cells { grid-template-columns: 1fr 1fr; }
       .ds-cell.is-wide { grid-column: 1 / -1; }
@@ -494,7 +493,7 @@
     <button class="lb-close" type="button" id="lb-close" aria-label="Close image viewer"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true" focusable="false"><path d="M18 6L6 18M6 6l12 12"/></svg></button>
     <figure><img id="lb-img" alt=""><figcaption id="lb-cap"></figcaption></figure>
   </dialog>
-  <script src="cases.js?v=9"></script>
+  <script src="cases.js?v=10"></script>
   <script src="app.js?v=2" defer></script>
   <script src="work.js?v=5" defer></script>
 </body>
