@@ -7,23 +7,23 @@
     pstake: {
       name: 'pSTAKE Finance',
       kicker: ['Case study', 'Web3', 'Liquid staking'],
-      title: 'Staking people can actually read.',
+      title: 'Unlocking liquidity for staked assets.',
       lede: 'pSTAKE Finance lets people stake their crypto and still use it. More than $30M in assets went through the platform. My job was to make it obvious which network you are on, which asset you picked and what that asset is doing right now, so nobody needs to be a crypto expert to use it.',
-      facts: [['Role', 'Product designer: brand, site, IA, key flows'], ['Year', '2022, Dubai'], ['Platform', 'Desktop web app'], ['Scope', 'Dashboard, network, stake, unstake, DeFi']],
+      facts: [['Role', 'Product designer: Brand, Site, IA, Key flows'], ['Year', '2022, Dubai'], ['Platform', 'Desktop Web App'], ['Scope', 'Dashboard, Network, Stake, Unstake, DeFi']],
       hero: { src: 'pstake-cs-hero.webp', w: 1497, h: 909, bare: true, alt: 'The pSTAKE stake screen: OSMO staked for stkOSMO with the exchange rate and network fee, a Liquid Stake button, APY and total value unlocked cards, a network selector showing Persistence and BNB Smart Chain, Flash and Regular unstaking methods, and a stake confirmation.' },
-      stats: [['$20–30M', 'Assets held in the wallet'], ['5', 'Product areas I designed end to end'], ['2', 'Ways to exit, each with its time and fee shown upfront']],
+      stats: [['$30M+', 'Staked assets value unlocked'], ['5', 'Product areas I designed end to end'], ['2', 'Ways to exit, each with its time and fee shown upfront']],
       sections: [
-        { label: 'Overview', title: 'One app to stake, unstake, earn and track your crypto.',
+        { label: 'Overview', title: 'One app to Stake, Unstake, Earn and track your crypto.',
           lede: 'Before pSTAKE, people jumped between staking sites, swap apps, block explorers and spreadsheets. pSTAKE put all of it in one place. Every balance shows what it is doing, and every button tells you what will happen.',
           blocks: [{ type: 'lists', groups: [
-            { title: 'What I designed', items: ['Switching between networks', 'Staking and unstaking (wait 14 days, or exit instantly for a fee)', 'The DeFi tab: creating and joining pools', 'How rewards and past activity are shown'] },
+            { title: 'What I designed', items: ['Switching between networks', 'Staking and Unstaking (wait 14 days, or exit instantly for a fee)', 'The DeFi tab: creating and joining pools', 'How rewards and past activity are shown'] },
             { title: 'Not my part', muted: true, items: ['Smart contracts', 'How APY is calculated', 'Which networks launched'] }] }] },
-        { label: 'Problem', title: 'People wanted their crypto to earn. Instead they needed five apps to do it.',
+        { label: 'Problem', title: 'People wanted their staked assets to earn. Instead they needed five apps to do it.',
           blocks: [
             { type: 'quote', text: '“I just want this token to earn something.” That one simple goal meant five apps and a manual checklist.' },
             { type: 'cards', cols: 2, title: 'Why it was hard', items: [
-              { title: 'You can’t see what your money is doing.', text: 'Available, staked, unstaking, in a pool, or earned as rewards: it all looks like “my money”, but each one behaves differently.' },
-              { title: 'Unstaking takes time.', text: 'The normal exit takes 14 days. The instant exit costs a fee. If nobody tells you that, it looks like your money has disappeared.' },
+              { title: 'You can’t see what your assets are doing.', text: 'Available, staked, unstaking, in a pool, or earned as rewards: it all looks like “my assets”, but each one behaves differently.' },
+              { title: 'Unstaking takes time.', text: 'The normal exit takes 14 days. The instant exit costs a fee. If nobody tells you that, it looks like your assets have disappeared.' },
               { title: 'Each network has its own balance.', text: 'Your assets live on a specific network. Showing one total for the whole wallet hides where things actually are.' },
               { title: 'DeFi brings new words and new risks.', text: 'Pools work differently from staking, so they can’t hide behind the same “Earn” button.' }] }] },
         { label: 'Pain points', title: 'Six moments where people got stuck.',
@@ -49,9 +49,9 @@
               images: [{ src: 'pstake-ui-stake.jpg', w: 1919, h: 1248, alt: 'The stake screen with four numbered callouts: the you-stake and you-receive panels, the exchange rate and network fee, the Liquid Stake button, and the APY and total value unlocked cards.' }],
               points: [['In, then out', 'What you stake sits above what you receive, with your balance and a MAX button.'], ['Costs before you sign', 'The rate, expected rewards and network fee all sit above the button.'], ['One main button', 'Liquid Stake is the only bold button, and it only turns on once the amount is valid.'], ['Earnings in view', 'APY and total value unlocked sit right below, so you never open another tab to check.']] },
             { type: 'decision', label: 'Decision B', title: 'Make unstaking clear, not scary.',
-              text: 'Waiting days for your money feels like losing it. So the exit screen shows the time and fee of each option before you commit.',
+              text: 'Waiting days for your assets feels like losing them. So the exit screen shows the time and fee of each option before you commit.',
               images: [{ src: 'pstake-ui-unstake.jpg', w: 1919, h: 1252, alt: 'The unstake screen with three numbered callouts: the Flash and Regular unstake method cards, the exchange rate above the methods, and a disabled Enter an amount button.' }],
-              points: [['Two clear options', 'Flash and Regular unstake are shown side by side, each with its time and fee.'], ['Rate first', 'The current exchange rate is shown first, so the amount you get back is never a surprise.'], ['No accidents', 'The button stays off until you enter an amount.']] },
+              points: [['Two clear options', 'Flash and Regular Unstake are shown side by side, each with its time and fee.'], ['Rate first', 'The current exchange rate is shown first, so the amount you get back is never a surprise.'], ['No accidents', 'The button stays off until you enter an amount.']] },
             { type: 'decision', label: 'Decision C', title: 'Always show which network you are on.',
               text: 'Your assets and actions depend on the network. So the current network and your connected wallet stay visible, and changing either one is a deliberate step.',
               images: [{ src: 'pstake-ui-menus.jpg', w: 939, h: 687, alt: 'Header menus: the network list with Persistence checked, and the wallet menu with the connected address, balance, copy address, view on explorer and disconnect.' }, { src: 'pstake-ui-wallet.jpg', w: 939, h: 687, alt: 'The connect wallet dialog, with popular wallets grouped above more wallets and the installed one tagged Detected.' }],
@@ -66,7 +66,7 @@
         { label: 'Learnings', title: 'What I would bring to any product that handles money.',
           blocks: [{ type: 'numbered', items: [
             ['Show the state, then ask for action.', 'Tell people what their money is doing before you ask what they want to do with it.'],
-            ['Make the way out clear.', 'Show the time and fee of every exit, so waiting never feels like losing money.'],
+            ['Make the way out clear.', 'Show the time and fee of every exit, so waiting never feels like losing assets.'],
             ['Keep the context visible.', 'If actions depend on the network, keep the network on screen and easy to switch.'],
             ['Don’t mix different things.', 'Staking and pools have different risks, so they need different words, not one shared “Earn” button.']] }] }
       ]
