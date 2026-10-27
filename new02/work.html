@@ -306,7 +306,27 @@
       .cs-compare { grid-template-columns: 1fr auto 1fr; align-items: stretch; }
       .cs-compare-arrow { display: grid; place-items: center; }
     }
-    @media print { .rail { display: none !important; } .content { margin: 0; padding: 0; } }
+
+    /* Zoomable images + lightbox */
+    .cs-zoom { position: relative; display: block; width: 100%; padding: 0; border: 0; background: none; cursor: zoom-in; border-radius: var(--r-md); }
+    .cs-zoom-hint { position: absolute; top: var(--s-md); right: var(--s-md); width: 32px; height: 32px; display: grid; place-items: center; border: 1px solid var(--line-1); border-radius: var(--r-md); background: var(--bg); color: var(--fg); opacity: 0; transform: translateY(-2px); transition: opacity .15s var(--ease-out), transform .15s var(--ease-out); }
+    .cs-zoom:hover .cs-zoom-hint, .cs-zoom:focus-visible .cs-zoom-hint { opacity: 1; transform: none; }
+    @media (hover: none) { .cs-zoom-hint { opacity: 1; transform: none; } }
+    .cs-hero-figure.is-bare img { border: 0; background: none; }
+    .cs-block-title + .cs-cards { margin-top: var(--s-md); }
+    .lb { width: 100vw; height: 100vh; height: 100dvh; max-width: none; max-height: none; margin: 0; padding: 0; border: 0; background: rgba(10, 10, 12, .98); color: #fafafa; overflow: hidden; }
+    .lb::backdrop { background: rgba(8, 8, 10, .6); }
+    .lb[open] { display: grid; place-items: center; animation: lb-in .2s var(--ease-out); }
+    @keyframes lb-in { from { opacity: 0; } to { opacity: 1; } }
+    .lb figure { display: flex; flex-direction: column; align-items: center; gap: var(--s-md); max-width: 92vw; padding: 64px 0 24px; }
+    .lb img { display: block; max-width: 92vw; max-height: calc(100dvh - 150px); width: auto; height: auto; object-fit: contain; border-radius: var(--r-md); }
+    .lb figcaption { max-width: 60em; font-size: 13px; line-height: 19.5px; color: #c9c9ce; text-align: center; }
+    .lb-close { position: fixed; top: var(--s-lg); right: var(--s-lg); width: 44px; height: 44px; display: grid; place-items: center; border: 1px solid rgba(255,255,255,.22); border-radius: var(--r-md); background: rgba(16,16,18,.7); color: #fafafa; cursor: pointer; transition: background-color .15s var(--ease-out), border-color .15s var(--ease-out); }
+    .lb-close:hover { background: #2c2c30; border-color: rgba(255,255,255,.5); }
+    .lb-close:focus-visible { outline: 2px solid #fafafa; outline-offset: 2px; }
+    body.lb-open { overflow: hidden; }
+    @media (prefers-reduced-motion: reduce) { .lb[open] { animation: none; } }
+    @media print { .lb { display: none !important; } .rail { display: none !important; } .content { margin: 0; padding: 0; } }
   </style>
 </head>
 <body>
@@ -332,8 +352,12 @@
       <nav class="cs-next" id="cs-next" aria-label="More case studies"></nav>
     </main>
   </div>
-  <script src="cases.js?v=1"></script>
+  <dialog class="lb" id="lb" aria-label="Image viewer">
+    <button class="lb-close" type="button" id="lb-close" aria-label="Close image viewer"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true" focusable="false"><path d="M18 6L6 18M6 6l12 12"/></svg></button>
+    <figure><img id="lb-img" alt=""><figcaption id="lb-cap"></figcaption></figure>
+  </dialog>
+  <script src="cases.js?v=2"></script>
   <script src="app.js?v=2" defer></script>
-  <script src="work.js?v=2" defer></script>
+  <script src="work.js?v=3" defer></script>
 </body>
 </html>

@@ -8,21 +8,21 @@
       name: 'pSTAKE Finance',
       kicker: ['Case study', 'Web3', 'Liquid staking'],
       title: 'Staking people can actually read.',
-      lede: 'pSTAKE Finance is a liquid staking wallet that held $20–30M in assets under management. I shaped how holders see an asset, act on it and know what state it is in, without needing to become protocol experts.',
-      facts: [['Role', 'Product designer'], ['Year', '2022, Dubai'], ['Platform', 'Desktop web app'], ['Scope', 'Dashboard, network, stake, unstake, DeFi']],
-      hero: { src: 'pstake-cs-hero.jpg', w: 1440, h: 1024, alt: 'The pSTAKE stake screen: OSMO staked for stkOSMO with the exchange rate and network fee, a Liquid Stake button, APY and total value unlocked cards, a network selector, the chosen unstaking method and a stake confirmation.' },
+      lede: 'PSTAKE Finance is a liquid staking protocol that held more than $30M in assets as value unlocked. I shaped how holders see the network, what asset is selected and what state it is in, without needing to become protocol experts.',
+      facts: [['Role', 'Product designer: brand, site, IA, key flows'], ['Year', '2022, Dubai'], ['Platform', 'Desktop web app'], ['Scope', 'Dashboard, network, stake, unstake, DeFi']],
+      hero: { src: 'pstake-cs-hero.webp', w: 1497, h: 909, bare: true, alt: 'The pSTAKE stake screen: OSMO staked for stkOSMO with the exchange rate and network fee, a Liquid Stake button, APY and total value unlocked cards, a network selector showing Persistence and BNB Smart Chain, Flash and Regular unstaking methods, and a stake confirmation.' },
       stats: [['$20–30M', 'Assets under management held in the wallet'], ['5', 'Product surfaces owned end to end'], ['2', 'Exit paths made explicit, with time and fee']],
       sections: [
         { label: 'Overview', title: 'One place to hold, stake, unstake, use DeFi and read history.',
           lede: 'Holders were stitching together staking sites, swaps, explorers and spreadsheets. pSTAKE brought it into one product with the chain context built in, so every balance has a clear state and every action a clear outcome.',
           blocks: [{ type: 'lists', groups: [
-            { title: 'What I owned', items: ['Dashboard and portfolio view', 'Network switch', 'Stake and unstake, 14-day or instant exit', 'DeFi tab: create and add to pools', 'How rewards and activity show up'] },
+            { title: 'What I owned', items: ['Network switch', 'Stake and unstake, 14-day or instant exit', 'DeFi tab: create and add to pools', 'How rewards and activity show up'] },
             { title: 'Outside my scope', muted: true, items: ['Smart contracts', 'APY calculation', 'Which chains launched'] }] }] },
-        { label: 'Problem', title: 'Holders wanted a token working, not five apps.',
+        { label: 'Problem', title: 'Holders wanted their staked assets working, not idle assets or five apps.',
           blocks: [
-            { type: 'quote', text: '“I want this token working” meant five apps and a manual checklist. Too many tools for one intention.', cite: 'The job every holder came with' },
-            { type: 'cards', cols: 2, items: [
-              { title: 'Blockchain state is invisible.', text: 'Available, staked, unstaking, pooled and rewards all feel like “my money”, but each behaves differently.' },
+            { type: 'quote', text: '“I want this token working” meant five apps and a manual checklist. Too many tools for one intention.' },
+            { type: 'cards', cols: 2, title: 'The job every holder came with', items: [
+              { title: 'Blockchain state is invisible.', text: 'Available, staked, unstaking, pooled and rewards all feel like “my money”, but user assets stay idle on a staking platform until they are unstaked.' },
               { title: 'Unstaking is a process, not a button.', text: 'The standard exit takes 14 days and the instant exit costs a fee. Without that context, people assume their funds are lost.' },
               { title: 'A chain switch changes everything.', text: 'Assets and actions belong to a network. A single global wallet balance hides that.' },
               { title: 'DeFi adds vocabulary and risk.', text: 'Pools behave differently from staking, so they cannot share one “Earn” button with no explanation.' }] }] },
@@ -56,12 +56,13 @@
               text: 'Assets and actions belong to a network, so the active chain and the connected wallet stay visible, and every change is one deliberate step away.',
               images: [{ src: 'pstake-ui-menus.jpg', w: 939, h: 687, alt: 'Header menus: the network list with Persistence checked, and the wallet menu with the connected address, balance, copy address, view on explorer and disconnect.' }, { src: 'pstake-ui-wallet.jpg', w: 939, h: 687, alt: 'The connect wallet dialog, with popular wallets grouped above more wallets and the installed one tagged Detected.' }],
               points: [['Active network, always visible', 'The header chip names the chain, and the menu marks the one in use with a check.'], ['Wallet actions in one place', 'Balance, copy and explorer sit together. Disconnect stays apart.'], ['Connect without guessing', 'Wallets are grouped, and the one already installed is tagged Detected.']] }] },
-        { label: 'Outcome', title: 'A wallet people trusted with $20–30M.',
-          lede: 'pSTAKE held $20–30M in assets under management. Each of the six stuck moments now has a direct answer on screen.',
-          blocks: [{ type: 'cards', cols: 3, items: [
-            { title: 'Balances by state', text: 'Available, staked, unstaking, pooled and rewards are shown separately, so “my money” always has a status.' },
+        { label: 'Outcome', title: 'A platform people trusted to unlock more than $30M in assets.',
+          lede: 'pSTAKE helped users unlock more than $30M in staked assets. Each of the six stuck moments now has a direct answer on screen.',
+          blocks: [{ type: 'cards', cols: 2, items: [
+            { title: 'Balances by state', text: 'Available, staked, unstaking, pooled and rewards are shown separately, so “my assets” always has a status.' },
             { title: 'Exits with time and fee', text: 'Both unstaking paths state how long they take and what they cost before the user signs.' },
-            { title: 'Network always in view', text: 'The active chain and wallet sit in the header, so no action happens on the wrong network.' }] }] },
+            { title: 'Network always in view', text: 'The active chain and wallet sit in the header, so no action happens on the wrong network.' },
+            { title: 'DeFi with confidence', text: 'Users can now liquid stake their assets, take part in DeFi and earn rewards safely.' }] }] },
         { label: 'Learnings', title: 'What I would carry into any trust-heavy product.',
           blocks: [{ type: 'numbered', items: [
             ['State before action.', 'Show what an asset is doing (available, staked, unstaking, pooled) before asking what to do with it.'],
@@ -209,8 +210,11 @@
   /* ---------- Renderer ---------- */
   function esc(s) { return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;'); }
   function img(i, lazy) {
-    return '<img src="' + IMG + i.src + '" width="' + i.w + '" height="' + i.h + '" alt="' + esc(i.alt) + '" decoding="async"' + (lazy ? ' loading="lazy"' : ' fetchpriority="high"') + '>';
+    return '<button type="button" class="cs-zoom" data-full="' + IMG + i.src + '" aria-label="View larger image">' +
+      '<img src="' + IMG + i.src + '" width="' + i.w + '" height="' + i.h + '" alt="' + esc(i.alt) + '" decoding="async"' + (lazy ? ' loading="lazy"' : ' fetchpriority="high"') + '>' +
+      '<span class="cs-zoom-hint" aria-hidden="true">' + ZOOM + '</span></button>';
   }
+  var ZOOM = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg>';
   var CHECK = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>';
   var DASH = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true" focusable="false"><path d="M6 12h12"/></svg>';
   var ARROW = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 12h14M13 6l6 6-6 6"/></svg>';
@@ -224,9 +228,9 @@
         }).join('') + '</ul></div>';
       }).join('') + '</div>';
     },
-    quote: function (b) { return '<blockquote class="cs-quote"><p>' + b.text + '</p><footer>' + b.cite + '</footer></blockquote>'; },
+    quote: function (b) { return '<blockquote class="cs-quote"><p>' + b.text + '</p>' + (b.cite ? '<footer>' + b.cite + '</footer>' : '') + '</blockquote>'; },
     cards: function (b) {
-      return '<ul class="cs-cards c' + b.cols + '">' + b.items.map(function (c) {
+      return (b.title ? '<p class="cs-label cs-block-title">' + b.title + '</p>' : '') + '<ul class="cs-cards c' + b.cols + '">' + b.items.map(function (c) {
         return '<li class="cs-card">' + (c.tag ? '<p class="cs-label">' + c.tag + '</p>' : '') +
           (c.title ? '<h3>' + c.title + '</h3>' : '') + (c.text ? '<p>' + c.text + '</p>' : '') +
           (c.list ? '<ul class="cs-dots">' + c.list.map(function (t) { return '<li>' + t + '</li>'; }).join('') + '</ul>' : '') +
@@ -278,7 +282,7 @@
     h += '<header class="cs-hero"><p class="cs-kicker">' + c.kicker.map(function (k) { return '<span>' + k + '</span>'; }).join('') + '</p>' +
       '<h1 id="cs-title" tabindex="-1">' + c.title + '</h1><p class="cs-intro">' + c.lede + '</p>' +
       '<dl class="cs-facts">' + c.facts.map(function (f) { return '<div><dt>' + f[0] + '</dt><dd>' + f[1] + '</dd></div>'; }).join('') + '</dl></header>';
-    h += '<figure class="cs-figure cs-hero-figure">' + img(c.hero, false) + '</figure>';
+    h += '<figure class="cs-figure cs-hero-figure' + (c.hero.bare ? ' is-bare' : '') + '">' + img(c.hero, false) + '</figure>';
     h += '<ul class="cs-stats" aria-label="Key figures">' + c.stats.map(function (s) { return '<li><strong>' + s[0] + '</strong><span>' + s[1] + '</span></li>'; }).join('') + '</ul>';
     c.sections.forEach(function (s, i) {
       var id = key + '-s' + (i + 1);

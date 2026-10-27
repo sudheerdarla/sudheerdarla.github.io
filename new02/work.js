@@ -40,3 +40,32 @@
   window.addEventListener('hashchange', function () { show(keyFromHash(), true); });
   show(keyFromHash(), false);
 })();
+
+/* Lightbox */
+(function () {
+  var lb = document.getElementById('lb');
+  if (!lb || typeof lb.showModal !== 'function') return;
+  var img = document.getElementById('lb-img');
+  var cap = document.getElementById('lb-cap');
+  var trigger = null;
+  function close() { if (lb.open) lb.close(); }
+  document.addEventListener('click', function (e) {
+    var b = e.target.closest && e.target.closest('.cs-zoom');
+    if (!b) return;
+    var src = b.querySelector('img');
+    trigger = b;
+    img.src = b.getAttribute('data-full');
+    img.alt = src.alt;
+    cap.textContent = src.alt;
+    lb.showModal();
+    document.body.classList.add('lb-open');
+    document.getElementById('lb-close').focus();
+  });
+  document.getElementById('lb-close').addEventListener('click', close);
+  lb.addEventListener('click', function (e) { if (e.target === lb || e.target.tagName === 'FIGURE') close(); });
+  lb.addEventListener('close', function () {
+    document.body.classList.remove('lb-open');
+    img.removeAttribute('src');
+    if (trigger) { trigger.focus({ preventScroll: true }); trigger = null; }
+  });
+})();
