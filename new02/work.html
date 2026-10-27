@@ -118,13 +118,13 @@
     .side { flex: 1; display: flex; flex-direction: column; justify-content: center; }
     .side-title { font-family: var(--font-mono); font-size: 11px; line-height: 16.5px; letter-spacing: .04em; text-transform: uppercase; color: var(--muted); margin-bottom: var(--s-md); }
     .side ul { border-top: 1px solid var(--line); }
-    .side a { display: block; padding: var(--s-md) var(--s-md); border-bottom: 1px solid var(--line); border-left: 2px solid transparent; transition: border-color .15s var(--ease-out), background-color .15s var(--ease-out); }
-    .side a b { display: block; font-size: 14px; line-height: 20px; font-weight: 600; letter-spacing: .02em; text-transform: uppercase; color: var(--fg-2); transition: color .15s var(--ease-out); }
-    .side a span { display: block; margin-top: 2px; font-size: 12px; line-height: 18px; color: var(--muted); }
-    .side a:hover { background: var(--bg-1); }
-    .side a:hover b { color: var(--fg); }
-    .side a[aria-current="page"] { border-left-color: var(--fg); background: var(--bg); }
-    .side a[aria-current="page"] b { color: var(--fg); font-weight: 700; }
+    .side a[data-cs] { display: block; padding: var(--s-md) var(--s-md); border-bottom: 1px solid var(--line); border-left: 2px solid transparent; transition: border-color .15s var(--ease-out), background-color .15s var(--ease-out); }
+    .side a[data-cs] b { display: block; font-size: 14px; line-height: 20px; font-weight: 600; letter-spacing: .02em; text-transform: uppercase; color: var(--fg-2); transition: color .15s var(--ease-out); }
+    .side a[data-cs] span { display: block; margin-top: 2px; font-size: 12px; line-height: 18px; color: var(--muted); }
+    .side a[data-cs]:hover { background: var(--bg-1); }
+    .side a[data-cs]:hover b { color: var(--fg); }
+    .side a[data-cs][aria-current="page"] { border-left-color: var(--fg); background: var(--bg); }
+    .side a[data-cs][aria-current="page"] b { color: var(--fg); font-weight: 700; }
     .rail .toggle { align-self: flex-start; }
 
     .content { margin-left: calc(var(--rail-x) + var(--rail-w) + var(--rail-gap)); max-width: 880px; padding: var(--s-2xl) var(--s-2xl) var(--s-4xl) 0; }
@@ -137,11 +137,11 @@
       .side-title { display: none; }
       .side ul { display: flex; gap: var(--s-xs); border: 0; overflow-x: auto; scrollbar-width: none; }
       .side ul::-webkit-scrollbar { display: none; }
-      .side a { border: 1px solid var(--line); border-radius: var(--r-md); padding: 6px 12px; white-space: nowrap; }
-      .side a span { display: none; }
-      .side a b { font-size: 12px; }
-      .side a[aria-current="page"] { background: var(--accent); border-color: var(--accent); }
-      .side a[aria-current="page"] b { color: var(--accent-ink); }
+      .side a[data-cs] { border: 1px solid var(--line); border-radius: var(--r-md); padding: 6px 12px; white-space: nowrap; }
+      .side a[data-cs] span { display: none; }
+      .side a[data-cs] b { font-size: 12px; }
+      .side a[data-cs][aria-current="page"] { background: var(--accent); border-color: var(--accent); }
+      .side a[data-cs][aria-current="page"] b { color: var(--accent-ink); }
       .rail .toggle { align-self: center; }
       .content { margin: 0; max-width: none; padding: 112px var(--s-lg) var(--s-3xl); }
     }
@@ -421,12 +421,6 @@
     }
     /* Micro-interactions */
     .side { position: relative; }
-    .side-ind { position: absolute; left: 0; top: 0; width: 2px; height: 0; background: var(--fg); opacity: 0; pointer-events: none;
-      transition: transform .38s var(--ease-in-out), height .38s var(--ease-in-out), opacity .2s; }
-    .side.has-ind .side-ind { opacity: 1; }
-    .side.has-ind a[aria-current="page"] { border-left-color: transparent; }
-    .side a b { transition: color .15s var(--ease-out), transform .2s var(--ease-out); }
-    .side a:hover b { transform: translateX(2px); }
     .cs-host { transition: opacity .16s var(--ease-out), transform .16s var(--ease-out); }
     .cs-host.swap { opacity: 0; transform: translateY(4px); }
     @keyframes cs-rise { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
@@ -438,11 +432,21 @@
     .cs-host.enter .cs-stats { animation-delay: .26s; }
     .cs-zoom img { transition: transform .4s var(--ease-out); }
     .cs-zoom:hover img { transform: scale(1.006); }
-    @media (max-width: 960px) { .side-ind { display: none; } .side.has-ind a[aria-current="page"] { border-left-color: var(--accent); } }
     @media (prefers-reduced-motion: reduce) {
-      .side-ind, .cs-host, .side a b { transition: none; }
+      .cs-host { transition: none; }
       .cs-host.enter .cs-hero > *, .cs-host.enter .cs-hero-figure, .cs-host.enter .cs-stats { animation: none; }
     }
+    /* Section submenu under the active case study */
+    .side { overflow-y: auto; scrollbar-width: none; }
+    .side::-webkit-scrollbar { display: none; }
+    .side-sub { padding: var(--s-xs) 0 var(--s-md) var(--s-md); border-bottom: 1px solid var(--line); }
+    .side-sub a { display: flex; align-items: baseline; gap: 10px; padding: 5px 0 5px var(--s-md); border-left: 1px solid var(--line); font-size: 13px; line-height: 18px; color: var(--muted); transition: color .15s var(--ease-out), border-color .15s var(--ease-out); }
+    .side-sub a em { flex: none; font-style: normal; font-family: var(--font-mono); font-size: 10.5px; color: var(--muted-2); }
+    .side-sub a:hover { color: var(--fg); }
+    .side-sub a.is-on { color: var(--fg); font-weight: 600; border-left-color: var(--fg); }
+    .side-sub a.is-on em { color: var(--fg-1); }
+    .side li:has(.side-sub) > a[data-cs] { border-bottom-color: transparent; }
+    @media (max-width: 960px) { .side-sub { display: none; } }
     /* Zoomable images + lightbox */
     .cs-zoom { position: relative; display: block; width: 100%; padding: 0; border: 0; background: none; cursor: zoom-in; border-radius: var(--r-md); }
     .cs-zoom-hint { position: absolute; top: var(--s-md); right: var(--s-md); width: 32px; height: 32px; display: grid; place-items: center; border: 1px solid var(--line-1); border-radius: var(--r-md); background: var(--bg); color: var(--fg); opacity: 0; transform: translateY(-2px); transition: opacity .15s var(--ease-out), transform .15s var(--ease-out); }
@@ -476,7 +480,6 @@
         <li><a href="#comdex" data-cs="comdex"><b>Comdex</b><span>Commodity trading platform</span></a></li>
         <li><a href="#captl" data-cs="captl"><b>CAPTL</b><span>Investor portfolio platform</span></a></li>
       </ul>
-      <span class="side-ind" aria-hidden="true"></span>
     </nav>
     <button class="toggle" type="button" id="theme" aria-pressed="false" aria-label="Switch to dark mode">
       <span class="toggle-label" id="theme-label">Dark mode</span>
@@ -495,6 +498,6 @@
   </dialog>
   <script src="cases.js?v=10"></script>
   <script src="app.js?v=2" defer></script>
-  <script src="work.js?v=5" defer></script>
+  <script src="work.js?v=6" defer></script>
 </body>
 </html>

@@ -7,21 +7,49 @@
   var current = null;
   var ARROW = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 12h14M13 6l6 6-6 6"/></svg>';
 
-  var side = document.querySelector('.side');
-  var ind = document.querySelector('.side-ind');
-  function moveInd() {
-    if (!side || !ind) return;
-    var a = side.querySelector('a[aria-current="page"]');
-    if (!a || window.innerWidth <= 960) { side.classList.remove('has-ind'); return; }
-    var sr = side.getBoundingClientRect(), ar = a.getBoundingClientRect();
-    ind.style.transform = 'translateY(' + (ar.top - sr.top) + 'px)';
-    ind.style.height = ar.height + 'px';
-    side.classList.add('has-ind');
+  var spy = null;
+  function buildSub(key) {
+    var old = document.querySelector('.side-sub'); if (old) old.remove();
+    if (spy) { spy.disconnect(); spy = null; }
+    var li = document.querySelector('.side a[data-cs="' + key + '"]').parentNode;
+    var ul = document.createElement('ul');
+    ul.className = 'side-sub';
+    ul.setAttribute('aria-label', window.CASES[key].name + ' sections');
+    window.CASES[key].sections.forEach(function (s, i) {
+      var n = (i < 9 ? '0' : '') + (i + 1), id = key + '-s' + (i + 1);
+      var item = document.createElement('li');
+      item.innerHTML = '<a href="#' + id + '" data-sec="' + id + '"><em>' + n + '</em><span>' + s.label + '</span></a>';
+      ul.appendChild(item);
+    });
+    li.appendChild(ul);
+    var links = ul.querySelectorAll('a');
+    links.forEach(function (a) {
+      a.addEventListener('click', function (e) {
+        e.preventDefault();
+        var t = document.getElementById(a.getAttribute('data-sec'));
+        if (!t) return;
+        var sec = t.closest('section');
+        sec.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'start' });
+        t.setAttribute('tabindex', '-1'); t.focus({ preventScroll: true });
+      });
+    });
+    if ('IntersectionObserver' in window) {
+      var map = {};
+      links.forEach(function (a) { map[a.getAttribute('data-sec')] = a; });
+      spy = new IntersectionObserver(function (es) {
+        es.forEach(function (e) {
+          if (e.isIntersecting) {
+            links.forEach(function (a) { a.classList.remove('is-on'); a.removeAttribute('aria-current'); });
+            var a = map[e.target.querySelector('h2').id];
+            if (a) { a.classList.add('is-on'); a.setAttribute('aria-current', 'location'); }
+          }
+        });
+      }, { rootMargin: '-35% 0px -60% 0px' });
+      document.querySelectorAll('#cs-host .cs-sec').forEach(function (s) { spy.observe(s); });
+    }
   }
-  window.addEventListener('resize', moveInd);
-  if (document.fonts && document.fonts.ready) document.fonts.ready.then(moveInd);
 
-  function keyFromHash() { var k = (location.hash || '').slice(1); return window.CASES[k] ? k : 'pstake'; }
+  function keyFromHash() { var k = (location.hash || '').slice(1).split('-')[0]; return window.CASES[k] ? k : (current || 'pstake'); }
 
   function paint(key) {
     host.innerHTML = window.renderCase(key);
@@ -32,7 +60,7 @@
       if (a.getAttribute('data-cs') === key) a.setAttribute('aria-current', 'page'); else a.removeAttribute('aria-current');
     });
     document.title = window.CASES[key].name + ' case study — Sudheer Darla';
-    moveInd();
+    buildSub(key);
     if (!reduce) {
       host.classList.remove('enter'); void host.offsetWidth; host.classList.add('enter');
       clearTimeout(paint.t); paint.t = setTimeout(function () { host.classList.remove('enter'); }, 1000);
