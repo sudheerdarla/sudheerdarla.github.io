@@ -26,7 +26,7 @@
       var t = null;
       try { t = localStorage.getItem('theme'); } catch (e) {}
       if (t !== 'light' && t !== 'dark') {
-        t = window.matchMedia && matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+        t = 'light';
       }
       document.documentElement.setAttribute('data-theme', t);
     })();
@@ -425,7 +425,7 @@
     @media (prefers-reduced-motion: reduce) { .lb[open] { animation: none; } }
     @media print { .lb { display: none !important; } .rail { display: none !important; } .content { margin: 0; padding: 0; } }
   </style>
-  <link rel="stylesheet" href="rail.css?v=2">
+  <link rel="stylesheet" href="rail.css?v=4">
 </head>
 <body>
   <a class="skip" href="#cs-main">Skip to case study</a>
@@ -455,7 +455,7 @@
     <figure><img id="lb-img" alt=""><figcaption id="lb-cap"></figcaption></figure>
   </dialog>
   <script src="cases.js?v=10"></script>
-  <script src="app.js?v=2" defer></script>
+  <script src="app.js?v=4" defer></script>
   <script src="work.js?v=6" defer></script>
 </body>
 </html>

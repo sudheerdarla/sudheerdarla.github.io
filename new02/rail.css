@@ -20,7 +20,7 @@
 
 @media (max-width: 960px) {
   .rail { left: 0; right: 0; bottom: auto; width: auto; padding: var(--s-sm) var(--s-lg) 0; flex-direction: row; flex-wrap: wrap; align-items: center;
-    background: color-mix(in srgb, var(--bg) 92%, transparent); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border-bottom: 1px solid var(--line); }
+    background: var(--bg); border-bottom: 1px solid var(--line); }
   .side { order: 3; flex: 0 0 100%; display: block; padding: var(--s-sm) 0; }
   .side-title { display: none; }
   .side ul { display: flex; gap: var(--s-xs); border: 0; overflow-x: auto; scrollbar-width: none; }
@@ -30,7 +30,7 @@
   .side .side-link b { font-size: 12px; }
   .side .side-link[aria-current] { background: var(--accent); border-color: var(--accent); }
   .side .side-link[aria-current] b { color: var(--accent-ink); }
-  .rail .toggle { align-self: center; }
+  .rail .toggle { position: fixed; left: var(--s-lg); bottom: var(--s-lg); padding: 6px 10px; border: 1px solid var(--line); border-radius: var(--r-md); background: var(--bg); }
 }
 
 /* Indented submenu */

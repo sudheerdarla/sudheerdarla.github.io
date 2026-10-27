@@ -26,7 +26,7 @@
       var t = null;
       try { t = localStorage.getItem('theme'); } catch (e) {}
       if (t !== 'light' && t !== 'dark') {
-        t = window.matchMedia && matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+        t = 'light';
       }
       document.documentElement.setAttribute('data-theme', t);
     })();
@@ -100,6 +100,9 @@
     .col { max-width: 720px; margin: 0 auto; padding: 0 var(--s-2xl); }
 
     /* Top bar + theme toggle */
+    /* Theme toggle, fixed bottom left (same spot as on the case study page) */
+    .toggle-fixed { position: fixed; z-index: 20; left: max(24px, calc((100vw - 1160px) / 2)); bottom: var(--s-2xl); }
+    @media (max-width: 960px) { .toggle-fixed { left: var(--s-lg); bottom: var(--s-lg); padding: 6px 10px; border: 1px solid var(--line); border-radius: var(--r-md); background: var(--bg); } }
     .toggle { display: inline-flex; align-items: center; gap: var(--s-sm); min-height: 32px; padding: 0 2px; }
     .toggle-label { font-family: var(--font-mono); font-size: 10px; line-height: 15px; letter-spacing: .04em; color: var(--muted); text-transform: uppercase; }
     .track { position: relative; width: 30px; height: 16px; border-radius: var(--r-md); background: var(--bg-3);
@@ -111,7 +114,7 @@
     .toggle:hover .toggle-label { color: var(--fg); }
 
     /* Header */
-    .header { display: flex; align-items: flex-end; gap: var(--s-2xl); padding-top: var(--s-3xl); }
+    .header { display: flex; align-items: flex-end; gap: var(--s-2xl); padding-top: var(--s-4xl); }
     .header-text { flex: 1; min-width: 0; }
     .avatar { width: 96px; height: 96px; border-radius: 50%; object-fit: cover; background: var(--bg-3); border: 2px solid #ffffff; flex: none; }
     .name { font-size: 28px; line-height: 28.56px; font-weight: 700; letter-spacing: -0.84px; }
@@ -188,48 +191,16 @@
       .row { flex-direction: column; align-items: flex-start; gap: var(--s-sm); }
       .skills { grid-template-columns: 1fr; }
     }
-
-    /* Left rail layout */
-    @media (min-width: 961px) {
-      .col { margin-left: calc(var(--rail-x) + var(--rail-w) + var(--rail-gap)); margin-right: 0; padding: var(--s-2xl) var(--s-2xl) 0 0; }
-      .header { padding-top: var(--s-lg); }
-    }
-    @media (max-width: 960px) { .col { padding-top: 104px; } }
-    .sec { scroll-margin-top: var(--s-2xl); }
-    @media (max-width: 960px) { .sec, .header { scroll-margin-top: 112px; } }
-    @media print { body { background: #fff; color: #000; } .rail, .skip, .slot-tag { display: none !important; } .sec-body { display: block !important; } .slot { break-inside: avoid; } .sec-head .chev { display: none; } }
+    @media print { body { background: #fff; color: #000; } .toggle-fixed, .skip, .slot-tag { display: none !important; } .sec-body { display: block !important; } .slot { break-inside: avoid; } .sec-head .chev { display: none; } }
     @media (prefers-reduced-motion: reduce) { *, *::before, *::after { transition-duration: .01ms !important; scroll-behavior: auto !important; } }
   </style>
-  <link rel="stylesheet" href="rail.css?v=2">
 </head>
 <body>
   <a class="skip" href="#main">Skip to content</a>
-  <aside class="rail" aria-label="Site navigation">
-    <a class="back" href="#top">Sudheer Darla</a>
-    <nav class="side" aria-label="On this page">
-      <p class="side-title" aria-hidden="true">Portfolio</p>
-      <ul>
-        <li><a class="side-link" href="#projects" data-sec="projects"><b>Projects</b><span>Three case studies</span></a>
-          <ul class="side-sub" aria-label="Case studies">
-            <li><a href="work.html#pstake"><em>01</em><span>pSTAKE Finance</span></a></li>
-            <li><a href="work.html#comdex"><em>02</em><span>Comdex</span></a></li>
-            <li><a href="work.html#captl"><em>03</em><span>CAPTL</span></a></li>
-          </ul>
-        </li>
-        <li><a class="side-link" href="#experience" data-sec="experience"><b>Experience</b><span>Five roles, 2018 to 2026</span></a></li>
-        <li><a class="side-link" href="#education" data-sec="education"><b>Education</b><span>B.Tech and diploma</span></a></li>
-        <li><a class="side-link" href="#skills" data-sec="skills"><b>Skills</b><span>Design and engineering</span></a></li>
-      </ul>
-    </nav>
-    <button class="toggle" type="button" id="theme" aria-pressed="false" aria-label="Switch to dark mode">
-      <span class="toggle-label" id="theme-label">Dark mode</span>
-      <span class="track" aria-hidden="true"><span class="knob"></span></span>
-    </button>
-  </aside>
   <div class="page">
     <main id="main" class="main">
       <div class="col">
-        <header class="header" id="top">
+        <header class="header">
           <img class="avatar" width="96" height="96" fetchpriority="high" decoding="async" alt="Portrait of Sudheer Darla" src="../img/avatar-sudheer.jpg">
           <div class="header-text">
             <h1 class="name">Sudheer Darla</h1>
@@ -251,7 +222,7 @@
         </ul>
 
         <div class="sections">
-          <section class="sec open" id="projects" data-acc>
+          <section class="sec open" data-acc>
             <h2 class="sec-title"><button class="sec-head" type="button" id="h-projects" aria-expanded="true" aria-controls="p-projects">Projects <svg class="chev" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M6 15l6-6 6 6"/></svg></button></h2>
             <div class="sec-body" id="p-projects" role="region" aria-labelledby="h-projects">
               <div class="projects">
@@ -283,7 +254,7 @@
             </div>
           </section>
 
-          <section class="sec" id="experience" data-acc>
+          <section class="sec" data-acc>
             <h2 class="sec-title"><button class="sec-head" type="button" id="h-experience" aria-expanded="false" aria-controls="p-experience">Experience <svg class="chev" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M6 15l6-6 6 6"/></svg></button></h2>
             <div class="sec-body" id="p-experience" role="region" aria-labelledby="h-experience">
               <div class="row"><div class="row-left"><div class="badge" aria-hidden="true">IV</div><div><h3>Independent ventures — Hyderabad</h3><div class="meta">Founder</div></div></div><div class="dates">2023 – 2026</div></div>
@@ -294,7 +265,7 @@
             </div>
           </section>
 
-          <section class="sec" id="education" data-acc>
+          <section class="sec" data-acc>
             <h2 class="sec-title"><button class="sec-head" type="button" id="h-education" aria-expanded="false" aria-controls="p-education">Education <svg class="chev" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M6 15l6-6 6 6"/></svg></button></h2>
             <div class="sec-body" id="p-education" role="region" aria-labelledby="h-education">
               <div class="edu"><h3>Mahatma Gandhi Institute of Technology, Hyderabad</h3><div class="meta">Bachelor of Technology, Computer Science</div><div class="meta">2013 – 2016</div></div>
@@ -302,7 +273,7 @@
             </div>
           </section>
 
-          <section class="sec" id="skills" data-acc>
+          <section class="sec" data-acc>
             <h2 class="sec-title"><button class="sec-head" type="button" id="h-skills" aria-expanded="false" aria-controls="p-skills">Skills <svg class="chev" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M6 15l6-6 6 6"/></svg></button></h2>
             <div class="sec-body" id="p-skills" role="region" aria-labelledby="h-skills">
               <div class="skills">
@@ -320,6 +291,10 @@
     </main>
   </div>
 
-    <script src="app.js?v=3" defer></script>
+    <button class="toggle toggle-fixed" type="button" id="theme" aria-pressed="false" aria-label="Switch to dark mode">
+            <span class="toggle-label" id="theme-label">Dark mode</span>
+            <span class="track" aria-hidden="true"><span class="knob"></span></span>
+          </button>
+    <script src="app.js?v=4" defer></script>
 </body>
 </html>
