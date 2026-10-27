@@ -1,0 +1,395 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Saifuro Console — concept</title>
+<meta name="description" content="Concept prototype of an agent-payments control console, by Sudheer Darla.">
+<meta name="robots" content="noindex">
+<link rel="icon" href="../favicon-32.png">
+<style>
+:root{
+  --bg:#F6F7F9; --panel:#FFFFFF; --line:#E4E7EC; --ink:#0F1E33; --ink2:#5B6577; --ink3:#8A93A3;
+  --accent:#1D4ED8; --accent-soft:#E8EEFD;
+  --ok:#15803D; --ok-soft:#E7F5EC; --warn:#B45309; --warn-soft:#FDF3E3; --bad:#B42318; --bad-soft:#FDECEA;
+  --mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+  --r:10px;
+}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{font:14px/1.5 -apple-system,BlinkMacSystemFont,"Segoe UI",Inter,Roboto,sans-serif;color:var(--ink);background:var(--bg)}
+button,input,select{font:inherit;color:inherit}
+a{color:var(--accent)}
+.note{background:var(--ink);color:#C9D2E0;font-size:12px;text-align:center;padding:6px 16px}
+.note a{color:#fff}
+
+.app{display:grid;grid-template-columns:220px 1fr;min-height:calc(100vh - 30px)}
+.side{background:var(--panel);border-right:1px solid var(--line);padding:20px 12px;display:flex;flex-direction:column;gap:2px}
+.brand{font-weight:700;font-size:16px;padding:0 10px 18px;display:flex;align-items:center;gap:8px}
+.brand i{width:20px;height:20px;border-radius:6px;background:var(--ink);display:inline-block}
+.nav{display:flex;align-items:center;justify-content:space-between;padding:8px 10px;border-radius:8px;color:var(--ink2);text-decoration:none}
+.nav:hover{background:var(--bg)}
+.nav.on{background:var(--accent-soft);color:var(--accent);font-weight:600}
+.count{font-size:11px;background:var(--warn-soft);color:var(--warn);border-radius:999px;padding:0 7px;font-weight:600}
+.side .foot{margin-top:auto;padding:10px;font-size:12px;color:var(--ink3)}
+
+main{padding:28px 32px;max-width:1100px;width:100%}
+.head{display:flex;align-items:flex-end;justify-content:space-between;gap:16px;margin-bottom:20px;flex-wrap:wrap}
+h1{font-size:22px;margin:0}
+.sub{color:var(--ink2);margin:4px 0 0}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:var(--r);padding:18px}
+.grid{display:grid;gap:16px}
+.g4{grid-template-columns:repeat(4,1fr)}
+.g2{grid-template-columns:1.2fr 1fr}
+.stat .k{color:var(--ink2);font-size:12px}
+.stat .v{font-size:24px;font-weight:650;margin-top:2px;font-variant-numeric:tabular-nums}
+.bar{height:6px;background:var(--line);border-radius:6px;margin-top:10px;overflow:hidden}
+.bar b{display:block;height:100%;background:var(--accent);width:0;transition:width .4s}
+h2{font-size:15px;margin:0 0 12px}
+.btn{border:1px solid var(--line);background:var(--panel);border-radius:8px;padding:8px 14px;cursor:pointer;font-weight:550}
+.btn:hover{border-color:var(--ink3)}
+.btn.pri{background:var(--ink);border-color:var(--ink);color:#fff}
+.btn.pri:hover{background:#1c2f4b}
+.btn.ok{color:var(--ok)} .btn.bad{color:var(--bad)}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+.btn:focus-visible,.nav:focus-visible,input:focus-visible,select:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+
+table{width:100%;border-collapse:collapse}
+th{font-size:12px;color:var(--ink3);font-weight:500;text-align:left;padding:8px 10px;border-bottom:1px solid var(--line)}
+td{padding:10px;border-bottom:1px solid var(--line);vertical-align:middle}
+tr:last-child td{border-bottom:0}
+td.num,th.num{text-align:right;font-variant-numeric:tabular-nums}
+.mono{font-family:var(--mono);font-size:12.5px;white-space:nowrap}
+.muted{color:var(--ink2)}
+.tag{display:inline-flex;align-items:center;gap:5px;font-size:12px;font-weight:600;border-radius:999px;padding:2px 9px;white-space:nowrap}
+.tag::before{content:"";width:6px;height:6px;border-radius:50%;background:currentColor}
+.t-settled{background:var(--ok-soft);color:var(--ok)}
+.t-held{background:var(--warn-soft);color:var(--warn)}
+.t-rejected{background:var(--bad-soft);color:var(--bad)}
+.t-approved{background:var(--ok-soft);color:var(--ok)}
+.rail{font-family:var(--mono);font-size:11.5px;border:1px solid var(--line);border-radius:5px;padding:1px 6px;color:var(--ink2)}
+.empty{text-align:center;color:var(--ink2);padding:28px 10px}
+.empty b{display:block;color:var(--ink);margin-bottom:4px}
+
+.steps{list-style:none;margin:0;padding:0;display:grid;gap:4px}
+.steps li{display:flex;gap:10px;align-items:center;padding:8px 6px;border-radius:8px}
+.steps .dot{width:20px;height:20px;border-radius:50%;border:1.5px solid var(--line);display:grid;place-items:center;font-size:11px;flex:none;color:#fff}
+.steps li.done .dot{background:var(--ok);border-color:var(--ok)}
+.steps li.done span{color:var(--ink2);text-decoration:line-through}
+.steps li.next{background:var(--bg)}
+.steps li.next span{font-weight:600}
+.steps a{margin-left:auto;font-size:12.5px}
+
+.form{display:grid;gap:14px}
+.row{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+label{display:grid;gap:5px;font-size:12.5px;color:var(--ink2);font-weight:500}
+input,select{border:1px solid var(--line);border-radius:8px;padding:8px 10px;background:#fff;color:var(--ink)}
+.hint{font-size:12px;color:var(--ink3)}
+.code{font-family:var(--mono);font-size:12px;background:#0F1E33;color:#D6DEEA;border-radius:8px;padding:14px;white-space:pre;overflow:auto;margin:0}
+.policy-meta{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+
+.hold{display:flex;gap:16px;align-items:center;justify-content:space-between;padding:14px 0;border-bottom:1px solid var(--line);flex-wrap:wrap}
+.hold:last-child{border-bottom:0}
+.hold .amt{font-size:18px;font-weight:650}
+.why{font-size:12.5px;color:var(--ink2)}
+
+dialog{border:1px solid var(--line);border-radius:14px;padding:0;width:min(440px,92vw);box-shadow:0 20px 50px rgba(15,30,51,.18)}
+dialog::backdrop{background:rgba(15,30,51,.35)}
+.dlg{padding:22px}
+.dlg h2{font-size:17px}
+.dlg .acts{display:flex;justify-content:flex-end;gap:8px;margin-top:18px}
+.keybox{display:flex;gap:8px;align-items:center;background:var(--bg);border:1px dashed var(--ink3);border-radius:8px;padding:10px;font-family:var(--mono);font-size:12.5px;word-break:break-all}
+.warnline{background:var(--warn-soft);color:var(--warn);border-radius:8px;padding:8px 10px;font-size:12.5px;margin-top:10px}
+
+.toast{position:fixed;right:20px;bottom:20px;background:var(--ink);color:#fff;border-radius:10px;padding:12px 16px;max-width:340px;font-size:13px;box-shadow:0 10px 30px rgba(15,30,51,.25);transform:translateY(20px);opacity:0;transition:.25s;pointer-events:none}
+.toast.show{transform:none;opacity:1}
+
+@media (max-width:860px){
+  .app{grid-template-columns:1fr}
+  .side{flex-direction:row;overflow-x:auto;border-right:0;border-bottom:1px solid var(--line);padding:10px 12px;gap:4px}
+  .brand{padding:0 10px 0 0}
+  .side .foot{display:none}
+  .nav{white-space:nowrap}
+  main{padding:20px 16px}
+  .g4{grid-template-columns:1fr 1fr}
+  .g2,.row{grid-template-columns:1fr}
+  .hide-sm{display:none}
+}
+</style>
+</head>
+<body>
+<div class="note">Concept prototype by <a href="../">Sudheer Darla</a>, based on public info from saifuro.com. Not affiliated with Saifuro. All data is fake.</div>
+
+<div class="app">
+  <nav class="side" aria-label="Main">
+    <div class="brand"><i></i>Saifuro</div>
+    <a class="nav" href="#overview" data-r="overview">Overview</a>
+    <a class="nav" href="#agents" data-r="agents">Agents</a>
+    <a class="nav" href="#policy" data-r="policy">Policy</a>
+    <a class="nav" href="#approvals" data-r="approvals">Approvals <span class="count" id="holdCount" hidden></span></a>
+    <a class="nav" href="#ledger" data-r="ledger">Ledger</a>
+    <div class="foot">Acme Research · Pilot<br>Keys stay in your wallet</div>
+  </nav>
+  <main id="view" tabindex="-1"></main>
+</div>
+
+<dialog id="dlg"><div class="dlg" id="dlgBody"></div></dialog>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script>
+/* ---------- state ---------- */
+const S = {
+  agents: [],
+  policy: null,            // published policy
+  draft: { daily: 1000, perTx: 500, approveAbove: 200, vendors: 'api.acme-data.dev, api.lexcorpus.com, api.tempo-fx.io', rails: ['x402','acp','ap2'] },
+  ledger: [],              // every verdict
+  exported: false,
+};
+const VENDORS = [
+  {host:'api.acme-data.dev', what:'dataset search', min:1, max:9},
+  {host:'api.tempo-fx.io', what:'FX quote', min:0.4, max:2},
+  {host:'api.lexcorpus.com', what:'case law bundle', min:180, max:420},
+  {host:'api.newsgrid.dev', what:'news crawl', min:0.02, max:0.2},
+];
+const $ = s => document.querySelector(s);
+const money = n => '$' + n.toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2});
+const id = p => p + '_' + Math.random().toString(36).slice(2,6);
+const now = () => new Date().toLocaleTimeString('en-GB');
+const esc = s => String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+
+const spentToday = () => S.ledger.filter(e => e.status==='settled' || e.status==='approved').reduce((a,e)=>a+e.amount,0);
+const held = () => S.ledger.filter(e => e.status==='held');
+
+function toast(msg){ const t=$('#toast'); t.textContent=msg; t.classList.add('show'); clearTimeout(t._h); t._h=setTimeout(()=>t.classList.remove('show'),2800); }
+function tag(s){ return `<span class="tag t-${s}">${s==='approved'?'approved · settled':s}</span>`; }
+
+/* ---------- onboarding checklist = "done" definition ---------- */
+function steps(){
+  return [
+    {t:'Create your first agent', done:S.agents.length>0, href:'#agents'},
+    {t:'Publish a spending policy', done:!!S.policy, href:'#policy'},
+    {t:'First governed payment settles', done:S.ledger.some(e=>e.status==='settled'||e.status==='approved'), href:'#overview'},
+    {t:'Resolve a held payment', done:S.ledger.some(e=>e.resolvedBy), href:'#approvals'},
+    {t:'Export the ledger for finance', done:S.exported, href:'#ledger'},
+  ];
+}
+
+/* ---------- policy engine (toy) ---------- */
+function evaluate(agent, vendor, amount, rail){
+  const p = S.policy;
+  const allow = p.vendors.includes(vendor);
+  const spent = spentToday();
+  if(!agent.active) return {status:'rejected', rule:'mandate revoked'};
+  if(!allow) return {status:'rejected', rule:'vendor not on allowlist'};
+  if(!p.rails.includes(rail)) return {status:'rejected', rule:`rail ${rail} not allowed`};
+  if(amount > p.perTx) return {status:'rejected', rule:`over per-payment cap ${money(p.perTx)}`};
+  if(spent + amount > p.daily) return {status:'rejected', rule:`daily budget ${money(p.daily)} would be exceeded`};
+  if(amount > p.approveAbove) return {status:'held', rule:`above approval threshold ${money(p.approveAbove)}`};
+  return {status:'settled', rule:'within all limits'};
+}
+
+function simulate(force){
+  if(!S.agents.length || !S.policy) return;
+  const pool = S.agents.filter(a=>a.active).length ? S.agents.filter(a=>a.active) : S.agents;
+  const agent = pool[Math.floor(Math.random()*pool.length)];
+  let v = force==='big' ? VENDORS[2] : VENDORS[Math.floor(Math.random()*VENDORS.length)];
+  if(!force && v===VENDORS[2] && Math.random()<.5) v = VENDORS[0];
+  const amount = +(v.min + Math.random()*(v.max-v.min)).toFixed(2);
+  const rail = S.policy.rails[Math.floor(Math.random()*S.policy.rails.length)];
+  const r = evaluate(agent, v.host, amount, rail);
+  const e = {id:id('dec'), time:now(), agent:agent.name, agentId:agent.id, vendor:v.host, what:v.what, amount, rail, policy:'v'+S.policy.v, ...r};
+  S.ledger.unshift(e);
+  toast(r.status==='held' ? `Held ${money(amount)} for approval. Sent to #finance-approvals` : `${agent.name} → ${v.host} ${money(amount)}: ${r.status}`);
+  render();
+}
+
+/* ---------- views ---------- */
+const V = {};
+
+V.overview = () => {
+  const st = steps(), nextI = st.findIndex(s=>!s.done);
+  const p = S.policy, spent = spentToday(), pct = p ? Math.min(100, spent/p.daily*100) : 0;
+  const ready = S.agents.length && p;
+  return `
+  <div class="head">
+    <div><h1>Overview</h1><p class="sub">What your agents spent today, and what needs you.</p></div>
+    <div style="display:flex;gap:8px">
+      <button class="btn" onclick="simulate('big')" ${ready?'':'disabled'}>Simulate large purchase</button>
+      <button class="btn pri" onclick="simulate()" ${ready?'':'disabled'} title="${ready?'':'Create an agent and publish a policy first'}">Simulate agent payment</button>
+    </div>
+  </div>
+  <div class="grid g4" style="margin-bottom:16px">
+    <div class="card stat"><div class="k">Spend today</div><div class="v">${money(spent)}</div>
+      <div class="muted" style="font-size:12px">${p?'of '+money(p.daily)+' daily budget':'No policy yet'}</div>
+      <div class="bar"><b style="width:${pct}%"></b></div></div>
+    <div class="card stat"><div class="k">Active agents</div><div class="v">${S.agents.filter(a=>a.active).length}</div></div>
+    <div class="card stat"><div class="k">Waiting for approval</div><div class="v" style="color:${held().length?'var(--warn)':'inherit'}">${held().length}</div></div>
+    <div class="card stat"><div class="k">Policy</div><div class="v">${p?'v'+p.v:'—'}</div><div class="muted" style="font-size:12px">${p?'Active':'Not published'}</div></div>
+  </div>
+  <div class="grid g2">
+    <div class="card"><h2>Recent decisions</h2>${feed(S.ledger.slice(0,6))}</div>
+    <div class="card">
+      <h2>Get to your first governed payment</h2>
+      <ol class="steps">${st.map((s,i)=>`<li class="${s.done?'done':''} ${i===nextI?'next':''}">
+        <span class="dot">${s.done?'✓':''}</span><span>${s.t}</span>${!s.done&&i===nextI?`<a href="${s.href}">Start</a>`:''}</li>`).join('')}</ol>
+      ${nextI===-1?'<p class="muted" style="margin:12px 6px 0">Pilot done: agents pay under policy, and finance has one export.</p>':''}
+    </div>
+  </div>`;
+};
+
+function feed(rows){
+  if(!rows.length) return `<div class="empty"><b>No payments yet</b>${S.agents.length&&S.policy?'Simulate an agent payment to see it checked against your policy.':'Once an agent pays under a policy, each decision shows up here.'}</div>`;
+  return `<table><thead><tr><th>Time</th><th>Agent</th><th class="hide-sm">Vendor</th><th class="num">Amount</th><th>Status</th></tr></thead><tbody>
+  ${rows.map(e=>`<tr><td class="mono muted">${e.time}</td><td class="mono">${esc(e.agent)}</td><td class="hide-sm">${e.vendor} <span class="rail">${e.rail}</span></td><td class="num">${money(e.amount)}</td><td>${tag(e.status)}</td></tr>`).join('')}
+  </tbody></table>`;
+}
+
+V.agents = () => `
+  <div class="head">
+    <div><h1>Agents</h1><p class="sub">Each agent pays under a mandate: who it may pay, for what, up to how much.</p></div>
+    <button class="btn pri" onclick="newAgent()">New agent</button>
+  </div>
+  <div class="card">${S.agents.length ? `
+    <table><thead><tr><th>Agent</th><th class="hide-sm">Mandate</th><th class="num">Spent today</th><th>Status</th><th></th></tr></thead><tbody>
+    ${S.agents.map(a=>{ const sp=S.ledger.filter(e=>e.agentId===a.id&&(e.status==='settled'||e.status==='approved')).reduce((x,e)=>x+e.amount,0);
+      return `<tr><td><b>${esc(a.name)}</b><div class="mono muted">${a.id}</div></td><td class="hide-sm muted">${esc(a.purpose)}</td><td class="num">${money(sp)}</td>
+      <td>${a.active?'<span class="tag t-settled">active</span>':'<span class="tag t-rejected">revoked</span>'}</td>
+      <td style="text-align:right">${a.active?`<button class="btn bad" onclick="revoke('${a.id}')">Revoke</button>`:''}</td></tr>`}).join('')}
+    </tbody></table>` :
+    `<div class="empty"><b>No agents yet</b>Create one to give it a wallet and a mandate. Its key is shown once.<br><br><button class="btn pri" onclick="newAgent()">New agent</button></div>`}
+  </div>`;
+
+function newAgent(){
+  $('#dlgBody').innerHTML = `
+    <h2>New agent</h2>
+    <form class="form" onsubmit="createAgent(event)">
+      <label>Name<input name="name" required value="research-bot" pattern="[a-z0-9-]+" title="lowercase, digits, dashes"></label>
+      <label>What it pays for<input name="purpose" required value="Datasets and search APIs"></label>
+      <p class="hint" style="margin:0">Spending limits come from your policy. Funds stay in your own wallet.</p>
+      <div class="acts" style="margin:0;display:flex;justify-content:flex-end;gap:8px">
+        <button type="button" class="btn" onclick="dlg.close()">Cancel</button>
+        <button class="btn pri">Create agent</button>
+      </div>
+    </form>`;
+  dlg.showModal();
+}
+function createAgent(ev){
+  ev.preventDefault();
+  const f = new FormData(ev.target);
+  const a = {id:id('agt'), name:f.get('name'), purpose:f.get('purpose'), active:true};
+  S.agents.push(a);
+  const key = 'sk_agent_' + Array.from({length:24},()=>'abcdef0123456789'[Math.floor(Math.random()*16)]).join('');
+  $('#dlgBody').innerHTML = `
+    <h2>${esc(a.name)} is ready</h2>
+    <p class="muted" style="margin:0 0 10px">Copy this key into your agent's environment.</p>
+    <div class="keybox"><span style="flex:1">${key}</span><button class="btn" onclick="navigator.clipboard&&navigator.clipboard.writeText('${key}');this.textContent='Copied'">Copy</button></div>
+    <div class="warnline">This is the only time the key is shown. Lose it and you revoke and reissue.</div>
+    <pre class="code" style="margin-top:12px">const res = await saifuro.fetch(url, {
+  agent: '${a.id}'
+})</pre>
+    <div class="acts"><button class="btn pri" onclick="dlg.close();location.hash='${S.policy?'overview':'policy'}'">${S.policy?'Done':'Next: set its policy'}</button></div>`;
+  render();
+}
+function revoke(aid){
+  const a=S.agents.find(x=>x.id===aid);
+  $('#dlgBody').innerHTML = `<h2>Revoke ${esc(a.name)}?</h2>
+    <p class="muted">Its mandate ends now and every payment it attempts is rejected. You can create a new agent later.</p>
+    <div class="acts"><button class="btn" onclick="dlg.close()">Cancel</button><button class="btn pri" style="background:var(--bad);border-color:var(--bad)" onclick="doRevoke('${aid}')">Revoke agent</button></div>`;
+  dlg.showModal();
+}
+function doRevoke(aid){ S.agents.find(x=>x.id===aid).active=false; S.agents = S.agents; dlg.close(); toast('Agent revoked. mandate.revoked sent to your webhook'); render(); }
+
+V.policy = () => {
+  const d=S.draft, p=S.policy;
+  const json = JSON.stringify({version:p?p.v+1:1, limits:{per_tx:d.perTx+' USDC', daily:d.daily+' USDC'}, allow:{merchants:d.vendors.split(',').map(s=>s.trim()).filter(Boolean), protocols:d.rails}, approvals:{above:d.approveAbove+' USDC', channel:'slack', fallback:'reject'}}, null, 2);
+  return `
+  <div class="head">
+    <div><h1>Spending policy</h1><p class="sub">Checked on every payment, whatever the rail.</p></div>
+    <div class="policy-meta">${p?`<span class="tag t-settled">v${p.v} active</span>`:'<span class="tag t-held">draft</span>'}</div>
+  </div>
+  <div class="grid g2">
+    <form class="card form" oninput="syncDraft(this)" onsubmit="publish(event)">
+      <h2 style="margin:0">Limits</h2>
+      <div class="row">
+        <label>Daily budget (USDC)<input name="daily" type="number" min="1" value="${d.daily}"></label>
+        <label>Hard cap per payment (USDC)<input name="perTx" type="number" min="1" value="${d.perTx}"></label>
+      </div>
+      <label>Ask a person above (USDC)<input name="approveAbove" type="number" min="1" value="${d.approveAbove}">
+        <span class="hint">Larger payments wait in Approvals and post to Slack. No answer means reject.</span></label>
+      <h2 style="margin:6px 0 0">Who agents may pay</h2>
+      <label>Allowed vendors<input name="vendors" value="${esc(d.vendors)}"><span class="hint">Comma separated. Anything else is rejected.</span></label>
+      <fieldset style="border:0;padding:0;margin:0"><legend style="font-size:12.5px;color:var(--ink2);font-weight:500;margin-bottom:6px">Rails</legend>
+        ${['x402','acp','ap2','card'].map(r=>`<label style="display:inline-flex;gap:6px;margin-right:14px;color:var(--ink)"><input type="checkbox" name="rails" value="${r}" ${d.rails.includes(r)?'checked':''}>${r}</label>`).join('')}
+      </fieldset>
+      <div style="display:flex;gap:8px;justify-content:flex-end"><button class="btn pri">${p?'Publish v'+(p.v+1):'Publish policy'}</button></div>
+    </form>
+    <div class="card"><h2>policy.json</h2><pre class="code" id="pjson">${esc(json)}</pre>
+      <p class="hint">Engineers can commit this file instead. Both stay in sync and every version is kept.</p></div>
+  </div>`;
+};
+function syncDraft(f){
+  const fd=new FormData(f);
+  S.draft={daily:+fd.get('daily')||0, perTx:+fd.get('perTx')||0, approveAbove:+fd.get('approveAbove')||0, vendors:fd.get('vendors'), rails:fd.getAll('rails')};
+  const p=S.policy, d=S.draft;
+  $('#pjson').textContent = JSON.stringify({version:p?p.v+1:1, limits:{per_tx:d.perTx+' USDC', daily:d.daily+' USDC'}, allow:{merchants:d.vendors.split(',').map(s=>s.trim()).filter(Boolean), protocols:d.rails}, approvals:{above:d.approveAbove+' USDC', channel:'slack', fallback:'reject'}}, null, 2);
+}
+function publish(ev){
+  ev.preventDefault();
+  const d=S.draft;
+  if(!d.rails.length){ toast('Pick at least one rail'); return; }
+  const v = S.policy ? S.policy.v+1 : 1;
+  if(d.approveAbove >= d.perTx){ toast('Approval threshold must be below the per-payment cap'); return; }
+  S.policy = {v, daily:d.daily, perTx:d.perTx, approveAbove:d.approveAbove, vendors:d.vendors.split(',').map(s=>s.trim()).filter(Boolean), rails:[...d.rails]};
+  toast(`Policy v${v} is live for all agents`);
+  location.hash = S.agents.length ? 'overview' : 'agents';
+  render();
+}
+
+V.approvals = () => `
+  <div class="head"><div><h1>Approvals</h1><p class="sub">Payments above your threshold wait here and in Slack.</p></div></div>
+  <div class="card">${held().length ? held().map(e=>`
+    <div class="hold">
+      <div><div class="amt">${money(e.amount)}</div>
+        <div><span class="mono">${esc(e.agent)}</span> → ${e.vendor} <span class="rail">${e.rail}</span></div>
+        <div class="why">${e.what} · held because it is ${e.rule} · policy ${e.policy}</div></div>
+      <div style="display:flex;gap:8px"><button class="btn bad" onclick="resolve('${e.id}',false)">Reject</button><button class="btn pri" onclick="resolve('${e.id}',true)">Approve and pay</button></div>
+    </div>`).join('') :
+    `<div class="empty"><b>Nothing waiting</b>Payments above ${S.policy?money(S.policy.approveAbove):'your threshold'} will show up here.${S.policy&&S.agents.length?'<br><br><button class="btn" onclick="simulate(\'big\');location.hash=\'approvals\'">Simulate a large purchase</button>':''}</div>`}
+  </div>`;
+function resolve(eid, ok){
+  const e=S.ledger.find(x=>x.id===eid);
+  if(ok && spentToday()+e.amount > S.policy.daily){ toast('Approving would exceed today\'s budget. Raise it in Policy first.'); return; }
+  e.status = ok?'approved':'rejected'; e.resolvedBy='you'; e.rule = ok?'approved by you':'rejected by you';
+  toast(ok?`Paid ${money(e.amount)} to ${e.vendor}. Receipt in ledger`:'Rejected. The agent was told why');
+  render();
+}
+
+V.ledger = () => `
+  <div class="head">
+    <div><h1>Ledger</h1><p class="sub">Every decision, including holds and rejections, with the rule that decided it.</p></div>
+    <button class="btn pri" onclick="exportLedger()" ${S.ledger.length?'':'disabled'}>Export NDJSON</button>
+  </div>
+  <div class="card">${S.ledger.length ? `<table><thead><tr><th>Time</th><th>Agent</th><th class="hide-sm">Vendor · rail</th><th class="num">Amount</th><th>Status</th><th class="hide-sm">Decided by</th></tr></thead><tbody>
+    ${S.ledger.map(e=>`<tr><td class="mono muted">${e.time}</td><td class="mono">${esc(e.agent)}</td><td class="hide-sm">${e.vendor} <span class="rail">${e.rail}</span></td><td class="num">${money(e.amount)}</td><td>${tag(e.status)}</td><td class="hide-sm muted">${e.policy} · ${e.rule}</td></tr>`).join('')}
+    </tbody></table>` : `<div class="empty"><b>The ledger is empty</b>Each payment decision is written here, signed, and can be exported for audit.</div>`}
+  </div>`;
+function exportLedger(){
+  const nd = S.ledger.map(e=>JSON.stringify({id:e.id, time:e.time, agent:e.agentId, vendor:e.vendor, rail:e.rail, amount_usdc:e.amount, verdict:e.status, rule:e.rule, policy:e.policy})).join('\n');
+  const a=document.createElement('a'); a.href=URL.createObjectURL(new Blob([nd],{type:'application/x-ndjson'})); a.download='saifuro-ledger.ndjson'; a.click();
+  S.exported=true; toast('Ledger exported'); render();
+}
+
+/* ---------- router ---------- */
+const dlg = $('#dlg');
+function render(){
+  const r = (location.hash.slice(1) || 'overview');
+  const view = V[r] ? r : 'overview';
+  $('#view').innerHTML = V[view]();
+  document.querySelectorAll('.nav').forEach(n=>n.classList.toggle('on', n.dataset.r===view));
+  const h = held().length, c=$('#holdCount'); c.hidden=!h; c.textContent=h;
+}
+window.addEventListener('hashchange', ()=>{ render(); $('#view').focus({preventScroll:true}); window.scrollTo(0,0); });
+render();
+</script>
+</body>
+</html>
