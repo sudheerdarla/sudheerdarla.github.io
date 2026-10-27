@@ -107,42 +107,10 @@
     .toggle:hover .toggle-label { color: var(--fg); }
 
     
-    /* ---------- Case study page layout ---------- */
-    :root { --rail-w: 200px; --rail-gap: 40px; --rail-x: max(24px, calc((100vw - 1160px) / 2)); }
-    .rail { position: fixed; z-index: 20; top: 0; bottom: 0; left: var(--rail-x); width: var(--rail-w);
-      display: flex; flex-direction: column; justify-content: space-between; padding: var(--s-2xl) 0; }
-    .back { align-self: flex-start; display: inline-flex; align-items: center; gap: var(--s-sm); min-height: 32px; font-family: var(--font-mono); font-size: 13px; line-height: 16px; color: var(--fg-1); border-bottom: 1px solid transparent; transition: border-color .15s var(--ease-out); }
-    .back:hover { border-bottom-color: var(--fg); }
-    .back svg { transition: transform .2s var(--ease-out); }
-    .back:hover svg { transform: translateX(-3px); }
-    .side { flex: 1; display: flex; flex-direction: column; justify-content: center; }
-    .side-title { font-family: var(--font-mono); font-size: 11px; line-height: 16.5px; letter-spacing: .04em; text-transform: uppercase; color: var(--muted); margin-bottom: var(--s-md); }
-    .side ul { border-top: 1px solid var(--line); }
-    .side a[data-cs] { display: block; padding: var(--s-md) var(--s-md); border-bottom: 1px solid var(--line); border-left: 2px solid transparent; transition: border-color .15s var(--ease-out), background-color .15s var(--ease-out); }
-    .side a[data-cs] b { display: block; font-size: 14px; line-height: 20px; font-weight: 600; letter-spacing: .02em; text-transform: uppercase; color: var(--fg-2); transition: color .15s var(--ease-out); }
-    .side a[data-cs] span { display: block; margin-top: 2px; font-size: 12px; line-height: 18px; color: var(--muted); }
-    .side a[data-cs]:hover { background: var(--bg-1); }
-    .side a[data-cs]:hover b { color: var(--fg); }
-    .side a[data-cs][aria-current="page"] { border-left-color: var(--fg); background: var(--bg); }
-    .side a[data-cs][aria-current="page"] b { color: var(--fg); font-weight: 700; }
-    .rail .toggle { align-self: flex-start; }
-
     .content { margin-left: calc(var(--rail-x) + var(--rail-w) + var(--rail-gap)); max-width: 880px; padding: var(--s-2xl) var(--s-2xl) var(--s-4xl) 0; }
     .box { border: 1px solid var(--line); border-radius: var(--r-md); background: var(--bg); overflow: hidden; container-type: inline-size; outline: none; }
 
     @media (max-width: 960px) {
-      .rail { left: 0; right: 0; bottom: auto; width: auto; padding: var(--s-sm) var(--s-lg) 0; flex-direction: row; flex-wrap: wrap; align-items: center;
-        background: color-mix(in srgb, var(--bg) 92%, transparent); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border-bottom: 1px solid var(--line); }
-      .side { order: 3; flex: 0 0 100%; display: block; padding: var(--s-sm) 0; }
-      .side-title { display: none; }
-      .side ul { display: flex; gap: var(--s-xs); border: 0; overflow-x: auto; scrollbar-width: none; }
-      .side ul::-webkit-scrollbar { display: none; }
-      .side a[data-cs] { border: 1px solid var(--line); border-radius: var(--r-md); padding: 6px 12px; white-space: nowrap; }
-      .side a[data-cs] span { display: none; }
-      .side a[data-cs] b { font-size: 12px; }
-      .side a[data-cs][aria-current="page"] { background: var(--accent); border-color: var(--accent); }
-      .side a[data-cs][aria-current="page"] b { color: var(--accent-ink); }
-      .rail .toggle { align-self: center; }
       .content { margin: 0; max-width: none; padding: 112px var(--s-lg) var(--s-3xl); }
     }
 
@@ -436,17 +404,6 @@
       .cs-host { transition: none; }
       .cs-host.enter .cs-hero > *, .cs-host.enter .cs-hero-figure, .cs-host.enter .cs-stats { animation: none; }
     }
-    /* Section submenu under the active case study */
-    .side { overflow-y: auto; scrollbar-width: none; }
-    .side::-webkit-scrollbar { display: none; }
-    .side-sub { padding: var(--s-xs) 0 var(--s-md) var(--s-md); border-bottom: 1px solid var(--line); }
-    .side-sub a { display: flex; align-items: baseline; gap: 10px; padding: 5px 0 5px var(--s-md); border-left: 1px solid var(--line); font-size: 13px; line-height: 18px; color: var(--muted); transition: color .15s var(--ease-out), border-color .15s var(--ease-out); }
-    .side-sub a em { flex: none; font-style: normal; font-family: var(--font-mono); font-size: 10.5px; color: var(--muted-2); }
-    .side-sub a:hover { color: var(--fg); }
-    .side-sub a.is-on { color: var(--fg); font-weight: 600; border-left-color: var(--fg); }
-    .side-sub a.is-on em { color: var(--fg-1); }
-    .side li:has(.side-sub) > a[data-cs] { border-bottom-color: transparent; }
-    @media (max-width: 960px) { .side-sub { display: none; } }
     /* Zoomable images + lightbox */
     .cs-zoom { position: relative; display: block; width: 100%; padding: 0; border: 0; background: none; cursor: zoom-in; border-radius: var(--r-md); }
     .cs-zoom-hint { position: absolute; top: var(--s-md); right: var(--s-md); width: 32px; height: 32px; display: grid; place-items: center; border: 1px solid var(--line-1); border-radius: var(--r-md); background: var(--bg); color: var(--fg); opacity: 0; transform: translateY(-2px); transition: opacity .15s var(--ease-out), transform .15s var(--ease-out); }
@@ -468,6 +425,7 @@
     @media (prefers-reduced-motion: reduce) { .lb[open] { animation: none; } }
     @media print { .lb { display: none !important; } .rail { display: none !important; } .content { margin: 0; padding: 0; } }
   </style>
+  <link rel="stylesheet" href="rail.css?v=2">
 </head>
 <body>
   <a class="skip" href="#cs-main">Skip to case study</a>
@@ -476,9 +434,9 @@
     <nav class="side" aria-label="Case studies">
       <p class="side-title" aria-hidden="true">Case studies</p>
       <ul>
-        <li><a href="#pstake" data-cs="pstake"><b>pSTAKE Finance</b><span>Web3 staking platform</span></a></li>
-        <li><a href="#comdex" data-cs="comdex"><b>Comdex</b><span>Commodity trading platform</span></a></li>
-        <li><a href="#captl" data-cs="captl"><b>CAPTL</b><span>Investor portfolio platform</span></a></li>
+        <li><a class="side-link" href="#pstake" data-cs="pstake"><b>pSTAKE Finance</b><span>Web3 staking platform</span></a></li>
+        <li><a class="side-link" href="#comdex" data-cs="comdex"><b>Comdex</b><span>Commodity trading platform</span></a></li>
+        <li><a class="side-link" href="#captl" data-cs="captl"><b>CAPTL</b><span>Investor portfolio platform</span></a></li>
       </ul>
     </nav>
     <button class="toggle" type="button" id="theme" aria-pressed="false" aria-label="Switch to dark mode">

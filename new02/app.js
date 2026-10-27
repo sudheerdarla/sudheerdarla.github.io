@@ -37,4 +37,41 @@
     });
   });
 
+
+  /* ---------- Home rail navigation ---------- */
+  var navLinks = document.querySelectorAll('.side-link[data-sec]');
+  if (navLinks.length) {
+    var reduceMotion = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+    function setActive(id) {
+      navLinks.forEach(function (a) {
+        if (a.getAttribute('data-sec') === id) a.setAttribute('aria-current', 'location'); else a.removeAttribute('aria-current');
+      });
+    }
+    navLinks.forEach(function (a) {
+      a.addEventListener('click', function (e) {
+        var id = a.getAttribute('data-sec');
+        var sec = document.getElementById(id);
+        if (!sec) return;
+        e.preventDefault();
+        var head = sec.querySelector('.sec-head');
+        if (!sec.classList.contains('open')) { sec.classList.add('open'); head.setAttribute('aria-expanded', 'true'); }
+        setActive(id);
+        sec.scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth', block: 'start' });
+        head.focus({ preventScroll: true });
+        if (history.replaceState) history.replaceState(null, '', '#' + id);
+      });
+    });
+    if ('IntersectionObserver' in window) {
+      var io = new IntersectionObserver(function (es) {
+        es.forEach(function (e) { if (e.isIntersecting) setActive(e.target.id); });
+      }, { rootMargin: '-25% 0px -65% 0px' });
+      document.querySelectorAll('.sec[id]').forEach(function (s) { io.observe(s); });
+    }
+    var start = (location.hash || '').slice(1);
+    var target = start && document.getElementById(start);
+    if (target && target.classList.contains('sec')) {
+      if (!target.classList.contains('open')) { target.classList.add('open'); target.querySelector('.sec-head').setAttribute('aria-expanded', 'true'); }
+      setActive(start);
+    } else { setActive('projects'); }
+  }
 })();
