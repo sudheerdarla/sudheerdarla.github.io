@@ -16,7 +16,7 @@
       a: "The best way is email: sudheer.darla11@gmail.com. You can also find me on LinkedIn (linkedin.com/in/sudheer-darla-a9496956), GitHub (github.com/sudheerdarla) and X (@sudheerdarla_)." },
     { id: 'resume', q: 'Where is your resume?',
       k: 'resume cv download pdf print',
-      a: "You can open my resume from the \"Resume ->\" link in the About section of this page, or go straight to /resume.html — it has a Download / Print PDF button." },
+      a: "You can open my resume (PDF) from the \"Resume ->\" link in the About section of this page." },
     { id: 'exp', q: 'Walk me through your experience',
       k: 'experience career history background jobs companies worked employer timeline years roles',
       a: "Newest to oldest:\n• Independent ventures, Hyderabad — Founder (2023–2026)\n• Hive Consultancy Services, Bengaluru — Product Designer (Apr–Aug 2023)\n• Wise Log Solutions, Dubai — UI/UX Designer (Jul 2022–Mar 2023)\n• CMMT Technologies, Bengaluru — UI/UX Designer (Feb 2020–Jun 2022)\n• Cosmic Tech Labs, Hyderabad — User Experience Designer (Jul 2018–Oct 2019)\nAsk me about any of them." },
