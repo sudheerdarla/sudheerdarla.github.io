@@ -117,8 +117,8 @@
     .header { display: flex; align-items: flex-end; gap: var(--s-2xl); padding-top: var(--s-4xl); }
     .header-text { flex: 1; min-width: 0; }
     .avatar { width: 96px; height: 96px; border-radius: 50%; object-fit: cover; background: var(--bg-3); border: 2px solid #ffffff; flex: none; }
-    .name { font-size: 28px; line-height: 28.56px; font-weight: 700; letter-spacing: -0.84px; }
-    .tagline { margin-top: var(--s-sm); font-size: 16px; line-height: 22px; color: var(--muted); }
+    .name { font-size: 24px; line-height: 28px; font-weight: 700; letter-spacing: -0.84px; }
+    .tagline { margin-top: var(--s-sm); font-size: 14px; line-height: 20px; color: var(--muted); }
     .social { display: flex; gap: var(--s-xs); margin: 0 -6px 0 auto; flex: none; }
     .nav-link { display: inline-flex; align-items: center; min-height: 32px; min-width: 32px; justify-content: center; font-size: 15px; line-height: 15px; font-weight: 500; color: var(--fg-1); padding: 0 6px; border-bottom: 1px solid transparent; transition: border-color .15s var(--ease-out), color .15s; }
     .nav-link:hover { color: var(--fg); border-bottom-color: var(--fg); }
@@ -130,16 +130,17 @@
 
     .sections { margin-top: var(--s-3xl); display: flex; flex-direction: column; gap: 0; }
 
-    /* Section header (accordion) */
-    .sec-title { font-size: inherit; font-weight: inherit; line-height: inherit; }
-    .sec-head { width: 100%; display: flex; align-items: center; justify-content: space-between; text-align: left;
-      padding: var(--s-lg) 0; border-top: 1px solid var(--line-strong); border-top-color: color-mix(in srgb, var(--line-strong) 40%, transparent); font-size: 16px; line-height: 24px; font-weight: 500; letter-spacing: 0; }
-    .sec-head:hover { color: var(--fg); }
-    .chev { flex: none; color: var(--muted); transition: transform .25s var(--ease-in-out), color .15s; }
-    .sec-head:hover .chev { color: var(--fg); }
-    .sec:not(.open) .chev { transform: rotate(180deg); }
-    .sec-body { display: none; padding: var(--s-xs) 0 var(--s-2xl); }
-    .sec.open .sec-body { display: block; }
+    /* Tabs */
+    .tabs { display: flex; gap: var(--s-xl); border-bottom: 1px solid color-mix(in srgb, var(--line-strong) 40%, transparent); flex-wrap: wrap; }
+    .tab { position: relative; flex: none; min-height: 44px; padding: 0; font-size: 15px; line-height: 20px; font-weight: 500; color: var(--muted); transition: color .15s var(--ease-out); }
+    .tab:hover { color: var(--fg); }
+    .tab[aria-selected="true"] { color: var(--fg); }
+    .tab::after { content: ""; position: absolute; left: 0; right: 0; bottom: -1px; height: 2px; background: var(--fg); transform: scaleX(0); transition: transform .2s var(--ease-out); }
+    .tab[aria-selected="true"]::after { transform: scaleX(1); }
+    .tab:focus-visible { outline: 2px solid var(--fg); outline-offset: 4px; border-radius: 4px; }
+    .panel { padding: var(--s-2xl) 0; outline: none; }
+    .panel:focus-visible { outline: 2px solid var(--fg); outline-offset: 4px; border-radius: 2px; }
+    @media (prefers-reduced-motion: reduce) { .tab::after { transition: none; } }
 
     /* Eyebrow */
     .eyebrow { font-size: 14px; line-height: 20px; font-weight: 600; color: var(--fg); }
@@ -147,7 +148,7 @@
     /* Projects */
     .projects { display: flex; flex-direction: column; gap: var(--s-4xl); }
     .project h3 .concept { text-transform: none; font-weight: 400; font-size: 15px; color: var(--muted); letter-spacing: 0; }
-    .project h3 { font-size: 22px; line-height: 26.4px; font-weight: 800; letter-spacing: 0; text-transform: uppercase; }
+    .project h3 { font-size: 18px; line-height: 24px; font-weight: 800; letter-spacing: 0; text-transform: uppercase; }
     .project .desc { margin-top: var(--s-xs); font-size: 16px; line-height: 24px; color: var(--muted); }
     .slot { position: relative; display: block; width: 100%; aspect-ratio: 2 / 1; margin-top: var(--s-lg); overflow: hidden;
       border: 1px solid var(--line); border-radius: var(--r-md); background: var(--bg-3); text-align: left;
@@ -192,7 +193,7 @@
       .row { flex-direction: column; align-items: flex-start; gap: var(--s-sm); }
       .skills { grid-template-columns: 1fr; }
     }
-    @media print { body { background: #fff; color: #000; } .toggle-fixed, .skip, .slot-tag { display: none !important; } .sec-body { display: block !important; } .slot { break-inside: avoid; } .sec-head .chev { display: none; } }
+    @media print { body { background: #fff; color: #000; } .toggle-fixed, .skip, .slot-tag { display: none !important; } .panel[hidden] { display: block !important; } .tabs { display: none; } .slot { break-inside: avoid; } }
     @media (prefers-reduced-motion: reduce) { *, *::before, *::after { transition-duration: .01ms !important; scroll-behavior: auto !important; } }
   </style>
 </head>
@@ -223,9 +224,14 @@
         </ul>
 
         <div class="sections">
-          <section class="sec open" data-acc>
-            <h2 class="sec-title"><button class="sec-head" type="button" id="h-projects" aria-expanded="true" aria-controls="p-projects">Projects <svg class="chev" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M6 15l6-6 6 6"/></svg></button></h2>
-            <div class="sec-body" id="p-projects" role="region" aria-labelledby="h-projects">
+          <h2 class="sr">Work and background</h2>
+          <div class="tabs" role="tablist" aria-label="Work and background">
+            <button class="tab" type="button" role="tab" id="t-projects" aria-controls="p-projects" aria-selected="true">Projects</button>
+            <button class="tab" type="button" role="tab" id="t-experience" aria-controls="p-experience" aria-selected="false" tabindex="-1">Experience</button>
+            <button class="tab" type="button" role="tab" id="t-education" aria-controls="p-education" aria-selected="false" tabindex="-1">Education</button>
+            <button class="tab" type="button" role="tab" id="t-skills" aria-controls="p-skills" aria-selected="false" tabindex="-1">Skills</button>
+          </div>
+          <div class="panel" role="tabpanel" id="p-projects" aria-labelledby="t-projects" tabindex="0">
               <div class="projects">
                 <article class="project">
                   <h3>Saifuro Console <span class="concept">(concept design)</span></h3>
@@ -261,36 +267,23 @@
                 </article>
               </div>
             </div>
-          </section>
-
-          <section class="sec" data-acc>
-            <h2 class="sec-title"><button class="sec-head" type="button" id="h-experience" aria-expanded="false" aria-controls="p-experience">Experience <svg class="chev" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M6 15l6-6 6 6"/></svg></button></h2>
-            <div class="sec-body" id="p-experience" role="region" aria-labelledby="h-experience">
+          <div class="panel" role="tabpanel" id="p-experience" aria-labelledby="t-experience" tabindex="0" hidden>
               <div class="row"><div class="row-left"><div class="badge" aria-hidden="true">IV</div><div><h3>Independent ventures</h3><div class="meta">Founder, Hyderabad</div></div></div><div class="dates">2023 – 2026</div></div>
               <div class="row"><div class="row-left"><div class="badge" aria-hidden="true">HC</div><div><h3>Hive Consultancy Services</h3><div class="meta">Product Designer, Bengaluru</div></div></div><div class="dates">Apr 2023 – Aug 2023</div></div>
               <div class="row"><div class="row-left"><div class="badge" aria-hidden="true">WL</div><div><h3>Wise Log Solutions</h3><div class="meta">UI/UX Designer, Dubai</div></div></div><div class="dates">Jul 2022 – Mar 2023</div></div>
               <div class="row"><div class="row-left"><div class="badge" aria-hidden="true">CM</div><div><h3>CMMT Technologies</h3><div class="meta">UI/UX Designer, Bengaluru</div></div></div><div class="dates">Feb 2020 – Jun 2022</div></div>
               <div class="row"><div class="row-left"><div class="badge" aria-hidden="true">CT</div><div><h3>Cosmic Tech Labs</h3><div class="meta">User Experience Designer, Hyderabad</div></div></div><div class="dates">Jul 2018 – Oct 2019</div></div>
             </div>
-          </section>
-
-          <section class="sec" data-acc>
-            <h2 class="sec-title"><button class="sec-head" type="button" id="h-education" aria-expanded="false" aria-controls="p-education">Education <svg class="chev" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M6 15l6-6 6 6"/></svg></button></h2>
-            <div class="sec-body" id="p-education" role="region" aria-labelledby="h-education">
+          <div class="panel" role="tabpanel" id="p-education" aria-labelledby="t-education" tabindex="0" hidden>
               <div class="edu"><h3>Mahatma Gandhi Institute of Technology, Hyderabad</h3><div class="meta">Bachelor of Technology, Computer Science</div><div class="meta">2013 – 2016</div></div>
               <div class="edu"><h3>Polytechnic College, Kothagudem</h3><div class="meta">Diploma in Electrical and Electronics Engineering</div><div class="meta">2010 – 2013</div></div>
             </div>
-          </section>
-
-          <section class="sec" data-acc>
-            <h2 class="sec-title"><button class="sec-head" type="button" id="h-skills" aria-expanded="false" aria-controls="p-skills">Skills <svg class="chev" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M6 15l6-6 6 6"/></svg></button></h2>
-            <div class="sec-body" id="p-skills" role="region" aria-labelledby="h-skills">
+          <div class="panel" role="tabpanel" id="p-skills" aria-labelledby="t-skills" tabindex="0" hidden>
               <div class="skills">
                 <div><h3 class="eyebrow">Design</h3><ul><li>Product Design</li><li>Figma</li><li>Rapid Prototyping</li><li>Design Systems</li><li>User Experience Design (UED)</li><li>Illustrator</li></ul></div>
                 <div><h3 class="eyebrow">Engineering</h3><ul><li>HTML/CSS/JS/React JS</li><li>Python</li><li>Git</li></ul></div>
               </div>
             </div>
-          </section>
         </div>
 
         <footer class="footer">
@@ -304,6 +297,6 @@
             <span class="toggle-label" id="theme-label">Dark mode</span>
             <span class="track" aria-hidden="true"><span class="knob"></span></span>
           </button>
-    <script src="app.js?v=5" defer></script>
+    <script src="app.js?v=6" defer></script>
 </body>
 </html>

@@ -18,12 +18,24 @@
     applyTheme(root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark', true);
   });
 
-  /* ---------- Accordions ---------- */
-  document.querySelectorAll('[data-acc]').forEach(function (acc) {
-    var head = acc.querySelector('.sec-head');
-    head.addEventListener('click', function () {
-      var open = acc.classList.toggle('open');
-      head.setAttribute('aria-expanded', open ? 'true' : 'false');
+  /* ---------- Tabs ---------- */
+  var tabs = [].slice.call(document.querySelectorAll('[role="tab"]'));
+  function select(t, focus) {
+    tabs.forEach(function (x) {
+      var on = x === t;
+      x.setAttribute('aria-selected', on ? 'true' : 'false');
+      x.tabIndex = on ? 0 : -1;
+      document.getElementById(x.getAttribute('aria-controls')).hidden = !on;
+    });
+    if (focus) t.focus();
+  }
+  tabs.forEach(function (t, i) {
+    t.addEventListener('click', function () { select(t, false); });
+    t.addEventListener('keydown', function (e) {
+      var j = e.key === 'ArrowRight' ? i + 1 : e.key === 'ArrowLeft' ? i - 1 : e.key === 'Home' ? 0 : e.key === 'End' ? tabs.length - 1 : null;
+      if (j === null) return;
+      e.preventDefault();
+      select(tabs[(j + tabs.length) % tabs.length], true);
     });
   });
 
