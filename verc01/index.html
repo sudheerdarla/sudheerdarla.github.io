@@ -1,0 +1,170 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sudheer Darla — Product Designer</title>
+  <meta name="description" content="Product designer with 7+ years taking fintech, Web3 and SaaS products from zero to one.">
+  <meta name="robots" content="noindex">
+  <meta name="color-scheme" content="light dark">
+  <link rel="icon" href="../favicon.ico?v=2" sizes="any">
+  <link rel="icon" type="image/png" sizes="32x32" href="../favicon-32.png?v=2">
+  <link rel="apple-touch-icon" href="../apple-touch-icon.png?v=2">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400..700&family=Geist+Mono:wght@400..600&display=swap">
+  <script>(function(){var t=null;try{t=localStorage.getItem('theme')}catch(e){}if(t!=='light'&&t!=='dark')t='light';document.documentElement.setAttribute('data-theme',t)})();</script>
+  <link rel="stylesheet" href="geist.css?v=1">
+  <style>
+    .hero { padding: 96px 48px 80px; text-align: center; }
+    .hero .badge { margin-bottom: 24px; }
+    .hero h1 { max-width: 18ch; margin: 0 auto; }
+    .hero p { max-width: 640px; margin: 20px auto 0; }
+    .hero-cta { margin-top: 32px; display: flex; justify-content: center; gap: 12px; flex-wrap: wrap; }
+    .stats { display: grid; grid-template-columns: repeat(3, 1fr); }
+    .stats li { padding: 32px; }
+    .stats li + li { border-left: 1px solid var(--gray-alpha-400); }
+    .stats b { display: block; font-size: 32px; line-height: 40px; font-weight: 600; letter-spacing: -1.28px; font-variant-numeric: tabular-nums; }
+    .stats span { display: block; margin-top: 4px; font-size: 14px; line-height: 20px; color: var(--gray-900); }
+    .sec { padding: 64px 48px; }
+    .sec-head { display: flex; align-items: end; justify-content: space-between; gap: 24px; margin-bottom: 32px; }
+    .sec-head p { max-width: 520px; margin-top: 8px; }
+    .pgrid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+    .pcard { display: flex; flex-direction: column; height: 100%; border-radius: var(--radius-large); background: var(--background-100); box-shadow: var(--shadow-medium); overflow: hidden; transition: box-shadow .2s ease, transform .2s ease; }
+    .pcard:hover { box-shadow: 0 0 0 1px var(--gray-alpha-500), 0 4px 16px -4px rgba(0,0,0,.08); }
+    .pimg { aspect-ratio: 16 / 10; background: var(--gray-100); border-bottom: 1px solid var(--gray-alpha-400); overflow: hidden; }
+    .pimg img { width: 100%; height: 100%; object-fit: cover; object-position: top center; transition: transform .4s ease; }
+    .pcard:hover .pimg img { transform: scale(1.02); }
+    .pbody { flex: 1; display: flex; flex-direction: column; gap: 8px; padding: 20px; }
+    .ptags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 4px; }
+    .plink { margin-top: auto; padding-top: 12px; display: inline-flex; align-items: center; gap: 6px; font-weight: 500; }
+    .plink svg { transition: transform .2s ease; }
+    .pcard:hover .plink svg { transform: translateX(3px); }
+    .about { display: grid; grid-template-columns: 1fr 1.4fr; gap: 48px; align-items: start; }
+    .about .copy-18 + .copy-18 { margin-top: 16px; }
+    .list { border-radius: var(--radius-large); box-shadow: var(--shadow-small); overflow: hidden; background: var(--background-100); }
+    .row { display: flex; align-items: center; gap: 16px; padding: 16px 20px; }
+    .row + .row { border-top: 1px solid var(--gray-alpha-400); }
+    .logo { width: 36px; height: 36px; flex: none; display: grid; place-items: center; border-radius: var(--radius); background: var(--gray-100); box-shadow: inset 0 0 0 1px var(--gray-alpha-400); font-family: var(--font-mono); font-size: 12px; color: var(--gray-1000); }
+    .row-main { flex: 1; min-width: 0; display: flex; flex-direction: column; }
+    .row-t { font-size: 14px; line-height: 20px; font-weight: 500; }
+    .row-s { font-size: 14px; line-height: 20px; color: var(--gray-900); }
+    .row-d { flex: none; color: var(--gray-900); }
+    .two { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; }
+    .sub-h { margin-bottom: 16px; }
+    .skillset + .skillset { margin-top: 24px; }
+    .chips { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
+    .chips .badge { height: 28px; padding: 0 12px; font-size: 13px; background: var(--background-100); box-shadow: inset 0 0 0 1px var(--gray-alpha-400); }
+    .band { padding: 64px 48px; background: var(--surface-contrast); color: var(--text-on-contrast); display: flex; align-items: center; justify-content: space-between; gap: 24px; flex-wrap: wrap; }
+    .band p { color: var(--text-on-contrast-secondary); margin-top: 8px; }
+    .band .btn-primary { background: var(--text-on-contrast); color: var(--surface-contrast); }
+    .band .btn-primary:hover { background: oklch(0.85 0 0); }
+    .band .btn-secondary { background: transparent; color: var(--text-on-contrast); box-shadow: 0 0 0 1px oklch(1 0 0 / 0.24); }
+    .band .btn-secondary:hover { background: oklch(1 0 0 / 0.08); }
+    .band-cta { display: flex; gap: 12px; flex-wrap: wrap; }
+    [data-theme="dark"] .band { background: var(--gray-100); }
+    @media (max-width: 960px) {
+      .pgrid { grid-template-columns: 1fr 1fr; }
+      .about, .two { grid-template-columns: 1fr; gap: 32px; }
+    }
+    @media (max-width: 720px) {
+      .hero { padding: 64px 0 56px; }
+      .sec, .band { padding: 48px 0; }
+      .band { padding: 40px 20px; border-radius: var(--radius-large); }
+      .pgrid, .stats { grid-template-columns: 1fr; }
+      .stats li { padding: 20px 0; }
+      .stats li + li { border-left: 0; border-top: 1px solid var(--gray-alpha-400); }
+      .sec-head { flex-direction: column; align-items: flex-start; }
+      .row { flex-wrap: wrap; }
+      .row-d { width: 100%; padding-left: 52px; }
+      .frame { border: 0; }
+    }
+  </style>
+</head>
+<body id="top">
+  <a class="skip" href="#main">Skip to content</a>
+  <header class="hdr">
+    <div class="hdr-in">
+      <a class="brand" href="#top"><img src="../img/avatar-sudheer.jpg" width="24" height="24" alt="">Sudheer Darla</a>
+      <nav class="nav" aria-label="Primary">
+        <a href="#work">Work</a>
+        <a href="#experience">Experience</a>
+        <a href="#skills">Skills</a>
+      </nav>
+      <div class="hdr-r">
+        <a class="btn btn-secondary btn-sm" href="https://www.linkedin.com/in/sudheerdarla/" target="_blank" rel="noopener">LinkedIn<span class="sr"> (opens in a new tab)</span></a>
+        <a class="btn btn-primary btn-sm" href="mailto:sudheer.darla11@gmail.com">Contact<span class="sr"> (opens your email app)</span></a>
+      </div>
+    </div>
+  </header>
+  <main id="main">
+    <div class="wrap">
+      <div class="frame">
+        <section class="cell hero" aria-labelledby="hero-title">
+          <span class="cross tl" aria-hidden="true"></span><span class="cross tr" aria-hidden="true"></span>
+          <span class="badge badge-green"><i aria-hidden="true"></i>Open to freelance and full-time roles</span>
+          <h1 id="hero-title" class="heading-56">Product designer for fintech, Web3 and SaaS.</h1>
+          <p class="copy-20 muted">Product designer with 7+ years of experience taking fintech, Web3 and SaaS products from zero to one. I design the core flows, interfaces and systems behind them, from how a product is structured to how it feels in use.</p>
+          <div class="hero-cta">
+            <a class="btn btn-primary btn-lg" href="#work">View case studies</a>
+            <a class="btn btn-secondary btn-lg" href="mailto:sudheer.darla11@gmail.com">Email me<span class="sr"> (opens your email app)</span></a>
+          </div>
+        </section>
+        <ul class="cell stats" aria-label="Key figures">
+          <li><b>7+</b><span>Years designing products</span></li>
+          <li><b>$30M+</b><span>Staked asset value unlocked on pSTAKE</span></li>
+          <li><b>3</b><span>Products taken from zero to one</span></li>
+        </ul>
+        <section class="cell sec" id="work" aria-labelledby="work-title">
+          <div class="sec-head"><div><h2 id="work-title" class="heading-32">Selected work</h2><p class="copy-16 muted">Trust-heavy, multi-step products where clarity of state, cost and risk matters most.</p></div></div>
+          <ul class="pgrid"><li><a class="pcard" href="work.html#pstake"><div class="pimg"><img src="../img/pstake-home-thumb.webp?v=2" width="1434" height="715" alt="pSTAKE stake screen with the network selector, unstaking methods and a stake confirmation" loading="lazy" decoding="async"></div><div class="pbody"><h3 class="heading-20">pSTAKE Finance</h3><p class="copy-14 muted">Liquid staking for Web3. Made network, asset and state readable so holders could stake and exit with confidence.</p><div class="ptags"><span class="badge badge-sm">Web3</span><span class="badge badge-sm">Liquid staking</span><span class="badge badge-sm">Brand + design system</span></div><span class="plink label-14">Read case study <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></div></a></li><li><a class="pcard" href="work.html#comdex"><div class="pimg"><img src="../img/comdex-thumb.jpg" width="1600" height="971" alt="Comdex commodity trading dashboard" loading="lazy" decoding="async"></div><div class="pbody"><h3 class="heading-20">Comdex</h3><p class="copy-14 muted">A commodity trading platform that takes a deal from discovery to settlement in one product.</p><div class="ptags"><span class="badge badge-sm">Fintech</span><span class="badge badge-sm">B2B</span><span class="badge badge-sm">Trading</span></div><span class="plink label-14">Read case study <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></div></a></li><li><a class="pcard" href="work.html#captl"><div class="pimg"><img src="../img/captl-thumb.jpg" width="1440" height="1024" alt="CAPTL fund overview screens" loading="lazy" decoding="async"></div><div class="pbody"><h3 class="heading-20">CAPTL</h3><p class="copy-14 muted">An investor workspace where a private equity fund, its people and its paperwork live together.</p><div class="ptags"><span class="badge badge-sm">Fintech</span><span class="badge badge-sm">Private equity</span><span class="badge badge-sm">SaaS</span></div><span class="plink label-14">Read case study <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></div></a></li></ul>
+        </section>
+        <section class="cell sec about" id="about" aria-labelledby="about-title">
+          <h2 id="about-title" class="heading-32">About</h2>
+          <div>
+            <p class="copy-18">I’ve shipped a commodity trading platform, a private equity fund workspace, and a liquid staking product that unlocked more than $30M in staked assets value. My focus is trust-heavy, multi-step products where clarity of state, cost and risk matters most.</p>
+            <div class="chips" aria-label="Core skills"><span class="badge">Product Design</span><span class="badge">Figma</span><span class="badge">Rapid Prototyping</span><span class="badge">User Experience Design</span><span class="badge">AI Driven</span></div>
+          </div>
+        </section>
+        <section class="cell sec" id="experience" aria-labelledby="exp-title">
+          <div class="sec-head"><h2 id="exp-title" class="heading-32">Experience</h2></div>
+          <ul class="list"><li class="row"><span class="logo" aria-hidden="true">IV</span><div class="row-main"><span class="row-t">Independent ventures</span><span class="row-s">Founder · Hyderabad</span></div><span class="row-d label-12-mono">2023 – 2026</span></li><li class="row"><span class="logo" aria-hidden="true">HC</span><div class="row-main"><span class="row-t">Hive Consultancy Services</span><span class="row-s">Product Designer · Bengaluru</span></div><span class="row-d label-12-mono">Apr 2023 – Aug 2023</span></li><li class="row"><span class="logo" aria-hidden="true">WL</span><div class="row-main"><span class="row-t">Wise Log Solutions</span><span class="row-s">UI/UX Designer · Dubai</span></div><span class="row-d label-12-mono">Jul 2022 – Mar 2023</span></li><li class="row"><span class="logo" aria-hidden="true">CM</span><div class="row-main"><span class="row-t">CMMT Technologies</span><span class="row-s">UI/UX Designer · Bengaluru</span></div><span class="row-d label-12-mono">Feb 2020 – Jun 2022</span></li><li class="row"><span class="logo" aria-hidden="true">CT</span><div class="row-main"><span class="row-t">Cosmic Tech Labs</span><span class="row-s">User Experience Designer · Hyderabad</span></div><span class="row-d label-12-mono">Jul 2018 – Oct 2019</span></li></ul>
+        </section>
+        <div class="cell sec two">
+          <section id="education" aria-labelledby="edu-title">
+            <h2 id="edu-title" class="heading-24 sub-h">Education</h2>
+            <ul class="list"><li class="row"><span class="logo" aria-hidden="true">MG</span><div class="row-main"><span class="row-t">Mahatma Gandhi Institute of Technology</span><span class="row-s">Bachelor of Technology, Computer Science · Hyderabad</span></div><span class="row-d label-12-mono">2013 – 2016</span></li><li class="row"><span class="logo" aria-hidden="true">PC</span><div class="row-main"><span class="row-t">Polytechnic College</span><span class="row-s">Diploma in Electrical and Electronics Engineering · Kothagudem</span></div><span class="row-d label-12-mono">2010 – 2013</span></li></ul>
+          </section>
+          <section id="skills" aria-labelledby="skills-title">
+            <h2 id="skills-title" class="heading-24 sub-h">Skills</h2>
+            <div class="skillset"><h3 class="label-12-mono muted">DESIGN</h3><div class="chips"><span class="badge">Product design</span><span class="badge">Figma</span><span class="badge">Rapid prototyping</span><span class="badge">Design systems</span><span class="badge">User experience design (UED)</span><span class="badge">Illustrator</span><span class="badge">AI-driven workflows</span></div></div>
+            <div class="skillset"><h3 class="label-12-mono muted">ENGINEERING</h3><div class="chips"><span class="badge">HTML</span><span class="badge">CSS</span><span class="badge">JavaScript</span><span class="badge">React JS</span><span class="badge">Python</span><span class="badge">Git</span></div></div>
+          </section>
+        </div>
+        <section class="band" id="contact" aria-labelledby="contact-title">
+          <div><h2 id="contact-title" class="heading-32">Let’s work together.</h2><p class="copy-16">Open to freelance projects and full-time product design roles.</p></div>
+          <div class="band-cta">
+            <a class="btn btn-primary btn-lg" href="mailto:sudheer.darla11@gmail.com">sudheer.darla11@gmail.com<span class="sr"> (opens your email app)</span></a>
+            <a class="btn btn-secondary btn-lg" href="https://www.linkedin.com/in/sudheerdarla/" target="_blank" rel="noopener">LinkedIn <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M7 17L17 7M8 7h9v9"/></svg><span class="sr"> (opens in a new tab)</span></a>
+          </div>
+        </section>
+      </div>
+    </div>
+  </main>
+  <footer class="foot">
+    <div class="foot-in">
+      <span class="label-14 muted">© 2026 Sudheer Darla</span>
+      <nav class="foot-links" aria-label="Footer">
+        <a href="mailto:sudheer.darla11@gmail.com">Email</a>
+        <a href="https://www.linkedin.com/in/sudheerdarla/" target="_blank" rel="noopener">LinkedIn<span class="sr"> (opens in a new tab)</span></a>
+        <a href="https://x.com/sudheerdarla_" target="_blank" rel="noopener">X<span class="sr"> (opens in a new tab)</span></a>
+      </nav>
+      <div class="switch" role="group" aria-label="Theme">
+        <button type="button" data-theme-set="light" aria-pressed="true" aria-label="Light theme"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg></button>
+        <button type="button" data-theme-set="dark" aria-pressed="false" aria-label="Dark theme"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M21 12.8A9 9 0 1 1 11.2 3 7 7 0 0 0 21 12.8z"/></svg></button>
+      </div>
+    </div>
+  </footer>
+  <script src="site.js?v=1" defer></script>
+</body>
+</html>
