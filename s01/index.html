@@ -48,7 +48,7 @@ h2{font-size:15px;margin:0}
 .grid{display:grid;gap:16px}
 .g3{grid-template-columns:repeat(3,1fr)}
 .g2{grid-template-columns:1fr 1fr}
-.stack{display:grid;gap:16px}
+.stack{display:grid;gap:16px;grid-template-columns:minmax(0,1fr)}
 .stat .k{color:var(--ink2);font-size:12px}
 .stat .v{font-size:24px;font-weight:650;margin-top:2px;font-variant-numeric:tabular-nums}
 .stat .s{color:var(--ink2);font-size:12px}
@@ -99,7 +99,7 @@ td.num,th.num{text-align:right;font-variant-numeric:tabular-nums}
 .req{all:unset;box-sizing:border-box;display:grid;grid-template-columns:110px 1fr auto;gap:16px;align-items:center;padding:14px;border:1px solid var(--line);border-radius:10px;cursor:pointer;background:var(--panel)}
 .req:hover{border-color:var(--warn-line);background:#FFFCF7}
 .req-amt{font-size:19px;font-weight:700;font-variant-numeric:tabular-nums}
-.req-main{line-height:1.45}
+.req-main{line-height:1.45;min-width:0;overflow-wrap:anywhere}
 .req-why{font-size:12.5px;color:var(--warn)}
 
 /* tabs & chips */
@@ -212,7 +212,10 @@ dialog.drawer[open]{display:flex;flex-direction:column;animation:slide .2s ease-
   .g3{grid-template-columns:1fr 1fr}
   .g2,.vgrid{grid-template-columns:1fr}
   .hide-sm{display:none}
-  .req{grid-template-columns:1fr auto}
+  td,th{padding:9px 5px}
+  td.mono{font-size:11.5px;word-break:break-all}
+  .card{padding:14px}
+  .req{grid-template-columns:minmax(0,1fr) auto;width:100%}
   .req-main{grid-column:1/-1;grid-row:2}
   .agentrow{grid-template-columns:1fr auto 20px}
   .review>div{grid-template-columns:1fr auto}
