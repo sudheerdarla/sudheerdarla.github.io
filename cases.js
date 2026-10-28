@@ -264,7 +264,7 @@
       return '<ol class="cs-steps">' + b.items.map(function (s) { return '<li><h3>' + s[0] + '</h3><p>' + s[1] + '</p></li>'; }).join('') + '</ol>';
     },
     decision: function (b) {
-      return '<div class="cs-decision"><p class="cs-label">' + b.label + '</p><h3>' + b.title + '</h3><p class="cs-text">' + b.text + '</p>' +
+      return '<div class="cs-decision"><h3>' + b.title + '</h3><p class="cs-text">' + b.text + '</p>' +
         '<div class="cs-shots' + (b.images.length > 1 ? ' two' : '') + '">' + b.images.map(function (i) { return '<figure class="cs-figure">' + img(i, true) + '</figure>'; }).join('') + '</div>' +
         '<ol class="cs-points' + (b.points.length === 4 ? ' four' : '') + '">' + b.points.map(function (p) {
           return '<li><h4>' + p[0] + '</h4><p>' + p[1] + '</p></li>';
@@ -280,7 +280,7 @@
     },
     system: function (b) {
       function cell(n, name, variants, body, wide) {
-        return '<div class="ds-cell' + (wide ? ' is-wide' : '') + '"><div class="ds-cell-head"><span>' + n + '</span><b>' + name + '</b><em>' + variants + '</em></div><div class="ds-canvas">' + body + '</div></div>';
+        return '<div class="ds-cell' + (wide ? ' is-wide' : '') + '"><div class="ds-cell-head"><b>' + name + '</b><em>' + variants + '</em></div><div class="ds-canvas">' + body + '</div></div>';
       }
       function cap(t) { return '<span class="ds-cap">' + t + '</span>'; }
       var colors = b.colors.map(function (c) {
@@ -307,15 +307,15 @@
           '<div class="ds-toast"><span class="ds-ok"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span><div><b>Stake confirmed</b><small>3.998656 stkOSMO added to your balance</small></div></div>');
       return '<div class="ds" role="group" aria-label="pSTAKE brand and design system">' +
         '<div class="ds-top"><span class="ds-top-logo">' + LOGO.replace('role="img" aria-label="pSTAKE logo"', 'aria-hidden="true" focusable="false"') + '</span><span class="ds-top-r">Design system</span></div>' +
-        '<div class="ds-part"><p class="ds-h"><span>A</span>Brand</p><div class="ds-brand">' +
+        '<div class="ds-part"><p class="ds-h">Brand</p><div class="ds-brand">' +
           '<div class="ds-logo is-dark">' + LOGO + '<em>On dark</em></div>' +
           '<div class="ds-logo is-light">' + LOGO + '<em>On light</em></div></div></div>' +
-        '<div class="ds-part"><p class="ds-h"><span>B</span>Colour</p><ul class="ds-colors">' + colors + '</ul></div>' +
-        '<div class="ds-part"><p class="ds-h"><span>C</span>Type</p><table class="ds-type"><thead><tr><th scope="col"><span class="sr">Sample</span></th><th scope="col">Style</th><th scope="col">Size/Line</th><th scope="col">Weight</th></tr></thead><tbody>' + typo + '</tbody></table></div>' +
-        '<div class="ds-part"><p class="ds-h"><span>D</span>Components</p><div class="ds-cells" aria-hidden="true">' + comps + '</div>' +
+        '<div class="ds-part"><p class="ds-h">Colour</p><ul class="ds-colors">' + colors + '</ul></div>' +
+        '<div class="ds-part"><p class="ds-h">Type</p><table class="ds-type"><thead><tr><th scope="col"><span class="sr">Sample</span></th><th scope="col">Style</th><th scope="col">Size/Line</th><th scope="col">Weight</th></tr></thead><tbody>' + typo + '</tbody></table></div>' +
+        '<div class="ds-part"><p class="ds-h">Components</p><div class="ds-cells" aria-hidden="true">' + comps + '</div>' +
         '<p class="sr">Components: primary, secondary and disabled buttons; a stake and unstake segmented control; network and token chips with a MAX tag; an amount field with available balance; selected and default unstaking option cards; an APY stat; a stake confirmed toast.</p></div>' +
         '</div>' +
-        '<ul class="ds-principles">' + b.principles.map(function (p, i) { return '<li><span>0' + (i + 1) + '</span><h3>' + p[0] + '</h3><p>' + p[1] + '</p></li>'; }).join('') + '</ul>';
+        '<ul class="ds-principles">' + b.principles.map(function (p, i) { return '<li><h3>' + p[0] + '</h3><p>' + p[1] + '</p></li>'; }).join('') + '</ul>';
     },
     numbered: function (b) {
       return '<ol class="cs-numbered">' + b.items.map(function (r) { return '<li><h3>' + r[0] + '</h3><p>' + r[1] + '</p></li>'; }).join('') + '</ol>';
@@ -325,14 +325,14 @@
   function render(key) {
     var c = CASES[key];
     var h = '<article class="cs" aria-labelledby="cs-title">';
-    h += '<header class="cs-hero"><p class="cs-kicker">' + c.kicker.map(function (k) { return '<span>' + k + '</span>'; }).join('') + '</p>' +
+    h += '<header class="cs-hero"><p class="cs-kicker">' + c.name + '<span>' + c.kicker.slice(1).map(function (k, i) { return i && !/^[A-Z0-9]{2}/.test(k) ? k.charAt(0).toLowerCase() + k.slice(1) : k; }).join(', ') + '</span></p>' +
       '<h1 id="cs-title" tabindex="-1">' + c.title + '</h1><p class="cs-intro">' + c.lede + '</p>' +
       '<dl class="cs-facts">' + c.facts.map(function (f) { return '<div><dt>' + f[0] + '</dt><dd>' + f[1] + '</dd></div>'; }).join('') + '</dl></header>';
     h += '<figure class="cs-figure cs-hero-figure' + (c.hero.bare ? ' is-bare' : '') + '">' + img(c.hero, false) + '</figure>';
     h += '<ul class="cs-stats" aria-label="Key figures">' + c.stats.map(function (s) { return '<li><strong>' + s[0] + '</strong><span>' + s[1] + '</span></li>'; }).join('') + '</ul>';
     c.sections.forEach(function (s, i) {
       var id = key + '-s' + (i + 1);
-      h += '<section class="cs-sec" aria-labelledby="' + id + '"><header class="cs-sec-head"><p class="cs-num"><span>' + (i < 9 ? '0' : '') + (i + 1) + '</span>' + s.label + '</p>' +
+      h += '<section class="cs-sec" aria-labelledby="' + id + '"><header class="cs-sec-head"><p class="cs-num">' + s.label + '</p>' +
         '<h2 id="' + id + '">' + s.title + '</h2>' + (s.lede ? '<p class="cs-text">' + s.lede + '</p>' : '') + '</header>' +
         s.blocks.map(function (b) { return B[b.type](b); }).join('') + '</section>';
     });

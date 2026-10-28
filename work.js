@@ -18,7 +18,7 @@
     window.CASES[key].sections.forEach(function (s, i) {
       var n = (i < 9 ? '0' : '') + (i + 1), id = key + '-s' + (i + 1);
       var item = document.createElement('li');
-      item.innerHTML = '<a href="#' + id + '" data-sec="' + id + '"><em>' + n + '</em><span>' + s.label + '</span></a>';
+      item.innerHTML = '<a href="#' + id + '" data-sec="' + id + '"><span>' + s.label + '</span></a>';
       ul.appendChild(item);
     });
     li.appendChild(ul);

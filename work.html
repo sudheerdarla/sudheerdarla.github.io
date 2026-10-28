@@ -96,7 +96,7 @@
 
     /* Top bar + theme toggle */
         .toggle { display: inline-flex; align-items: center; gap: var(--s-sm); min-height: 32px; padding: 0 2px; }
-    .toggle-label { font-family: var(--font-mono); font-size: 10px; line-height: 15px; letter-spacing: .04em; color: var(--muted); text-transform: uppercase; }
+    .toggle-label { font-size: 13px; line-height: 16px; color: var(--muted); }
     .track { position: relative; width: 30px; height: 16px; border-radius: var(--r-md); background: var(--bg-3);
       border: 1px solid var(--line-strong); transition: background-color .2s var(--ease-out), border-color .2s var(--ease-out); }
     .knob { position: absolute; top: 2px; left: 2px; width: 10px; height: 10px; border-radius: var(--r-md); background: var(--fg);
@@ -116,11 +116,12 @@
     /* ---------- Case study system ---------- */
     .cs { --pad: clamp(20px, 5.5cqw, 48px); counter-reset: none; }
     .cs h1, .cs h2, .cs h3, .cs h4 { color: var(--fg); }
-    .cs-label, .cs-kicker, .cs-num, .cs-facts dt { font-family: var(--font-mono); font-size: 11px; line-height: 16.5px; letter-spacing: .04em; text-transform: uppercase; color: var(--muted); font-weight: 400; }
+    .cs-label, .cs-kicker, .cs-num, .cs-facts dt { font-family: var(--font-sans); font-size: 13px; line-height: 18px; letter-spacing: 0; color: var(--muted); font-weight: 500; }
     .cs-text { margin-top: var(--s-md); max-width: 40em; font-size: 16px; line-height: 26px; color: var(--fg-2); }
 
     .cs-hero { padding: clamp(32px, 7cqw, 56px) var(--pad) var(--s-3xl); }
-    .cs-kicker span + span::before { content: "/"; margin: 0 8px; color: var(--muted-3); }
+    .cs-kicker { color: var(--fg); }
+    .cs-kicker span { margin-left: 8px; padding-left: 8px; border-left: 1px solid var(--line-strong); color: var(--muted); font-weight: 400; }
     .cs-hero h1 { margin-top: var(--s-lg); max-width: 18em; font-size: clamp(28px, 5cqw, 40px); line-height: 1.12; font-weight: 800; letter-spacing: -0.025em; outline: none; }
     .cs-intro { margin-top: var(--s-lg); max-width: 38em; font-size: 17px; line-height: 28px; color: var(--fg-2); }
     .cs-facts { margin-top: var(--s-3xl); display: grid; grid-template-columns: 1fr 1fr; border-top: 1px solid var(--line); }
@@ -137,8 +138,7 @@
 
     .cs-sec { margin-top: var(--s-4xl); padding: var(--s-4xl) var(--pad) 0; border-top: 1px solid var(--line); }
     .cs-sec > * + * { margin-top: var(--s-3xl); }
-    .cs-num span { color: var(--fg-1); margin-right: var(--s-sm); }
-    .cs-sec-head h2 { margin-top: var(--s-md); max-width: 22em; font-size: clamp(22px, 3.6cqw, 28px); line-height: 1.2; font-weight: 700; letter-spacing: -0.02em; }
+        .cs-sec-head h2 { margin-top: var(--s-md); max-width: 22em; font-size: clamp(22px, 3.6cqw, 28px); line-height: 1.2; font-weight: 700; letter-spacing: -0.02em; }
 
     /* Lists */
     .cs-lists { display: grid; gap: var(--s-2xl); }
@@ -151,7 +151,7 @@
     /* Quote */
     .cs-quote { padding-left: var(--s-xl); border-left: 2px solid var(--fg); }
     .cs-quote p { max-width: 30em; font-size: 20px; line-height: 30px; font-weight: 500; letter-spacing: -0.01em; color: var(--fg); }
-    .cs-quote footer { margin-top: var(--s-md); font-family: var(--font-mono); font-size: 11px; line-height: 16.5px; letter-spacing: .04em; text-transform: uppercase; color: var(--muted); }
+    .cs-quote footer { margin-top: var(--s-md); font-size: 13px; line-height: 18px; font-weight: 500; color: var(--muted); }
 
     /* Cards */
     .cs-cards { display: grid; gap: var(--s-md); }
@@ -170,7 +170,7 @@
     /* Table */
     .cs-table { width: 100%; border-collapse: collapse; font-size: 15px; line-height: 22px; }
     .cs-table th, .cs-table td { text-align: left; vertical-align: top; padding: 14px var(--s-lg) 14px 0; border-bottom: 1px solid var(--line); }
-    .cs-table thead th { padding-top: 0; font-family: var(--font-mono); font-size: 11px; line-height: 16.5px; letter-spacing: .04em; text-transform: uppercase; color: var(--muted); font-weight: 400; border-bottom-color: var(--line-1); }
+    .cs-table thead th { padding-top: 0; font-size: 13px; line-height: 18px; color: var(--muted); font-weight: 500; border-bottom-color: var(--line-1); }
     .cs-table tbody th { width: 40%; font-weight: 500; color: var(--fg); }
     .cs-table td { color: var(--fg-2); padding-right: 0; }
 
@@ -200,14 +200,13 @@
     /* Steps */
     .cs-steps { display: grid; grid-template-columns: 1fr 1fr; gap: 0 var(--s-2xl); counter-reset: step; border-top: 1px solid var(--line); }
     .cs-steps li { counter-increment: step; padding: 14px 0; border-bottom: 1px solid var(--line); }
-    .cs-steps li::before { content: counter(step, decimal-leading-zero); font-family: var(--font-mono); font-size: 11px; line-height: 16.5px; color: var(--muted); }
-    .cs-steps h3 { margin-top: 4px; font-size: 15px; line-height: 22px; font-weight: 600; }
+        .cs-steps h3 { margin-top: 0; font-size: 15px; line-height: 22px; font-weight: 600; }
     .cs-steps p { font-size: 13.5px; line-height: 20px; color: var(--muted); }
 
     /* Decisions */
     .cs-decision + .cs-decision { padding-top: var(--s-4xl); border-top: 1px solid var(--line); }
     .cs-sec > .cs-decision + .cs-decision { margin-top: var(--s-4xl); }
-    .cs-decision h3 { margin-top: var(--s-sm); max-width: 24em; font-size: 20px; line-height: 28px; font-weight: 700; letter-spacing: -0.015em; }
+    .cs-decision h3 { margin-top: 0; max-width: 24em; font-size: 20px; line-height: 28px; font-weight: 700; letter-spacing: -0.015em; }
     .cs-shots { margin-top: var(--s-2xl); display: grid; gap: var(--s-md); }
     .cs-points { margin-top: var(--s-2xl); display: grid; gap: var(--s-xl) var(--s-2xl); counter-reset: pt; }
     .cs-points li { counter-increment: pt; display: grid; grid-template-columns: 24px 1fr; column-gap: var(--s-md); }
@@ -230,8 +229,7 @@
     /* Numbered learnings */
     .cs-numbered { display: grid; gap: 0 var(--s-2xl); counter-reset: ln; border-top: 1px solid var(--line); }
     .cs-numbered li { counter-increment: ln; padding: var(--s-xl) 0; border-bottom: 1px solid var(--line); }
-    .cs-numbered li::before { content: counter(ln, decimal-leading-zero); font-family: var(--font-mono); font-size: 11px; line-height: 16.5px; color: var(--muted); }
-    .cs-numbered h3 { margin-top: var(--s-sm); font-size: 16px; line-height: 24px; font-weight: 600; }
+        .cs-numbered h3 { margin-top: 0; font-size: 16px; line-height: 24px; font-weight: 600; }
     .cs-numbered p { margin-top: var(--s-xs); font-size: 14px; line-height: 22px; color: var(--fg-2); }
 
     /* End + next */
@@ -284,8 +282,7 @@
     .ds-part { padding: clamp(20px, 4cqw, 32px) clamp(16px, 3.5cqw, 28px); }
     .ds-part + .ds-part { border-top: 1px solid var(--ln); }
     .ds-h { display: flex; align-items: center; gap: 10px; margin-bottom: 18px; font-size: 13px; font-weight: 600; letter-spacing: -.005em; color: var(--tx); }
-    .ds-h span { width: 20px; height: 20px; display: grid; place-items: center; border: 1px solid var(--ln2); border-radius: 4px; font-family: var(--font-mono); font-size: 10px; font-weight: 400; color: var(--mu); }
-
+    
     .ds-brand { display: grid; grid-template-columns: 1fr; gap: 8px; }
     .ds-logo { position: relative; display: grid; place-items: center; aspect-ratio: 16 / 6; border-radius: 6px; border: 1px solid var(--ln); }
     .ds-logo-svg { display: block; width: clamp(110px, 26cqw, 168px); height: auto; }
@@ -317,8 +314,7 @@
     .ds-cells { display: grid; grid-template-columns: 1fr; gap: 1px; background: var(--ln); border: 1px solid var(--ln); border-radius: 6px; overflow: hidden; }
     .ds-cell { display: flex; flex-direction: column; background: var(--n); }
     .ds-cell-head { display: flex; align-items: baseline; gap: 8px; padding: 10px 12px; border-bottom: 1px solid var(--ln); font-size: 12px; }
-    .ds-cell-head span { font-family: var(--font-mono); font-size: 10px; color: var(--mu); }
-    .ds-cell-head b { font-weight: 600; color: var(--tx); }
+        .ds-cell-head b { font-weight: 600; color: var(--tx); }
     .ds-cell-head em { margin-left: auto; font-style: normal; font-size: 11px; color: var(--mu); text-align: right; }
     .ds-canvas { flex: 1; display: grid; place-items: center; min-height: 128px; padding: 22px 16px;
       background-color: var(--s1); background-image: radial-gradient(rgba(255,255,255,.06) 1px, transparent 1px); background-size: 12px 12px; }
@@ -364,8 +360,7 @@
 
     .ds-principles { display: grid; gap: 0 var(--s-2xl); border-top: 1px solid var(--line); margin-top: var(--s-2xl) !important; }
     .ds-principles li { padding: var(--s-lg) 0; border-bottom: 1px solid var(--line); }
-    .ds-principles span { font-family: var(--font-mono); font-size: 11px; color: var(--muted); }
-    .ds-principles h3 { margin-top: 6px; font-size: 15px; line-height: 22px; font-weight: 600; }
+        .ds-principles h3 { margin-top: 0; font-size: 15px; line-height: 22px; font-weight: 600; }
     .ds-principles p { margin-top: 2px; font-size: 14px; line-height: 21px; color: var(--fg-2); }
 
     @container (min-width: 520px) {
@@ -424,7 +419,7 @@
     @media (prefers-reduced-motion: reduce) { .lb[open] { animation: none; } }
     @media print { .lb { display: none !important; } .rail { display: none !important; } .content { margin: 0; padding: 0; } }
   </style>
-  <link rel="stylesheet" href="rail.css?v=4">
+  <link rel="stylesheet" href="rail.css?v=5">
 </head>
 <body>
   <a class="skip" href="#cs-main">Skip to case study</a>
@@ -453,8 +448,8 @@
     <button class="lb-close" type="button" id="lb-close" aria-label="Close image viewer"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true" focusable="false"><path d="M18 6L6 18M6 6l12 12"/></svg></button>
     <figure><img id="lb-img" alt=""><figcaption id="lb-cap"></figcaption></figure>
   </dialog>
-  <script src="cases.js?v=10"></script>
+  <script src="cases.js?v=12"></script>
   <script src="app.js?v=4" defer></script>
-  <script src="work.js?v=6" defer></script>
+  <script src="work.js?v=7" defer></script>
 </body>
 </html>

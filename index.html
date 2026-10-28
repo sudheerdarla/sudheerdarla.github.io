@@ -103,7 +103,7 @@
     .toggle-fixed { position: fixed; z-index: 20; left: max(24px, calc((100vw - 1160px) / 2)); bottom: var(--s-2xl); }
     @media (max-width: 960px) { .toggle-fixed { left: var(--s-lg); bottom: var(--s-lg); padding: 6px 10px; border: 1px solid var(--line); border-radius: var(--r-md); background: var(--bg); } }
     .toggle { display: inline-flex; align-items: center; gap: var(--s-sm); min-height: 32px; padding: 0 2px; }
-    .toggle-label { font-family: var(--font-mono); font-size: 10px; line-height: 15px; letter-spacing: .04em; color: var(--muted); text-transform: uppercase; }
+    .toggle-label { font-size: 13px; line-height: 16px; color: var(--muted); }
     .track { position: relative; width: 30px; height: 16px; border-radius: var(--r-md); background: var(--bg-3);
       border: 1px solid var(--line-strong); transition: background-color .2s var(--ease-out), border-color .2s var(--ease-out); }
     .knob { position: absolute; top: 2px; left: 2px; width: 10px; height: 10px; border-radius: var(--r-md); background: var(--fg);
@@ -119,13 +119,13 @@
     .name { font-size: 28px; line-height: 28.56px; font-weight: 700; letter-spacing: -0.84px; }
     .tagline { margin-top: var(--s-sm); font-size: 16px; line-height: 22px; color: var(--muted); }
     .social { display: flex; gap: var(--s-xs); margin: 0 -6px 0 auto; flex: none; }
-    .nav-link { display: inline-flex; align-items: center; min-height: 32px; min-width: 32px; justify-content: center; font-family: var(--font-mono); font-size: 15px; line-height: 15px; color: var(--fg-1); padding: 0 6px; border-bottom: 1px solid transparent; transition: border-color .15s var(--ease-out), color .15s; }
+    .nav-link { display: inline-flex; align-items: center; min-height: 32px; min-width: 32px; justify-content: center; font-size: 15px; line-height: 15px; font-weight: 500; color: var(--fg-1); padding: 0 6px; border-bottom: 1px solid transparent; transition: border-color .15s var(--ease-out), color .15s; }
     .nav-link:hover { color: var(--fg); border-bottom-color: var(--fg); }
 
     .bio { margin-top: var(--s-3xl); display: flex; flex-direction: column; gap: var(--s-lg); font-size: 16px; line-height: 26.4px; color: var(--fg-2); }
 
     .tags { margin-top: var(--s-3xl); display: flex; flex-wrap: wrap; gap: var(--s-sm); }
-    .tag { font-family: var(--font-mono); font-size: 11px; line-height: 16.5px; padding: 4px 8px; border: 1px solid var(--line-1); border-radius: var(--r-md); background: var(--bg); color: var(--fg-1); }
+    .tag { font-size: 13px; line-height: 18px; font-weight: 500; padding: 3px 10px; border: 1px solid var(--line-1); border-radius: var(--r-md); background: var(--bg); color: var(--fg-1); }
 
     .sections { margin-top: var(--s-3xl); display: flex; flex-direction: column; gap: 0; }
 
@@ -141,9 +141,8 @@
     .sec.open .sec-body { display: block; }
 
     /* Eyebrow */
-    .eyebrow { font-family: var(--font-mono); font-size: 11px; line-height: 16.5px; letter-spacing: .04em; text-transform: uppercase; color: var(--fg-1); }
-    .eyebrow b { font-weight: 400; color: var(--muted); margin-right: var(--s-xs); }
-
+    .eyebrow { font-size: 14px; line-height: 20px; font-weight: 600; color: var(--fg); }
+    
     /* Projects */
     .projects { display: flex; flex-direction: column; gap: var(--s-4xl); }
     .project h3 { font-size: 22px; line-height: 26.4px; font-weight: 800; letter-spacing: 0; text-transform: uppercase; }
@@ -155,8 +154,8 @@
     .slot img.is-center { object-position: center; }
     .slot:hover { border-color: var(--line-strong); box-shadow: var(--shadow-md); }
     .slot:hover img { transform: scale(1.015); }
-    .slot-tag { position: absolute; right: var(--s-md); bottom: var(--s-md); font-family: var(--font-mono); font-size: 11px; line-height: 16.5px; letter-spacing: .04em;
-      text-transform: uppercase; padding: 4px 8px; border-radius: var(--r-md); background: var(--accent); color: var(--accent-ink);
+    .slot-tag { position: absolute; right: var(--s-md); bottom: var(--s-md); font-size: 12px; line-height: 16px; font-weight: 500;
+      padding: 4px 8px; border-radius: var(--r-md); background: var(--accent); color: var(--accent-ink);
       opacity: 0; transform: translateY(4px); transition: opacity .15s var(--ease-out), transform .15s var(--ease-out); }
     .slot:hover .slot-tag, .slot:focus-visible .slot-tag { opacity: 1; transform: none; }
 
@@ -257,11 +256,11 @@
           <section class="sec" data-acc>
             <h2 class="sec-title"><button class="sec-head" type="button" id="h-experience" aria-expanded="false" aria-controls="p-experience">Experience <svg class="chev" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M6 15l6-6 6 6"/></svg></button></h2>
             <div class="sec-body" id="p-experience" role="region" aria-labelledby="h-experience">
-              <div class="row"><div class="row-left"><div class="badge" aria-hidden="true">IV</div><div><h3>Independent ventures — Hyderabad</h3><div class="meta">Founder</div></div></div><div class="dates">2023 – 2026</div></div>
-              <div class="row"><div class="row-left"><div class="badge" aria-hidden="true">HC</div><div><h3>Hive Consultancy Services — Bengaluru</h3><div class="meta">Product Designer</div></div></div><div class="dates">Apr 2023 – Aug 2023</div></div>
-              <div class="row"><div class="row-left"><div class="badge" aria-hidden="true">WL</div><div><h3>Wise Log Solutions — Dubai</h3><div class="meta">UI/UX Designer</div></div></div><div class="dates">Jul 2022 – Mar 2023</div></div>
-              <div class="row"><div class="row-left"><div class="badge" aria-hidden="true">CM</div><div><h3>CMMT Technologies — Bengaluru</h3><div class="meta">UI/UX Designer</div></div></div><div class="dates">Feb 2020 – Jun 2022</div></div>
-              <div class="row"><div class="row-left"><div class="badge" aria-hidden="true">CT</div><div><h3>Cosmic Tech Labs — Hyderabad</h3><div class="meta">User Experience Designer</div></div></div><div class="dates">Jul 2018 – Oct 2019</div></div>
+              <div class="row"><div class="row-left"><div class="badge" aria-hidden="true">IV</div><div><h3>Independent ventures</h3><div class="meta">Founder, Hyderabad</div></div></div><div class="dates">2023 – 2026</div></div>
+              <div class="row"><div class="row-left"><div class="badge" aria-hidden="true">HC</div><div><h3>Hive Consultancy Services</h3><div class="meta">Product Designer, Bengaluru</div></div></div><div class="dates">Apr 2023 – Aug 2023</div></div>
+              <div class="row"><div class="row-left"><div class="badge" aria-hidden="true">WL</div><div><h3>Wise Log Solutions</h3><div class="meta">UI/UX Designer, Dubai</div></div></div><div class="dates">Jul 2022 – Mar 2023</div></div>
+              <div class="row"><div class="row-left"><div class="badge" aria-hidden="true">CM</div><div><h3>CMMT Technologies</h3><div class="meta">UI/UX Designer, Bengaluru</div></div></div><div class="dates">Feb 2020 – Jun 2022</div></div>
+              <div class="row"><div class="row-left"><div class="badge" aria-hidden="true">CT</div><div><h3>Cosmic Tech Labs</h3><div class="meta">User Experience Designer, Hyderabad</div></div></div><div class="dates">Jul 2018 – Oct 2019</div></div>
             </div>
           </section>
 
@@ -277,8 +276,8 @@
             <h2 class="sec-title"><button class="sec-head" type="button" id="h-skills" aria-expanded="false" aria-controls="p-skills">Skills <svg class="chev" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M6 15l6-6 6 6"/></svg></button></h2>
             <div class="sec-body" id="p-skills" role="region" aria-labelledby="h-skills">
               <div class="skills">
-                <div><h3 class="eyebrow"><b>01</b> Design</h3><ul><li>Product Design</li><li>Figma</li><li>Rapid Prototyping</li><li>Design Systems</li><li>User Experience Design (UED)</li><li>Illustrator</li></ul></div>
-                <div><h3 class="eyebrow"><b>02</b> Engineering</h3><ul><li>HTML/CSS/JS/React JS</li><li>Python</li><li>Git</li></ul></div>
+                <div><h3 class="eyebrow">Design</h3><ul><li>Product Design</li><li>Figma</li><li>Rapid Prototyping</li><li>Design Systems</li><li>User Experience Design (UED)</li><li>Illustrator</li></ul></div>
+                <div><h3 class="eyebrow">Engineering</h3><ul><li>HTML/CSS/JS/React JS</li><li>Python</li><li>Git</li></ul></div>
               </div>
             </div>
           </section>
@@ -295,6 +294,6 @@
             <span class="toggle-label" id="theme-label">Dark mode</span>
             <span class="track" aria-hidden="true"><span class="knob"></span></span>
           </button>
-    <script src="app.js?v=4" defer></script>
+    <script src="app.js?v=5" defer></script>
 </body>
 </html>
