@@ -484,6 +484,8 @@ dialog.cmd[open]{animation:pop .15s ease-out}
 .me-org{display:flex;align-items:center;gap:8px;margin:6px 4px 2px;padding:8px 10px;border-radius:var(--r-sm);background:var(--g100);font-size:13px;min-width:0}
 
 /* ===== overview top row ===== */
+.ov-mid>.card{display:flex;flex-direction:column}
+.ov-mid .chart-wrap{flex:1;display:flex;flex-direction:column;justify-content:flex-end}
 .ov-top{display:grid;grid-template-columns:minmax(0,1.55fr) minmax(0,1fr);gap:24px;align-items:stretch}
 .ov-top>.card{display:flex;flex-direction:column}
 .ov-top .chart-wrap{flex:1;display:flex;flex-direction:column;justify-content:flex-end}
@@ -1050,27 +1052,25 @@ V.overview=()=>{
   return pageHead(`Overview`,`${S.session?`Good ${new Date().getHours()<12?'morning':new Date().getHours()<17?'afternoon':'evening'}, ${esc(firstName())}. `:''}Here\u2019s what needs you, and how your agents are spending.`,`<a class="btn sm" href="#activity">${ic('activity')}<span class="hide-sm">Activity</span></a><a class="btn pri sm" id="newAgentBtn" href="#agents/new">${ic('plus')}New agent</a>`)+`
   <div class="wrap body">
     ${S.sample?`<div class="nbox n-blue">${ic('sparkle')}<span><b>You\u2019re exploring sample data.</b> These agents and payments are examples so you can try everything safely.</span><button class="btn xs nact" onclick="confirmReset(true)">Clear sample data</button></div>`:''}
-    <div class="ov-top">
     ${P.length?`<section class="card clip" id="needsCard" aria-labelledby="needsH">
       <div class="card-h"><h2 id="needsH">${ic('inbox')}Needs your approval <span class="cnt">${P.length}</span></h2>
         <div style="display:flex;gap:8px;align-items:center">${urgent?`<span class="badge b-red">${urgent} expiring soon</span>`:''}<a class="btn tert xs" href="#approvals">View all${ic('arrowR',14)}</a></div></div>
       <div class="plist">${P.slice(0,3).map(e=>prow(e)).join('')}</div>
       ${P.length>3?`<div class="card-f"><span>${P.length-3} more waiting</span><a class="btn xs" href="#approvals">Open approvals</a></div>`:''}
     </section>`:`<section class="card" id="needsCard"><div class="caught"><span class="okico">${ic('check')}</span><div><b class="w5">You\u2019re all caught up</b><p class="muted">Requests over an agent\u2019s auto-approve limit show up here${S.settings.slack?` and in Slack ${esc(S.settings.channel)}`:''}.</p></div></div></section>`}
-    <section class="card" id="chartCard">${chart()}</section>
-    </div>
     <section class="card stats" id="statsCard" aria-label="Key numbers">
       <div class="stat"><div class="k">Spent · 24h</div><div class="v">${money(spentAll)}</div>${pgBar(spentAll,budget)}<div class="s">of ${money0(budget)} combined daily budget</div></div>
       <div class="stat"><div class="k">Awaiting approval</div><div class="v">${money(waitAmt)}</div><div class="s">${P.length} request${P.length===1?'':'s'}${urgent?` · <span class="t-red">${urgent} expiring</span>`:''}</div></div>
       <div class="stat"><div class="k">Payments · 24h</div><div class="v">${day.length}</div><div class="s">${blocked} blocked by your rules</div></div>
       <div class="stat"><div class="k">Agents</div><div class="v">${actv.length}<span class="muted" style="font-size:16px;font-weight:500;letter-spacing:0"> active</span></div><div class="s">${paused?`${paused} paused`:'None paused'}</div></div>
     </section>
-    <div class="two">
-      <section class="card clip"><div class="card-h"><h2>Recent activity</h2>${S.ledger.length?`<a class="btn tert xs" href="#activity">View all${ic('arrowR',14)}</a>`:''}</div>${payTable(S.ledger.slice(0,6))}</section>
+    <div class="two ov-mid">
+      <section class="card" id="chartCard">${chart()}</section>
       <section class="card clip" id="budgetCard"><div class="card-h"><h2>Budget by agent</h2><a class="btn tert xs" href="#agents">Manage${ic('arrowR',14)}</a></div>
         <div class="ulist">${S.agents.length?S.agents.map(a=>{const sp=spent(a.id);return `<a href="#agents/${a.id}">${av(a.name,28)}<div style="min-width:0"><div class="nm"><b class="trunc">${esc(a.name)}</b>${a.status==='paused'||sp/a.daily>=.8?agBadge(a):''}</div><div class="pg thin">${pgBar(sp,a.daily).replace(/^<div class="pg"[^>]*>|<\/div>$/g,'')}</div></div><div class="amt">${money0(Math.round(sp))} / ${money0(a.daily)}</div></a>`}).join(''):emptyBox('bot','No agents','Create one to see its budget here.')}</div>
       </section>
     </div>
+    <section class="card clip" id="recentCard"><div class="card-h"><h2>Recent activity</h2>${S.ledger.length?`<a class="btn tert xs" href="#activity">View all${ic('arrowR',14)}</a>`:''}</div>${payTable(S.ledger.slice(0,6))}</section>
   </div>`;
 };
 
