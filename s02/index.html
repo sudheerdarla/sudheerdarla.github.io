@@ -505,11 +505,10 @@ dialog.cmd[open]{animation:pop .15s ease-out}
 }
 
 /* ===== auth / landing ===== */
-body.anon>.top{display:none}
+body.anon .top{display:none}
 .auth{position:relative;min-height:calc(100vh - 30px);overflow:hidden;display:flex;flex-direction:column;isolation:isolate;background:radial-gradient(120% 95% at 82% 8%,#ffffff 0%,#eef0f3 34%,#dadee4 66%,#c4c9d1 100%)}
 [data-theme="dark"] .auth{background:radial-gradient(120% 95% at 82% 8%,#2b2e35 0%,#17191d 38%,#0b0c0e 72%,#050506 100%)}
-.auth-top{position:relative}
-.auth canvas{position:absolute;inset:0;width:100%;height:100%;z-index:-2;-webkit-mask-image:linear-gradient(#000 75%,transparent);mask-image:linear-gradient(#000 75%,transparent)}
+.auth canvas{position:absolute;inset:0;width:100%;height:100%;z-index:-2}
 .auth::before{content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;background:linear-gradient(100deg,color-mix(in oklch,var(--bg2) 72%,transparent) 0%,color-mix(in oklch,var(--bg2) 30%,transparent) 45%,transparent 70%)}
 .auth::after{content:"";position:absolute;inset:-40% -10% auto auto;width:70vw;height:70vw;z-index:-1;pointer-events:none;background:conic-gradient(from 210deg,transparent,rgba(255,255,255,.55),transparent 30%,rgba(190,198,210,.35),transparent 60%);filter:blur(60px);opacity:.7;animation:sheen 24s linear infinite}
 [data-theme="dark"] .auth::after{background:conic-gradient(from 210deg,transparent,rgba(200,210,230,.14),transparent 30%,rgba(140,150,170,.12),transparent 60%)}
@@ -520,7 +519,7 @@ body.anon>.top{display:none}
 .auth.hero02::after{inset:auto -20% -50% auto;opacity:.5}
 .auth.hero02::before{background:linear-gradient(100deg,color-mix(in oklch,var(--bg2) 55%,transparent) 0%,color-mix(in oklch,var(--bg2) 15%,transparent) 42%,transparent 62%)}
 .auth-nav{display:flex;align-items:center;justify-content:space-between;height:72px;gap:12px;width:100%}
-.hero{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,440px);gap:64px;align-items:center;padding-top:8px;padding-bottom:44px;width:100%}
+.hero{flex:1;display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,440px);gap:64px;align-items:center;padding-top:16px;padding-bottom:56px;width:100%}
 .hero h1{font-size:56px;line-height:60px;font-weight:600;letter-spacing:-3px;margin-top:22px}
 .hero h1 .grad{background:linear-gradient(92deg,var(--g1000) 0%,var(--g700) 45%,var(--g1000) 90%);-webkit-background-clip:text;background-clip:text;color:transparent}
 .hero .lede{font-size:18px;line-height:28px;color:var(--g900);margin-top:20px;max-width:540px}
@@ -532,7 +531,7 @@ body.anon>.top{display:none}
 .hpill b{background:var(--g1000);color:var(--bg1);border-radius:999px;padding:2px 9px;font-size:11px;font-weight:600}
 .rails-row{display:flex;gap:8px;margin-top:28px;align-items:center;flex-wrap:wrap;color:var(--g900);font-size:13px}
 .rails-row .rail{background:color-mix(in oklch,var(--bg1) 70%,transparent)}
-.acard{background:color-mix(in oklch,var(--bg1) 88%,transparent);backdrop-filter:blur(16px) saturate(1.2);-webkit-backdrop-filter:blur(16px) saturate(1.2);border-radius:16px;box-shadow:var(--sh-xl);padding:24px 26px;display:grid;gap:16px;min-width:0}
+.acard{background:color-mix(in oklch,var(--bg1) 88%,transparent);backdrop-filter:blur(16px) saturate(1.2);-webkit-backdrop-filter:blur(16px) saturate(1.2);border-radius:16px;box-shadow:var(--sh-xl);padding:28px;display:grid;gap:18px;min-width:0}
 .acard h2{font-size:24px;line-height:32px;font-weight:600;letter-spacing:-.96px}
 .acard .sub{color:var(--g900);margin-top:4px;line-height:22px}
 .acard form{display:grid;gap:16px}
@@ -573,27 +572,6 @@ body.anon>.top{display:none}
 .redirect .spin{width:28px;height:28px;border-width:2px}
 @media (max-width:960px){.hero{grid-template-columns:minmax(0,1fr);gap:32px;padding-top:8px}.hero h1{font-size:42px;line-height:46px;letter-spacing:-2px}.acard{max-width:520px}}
 @media (max-width:720px){.hero h1{font-size:34px;line-height:38px;letter-spacing:-1.4px;margin-top:16px}.hero .lede{font-size:16px;line-height:24px;margin-top:14px}.acard{padding:20px}.hero-pts,.rails-row{display:none}.otp{gap:6px}.otp .in{height:46px}}
-
-/* ===== dashboard preview on auth pages ===== */
-.auth-preview{padding-bottom:0}
-.pv-frame{position:relative;height:1240px;overflow:hidden;border-radius:16px 16px 0 0;background:var(--bg2);color:var(--g1000);box-shadow:0 0 0 1px rgba(255,255,255,.09),0 -10px 60px -20px rgba(0,0,0,.35),0 40px 100px -30px rgba(0,0,0,.6);-webkit-mask-image:linear-gradient(to bottom,#000 70%,transparent 100%);mask-image:linear-gradient(to bottom,#000 70%,transparent 100%)}
-.pv-bar{height:38px;display:flex;align-items:center;gap:7px;padding:0 14px;background:var(--bg1);border-bottom:1px solid var(--a400)}
-.pv-bar i{width:11px;height:11px;border-radius:50%;background:var(--g400)}
-.pv-url{margin:0 auto;font-size:12px;color:var(--g900);display:flex;gap:6px;align-items:center;padding:3px 12px;border-radius:6px;background:var(--g100)}
-.pv-app{pointer-events:none;user-select:none;background:var(--bg2)}
-.pv-app .top{position:relative;top:auto}
-.pv-app .ph-in{padding-top:28px;padding-bottom:24px}
-.pv-app .body{padding-bottom:40px}
-.pv-blur{position:absolute;left:0;right:0;bottom:0;height:42%;pointer-events:none;z-index:2}
-.pv-blur i{position:absolute;inset:0}
-.pv-blur i:nth-child(1){-webkit-backdrop-filter:blur(.5px);backdrop-filter:blur(.5px);-webkit-mask-image:linear-gradient(to bottom,transparent 0%,#000 12.5%,#000 25%,transparent 37.5%);mask-image:linear-gradient(to bottom,transparent 0%,#000 12.5%,#000 25%,transparent 37.5%)}
-.pv-blur i:nth-child(2){-webkit-backdrop-filter:blur(1px);backdrop-filter:blur(1px);-webkit-mask-image:linear-gradient(to bottom,transparent 12.5%,#000 25%,#000 37.5%,transparent 50%);mask-image:linear-gradient(to bottom,transparent 12.5%,#000 25%,#000 37.5%,transparent 50%)}
-.pv-blur i:nth-child(3){-webkit-backdrop-filter:blur(2px);backdrop-filter:blur(2px);-webkit-mask-image:linear-gradient(to bottom,transparent 25%,#000 37.5%,#000 50%,transparent 62.5%);mask-image:linear-gradient(to bottom,transparent 25%,#000 37.5%,#000 50%,transparent 62.5%)}
-.pv-blur i:nth-child(4){-webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px);-webkit-mask-image:linear-gradient(to bottom,transparent 37.5%,#000 50%,#000 62.5%,transparent 75%);mask-image:linear-gradient(to bottom,transparent 37.5%,#000 50%,#000 62.5%,transparent 75%)}
-.pv-blur i:nth-child(5){-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);-webkit-mask-image:linear-gradient(to bottom,transparent 50%,#000 62.5%,#000 75%,transparent 87.5%);mask-image:linear-gradient(to bottom,transparent 50%,#000 62.5%,#000 75%,transparent 87.5%)}
-.pv-blur i:nth-child(6){-webkit-backdrop-filter:blur(16px);backdrop-filter:blur(16px);-webkit-mask-image:linear-gradient(to bottom,transparent 62.5%,#000 75%,#000 87.5%,transparent 100%);mask-image:linear-gradient(to bottom,transparent 62.5%,#000 75%,#000 87.5%,transparent 100%)}
-.pv-blur i:nth-child(7){-webkit-backdrop-filter:blur(28px);backdrop-filter:blur(28px);-webkit-mask-image:linear-gradient(to bottom,transparent 75%,#000 87.5%);mask-image:linear-gradient(to bottom,transparent 75%,#000 87.5%)}
-@media (max-width:720px){.auth .hpill,.auth .lede{display:none}.pv-frame{height:900px;border-radius:12px 12px 0 0}.pv-bar .pv-url{font-size:11px}}
 
 /* ===== walkthrough ===== */
 .tour-block{position:fixed;inset:0;z-index:900}
@@ -1859,7 +1837,7 @@ const PW_LABEL=['','Too weak','Okay','Strong','Very strong'];
 V.auth=r=>{
   const mode=r==='signup'?'signup':'login';
   if(!UI.auth||UI.auth.mode!==mode){authInit(mode);if(r==='login/sso')UI.auth.sso=true}
-  return `<div class="auth ${getHero()}"><div class="auth-top"><canvas id="bg" aria-hidden="true"></canvas>
+  return `<div class="auth ${getHero()}"><canvas id="bg" aria-hidden="true"></canvas>
   <nav class="wrap auth-nav" aria-label="Site">
     <a class="logo" href="#signup" aria-label="Saifuro">${logoSVG}<span>Saifuro</span></a>
     <div style="display:flex;gap:8px;align-items:center">
@@ -1881,24 +1859,8 @@ V.auth=r=>{
       <div class="rails-row"><span>Works across</span><span class="rail">x402</span><span class="rail">ACP</span><span class="rail">AP2</span><span class="rail">cards</span></div>
     </div>
     <div class="acard" id="acard">${authCard()}</div>
-  </section></div>${previewHTML()}</div>`;
+  </section></div>`;
 };
-function previewHTML(){
-  const keep=S;let body='';
-  try{S={...seed(),team:demoTeam(DEMO_ACCT),accounts:keep.accounts,org:{name:DEMO_ACCT.org,slug:DEMO_ACCT.slug},session:{email:DEMO_ACCT.email,name:DEMO_ACCT.name},sample:false};body=V.overview()}catch(e){body=''}finally{S=keep}
-  const tabs=TABS.map(([r,l],i)=>`<span class="tab ${i===0?'on':''}">${l}${r==='approvals'?'<span class="cnt">3</span>':''}</span>`).join('');
-  return `<section class="wrap auth-preview" aria-label="Preview of the Saifuro dashboard with sample data">
-    <div class="pv-frame" data-theme="dark" inert aria-hidden="true">
-      <div class="pv-bar"><i></i><i></i><i></i><span class="pv-url">${ic('lock',12)}app.saifuro.com/acme-research</span><span style="width:42px"></span></div>
-      <div class="pv-app">
-        <header class="top" style="position:relative"><div class="wrap top-in"><span class="logo">${logoSVG}<span class="hide-sm">Saifuro</span></span><span class="slash" aria-hidden="true"><svg width="16" height="24" viewBox="0 0 16 24"><path d="M11 3 5 21" stroke="currentColor" stroke-width="1.2"/></svg></span><div class="ws"><span class="av" style="width:20px;height:20px;background:linear-gradient(135deg,#7928ca,#ff0080)"></span><span class="wsn">Acme Research</span><span class="badge b-gray" style="height:20px;font-size:11px">Pilot</span></div>
-          <div class="top-r"><span class="cmdk">${ic('search',14)}<span class="lbl-t">Search or jump to\u2026</span><kbd>${MAC?'\u2318K':'Ctrl K'}</kbd></span><span class="iconbtn">${ic('moon')}</span><span class="av me" style="background:linear-gradient(135deg,#0070f3,#50e3c2)"></span></div></div>
-          <nav class="wrap tabs">${tabs}</nav></header>
-        ${body}
-      </div>
-      <div class="pv-blur"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
-    </div></section>`;
-}
 function renderCard(focusSel){const c=$('#acard');if(!c)return;c.innerHTML=authCard();const f=focusSel?$(focusSel):($('#acard .in.err')||null);if(f)f.focus()}
 function af(k,label,{type='text',val='',ph='',ac='off',hint='',extra='',right=''}={}){
   const e=UI.auth.errs[k];
@@ -1914,7 +1876,7 @@ const dots=n=>`<div class="sdots" aria-label="Step ${n+1} of 3">${[0,1,2].map(i=
 function authCard(){
   const A=UI.auth,d=A.d,E=A.errs;
   if(A.mode==='signup'){
-    if(A.step===0)return `<div><div style="display:flex;justify-content:space-between;align-items:center;gap:8px">${dots(0)}<button type="button" class="btn xs" onclick="fillSignup()" title="Prototype: fill with sample details">${ic('sparkle',12)}Fill sample</button></div><h2 style="margin-top:10px">Create your workspace</h2><p class="sub">Free during the pilot. No card needed.</p></div>
+    if(A.step===0)return `<div>${dots(0)}<h2 style="margin-top:14px">Create your workspace</h2><p class="sub">Free during the pilot. No card needed.</p></div>
       <button class="btn block" type="button" onclick="authGoogle(this)"><svg width="18" height="18" viewBox="0 0 48 48" aria-hidden="true"><path fill="#FFC107" d="M43.6 20.5H42V20H24v8h11.3C33.7 32.7 29.2 36 24 36c-6.6 0-12-5.4-12-12s5.4-12 12-12c3.1 0 5.8 1.2 7.9 3.1l5.7-5.7C34 6.1 29.3 4 24 4 12.9 4 4 12.9 4 24s8.9 20 20 20 20-8.9 20-20c0-1.3-.1-2.4-.4-3.5z"/><path fill="#FF3D00" d="m6.3 14.7 6.6 4.8C14.7 15.1 19 12 24 12c3.1 0 5.8 1.2 7.9 3.1l5.7-5.7C34 6.1 29.3 4 24 4 16.3 4 9.7 8.3 6.3 14.7z"/><path fill="#4CAF50" d="M24 44c5.2 0 9.9-2 13.4-5.2l-6.2-5.2C29.2 35.1 26.7 36 24 36c-5.2 0-9.6-3.3-11.3-7.9l-6.5 5C9.5 39.6 16.2 44 24 44z"/><path fill="#1976D2" d="M43.6 20.5H42V20H24v8h11.3c-.8 2.2-2.2 4.2-4.1 5.6l6.2 5.2C37 39.2 44 34 44 24c0-1.3-.1-2.4-.4-3.5z"/></svg>Continue with Google</button>
       <div class="or">or with your work email</div>
       <form novalidate onsubmit="suAccount(event)" oninput="authInput(event)" onchange="authInput(event)">
@@ -1925,6 +1887,7 @@ function authCard(){
         <label class="ackrow" style="align-items:flex-start"><input type="checkbox" class="cb" name="terms" ${d.terms?'checked':''} style="margin-top:2px"><span class="muted" style="font-size:13px;line-height:18px">I agree to the <a href="#" onclick="event.preventDefault();toast({title:'Terms aren’t part of this prototype'})">Terms</a> and <a href="#" onclick="event.preventDefault();toast({title:'Privacy policy isn’t part of this prototype'})">Privacy Policy</a></span></label>
         ${fieldErr(E,'terms')}
         <button class="btn pri block" id="authBtn">Continue${ic('arrowR')}</button>
+        <div class="demo-hint">${ic('info',14)}<span>Prototype: fill the form with sample details</span><button type="button" class="btn xs" onclick="fillSignup()">Fill</button></div>
       </form>
       <p class="auth-foot">Already have an account? <a href="#login">Log in</a></p>`;
     if(A.step===1){
