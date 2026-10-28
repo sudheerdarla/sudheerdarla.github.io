@@ -10,13 +10,13 @@
       title: 'Let agents pay. Keep the final say.',
       lede: 'AI agents are starting to buy things on their own: data, compute, flights. Saifuro Console is a concept for the control panel behind that. Teams give each agent a budget, a vendor list and approval rules, so small payments settle on their own and big ones wait for a person. I designed it and built it as a working prototype.',
       facts: [['Role', 'Product designer and builder'], ['Year', '2026'], ['Platform', 'Web console, desktop first'], ['Type', 'Self-initiated concept, not affiliated with Saifuro']],
-      hero: { src: 'saifuro-hero.jpg', w: 1920, h: 1200, alt: 'The Saifuro sign-up page: a headline reading Let your agents pay. Keep the final say, three product promises and a create-your-workspace form.' },
+      hero: { src: 'saifuro-hero.jpg?v=2', w: 1920, h: 1175, alt: 'The Saifuro sign-up page over a silver flow background: a headline reading Let your agents pay. Keep the final say, three product promises, and a create-your-workspace form with Continue with Google and a sample-details fill for the prototype.' },
       stats: [['5', 'Core surfaces: overview, approvals, agents, activity, settings'], ['4', 'Steps to create an agent with its own key and limits'], ['6', 'Policy checks shown on every approval request']],
       sections: [
         { label: 'Overview', title: 'A spend control panel for teams running AI agents.',
           lede: 'The console answers one question at a glance: what needs me right now, and how are my agents spending? Everything else, from creating an agent to exporting a log for finance, is one step away.',
           blocks: [{ type: 'lists', groups: [
-            { title: 'What I designed and built', items: ['Sign-up, log in, single sign-on and a guided first-run tour', 'Overview with approvals, spend and budget by agent', 'Approval review with policy checks and keyboard shortcuts', 'Four-step agent setup with a one-time key', 'Activity log with search, filters and CSV export', 'Approvers, alerts and light and dark themes'] },
+            { title: 'What I designed and built', items: ['Sign-up with Google or work email, log in, single sign-on and a guided tour on first login', 'Overview with approvals, spend and budget by agent', 'Approval review with policy checks and keyboard shortcuts', 'Four-step agent setup with a one-time key', 'Activity log with search, filters and CSV export', 'Approvers, alerts and light and dark themes'] },
             { title: 'Out of scope', muted: true, items: ['Real payments and wallets', 'Saifuro’s actual product or data', 'Back-end and payment-rail integrations'] }] }] },
         { label: 'Problem', title: 'Agents can spend money. Teams can’t see or stop it.',
           blocks: [
@@ -59,7 +59,7 @@
               images: [{ src: 'saifuro-key.jpg', w: 1920, h: 1200, alt: 'The agent created screen: a summary sentence of its limits, a warning to copy the key now, the key with a copy button, a stored-safely checkbox and a code snippet.' }],
               points: [['Shown once', 'The warning explains why, and how to rotate the key if it is lost.'], ['Ready to use', 'A short code snippet shows exactly where the key goes.'], ['No silent loss', 'Navigating away before confirming triggers a warning.']] }] },
         { label: 'Outcome', title: 'A working prototype, end to end.',
-          lede: 'Everything in this case study works in the browser with sample data: sign up, take the tour, approve and decline requests, create an agent, export the log and switch themes.',
+          lede: 'Everything in this case study works in the browser with sample data: sign up (one click fills in sample details), take the tour, approve and decline requests, create an agent, export the log and switch themes.',
           blocks: [
             { type: 'figure', img: { src: 'saifuro-activity.jpg', w: 1920, h: 1200, alt: 'The activity log: every payment attempt with time, agent, vendor, payment rail, amount and status such as Paid, Pending or Blocked.' }, caption: 'Activity: every payment attempt and the rule that decided it.' },
             { type: 'cards', cols: 3, items: [
