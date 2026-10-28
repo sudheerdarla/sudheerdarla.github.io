@@ -669,6 +669,10 @@ body.anon .top{display:none}
 }
 @media (min-width:721px){ .prow-tail{display:contents} }
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+
+/* drawer hero: keep the landing-page .hero layout out of the review panel */
+.dr-b .hero{display:block;flex:none;width:auto;padding:0;gap:0;grid-template-columns:none}
+.dr-b .hero .who{display:flex;align-items:center}
 </style>
 </head>
 <body>

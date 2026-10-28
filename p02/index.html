@@ -146,6 +146,7 @@
     
     /* Projects */
     .projects { display: flex; flex-direction: column; gap: var(--s-4xl); }
+    .project h3 .concept { text-transform: none; font-weight: 400; font-size: 15px; color: var(--muted); letter-spacing: 0; }
     .project h3 { font-size: 22px; line-height: 26.4px; font-weight: 800; letter-spacing: 0; text-transform: uppercase; }
     .project .desc { margin-top: var(--s-xs); font-size: 16px; line-height: 24px; color: var(--muted); }
     .slot { position: relative; display: block; width: 100%; aspect-ratio: 2 / 1; margin-top: var(--s-lg); overflow: hidden;
@@ -227,8 +228,8 @@
             <div class="sec-body" id="p-projects" role="region" aria-labelledby="h-projects">
               <div class="projects">
                 <article class="project">
-                  <h3>Saifuro Console</h3>
-                  <p class="desc">AI agent spend controls, concept</p>
+                  <h3>Saifuro Console <span class="concept">(concept design)</span></h3>
+                  <p class="desc">AI agent spend controls</p>
                   <a class="slot" href="work.html#saifuro" aria-label="Read the case study: Saifuro Console">
                     <img alt="Saifuro Console overview with approvals waiting, spend and budget by agent" width="1600" height="1000" decoding="async" src="../img/saifuro-thumb.jpg">
                     <span class="slot-tag" aria-hidden="true">Read case study</span>

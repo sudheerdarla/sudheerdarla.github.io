@@ -5,8 +5,8 @@
 
   var CASES = {
     saifuro: {
-      name: 'Saifuro Console',
-      kicker: ['Case study', 'Concept', 'AI agent payments'],
+      name: 'Saifuro Console', tag: '(concept design)',
+      kicker: ['Case study', 'AI agent payments'],
       title: 'Let agents pay. Keep the final say.',
       lede: 'AI agents are starting to buy things on their own: data, compute, flights. Saifuro Console is a concept for the control panel behind that. Teams give each agent a budget, a vendor list and approval rules, so small payments settle on their own and big ones wait for a person. I designed it and built it as a working prototype.',
       facts: [['Role', 'Product designer and builder'], ['Year', '2026'], ['Platform', 'Web console, desktop first'], ['Type', 'Self-initiated concept, not affiliated with Saifuro']],
@@ -48,7 +48,7 @@
               points: [['Urgency is visible', 'A countdown turns red when a request is about to expire.'], ['Risk is flagged', 'Tags like “Agent paused” or “Leaves 10% of budget” appear before you open anything.'], ['Numbers that matter', 'Spent today, waiting on you, and payments your rules blocked.']] },
             { type: 'decision', label: 'Decision B', title: 'Show the evidence, not just the amount.',
               text: 'Opening a request shows every policy check, the agent’s own reason and the effect on its daily budget, so a decision takes seconds instead of a Slack thread.',
-              images: [{ src: 'saifuro-approvals.jpg', w: 1920, h: 867, alt: 'The approvals list with pending requests, time left, risk flags and bulk selection.' }, { src: 'saifuro-review.jpg', w: 1040, h: 1340, alt: 'An approval request panel: pending status, policy checks with one warning for being over the auto-approve limit, the agent’s reason, the effect on its daily budget, and Decline and Approve buttons.' }],
+              video: { src: 'saifuro-approve.mp4', poster: 'saifuro-approve-poster.jpg', w: 1440, h: 900, label: 'Screen recording: the cursor opens a pending $312.40 request, checks pass, the payment is approved, the next request for travel-desk is approved, and the overview drops to one pending approval.' },
               points: [['Checks in plain words', 'Each rule reads as a sentence, and the one that triggered review is marked.'], ['Fast for repeat users', 'A to approve, D to decline, J and K to move between requests.'], ['Safe declines', 'Declining asks for a reason the agent receives, with an undo.']] },
             { type: 'decision', label: 'Decision C', title: 'Make limits a sentence, not a form.',
               text: 'Creating an agent takes four steps: details, limits, vendors and review. Presets give a sensible start, and every number is summarised in one plain sentence before it goes live.',
@@ -336,7 +336,8 @@
     },
     decision: function (b) {
       return '<div class="cs-decision"><h3>' + b.title + '</h3><p class="cs-text">' + b.text + '</p>' +
-        '<div class="cs-shots' + (b.images.length > 1 ? ' two' : '') + '">' + b.images.map(function (i) { return '<figure class="cs-figure">' + img(i, true) + '</figure>'; }).join('') + '</div>' +
+        (b.video ? '<figure class="cs-figure cs-video"><video poster="' + IMG + b.video.poster + '" width="' + b.video.w + '" height="' + b.video.h + '" autoplay muted loop playsinline controls preload="metadata" aria-label="' + b.video.label + '"><source src="' + IMG + b.video.src + '" type="video/mp4"><source src="' + IMG + b.video.src.replace('.mp4', '.webm') + '" type="video/webm"></video></figure>' :
+        '<div class="cs-shots' + (b.images.length > 1 ? ' two' : '') + '">' + b.images.map(function (i) { return '<figure class="cs-figure">' + img(i, true) + '</figure>'; }).join('') + '</div>') +
         '<ol class="cs-points' + (b.points.length === 4 ? ' four' : '') + '">' + b.points.map(function (p) {
           return '<li><h4>' + p[0] + '</h4><p>' + p[1] + '</p></li>';
         }).join('') + '</ol></div>';
@@ -397,7 +398,7 @@
   function render(key) {
     var c = CASES[key];
     var h = '<article class="cs" aria-labelledby="cs-title">';
-    h += '<header class="cs-hero"><p class="cs-kicker">' + c.name + '<span>' + c.kicker.slice(1).map(function (k, i) { return i && !/^[A-Z0-9]{2}/.test(k) ? k.charAt(0).toLowerCase() + k.slice(1) : k; }).join(', ') + '</span></p>' +
+    h += '<header class="cs-hero"><p class="cs-kicker">' + c.name + (c.tag ? ' <em class="cs-tag">' + c.tag + '</em>' : '') + '<span>' + c.kicker.slice(1).map(function (k, i) { return i && !/^[A-Z0-9]{2}/.test(k) ? k.charAt(0).toLowerCase() + k.slice(1) : k; }).join(', ') + '</span></p>' +
       '<h1 id="cs-title" tabindex="-1">' + c.title + '</h1><p class="cs-intro">' + c.lede + '</p>' +
       '<dl class="cs-facts">' + c.facts.map(function (f) { return '<div><dt>' + f[0] + '</dt><dd>' + f[1] + '</dd></div>'; }).join('') + '</dl></header>';
     h += '<figure class="cs-figure cs-hero-figure' + (c.hero.bare ? ' is-bare' : '') + '">' + img(c.hero, false) + '</figure>';

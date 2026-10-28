@@ -122,6 +122,9 @@
 
     .cs-hero { padding: clamp(32px, 7cqw, 56px) var(--pad) var(--s-3xl); }
     .cs-kicker { color: var(--fg); }
+    .cs-tag { font-style: normal; font-weight: 400; color: var(--muted); }
+    .cs-figure video { display: block; width: 100%; height: auto; border: 1px solid var(--line); border-radius: var(--r-md); background: var(--bg-3); }
+    .side .side-link b .tag { text-transform: none; font-weight: 400; color: var(--muted); letter-spacing: 0; }
     .cs-kicker span { margin-left: 8px; padding-left: 8px; border-left: 1px solid var(--line-strong); color: var(--muted); font-weight: 400; }
     .cs-hero h1 { margin-top: var(--s-lg); max-width: 18em; font-size: clamp(28px, 5cqw, 40px); line-height: 1.12; font-weight: 800; letter-spacing: -0.025em; outline: none; }
     .cs-intro { margin-top: var(--s-lg); max-width: 38em; font-size: 17px; line-height: 28px; color: var(--fg-2); }
@@ -209,6 +212,7 @@
     .cs-sec > .cs-decision + .cs-decision { margin-top: var(--s-4xl); }
     .cs-decision h3 { margin-top: 0; max-width: 24em; font-size: 20px; line-height: 28px; font-weight: 700; letter-spacing: -0.015em; }
     .cs-shots { margin-top: var(--s-2xl); display: grid; gap: var(--s-md); }
+    .cs-decision .cs-video { margin-top: var(--s-2xl); }
     .cs-points { margin-top: var(--s-2xl); display: grid; gap: var(--s-xl) var(--s-2xl); counter-reset: pt; }
     .cs-points li { counter-increment: pt; display: grid; grid-template-columns: 24px 1fr; column-gap: var(--s-md); }
     .cs-points li::before { content: counter(pt); grid-row: span 2; width: 24px; height: 24px; display: grid; place-items: center; border: 1px solid var(--line-strong); border-radius: var(--r-md); font-family: var(--font-mono); font-size: 11px; color: var(--fg); }
@@ -429,7 +433,7 @@
     <nav class="side" aria-label="Case studies">
       <p class="side-title" aria-hidden="true">Case studies</p>
       <ul>
-        <li><a class="side-link" href="#saifuro" data-cs="saifuro"><b>Saifuro Console</b><span>AI agent spend controls</span></a></li>
+        <li><a class="side-link" href="#saifuro" data-cs="saifuro"><b>Saifuro Console <span class="tag">(concept design)</span></b><span>AI agent spend controls</span></a></li>
         <li><a class="side-link" href="#pstake" data-cs="pstake"><b>pSTAKE Finance</b><span>Web3 staking platform</span></a></li>
         <li><a class="side-link" href="#comdex" data-cs="comdex"><b>Comdex</b><span>Commodity trading platform</span></a></li>
         <li><a class="side-link" href="#captl" data-cs="captl"><b>CAPTL</b><span>Investor portfolio platform</span></a></li>

@@ -53,6 +53,7 @@
 
   function paint(key) {
     host.innerHTML = window.renderCase(key);
+    if (window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches) host.querySelectorAll('video[autoplay]').forEach(function (v) { v.removeAttribute('autoplay'); v.pause(); });
     var n = order[(order.indexOf(key) + 1) % order.length];
     next.innerHTML = '<a href="index.html"><span class="cs-label">All work</span></a>' +
       '<a href="#' + n + '"><span class="cs-label">Next</span><b>' + window.CASES[n].name + '</b>' + ARROW + '</a>';
