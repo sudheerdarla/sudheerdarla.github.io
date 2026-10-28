@@ -11,18 +11,19 @@
 :root{
   --bg:#F6F7F9; --panel:#FFFFFF; --line:#E4E7EC; --ink:#0F1E33; --ink2:#5B6577; --ink3:#8A93A3;
   --accent:#1D4ED8; --accent-soft:#E8EEFD;
-  --ok:#15803D; --ok-soft:#E7F5EC; --warn:#B45309; --warn-soft:#FDF3E3; --bad:#B42318; --bad-soft:#FDECEA;
+  --ok:#15803D; --ok-soft:#E7F5EC; --warn:#B45309; --warn-soft:#FDF3E3; --warn-line:#F3D9AE; --bad:#B42318; --bad-soft:#FDECEA;
   --mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
-  --r:10px;
+  --r:12px;
 }
 *{box-sizing:border-box}
 html,body{margin:0}
 body{font:14px/1.5 -apple-system,BlinkMacSystemFont,"Segoe UI",Inter,Roboto,sans-serif;color:var(--ink);background:var(--bg)}
-button,input,select{font:inherit;color:inherit}
+button,input,select,textarea{font:inherit;color:inherit}
 a{color:var(--accent)}
 .note{background:var(--ink);color:#C9D2E0;font-size:12px;text-align:center;padding:6px 16px}
 .note a{color:#fff}
 
+/* shell */
 .app{display:grid;grid-template-columns:220px 1fr;min-height:calc(100vh - 30px)}
 .side{background:var(--panel);border-right:1px solid var(--line);padding:20px 12px;display:flex;flex-direction:column;gap:2px}
 .brand{font-weight:700;font-size:16px;padding:0 10px 18px;display:flex;align-items:center;gap:8px}
@@ -30,90 +31,192 @@ a{color:var(--accent)}
 .nav{display:flex;align-items:center;justify-content:space-between;padding:8px 10px;border-radius:8px;color:var(--ink2);text-decoration:none}
 .nav:hover{background:var(--bg)}
 .nav.on{background:var(--accent-soft);color:var(--accent);font-weight:600}
-.count{font-size:11px;background:var(--warn-soft);color:var(--warn);border-radius:999px;padding:0 7px;font-weight:600}
-.side .foot{margin-top:auto;padding:10px;font-size:12px;color:var(--ink3)}
+.count{font-size:11px;background:var(--warn);color:#fff;border-radius:999px;padding:0 7px;font-weight:700;line-height:18px}
+.side .foot{margin-top:auto;padding:12px 10px;font-size:12px;color:var(--ink3);display:grid;gap:8px}
+.side .foot .demo{border:1px dashed var(--line);border-radius:10px;padding:10px;display:grid;gap:6px}
+.linkbtn{background:none;border:0;padding:0;color:var(--accent);cursor:pointer;text-align:left;font-size:12px}
 
-main{padding:28px 32px;max-width:1100px;width:100%}
+main{padding:28px 32px 60px;max-width:1080px;width:100%}
 .head{display:flex;align-items:flex-end;justify-content:space-between;gap:16px;margin-bottom:20px;flex-wrap:wrap}
 h1{font-size:22px;margin:0}
+h2{font-size:15px;margin:0}
 .sub{color:var(--ink2);margin:4px 0 0}
+.back{font-size:13px;text-decoration:none;color:var(--ink2);display:inline-block;margin-bottom:6px}
+.back:hover{color:var(--ink)}
 .card{background:var(--panel);border:1px solid var(--line);border-radius:var(--r);padding:18px}
+.card-h{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:12px}
 .grid{display:grid;gap:16px}
-.g4{grid-template-columns:repeat(4,1fr)}
-.g2{grid-template-columns:1.2fr 1fr}
+.g3{grid-template-columns:repeat(3,1fr)}
+.g2{grid-template-columns:1fr 1fr}
+.stack{display:grid;gap:16px}
 .stat .k{color:var(--ink2);font-size:12px}
 .stat .v{font-size:24px;font-weight:650;margin-top:2px;font-variant-numeric:tabular-nums}
-.bar{height:6px;background:var(--line);border-radius:6px;margin-top:10px;overflow:hidden}
-.bar b{display:block;height:100%;background:var(--accent);width:0;transition:width .4s}
-h2{font-size:15px;margin:0 0 12px}
-.btn{border:1px solid var(--line);background:var(--panel);border-radius:8px;padding:8px 14px;cursor:pointer;font-weight:550}
+.stat .s{color:var(--ink2);font-size:12px}
+.bar{height:6px;background:var(--line);border-radius:6px;margin-top:10px;overflow:hidden;display:flex}
+.bar b{display:block;height:100%;background:var(--accent)}
+.bar b.this{background:repeating-linear-gradient(45deg,var(--warn),var(--warn) 4px,#D98A2B 4px,#D98A2B 8px)}
+.bar b.over{background:var(--bad)}
+.muted{color:var(--ink2)}
+.mono{font-family:var(--mono);font-size:12.5px}
+
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;border:1px solid var(--line);background:var(--panel);border-radius:8px;padding:8px 14px;cursor:pointer;font-weight:550;text-decoration:none;color:var(--ink);white-space:nowrap}
 .btn:hover{border-color:var(--ink3)}
 .btn.pri{background:var(--ink);border-color:var(--ink);color:#fff}
 .btn.pri:hover{background:#1c2f4b}
-.btn.ok{color:var(--ok)} .btn.bad{color:var(--bad)}
+.btn.ok{background:var(--ok);border-color:var(--ok);color:#fff}
+.btn.ok:hover{background:#116632}
+.btn.bad{color:var(--bad)}
+.btn.badfill{background:var(--bad);border-color:var(--bad);color:#fff}
+.btn.ghost{border-style:dashed;color:var(--ink2)}
+.btn.sm{padding:5px 10px;font-size:13px}
 .btn:disabled{opacity:.45;cursor:not-allowed}
-.btn:focus-visible,.nav:focus-visible,input:focus-visible,select:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.btn:focus-visible,.nav:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible,.req:focus-visible,tr.click:focus-visible,.tab:focus-visible,.chip:focus-visible,.agentrow:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
 
 table{width:100%;border-collapse:collapse}
 th{font-size:12px;color:var(--ink3);font-weight:500;text-align:left;padding:8px 10px;border-bottom:1px solid var(--line)}
 td{padding:10px;border-bottom:1px solid var(--line);vertical-align:middle}
 tr:last-child td{border-bottom:0}
+tr.click{cursor:pointer}
+tr.click:hover td{background:#FAFBFC}
 td.num,th.num{text-align:right;font-variant-numeric:tabular-nums}
-.mono{font-family:var(--mono);font-size:12.5px;white-space:nowrap}
-.muted{color:var(--ink2)}
 .tag{display:inline-flex;align-items:center;gap:5px;font-size:12px;font-weight:600;border-radius:999px;padding:2px 9px;white-space:nowrap}
 .tag::before{content:"";width:6px;height:6px;border-radius:50%;background:currentColor}
-.t-settled{background:var(--ok-soft);color:var(--ok)}
-.t-held{background:var(--warn-soft);color:var(--warn)}
-.t-rejected{background:var(--bad-soft);color:var(--bad)}
-.t-approved{background:var(--ok-soft);color:var(--ok)}
+.t-ok{background:var(--ok-soft);color:var(--ok)}
+.t-warn{background:var(--warn-soft);color:var(--warn)}
+.t-bad{background:var(--bad-soft);color:var(--bad)}
+.t-off{background:var(--bg);color:var(--ink3)}
 .rail{font-family:var(--mono);font-size:11.5px;border:1px solid var(--line);border-radius:5px;padding:1px 6px;color:var(--ink2)}
 .empty{text-align:center;color:var(--ink2);padding:28px 10px}
-.empty b{display:block;color:var(--ink);margin-bottom:4px}
+.empty b{display:block;color:var(--ink);margin-bottom:4px;font-size:15px}
 
-.steps{list-style:none;margin:0;padding:0;display:grid;gap:4px}
-.steps li{display:flex;gap:10px;align-items:center;padding:8px 6px;border-radius:8px}
-.steps .dot{width:20px;height:20px;border-radius:50%;border:1.5px solid var(--line);display:grid;place-items:center;font-size:11px;flex:none;color:#fff}
-.steps li.done .dot{background:var(--ok);border-color:var(--ok)}
-.steps li.done span{color:var(--ink2);text-decoration:line-through}
-.steps li.next{background:var(--bg)}
-.steps li.next span{font-weight:600}
-.steps a{margin-left:auto;font-size:12.5px}
+/* approvals: priority block */
+.prio{border-color:var(--warn-line);box-shadow:0 0 0 3px var(--warn-soft)}
+.prio .card-h h2{display:flex;align-items:center;gap:8px}
+.pill{font-size:12px;font-weight:700;border-radius:999px;padding:1px 9px;background:var(--warn);color:#fff}
+.caught{display:flex;align-items:center;gap:12px;color:var(--ink2)}
+.caught .ico{width:32px;height:32px;border-radius:50%;background:var(--ok-soft);color:var(--ok);display:grid;place-items:center;font-weight:700;flex:none}
+.reqs{display:grid;gap:8px}
+.req{all:unset;box-sizing:border-box;display:grid;grid-template-columns:110px 1fr auto;gap:16px;align-items:center;padding:14px;border:1px solid var(--line);border-radius:10px;cursor:pointer;background:var(--panel)}
+.req:hover{border-color:var(--warn-line);background:#FFFCF7}
+.req-amt{font-size:19px;font-weight:700;font-variant-numeric:tabular-nums}
+.req-main{line-height:1.45}
+.req-why{font-size:12.5px;color:var(--warn)}
 
-.form{display:grid;gap:14px}
-.row{display:grid;grid-template-columns:1fr 1fr;gap:14px}
-label{display:grid;gap:5px;font-size:12.5px;color:var(--ink2);font-weight:500}
-input,select{border:1px solid var(--line);border-radius:8px;padding:8px 10px;background:#fff;color:var(--ink)}
-.hint{font-size:12px;color:var(--ink3)}
+/* tabs & chips */
+.tabs{display:flex;gap:4px;border-bottom:1px solid var(--line);margin-bottom:16px}
+.tab{background:none;border:0;border-bottom:2px solid transparent;padding:8px 12px;cursor:pointer;color:var(--ink2);font-weight:550;margin-bottom:-1px}
+.tab.on{color:var(--ink);border-color:var(--ink)}
+.chips{display:flex;gap:6px;flex-wrap:wrap}
+.chip{border:1px solid var(--line);background:var(--panel);border-radius:999px;padding:4px 12px;cursor:pointer;font-size:13px;color:var(--ink2)}
+.chip.on{background:var(--ink);border-color:var(--ink);color:#fff}
+
+/* agents list */
+.agentrow{all:unset;box-sizing:border-box;display:grid;grid-template-columns:1.4fr 1.2fr auto 20px;gap:16px;align-items:center;padding:14px;border-bottom:1px solid var(--line);cursor:pointer;width:100%}
+.agentrow:last-child{border-bottom:0}
+.agentrow:hover{background:#FAFBFC}
+.agentrow .bar{margin-top:6px}
+.chev{color:var(--ink3)}
+
+/* wizard */
+.stepper{list-style:none;display:flex;gap:8px;padding:0;margin:0 0 16px;flex-wrap:wrap}
+.stepper li{display:flex;align-items:center;gap:8px;color:var(--ink3);font-weight:550;font-size:13px}
+.stepper li+li::before{content:"";width:28px;height:1px;background:var(--line);margin-right:0}
+.stepper span{width:24px;height:24px;border-radius:50%;border:1.5px solid var(--line);display:grid;place-items:center;font-size:12px;background:var(--panel)}
+.stepper li.on{color:var(--ink)} .stepper li.on span{border-color:var(--ink);background:var(--ink);color:#fff}
+.stepper li.done{color:var(--ink2)} .stepper li.done span{border-color:var(--ok);background:var(--ok);color:#fff}
+.wiz{max-width:620px;display:grid;gap:18px}
+.wiz h2{font-size:17px}
+.wiz .lead{color:var(--ink2);margin:-12px 0 0}
+.field{display:grid;gap:6px}
+.field>span:first-child{font-size:13px;font-weight:600}
+.field .hint{font-size:12.5px;color:var(--ink3)}
+input,select,textarea{border:1px solid var(--line);border-radius:8px;padding:9px 11px;background:#fff;color:var(--ink);width:100%}
+textarea{resize:vertical;min-height:70px}
+.money-in{position:relative}
+.money-in::before{content:"$";position:absolute;left:11px;top:50%;transform:translateY(-50%);color:var(--ink3)}
+.money-in input{padding-left:22px;padding-right:90px;-moz-appearance:textfield}
+.money-in input::-webkit-outer-spin-button,.money-in input::-webkit-inner-spin-button{-webkit-appearance:none;margin:0}
+.money-in em{position:absolute;right:11px;top:50%;transform:translateY(-50%);color:var(--ink3);font-style:normal;font-size:12px}
+.summary{background:var(--accent-soft);border-radius:10px;padding:12px 14px;color:#1E3A8A;line-height:1.55}
+.vgrid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.vopt{display:flex;gap:10px;align-items:flex-start;border:1px solid var(--line);border-radius:10px;padding:10px 12px;cursor:pointer}
+.vopt:has(input:checked){border-color:var(--ink);background:#FAFBFC}
+.vopt input{width:auto;margin-top:3px}
+.vopt small{display:block;color:var(--ink3);font-family:var(--mono);font-size:11.5px}
+details.adv{border-top:1px solid var(--line);padding-top:12px}
+details.adv summary{cursor:pointer;font-weight:600;font-size:13px;color:var(--ink2)}
+.railopts{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
+.railopts label{display:inline-flex;gap:6px;align-items:center;border:1px solid var(--line);border-radius:8px;padding:6px 10px;font-size:13px}
+.railopts input{width:auto}
+.review{display:grid;gap:0;border:1px solid var(--line);border-radius:10px}
+.review>div{display:grid;grid-template-columns:150px 1fr auto;gap:12px;padding:12px 14px;border-bottom:1px solid var(--line);align-items:start}
+.review>div:last-child{border-bottom:0}
+.review dt{color:var(--ink2);font-size:13px}
+.review dd{margin:0}
+.wiz-foot{display:flex;justify-content:space-between;gap:8px;border-top:1px solid var(--line);padding-top:16px}
+.errline{background:var(--bad-soft);color:var(--bad);border-radius:8px;padding:9px 12px;font-size:13px}
+.warnline{background:var(--warn-soft);color:var(--warn);border-radius:8px;padding:9px 12px;font-size:13px}
+.keybox{display:flex;gap:8px;align-items:center;background:var(--bg);border:1px dashed var(--ink3);border-radius:8px;padding:10px;font-family:var(--mono);font-size:12.5px;word-break:break-all}
 .code{font-family:var(--mono);font-size:12px;background:#0F1E33;color:#D6DEEA;border-radius:8px;padding:14px;white-space:pre;overflow:auto;margin:0}
-.policy-meta{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.success-ico{width:44px;height:44px;border-radius:50%;background:var(--ok-soft);color:var(--ok);display:grid;place-items:center;font-size:22px;font-weight:700}
 
-.hold{display:flex;gap:16px;align-items:center;justify-content:space-between;padding:14px 0;border-bottom:1px solid var(--line);flex-wrap:wrap}
-.hold:last-child{border-bottom:0}
-.hold .amt{font-size:18px;font-weight:650}
-.why{font-size:12.5px;color:var(--ink2)}
+/* rules list (agent detail) */
+.rules{display:grid;gap:0}
+.rules>div{display:flex;justify-content:space-between;gap:12px;padding:10px 0;border-bottom:1px solid var(--line)}
+.rules>div:last-child{border-bottom:0}
+.rules span:first-child{color:var(--ink2)}
+.rules span:last-child{text-align:right;font-weight:550}
 
+/* drawer */
 dialog{border:1px solid var(--line);border-radius:14px;padding:0;width:min(440px,92vw);box-shadow:0 20px 50px rgba(15,30,51,.18)}
 dialog::backdrop{background:rgba(15,30,51,.35)}
 .dlg{padding:22px}
-.dlg h2{font-size:17px}
+.dlg h2{font-size:17px;margin-bottom:8px}
 .dlg .acts{display:flex;justify-content:flex-end;gap:8px;margin-top:18px}
-.keybox{display:flex;gap:8px;align-items:center;background:var(--bg);border:1px dashed var(--ink3);border-radius:8px;padding:10px;font-family:var(--mono);font-size:12.5px;word-break:break-all}
-.warnline{background:var(--warn-soft);color:var(--warn);border-radius:8px;padding:8px 10px;font-size:12.5px;margin-top:10px}
+dialog.drawer{margin:0 0 0 auto;height:100vh;max-height:100vh;width:min(480px,100vw);max-width:100vw;border:0;border-left:1px solid var(--line);border-radius:0}
+dialog.drawer[open]{display:flex;flex-direction:column;animation:slide .2s ease-out}
+@keyframes slide{from{transform:translateX(24px);opacity:.4}to{transform:none;opacity:1}}
+.dr-head{display:flex;align-items:center;justify-content:space-between;padding:14px 20px;border-bottom:1px solid var(--line)}
+.dr-head b{font-size:14px}
+.x{background:none;border:0;font-size:22px;line-height:1;cursor:pointer;color:var(--ink2);padding:4px 8px;border-radius:6px}
+.x:hover{background:var(--bg)}
+.dr-body{flex:1;overflow:auto;padding:20px;display:grid;gap:20px;align-content:start}
+.dr-hero .amt{font-size:32px;font-weight:700;font-variant-numeric:tabular-nums;line-height:1.1}
+.dr-hero p{margin:6px 0 10px;font-size:15px}
+.sec h3{font-size:12px;text-transform:uppercase;letter-spacing:.04em;color:var(--ink3);margin:0 0 8px;font-weight:600}
+.kv{display:grid;gap:0;border:1px solid var(--line);border-radius:10px}
+.kv>div{display:flex;justify-content:space-between;gap:12px;padding:9px 12px;border-bottom:1px solid var(--line)}
+.kv>div:last-child{border-bottom:0}
+.kv span:first-child{color:var(--ink2)}
+.kv span:last-child{text-align:right}
+.quote{border-left:3px solid var(--line);padding:4px 0 4px 12px;color:var(--ink);font-style:italic}
+.why{background:var(--warn-soft);border-radius:10px;padding:12px;color:#7A3E06}
+.why b{display:block;margin-bottom:2px;color:var(--warn)}
+.legend{display:flex;gap:14px;font-size:12px;color:var(--ink2);margin-top:8px;flex-wrap:wrap}
+.legend i{display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:5px;vertical-align:-1px}
+.dr-foot{border-top:1px solid var(--line);padding:14px 20px;display:grid;gap:10px;background:var(--panel)}
+.dr-foot .acts{display:flex;gap:8px;justify-content:flex-end}
+.dr-foot .acts .btn{flex:1}
 
-.toast{position:fixed;right:20px;bottom:20px;background:var(--ink);color:#fff;border-radius:10px;padding:12px 16px;max-width:340px;font-size:13px;box-shadow:0 10px 30px rgba(15,30,51,.25);transform:translateY(20px);opacity:0;transition:.25s;pointer-events:none}
-.toast.show{transform:none;opacity:1}
+.toast{position:fixed;left:50%;bottom:20px;background:var(--ink);color:#fff;border-radius:10px;padding:12px 16px;max-width:380px;font-size:13px;box-shadow:0 10px 30px rgba(15,30,51,.25);transform:translate(-50%,20px);opacity:0;transition:.25s;pointer-events:none;z-index:10}
+.toast.show{transform:translate(-50%,0);opacity:1}
 
 @media (max-width:860px){
-  .app{grid-template-columns:1fr}
-  .side{flex-direction:row;overflow-x:auto;border-right:0;border-bottom:1px solid var(--line);padding:10px 12px;gap:4px}
+  .app{grid-template-columns:minmax(0,1fr)}
+  .g3>:last-child{grid-column:1/-1}
+  .side{flex-direction:row;overflow-x:auto;border-right:0;border-bottom:1px solid var(--line);padding:10px 12px;gap:4px;align-items:center}
   .brand{padding:0 10px 0 0}
   .side .foot{display:none}
-  .nav{white-space:nowrap}
-  main{padding:20px 16px}
-  .g4{grid-template-columns:1fr 1fr}
-  .g2,.row{grid-template-columns:1fr}
+  .nav{white-space:nowrap;gap:6px}
+  main{padding:20px 16px 60px}
+  .g3{grid-template-columns:1fr 1fr}
+  .g2,.vgrid{grid-template-columns:1fr}
   .hide-sm{display:none}
+  .req{grid-template-columns:1fr auto}
+  .req-main{grid-column:1/-1;grid-row:2}
+  .agentrow{grid-template-columns:1fr auto 20px}
+  .review>div{grid-template-columns:1fr auto}
+  .review dd{grid-column:1/-1;grid-row:2}
 }
 </style>
 </head>
@@ -123,272 +226,528 @@ dialog::backdrop{background:rgba(15,30,51,.35)}
 <div class="app">
   <nav class="side" aria-label="Main">
     <div class="brand"><i></i>Saifuro</div>
-    <a class="nav" href="#overview" data-r="overview">Overview</a>
-    <a class="nav" href="#agents" data-r="agents">Agents</a>
-    <a class="nav" href="#policy" data-r="policy">Policy</a>
+    <a class="nav" href="#home" data-r="home">Home</a>
     <a class="nav" href="#approvals" data-r="approvals">Approvals <span class="count" id="holdCount" hidden></span></a>
-    <a class="nav" href="#ledger" data-r="ledger">Ledger</a>
-    <div class="foot">Acme Research · Pilot<br>Keys stay in your wallet</div>
+    <a class="nav" href="#agents" data-r="agents">Agents</a>
+    <a class="nav" href="#activity" data-r="activity">Activity</a>
+    <div class="foot">
+      <div class="demo">
+        <b style="color:var(--ink2)">Prototype controls</b>
+        <button class="linkbtn" onclick="simulate()">Simulate an agent payment</button>
+        <button class="linkbtn" onclick="simulate('big')">Simulate a large purchase</button>
+        <button class="linkbtn" onclick="resetDemo()">Reset demo data</button>
+      </div>
+      <span>Acme Research · Pilot<br>Funds stay in your wallet</span>
+    </div>
   </nav>
   <main id="view" tabindex="-1"></main>
 </div>
 
 <dialog id="dlg"><div class="dlg" id="dlgBody"></div></dialog>
+<dialog id="drawer" class="drawer" aria-labelledby="drTitle"></dialog>
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
 <script>
-/* ---------- state ---------- */
-const S = {
-  agents: [],
-  policy: null,            // published policy
-  draft: { daily: 1000, perTx: 500, approveAbove: 200, vendors: 'api.acme-data.dev, api.lexcorpus.com, api.tempo-fx.io', rails: ['x402','acp','ap2'] },
-  ledger: [],              // every verdict
-  exported: false,
+/* ---------- reference data ---------- */
+const VENDORS = {
+  'api.acme-data.dev':  {name:'Acme Data',  what:'Dataset search',   min:1,    max:9},
+  'api.lexcorpus.com':  {name:'LexCorpus',  what:'Case law bundle',  min:180,  max:420},
+  'api.tempo-fx.io':    {name:'Tempo FX',   what:'FX quote',         min:0.4,  max:2},
+  'api.newsgrid.dev':   {name:'Newsgrid',   what:'News crawl',       min:0.02, max:0.2},
+  'api.skyfare.travel': {name:'Skyfare',    what:'Flight booking',   min:120,  max:680},
 };
-const VENDORS = [
-  {host:'api.acme-data.dev', what:'dataset search', min:1, max:9},
-  {host:'api.tempo-fx.io', what:'FX quote', min:0.4, max:2},
-  {host:'api.lexcorpus.com', what:'case law bundle', min:180, max:420},
-  {host:'api.newsgrid.dev', what:'news crawl', min:0.02, max:0.2},
+const RAILS = [
+  {id:'x402', desc:'HTTP-native stablecoin payments'},
+  {id:'acp',  desc:'Agentic Commerce Protocol'},
+  {id:'ap2',  desc:'Agent Payments Protocol'},
+  {id:'card', desc:'Virtual card'},
 ];
+const STATUS = {
+  paid:     {label:'Paid',           cls:'t-ok'},
+  waiting:  {label:'Needs approval', cls:'t-warn'},
+  approved: {label:'Approved',       cls:'t-ok'},
+  declined: {label:'Declined',       cls:'t-bad'},
+  blocked:  {label:'Blocked',        cls:'t-bad'},
+};
+const APPROVAL_WINDOW = 60; // minutes before an unanswered request auto-declines
+const NOTES = [
+  'Needed to finish the current task.',
+  'Higher tier needed for the full result set.',
+  'Requested by the team lead for this week’s report.',
+];
+
+/* ---------- helpers ---------- */
 const $ = s => document.querySelector(s);
 const money = n => '$' + n.toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2});
-const id = p => p + '_' + Math.random().toString(36).slice(2,6);
-const now = () => new Date().toLocaleTimeString('en-GB');
-const esc = s => String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const money0 = n => '$' + n.toLocaleString('en-US',{maximumFractionDigits:2});
+const uid = p => p + '_' + Math.random().toString(36).slice(2,8);
+const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const minsAgo = m => new Date(Date.now() - m*60000);
+const clock = d => d.toLocaleTimeString('en-US',{hour:'numeric',minute:'2-digit'});
+function ago(d){ const m=Math.round((Date.now()-d)/60000); if(m<1) return 'just now'; if(m<60) return m+' min ago'; return Math.floor(m/60)+' h ago'; }
+const vname = h => VENDORS[h] ? VENDORS[h].name : h;
+const agentOf = e => S.agents.find(a => a.id===e.agentId);
+const counts = e => e.status==='paid' || e.status==='approved';
+const spent = aid => S.ledger.filter(e => e.agentId===aid && counts(e)).reduce((s,e)=>s+e.amount,0);
+const waiting = () => S.ledger.filter(e => e.status==='waiting');
+const tag = s => `<span class="tag ${STATUS[s].cls}">${STATUS[s].label}</span>`;
+function toast(msg){ const t=$('#toast'); t.textContent=msg; t.classList.add('show'); clearTimeout(t._h); t._h=setTimeout(()=>t.classList.remove('show'),3200); }
 
-const spentToday = () => S.ledger.filter(e => e.status==='settled' || e.status==='approved').reduce((a,e)=>a+e.amount,0);
-const held = () => S.ledger.filter(e => e.status==='held');
+/* ---------- state ---------- */
+const S = { agents:[], ledger:[], wiz:null, apTab:'waiting', filter:'all', review:null };
 
-function toast(msg){ const t=$('#toast'); t.textContent=msg; t.classList.add('show'); clearTimeout(t._h); t._h=setTimeout(()=>t.classList.remove('show'),2800); }
-function tag(s){ return `<span class="tag t-${s}">${s==='approved'?'approved · settled':s}</span>`; }
-
-/* ---------- onboarding checklist = "done" definition ---------- */
-function steps(){
-  return [
-    {t:'Create your first agent', done:S.agents.length>0, href:'#agents'},
-    {t:'Publish a spending policy', done:!!S.policy, href:'#policy'},
-    {t:'First governed payment settles', done:S.ledger.some(e=>e.status==='settled'||e.status==='approved'), href:'#overview'},
-    {t:'Resolve a held payment', done:S.ledger.some(e=>e.resolvedBy), href:'#approvals'},
-    {t:'Export the ledger for finance', done:S.exported, href:'#ledger'},
+function seed(){
+  const r = {id:'agt_r7k2', name:'research-bot', purpose:'Datasets, search and legal research APIs', active:true,
+    daily:1000, perTx:500, approveAbove:200, vendors:['api.acme-data.dev','api.lexcorpus.com','api.tempo-fx.io'], rails:['x402','acp']};
+  const t = {id:'agt_t3m9', name:'travel-desk', purpose:'Team flights for customer visits', active:true,
+    daily:2000, perTx:900, approveAbove:400, vendors:['api.skyfare.travel','api.tempo-fx.io'], rails:['acp','card']};
+  S.agents = [r,t];
+  const L = (m,a,v,amount,rail,status,rule,x={}) => ({id:uid('pay'), at:minsAgo(m), agentId:a.id, vendor:v, what:VENDORS[v].what, amount, rail, status, rule, ...x});
+  S.ledger = [
+    L(3,  t,'api.skyfare.travel',642.00,'acp','waiting','Over travel-desk’s $400 auto-approve limit',
+      {what:'Flight BLR → SFO, 12 Nov, economy', note:'Customer visit at Northwind on 13 Nov. This is the cheapest fare that lands the day before.'}),
+    L(9,  r,'api.lexcorpus.com', 312.40,'x402','waiting','Over research-bot’s $200 auto-approve limit',
+      {what:'EU case law bundle, 2024', note:'Contract review task #142 needs EU precedent on data-processing clauses.'}),
+    L(14, r,'api.acme-data.dev',   6.20,'x402','paid','Within limits'),
+    L(22, r,'api.newsgrid.dev',    0.12,'x402','blocked','Newsgrid isn’t on research-bot’s vendor list'),
+    L(31, t,'api.tempo-fx.io',     1.10,'acp', 'paid','Within limits'),
+    L(48, r,'api.acme-data.dev',   4.75,'x402','paid','Within limits'),
+    L(66, r,'api.lexcorpus.com', 188.00,'x402','paid','Within limits',{what:'UK case law bundle, 2023'}),
+    L(90, t,'api.skyfare.travel',356.00,'acp', 'paid','Within limits',{what:'Flight BLR → DEL, 4 Nov, economy'}),
+    L(130,r,'api.tempo-fx.io',     0.80,'acp', 'paid','Within limits'),
+    L(175,r,'api.acme-data.dev',   8.40,'x402','paid','Within limits'),
   ];
 }
 
-/* ---------- policy engine (toy) ---------- */
-function evaluate(agent, vendor, amount, rail){
-  const p = S.policy;
-  const allow = p.vendors.includes(vendor);
-  const spent = spentToday();
-  if(!agent.active) return {status:'rejected', rule:'mandate revoked'};
-  if(!allow) return {status:'rejected', rule:'vendor not on allowlist'};
-  if(!p.rails.includes(rail)) return {status:'rejected', rule:`rail ${rail} not allowed`};
-  if(amount > p.perTx) return {status:'rejected', rule:`over per-payment cap ${money(p.perTx)}`};
-  if(spent + amount > p.daily) return {status:'rejected', rule:`daily budget ${money(p.daily)} would be exceeded`};
-  if(amount > p.approveAbove) return {status:'held', rule:`above approval threshold ${money(p.approveAbove)}`};
-  return {status:'settled', rule:'within all limits'};
+/* ---------- policy check (toy) ---------- */
+function evaluate(a, vendor, amount, rail){
+  if(!a.active) return {status:'blocked', rule:`${a.name} is paused`};
+  if(!a.vendors.includes(vendor)) return {status:'blocked', rule:`${vname(vendor)} isn’t on ${a.name}’s vendor list`};
+  if(!a.rails.includes(rail)) return {status:'blocked', rule:`${rail} isn’t an allowed payment rail`};
+  if(amount > a.perTx) return {status:'blocked', rule:`Over ${a.name}’s ${money0(a.perTx)} per-payment cap`};
+  if(spent(a.id) + amount > a.daily) return {status:'blocked', rule:`Would go over ${a.name}’s ${money0(a.daily)} daily budget`};
+  if(amount > a.approveAbove) return {status:'waiting', rule:`Over ${a.name}’s ${money0(a.approveAbove)} auto-approve limit`};
+  return {status:'paid', rule:'Within limits'};
 }
 
-function simulate(force){
-  if(!S.agents.length || !S.policy) return;
-  const pool = S.agents.filter(a=>a.active).length ? S.agents.filter(a=>a.active) : S.agents;
-  const agent = pool[Math.floor(Math.random()*pool.length)];
-  let v = force==='big' ? VENDORS[2] : VENDORS[Math.floor(Math.random()*VENDORS.length)];
-  if(!force && v===VENDORS[2] && Math.random()<.5) v = VENDORS[0];
-  const amount = +(v.min + Math.random()*(v.max-v.min)).toFixed(2);
-  const rail = S.policy.rails[Math.floor(Math.random()*S.policy.rails.length)];
-  const r = evaluate(agent, v.host, amount, rail);
-  const e = {id:id('dec'), time:now(), agent:agent.name, agentId:agent.id, vendor:v.host, what:v.what, amount, rail, policy:'v'+S.policy.v, ...r};
+function simulate(kind){
+  const pool = S.agents.filter(a=>a.active);
+  if(!pool.length){ toast('No active agents. Create or resume one first.'); return; }
+  let a = pool[Math.floor(Math.random()*pool.length)];
+  let vendor, amount;
+  if(kind==='big'){
+    const opts = pool.flatMap(ag => ag.vendors.filter(v=>VENDORS[v] && VENDORS[v].max > ag.approveAbove).map(v=>[ag,v]));
+    if(!opts.length){ toast('No agent has a vendor big enough to need approval.'); return; }
+    [a, vendor] = opts[Math.floor(Math.random()*opts.length)];
+    amount = +(Math.max(a.approveAbove+5, VENDORS[vendor].min) + Math.random()*(Math.min(a.perTx, VENDORS[vendor].max) - Math.max(a.approveAbove+5, VENDORS[vendor].min))).toFixed(2);
+  } else {
+    const roll = Math.random();
+    const all = Object.keys(VENDORS);
+    vendor = roll < .15 ? all.find(v=>!a.vendors.includes(v)) || a.vendors[0] : a.vendors[Math.floor(Math.random()*a.vendors.length)];
+    const v = VENDORS[vendor] || {min:1,max:20};
+    const hi = roll > .85 ? v.max : Math.min(v.max, v.min + (v.max-v.min)*.4);
+    amount = +(v.min + Math.random()*(hi-v.min)).toFixed(2);
+  }
+  const rail = a.rails[Math.floor(Math.random()*a.rails.length)];
+  const r = evaluate(a, vendor, amount, rail);
+  const e = {id:uid('pay'), at:new Date(), agentId:a.id, vendor, what:(VENDORS[vendor]||{what:'API call'}).what, amount, rail, ...r};
+  if(r.status==='waiting') e.note = NOTES[Math.floor(Math.random()*NOTES.length)];
   S.ledger.unshift(e);
-  toast(r.status==='held' ? `Held ${money(amount)} for approval. Sent to #finance-approvals` : `${agent.name} → ${v.host} ${money(amount)}: ${r.status}`);
+  toast(r.status==='waiting' ? `New approval request: ${a.name} wants to pay ${money(amount)}`
+      : r.status==='paid' ? `${a.name} paid ${vname(vendor)} ${money(amount)}`
+      : `Blocked: ${r.rule}`);
   render();
+}
+
+/* ---------- shared pieces ---------- */
+function reqRow(e){
+  const a = agentOf(e);
+  return `<button class="req" onclick="openReview('${e.id}')" aria-label="Review ${money(e.amount)} request from ${esc(a.name)}">
+    <span class="req-amt">${money(e.amount)}</span>
+    <span class="req-main"><b>${esc(a.name)}</b> wants to pay <b>${esc(vname(e.vendor))}</b><span class="muted"> · ${esc(e.what)}</span><br>
+      <span class="req-why">${esc(e.rule)} · ${ago(e.at)}</span></span>
+    <span class="btn pri sm">Review</span>
+  </button>`;
+}
+function activityTable(rows, opts={}){
+  if(!rows.length) return `<div class="empty"><b>${opts.emptyTitle||'No payments yet'}</b>${opts.emptyText||'Payments your agents make will show up here.'}</div>`;
+  return `<table><thead><tr><th>Time</th>${opts.noAgent?'':'<th>Agent</th>'}<th class="hide-sm">Vendor</th><th class="num">Amount</th><th>Status</th></tr></thead><tbody>
+  ${rows.map(e=>`<tr class="click" tabindex="0" onclick="openReview('${e.id}')" onkeydown="if(event.key==='Enter')openReview('${e.id}')">
+    <td class="muted" style="white-space:nowrap">${clock(e.at)}</td>
+    ${opts.noAgent?'':`<td class="mono">${esc(agentOf(e).name)}</td>`}
+    <td class="hide-sm">${esc(vname(e.vendor))} <span class="muted">· ${esc(e.what)}</span></td>
+    <td class="num">${money(e.amount)}</td><td>${tag(e.status)}</td></tr>`).join('')}
+  </tbody></table>`;
+}
+function budgetBar(a, extra=0){
+  const sp = spent(a.id), pct = Math.min(100, sp/a.daily*100), ex = Math.max(0, Math.min(100-pct, extra/a.daily*100));
+  const over = sp + extra > a.daily;
+  return `<div class="bar"><b style="width:${pct}%"></b>${extra?`<b class="${over?'over':'this'}" style="width:${over?100-pct:ex}%"></b>`:''}</div>`;
 }
 
 /* ---------- views ---------- */
 const V = {};
 
-V.overview = () => {
-  const st = steps(), nextI = st.findIndex(s=>!s.done);
-  const p = S.policy, spent = spentToday(), pct = p ? Math.min(100, spent/p.daily*100) : 0;
-  const ready = S.agents.length && p;
+V.home = () => {
+  const w = waiting();
+  const active = S.agents.filter(a=>a.active);
+  const totSpent = S.agents.reduce((s,a)=>s+spent(a.id),0);
+  const totBudget = active.reduce((s,a)=>s+a.daily,0);
+  const blocked = S.ledger.filter(e=>e.status==='blocked').length;
   return `
   <div class="head">
-    <div><h1>Overview</h1><p class="sub">What your agents spent today, and what needs you.</p></div>
-    <div style="display:flex;gap:8px">
-      <button class="btn" onclick="simulate('big')" ${ready?'':'disabled'}>Simulate large purchase</button>
-      <button class="btn pri" onclick="simulate()" ${ready?'':'disabled'} title="${ready?'':'Create an agent and publish a policy first'}">Simulate agent payment</button>
-    </div>
+    <div><h1>Home</h1><p class="sub">What needs you, and how your agents are spending today.</p></div>
+    <a class="btn" href="#agents/new" onclick="wizStart()">+ New agent</a>
   </div>
-  <div class="grid g4" style="margin-bottom:16px">
-    <div class="card stat"><div class="k">Spend today</div><div class="v">${money(spent)}</div>
-      <div class="muted" style="font-size:12px">${p?'of '+money(p.daily)+' daily budget':'No policy yet'}</div>
-      <div class="bar"><b style="width:${pct}%"></b></div></div>
-    <div class="card stat"><div class="k">Active agents</div><div class="v">${S.agents.filter(a=>a.active).length}</div></div>
-    <div class="card stat"><div class="k">Waiting for approval</div><div class="v" style="color:${held().length?'var(--warn)':'inherit'}">${held().length}</div></div>
-    <div class="card stat"><div class="k">Policy</div><div class="v">${p?'v'+p.v:'—'}</div><div class="muted" style="font-size:12px">${p?'Active':'Not published'}</div></div>
-  </div>
-  <div class="grid g2">
-    <div class="card"><h2>Recent decisions</h2>${feed(S.ledger.slice(0,6))}</div>
-    <div class="card">
-      <h2>Get to your first governed payment</h2>
-      <ol class="steps">${st.map((s,i)=>`<li class="${s.done?'done':''} ${i===nextI?'next':''}">
-        <span class="dot">${s.done?'✓':''}</span><span>${s.t}</span>${!s.done&&i===nextI?`<a href="${s.href}">Start</a>`:''}</li>`).join('')}</ol>
-      ${nextI===-1?'<p class="muted" style="margin:12px 6px 0">Pilot done: agents pay under policy, and finance has one export.</p>':''}
+  <div class="stack">
+    <section class="card ${w.length?'prio':''}" aria-labelledby="needsH">
+      <div class="card-h">
+        <h2 id="needsH">Needs your approval ${w.length?`<span class="pill">${w.length}</span>`:''}</h2>
+        ${w.length>3?`<a href="#approvals">See all</a>`:''}
+      </div>
+      ${w.length ? `<div class="reqs">${w.slice(0,3).map(reqRow).join('')}</div>`
+        : `<div class="caught"><span class="ico">✓</span><div><b style="color:var(--ink)">You're all caught up</b><br>When an agent wants to pay more than its auto-approve limit, the request lands here.</div></div>`}
+    </section>
+
+    <div class="grid g3">
+      <div class="card stat"><div class="k">Spent today</div><div class="v">${money(totSpent)}</div>
+        <div class="s">of ${money0(totBudget)} combined daily budget</div>
+        <div class="bar"><b style="width:${totBudget?Math.min(100,totSpent/totBudget*100):0}%"></b></div></div>
+      <div class="card stat"><div class="k">Payments today</div><div class="v">${S.ledger.length}</div>
+        <div class="s">${blocked} blocked by your rules</div></div>
+      <div class="card stat"><div class="k">Active agents</div><div class="v">${active.length}</div>
+        <div class="s"><a href="#agents">Manage agents</a></div></div>
     </div>
+
+    <section class="card">
+      <div class="card-h"><h2>Recent activity</h2>${S.ledger.length?'<a href="#activity">View all</a>':''}</div>
+      ${activityTable(S.ledger.slice(0,6), {emptyText: S.agents.length ? 'Payments your agents make will show up here.' : 'Create an agent to get started.'})}
+    </section>
   </div>`;
 };
 
-function feed(rows){
-  if(!rows.length) return `<div class="empty"><b>No payments yet</b>${S.agents.length&&S.policy?'Simulate an agent payment to see it checked against your policy.':'Once an agent pays under a policy, each decision shows up here.'}</div>`;
-  return `<table><thead><tr><th>Time</th><th>Agent</th><th class="hide-sm">Vendor</th><th class="num">Amount</th><th>Status</th></tr></thead><tbody>
-  ${rows.map(e=>`<tr><td class="mono muted">${e.time}</td><td class="mono">${esc(e.agent)}</td><td class="hide-sm">${e.vendor} <span class="rail">${e.rail}</span></td><td class="num">${money(e.amount)}</td><td>${tag(e.status)}</td></tr>`).join('')}
-  </tbody></table>`;
-}
+V.approvals = () => {
+  const w = waiting();
+  const decided = S.ledger.filter(e=>e.status==='approved'||e.status==='declined');
+  const tab = S.apTab;
+  return `
+  <div class="head"><div><h1>Approvals</h1><p class="sub">Payments over an agent's auto-approve limit wait here for a person. Unanswered requests auto-decline after ${APPROVAL_WINDOW} minutes.</p></div></div>
+  <div class="tabs" role="tablist">
+    <button class="tab ${tab==='waiting'?'on':''}" role="tab" aria-selected="${tab==='waiting'}" onclick="S.apTab='waiting';render()">Waiting (${w.length})</button>
+    <button class="tab ${tab==='decided'?'on':''}" role="tab" aria-selected="${tab==='decided'}" onclick="S.apTab='decided';render()">Decided (${decided.length})</button>
+  </div>
+  ${tab==='waiting'
+    ? (w.length ? `<div class="reqs">${w.map(reqRow).join('')}</div>`
+       : `<div class="card"><div class="empty"><b>Nothing waiting</b>You'll see a request here when an agent wants to pay more than its auto-approve limit.</div></div>`)
+    : `<div class="card">${decided.length ? `<table><thead><tr><th>Decided</th><th>Agent</th><th class="hide-sm">Vendor</th><th class="num">Amount</th><th>Outcome</th></tr></thead><tbody>
+        ${decided.map(e=>`<tr class="click" tabindex="0" onclick="openReview('${e.id}')" onkeydown="if(event.key==='Enter')openReview('${e.id}')">
+          <td class="muted">${clock(e.decidedAt)} · You</td><td class="mono">${esc(agentOf(e).name)}</td>
+          <td class="hide-sm">${esc(vname(e.vendor))} <span class="muted">· ${esc(e.what)}</span></td><td class="num">${money(e.amount)}</td><td>${tag(e.status)}</td></tr>`).join('')}
+        </tbody></table>` : `<div class="empty"><b>No decisions yet</b>Requests you approve or decline are kept here for audit.</div>`}</div>`}`;
+};
 
 V.agents = () => `
   <div class="head">
-    <div><h1>Agents</h1><p class="sub">Each agent pays under a mandate: who it may pay, for what, up to how much.</p></div>
-    <button class="btn pri" onclick="newAgent()">New agent</button>
+    <div><h1>Agents</h1><p class="sub">Each agent has its own budget, vendor list and approval limit.</p></div>
+    <a class="btn pri" href="#agents/new" onclick="wizStart()">+ New agent</a>
   </div>
-  <div class="card">${S.agents.length ? `
-    <table><thead><tr><th>Agent</th><th class="hide-sm">Mandate</th><th class="num">Spent today</th><th>Status</th><th></th></tr></thead><tbody>
-    ${S.agents.map(a=>{ const sp=S.ledger.filter(e=>e.agentId===a.id&&(e.status==='settled'||e.status==='approved')).reduce((x,e)=>x+e.amount,0);
-      return `<tr><td><b>${esc(a.name)}</b><div class="mono muted">${a.id}</div></td><td class="hide-sm muted">${esc(a.purpose)}</td><td class="num">${money(sp)}</td>
-      <td>${a.active?'<span class="tag t-settled">active</span>':'<span class="tag t-rejected">revoked</span>'}</td>
-      <td style="text-align:right">${a.active?`<button class="btn bad" onclick="revoke('${a.id}')">Revoke</button>`:''}</td></tr>`}).join('')}
-    </tbody></table>` :
-    `<div class="empty"><b>No agents yet</b>Create one to give it a wallet and a mandate. Its key is shown once.<br><br><button class="btn pri" onclick="newAgent()">New agent</button></div>`}
+  <div class="card" style="padding:4px 4px">${S.agents.length ? S.agents.map(a=>{
+    const sp = spent(a.id);
+    return `<button class="agentrow" onclick="go('agents/${a.id}')">
+      <span><b>${esc(a.name)}</b><br><span class="muted">${esc(a.purpose)}</span></span>
+      <span class="hide-sm"><span class="muted" style="font-size:12.5px">${money(sp)} of ${money0(a.daily)} today</span>${budgetBar(a)}</span>
+      <span>${a.active?'<span class="tag t-ok">Active</span>':'<span class="tag t-off">Paused</span>'}</span>
+      <span class="chev" aria-hidden="true">›</span></button>`;}).join('')
+  : `<div class="empty"><b>No agents yet</b>An agent gets a key, a budget and a list of vendors it may pay.<br><br><a class="btn pri" href="#agents/new" onclick="wizStart()">Create your first agent</a></div>`}
   </div>`;
 
-function newAgent(){
-  $('#dlgBody').innerHTML = `
-    <h2>New agent</h2>
-    <form class="form" onsubmit="createAgent(event)">
-      <label>Name<input name="name" required value="research-bot" pattern="[a-z0-9-]+" title="lowercase, digits, dashes"></label>
-      <label>What it pays for<input name="purpose" required value="Datasets and search APIs"></label>
-      <p class="hint" style="margin:0">Spending limits come from your policy. Funds stay in your own wallet.</p>
-      <div class="acts" style="margin:0;display:flex;justify-content:flex-end;gap:8px">
-        <button type="button" class="btn" onclick="dlg.close()">Cancel</button>
-        <button class="btn pri">Create agent</button>
-      </div>
-    </form>`;
-  dlg.showModal();
-}
-function createAgent(ev){
-  ev.preventDefault();
-  const f = new FormData(ev.target);
-  const a = {id:id('agt'), name:f.get('name'), purpose:f.get('purpose'), active:true};
-  S.agents.push(a);
-  const key = 'sk_agent_' + Array.from({length:24},()=>'abcdef0123456789'[Math.floor(Math.random()*16)]).join('');
-  $('#dlgBody').innerHTML = `
-    <h2>${esc(a.name)} is ready</h2>
-    <p class="muted" style="margin:0 0 10px">Copy this key into your agent's environment.</p>
-    <div class="keybox"><span style="flex:1">${key}</span><button class="btn" onclick="navigator.clipboard&&navigator.clipboard.writeText('${key}');this.textContent='Copied'">Copy</button></div>
-    <div class="warnline">This is the only time the key is shown. Lose it and you revoke and reissue.</div>
-    <pre class="code" style="margin-top:12px">const res = await saifuro.fetch(url, {
-  agent: '${a.id}'
-})</pre>
-    <div class="acts"><button class="btn pri" onclick="dlg.close();location.hash='${S.policy?'overview':'policy'}'">${S.policy?'Done':'Next: set its policy'}</button></div>`;
-  render();
-}
-function revoke(aid){
-  const a=S.agents.find(x=>x.id===aid);
-  $('#dlgBody').innerHTML = `<h2>Revoke ${esc(a.name)}?</h2>
-    <p class="muted">Its mandate ends now and every payment it attempts is rejected. You can create a new agent later.</p>
-    <div class="acts"><button class="btn" onclick="dlg.close()">Cancel</button><button class="btn pri" style="background:var(--bad);border-color:var(--bad)" onclick="doRevoke('${aid}')">Revoke agent</button></div>`;
-  dlg.showModal();
-}
-function doRevoke(aid){ S.agents.find(x=>x.id===aid).active=false; S.agents = S.agents; dlg.close(); toast('Agent revoked. mandate.revoked sent to your webhook'); render(); }
-
-V.policy = () => {
-  const d=S.draft, p=S.policy;
-  const json = JSON.stringify({version:p?p.v+1:1, limits:{per_tx:d.perTx+' USDC', daily:d.daily+' USDC'}, allow:{merchants:d.vendors.split(',').map(s=>s.trim()).filter(Boolean), protocols:d.rails}, approvals:{above:d.approveAbove+' USDC', channel:'slack', fallback:'reject'}}, null, 2);
+V.agent = (aid) => {
+  const a = S.agents.find(x=>x.id===aid);
+  if(!a) return `<div class="empty"><b>Agent not found</b><a href="#agents">Back to agents</a></div>`;
+  const rows = S.ledger.filter(e=>e.agentId===a.id);
+  const w = rows.filter(e=>e.status==='waiting');
   return `
   <div class="head">
-    <div><h1>Spending policy</h1><p class="sub">Checked on every payment, whatever the rail.</p></div>
-    <div class="policy-meta">${p?`<span class="tag t-settled">v${p.v} active</span>`:'<span class="tag t-held">draft</span>'}</div>
+    <div><a class="back" href="#agents">← Agents</a><h1>${esc(a.name)} ${a.active?'<span class="tag t-ok" style="vertical-align:4px">Active</span>':'<span class="tag t-off" style="vertical-align:4px">Paused</span>'}</h1>
+      <p class="sub">${esc(a.purpose)} · <span class="mono">${a.id}</span></p></div>
+    <button class="btn ${a.active?'bad':''}" onclick="togglePause('${a.id}')">${a.active?'Pause agent':'Resume agent'}</button>
   </div>
-  <div class="grid g2">
-    <form class="card form" oninput="syncDraft(this)" onsubmit="publish(event)">
-      <h2 style="margin:0">Limits</h2>
-      <div class="row">
-        <label>Daily budget (USDC)<input name="daily" type="number" min="1" value="${d.daily}"></label>
-        <label>Hard cap per payment (USDC)<input name="perTx" type="number" min="1" value="${d.perTx}"></label>
-      </div>
-      <label>Ask a person above (USDC)<input name="approveAbove" type="number" min="1" value="${d.approveAbove}">
-        <span class="hint">Larger payments wait in Approvals and post to Slack. No answer means reject.</span></label>
-      <h2 style="margin:6px 0 0">Who agents may pay</h2>
-      <label>Allowed vendors<input name="vendors" value="${esc(d.vendors)}"><span class="hint">Comma separated. Anything else is rejected.</span></label>
-      <fieldset style="border:0;padding:0;margin:0"><legend style="font-size:12.5px;color:var(--ink2);font-weight:500;margin-bottom:6px">Rails</legend>
-        ${['x402','acp','ap2','card'].map(r=>`<label style="display:inline-flex;gap:6px;margin-right:14px;color:var(--ink)"><input type="checkbox" name="rails" value="${r}" ${d.rails.includes(r)?'checked':''}>${r}</label>`).join('')}
-      </fieldset>
-      <div style="display:flex;gap:8px;justify-content:flex-end"><button class="btn pri">${p?'Publish v'+(p.v+1):'Publish policy'}</button></div>
-    </form>
-    <div class="card"><h2>policy.json</h2><pre class="code" id="pjson">${esc(json)}</pre>
-      <p class="hint">Engineers can commit this file instead. Both stay in sync and every version is kept.</p></div>
+  <div class="stack">
+    ${w.length?`<section class="card prio"><div class="card-h"><h2>Needs your approval <span class="pill">${w.length}</span></h2></div><div class="reqs">${w.map(reqRow).join('')}</div></section>`:''}
+    <div class="grid g2">
+      <div class="card stat"><div class="k">Spent today</div><div class="v">${money(spent(a.id))}</div>
+        <div class="s">of ${money0(a.daily)} daily budget</div>${budgetBar(a)}</div>
+      <div class="card"><h2 style="margin-bottom:6px">Rules</h2><div class="rules">
+        <div><span>Daily budget</span><span>${money0(a.daily)}</span></div>
+        <div><span>Max per payment</span><span>${money0(a.perTx)}</span></div>
+        <div><span>Ask me above</span><span>${money0(a.approveAbove)}</span></div>
+        <div><span>Vendors</span><span>${a.vendors.map(v=>esc(vname(v))).join(', ')}</span></div>
+        <div><span>Payment rails</span><span>${a.rails.map(r=>`<span class="rail">${r}</span>`).join(' ')}</span></div>
+      </div></div>
+    </div>
+    <section class="card"><div class="card-h"><h2>Activity</h2></div>${activityTable(rows,{noAgent:true, emptyText:'This agent hasn’t made a payment yet.'})}</section>
   </div>`;
 };
-function syncDraft(f){
-  const fd=new FormData(f);
-  S.draft={daily:+fd.get('daily')||0, perTx:+fd.get('perTx')||0, approveAbove:+fd.get('approveAbove')||0, vendors:fd.get('vendors'), rails:fd.getAll('rails')};
-  const p=S.policy, d=S.draft;
-  $('#pjson').textContent = JSON.stringify({version:p?p.v+1:1, limits:{per_tx:d.perTx+' USDC', daily:d.daily+' USDC'}, allow:{merchants:d.vendors.split(',').map(s=>s.trim()).filter(Boolean), protocols:d.rails}, approvals:{above:d.approveAbove+' USDC', channel:'slack', fallback:'reject'}}, null, 2);
-}
-function publish(ev){
-  ev.preventDefault();
-  const d=S.draft;
-  if(!d.rails.length){ toast('Pick at least one rail'); return; }
-  const v = S.policy ? S.policy.v+1 : 1;
-  if(d.approveAbove >= d.perTx){ toast('Approval threshold must be below the per-payment cap'); return; }
-  S.policy = {v, daily:d.daily, perTx:d.perTx, approveAbove:d.approveAbove, vendors:d.vendors.split(',').map(s=>s.trim()).filter(Boolean), rails:[...d.rails]};
-  toast(`Policy v${v} is live for all agents`);
-  location.hash = S.agents.length ? 'overview' : 'agents';
-  render();
-}
 
-V.approvals = () => `
-  <div class="head"><div><h1>Approvals</h1><p class="sub">Payments above your threshold wait here and in Slack.</p></div></div>
-  <div class="card">${held().length ? held().map(e=>`
-    <div class="hold">
-      <div><div class="amt">${money(e.amount)}</div>
-        <div><span class="mono">${esc(e.agent)}</span> → ${e.vendor} <span class="rail">${e.rail}</span></div>
-        <div class="why">${e.what} · held because it is ${e.rule} · policy ${e.policy}</div></div>
-      <div style="display:flex;gap:8px"><button class="btn bad" onclick="resolve('${e.id}',false)">Reject</button><button class="btn pri" onclick="resolve('${e.id}',true)">Approve and pay</button></div>
-    </div>`).join('') :
-    `<div class="empty"><b>Nothing waiting</b>Payments above ${S.policy?money(S.policy.approveAbove):'your threshold'} will show up here.${S.policy&&S.agents.length?'<br><br><button class="btn" onclick="simulate(\'big\');location.hash=\'approvals\'">Simulate a large purchase</button>':''}</div>`}
-  </div>`;
-function resolve(eid, ok){
-  const e=S.ledger.find(x=>x.id===eid);
-  if(ok && spentToday()+e.amount > S.policy.daily){ toast('Approving would exceed today\'s budget. Raise it in Policy first.'); return; }
-  e.status = ok?'approved':'rejected'; e.resolvedBy='you'; e.rule = ok?'approved by you':'rejected by you';
-  toast(ok?`Paid ${money(e.amount)} to ${e.vendor}. Receipt in ledger`:'Rejected. The agent was told why');
-  render();
-}
-
-V.ledger = () => `
+V.activity = () => {
+  const f = S.filter;
+  const match = e => f==='all' || (f==='decided' ? (e.status==='approved'||e.status==='declined') : e.status===f);
+  const rows = S.ledger.filter(match);
+  const F = [['all','All'],['paid','Paid'],['waiting','Needs approval'],['decided','Decided by you'],['blocked','Blocked']];
+  return `
   <div class="head">
-    <div><h1>Ledger</h1><p class="sub">Every decision, including holds and rejections, with the rule that decided it.</p></div>
-    <button class="btn pri" onclick="exportLedger()" ${S.ledger.length?'':'disabled'}>Export NDJSON</button>
+    <div><h1>Activity</h1><p class="sub">Every payment attempt and the rule that decided it. Click a row for details.</p></div>
+    <button class="btn" onclick="exportCSV()" ${S.ledger.length?'':'disabled'}>Export CSV</button>
   </div>
-  <div class="card">${S.ledger.length ? `<table><thead><tr><th>Time</th><th>Agent</th><th class="hide-sm">Vendor · rail</th><th class="num">Amount</th><th>Status</th><th class="hide-sm">Decided by</th></tr></thead><tbody>
-    ${S.ledger.map(e=>`<tr><td class="mono muted">${e.time}</td><td class="mono">${esc(e.agent)}</td><td class="hide-sm">${e.vendor} <span class="rail">${e.rail}</span></td><td class="num">${money(e.amount)}</td><td>${tag(e.status)}</td><td class="hide-sm muted">${e.policy} · ${e.rule}</td></tr>`).join('')}
-    </tbody></table>` : `<div class="empty"><b>The ledger is empty</b>Each payment decision is written here, signed, and can be exported for audit.</div>`}
-  </div>`;
-function exportLedger(){
-  const nd = S.ledger.map(e=>JSON.stringify({id:e.id, time:e.time, agent:e.agentId, vendor:e.vendor, rail:e.rail, amount_usdc:e.amount, verdict:e.status, rule:e.rule, policy:e.policy})).join('\n');
-  const a=document.createElement('a'); a.href=URL.createObjectURL(new Blob([nd],{type:'application/x-ndjson'})); a.download='saifuro-ledger.ndjson'; a.click();
-  S.exported=true; toast('Ledger exported'); render();
+  <div class="chips" style="margin-bottom:12px">${F.map(([k,l])=>`<button class="chip ${f===k?'on':''}" onclick="S.filter='${k}';render()">${l}</button>`).join('')}</div>
+  <div class="card">${activityTable(rows,{emptyTitle:'Nothing here', emptyText:'No payments match this filter.'})}</div>`;
+};
+
+/* ---------- approval review drawer ---------- */
+const drawer = $('#drawer');
+function openReview(eid){ S.review = {id:eid, declining:false}; renderDrawer(); if(!drawer.open) drawer.showModal(); }
+function closeReview(){ drawer.close(); }
+drawer.addEventListener('close', ()=>{ S.review=null; });
+drawer.addEventListener('click', ev => { if(ev.target===drawer) closeReview(); });
+
+function renderDrawer(){
+  const e = S.ledger.find(x=>x.id===S.review.id), a = agentOf(e);
+  const isWaiting = e.status==='waiting';
+  const sp = spent(a.id), after = sp + e.amount, over = isWaiting && after > a.daily;
+  const left = Math.max(0, APPROVAL_WINDOW - Math.round((Date.now()-e.at)/60000));
+  const hist = S.ledger.filter(x=>x.agentId===a.id && x.vendor===e.vendor && x.id!==e.id && counts(x)).slice(0,3);
+  const title = isWaiting ? 'Approval request' : 'Payment details';
+  drawer.innerHTML = `
+  <div class="dr-head"><b id="drTitle">${title}</b><button class="x" onclick="closeReview()" aria-label="Close">×</button></div>
+  <div class="dr-body">
+    <div class="dr-hero">
+      <div class="amt">${money(e.amount)}</div>
+      <p><b>${esc(a.name)}</b> ${isWaiting?'wants to pay':e.status==='blocked'||e.status==='declined'?'tried to pay':'paid'} <b>${esc(vname(e.vendor))}</b></p>
+      ${tag(e.status)} ${isWaiting?`<span class="muted" style="font-size:12.5px;margin-left:6px">Auto-declines in ${left} min</span>`:''}
+    </div>
+
+    ${isWaiting ? `<div class="why"><b>Why this needs you</b>${esc(e.rule)}. Smaller payments go through on their own.</div>` : ''}
+
+    <div class="sec"><h3>What it's buying</h3><div class="kv">
+      <div><span>Item</span><span>${esc(e.what)}</span></div>
+      <div><span>Vendor</span><span>${esc(vname(e.vendor))} <span class="muted mono" style="font-size:11.5px">${esc(e.vendor)}</span></span></div>
+      <div><span>Payment rail</span><span><span class="rail">${e.rail}</span></span></div>
+      <div><span>Requested</span><span>${clock(e.at)} · ${ago(e.at)}</span></div>
+      <div><span>Reference</span><span class="mono">${e.id}</span></div>
+    </div></div>
+
+    ${e.note ? `<div class="sec"><h3>Agent's reason</h3><div class="quote">${esc(e.note)}</div></div>` : ''}
+
+    ${isWaiting ? `<div class="sec"><h3>Effect on today's budget</h3>
+      ${budgetBar(a, e.amount)}
+      <div class="legend"><span><i style="background:var(--accent)"></i>Spent ${money(sp)}</span><span><i style="background:${over?'var(--bad)':'var(--warn)'}"></i>This request ${money(e.amount)}</span><span>Budget ${money0(a.daily)}</span></div>
+      <p class="muted" style="margin:8px 0 0">${over ? '' : `After approval: ${money(after)} spent, ${money(a.daily-after)} left today.`}</p>
+      ${over ? `<div class="warnline" style="margin-top:8px">Approving would take ${esc(a.name)} over its ${money0(a.daily)} daily budget. Raise the budget or decline.</div>` : ''}
+    </div>` : `<div class="sec"><h3>Decision</h3><div class="kv">
+      <div><span>Outcome</span><span>${tag(e.status)}</span></div>
+      <div><span>Decided by</span><span>${e.decidedBy ? `${e.decidedBy} · ${clock(e.decidedAt)}` : 'Policy, automatically'}</span></div>
+      <div><span>Rule</span><span>${esc(e.decidedBy ? (e.status==='approved'?'Approved by a person':'Declined by a person') : e.rule)}</span></div>
+      ${e.reason?`<div><span>Reason given</span><span>${esc(e.reason)}</span></div>`:''}
+    </div></div>`}
+
+    <div class="sec"><h3>${esc(a.name)}'s rules</h3><div class="kv">
+      <div><span>Auto-approves up to</span><span>${money0(a.approveAbove)}</span></div>
+      <div><span>Max per payment</span><span>${money0(a.perTx)}</span></div>
+      <div><span>Daily budget</span><span>${money0(a.daily)}</span></div>
+    </div></div>
+
+    <div class="sec"><h3>Past payments to ${esc(vname(e.vendor))}</h3>
+      ${hist.length ? `<div class="kv">${hist.map(h=>`<div><span>${clock(h.at)} · ${esc(h.what)}</span><span>${money(h.amount)}</span></div>`).join('')}</div>`
+        : `<p class="muted" style="margin:0">No earlier payments from ${esc(a.name)} to this vendor today.</p>`}
+    </div>
+  </div>
+  ${isWaiting ? `<div class="dr-foot">
+    ${S.review.declining ? `
+      <label class="field"><span>Tell the agent why <span class="muted" style="font-weight:400">(optional)</span></span>
+        <textarea id="declineReason" placeholder="e.g. Use the 2023 bundle we already own"></textarea></label>
+      <div class="acts"><button class="btn" onclick="S.review.declining=false;renderDrawer()">Back</button><button class="btn badfill" onclick="decide(false)">Decline request</button></div>`
+    : `<div class="acts"><button class="btn bad" onclick="S.review.declining=true;renderDrawer();$('#declineReason').focus()">Decline</button>
+        <button class="btn ok" onclick="decide(true)" ${over?'disabled':''}>Approve ${money(e.amount)}</button></div>`}
+  </div>` : ''}`;
 }
+
+function decide(ok){
+  const e = S.ledger.find(x=>x.id===S.review.id), a = agentOf(e);
+  if(ok && spent(a.id)+e.amount > a.daily){ toast('Approving would exceed today’s budget.'); return; }
+  e.status = ok ? 'approved' : 'declined';
+  e.decidedBy = 'You'; e.decidedAt = new Date();
+  if(!ok){ const r = ($('#declineReason')||{}).value; if(r && r.trim()) e.reason = r.trim(); }
+  closeReview();
+  const more = waiting().length;
+  toast((ok ? `Approved. ${money(e.amount)} paid to ${vname(e.vendor)}.` : `Declined. ${a.name} has been told${e.reason?' why':''}.`) + (more ? ` ${more} more waiting.` : ''));
+  render();
+}
+
+/* ---------- new agent wizard ---------- */
+const STEPS = ['Name it','Set budget','Choose vendors','Review'];
+function wizStart(){ S.wiz = {step:0, name:'', purpose:'', daily:500, perTx:250, approveAbove:100, vendors:[], extra:'', rails:['x402','acp'], err:''}; }
+
+function limitSentence(w){
+  return `<b>${esc(w.name||'This agent')}</b> can spend up to <b>${money0(+w.daily||0)} a day</b>, at most <b>${money0(+w.perTx||0)} per payment</b>.
+    Anything over <b>${money0(+w.approveAbove||0)}</b> waits for your approval.`;
+}
+const allVendors = w => [...w.vendors, ...w.extra.split(',').map(s=>s.trim().toLowerCase()).filter(Boolean)].filter((v,i,arr)=>arr.indexOf(v)===i);
+
+const WSTEP = [
+  w => `<h2>What should we call this agent?</h2>
+    <p class="lead">A short name you'll recognise in approvals and activity.</p>
+    <label class="field"><span>Agent name</span><input name="name" value="${esc(w.name)}" placeholder="research-bot" autocomplete="off" autofocus>
+      <span class="hint">Lowercase letters, numbers and dashes.</span></label>
+    <label class="field"><span>What does it pay for?</span><input name="purpose" value="${esc(w.purpose)}" placeholder="e.g. Datasets and search APIs">
+      <span class="hint">Shown to approvers so they know what's normal for this agent.</span></label>`,
+  w => `<h2>How much can it spend?</h2>
+    <p class="lead">Payments inside these limits go through on their own.</p>
+    <label class="field"><span>Daily budget</span><span class="money-in"><input name="daily" type="number" min="1" step="1" value="${w.daily}" inputmode="decimal"><em>USDC / day</em></span>
+      <span class="hint">Total the agent can spend in a day. Payments that would go over are blocked.</span></label>
+    <label class="field"><span>Max per payment</span><span class="money-in"><input name="perTx" type="number" min="1" step="1" value="${w.perTx}" inputmode="decimal"><em>USDC</em></span>
+      <span class="hint">Any single payment above this is blocked outright.</span></label>
+    <label class="field"><span>Ask me before paying more than</span><span class="money-in"><input name="approveAbove" type="number" min="0" step="1" value="${w.approveAbove}" inputmode="decimal"><em>USDC</em></span>
+      <span class="hint">Payments above this wait for your approval on Home.</span></label>
+    <div class="summary" id="limitSummary">${limitSentence(w)}</div>`,
+  w => `<h2>Who can it pay?</h2>
+    <p class="lead">Payments to anyone not on this list are blocked.</p>
+    <div class="vgrid">${Object.entries(VENDORS).map(([h,v])=>`
+      <label class="vopt"><input type="checkbox" name="vendors" value="${h}" ${w.vendors.includes(h)?'checked':''}>
+        <span><b>${v.name}</b> <span class="muted">· ${v.what}</span><small>${h}</small></span></label>`).join('')}</div>
+    <label class="field"><span>Other vendors <span class="muted" style="font-weight:400">(optional)</span></span><input name="extra" value="${esc(w.extra)}" placeholder="api.example.com, api.other.io">
+      <span class="hint">Domains, separated by commas.</span></label>
+    <details class="adv"><summary>Payment rails (${w.rails.join(', ')||'none'})</summary>
+      <div class="railopts">${RAILS.map(r=>`<label title="${r.desc}"><input type="checkbox" name="rails" value="${r.id}" ${w.rails.includes(r.id)?'checked':''}><span class="mono">${r.id}</span> <span class="muted">${r.desc}</span></label>`).join('')}</div>
+    </details>`,
+  w => `<h2>Review and create</h2>
+    <p class="lead">Check the details. You can change any of this later.</p>
+    <dl class="review" style="margin:0">
+      <div><dt>Agent</dt><dd><b>${esc(w.name)}</b><br><span class="muted">${esc(w.purpose)}</span></dd><button type="button" class="linkbtn" onclick="wizGo(0)">Edit</button></div>
+      <div><dt>Limits</dt><dd>${money0(+w.daily)} a day · ${money0(+w.perTx)} max per payment<br><span class="muted">Asks you above ${money0(+w.approveAbove)}</span></dd><button type="button" class="linkbtn" onclick="wizGo(1)">Edit</button></div>
+      <div><dt>Can pay</dt><dd>${allVendors(w).map(v=>esc(vname(v))).join(', ')}<br><span class="muted">via ${w.rails.join(', ')}</span></dd><button type="button" class="linkbtn" onclick="wizGo(2)">Edit</button></div>
+    </dl>
+    <div class="summary">${limitSentence(w)}</div>`,
+];
+
+V['agents/new'] = () => {
+  if(!S.wiz) wizStart();
+  const w = S.wiz;
+  if(w.done) return wizDone();
+  return `
+  <div class="head"><div><a class="back" href="#agents">← Agents</a><h1>New agent</h1></div></div>
+  <ol class="stepper" aria-label="Progress">${STEPS.map((s,i)=>`<li class="${i<w.step?'done':''} ${i===w.step?'on':''}" ${i===w.step?'aria-current="step"':''}><span>${i<w.step?'✓':i+1}</span>${s}</li>`).join('')}</ol>
+  <form class="card wiz" novalidate onsubmit="wizNext(event)" oninput="wizSave(this)" onchange="wizSave(this)">
+    ${WSTEP[w.step](w)}
+    ${w.err?`<div class="errline" role="alert">${esc(w.err)}</div>`:''}
+    <div class="wiz-foot">
+      ${w.step ? `<button type="button" class="btn" onclick="wizBack()">Back</button>` : `<a class="btn" href="#agents">Cancel</a>`}
+      <button class="btn pri">${w.step===3?'Create agent':'Continue'}</button>
+    </div>
+  </form>`;
+};
+
+function wizSave(f){
+  const w = S.wiz, fd = new FormData(f), has = n => f.elements.namedItem(n);
+  if(has('name')) w.name = fd.get('name').trim();
+  if(has('purpose')) w.purpose = fd.get('purpose').trim();
+  ['daily','perTx','approveAbove'].forEach(k => { if(has(k)) w[k] = fd.get(k); });
+  if(has('vendors')) w.vendors = fd.getAll('vendors');
+  if(has('extra')) w.extra = fd.get('extra');
+  if(has('rails')) w.rails = fd.getAll('rails');
+  const s = $('#limitSummary'); if(s) s.innerHTML = limitSentence(w);
+  const sum = f.querySelector('details.adv summary'); if(sum) sum.textContent = `Payment rails (${w.rails.join(', ')||'none'})`;
+}
+function wizValidate(w){
+  if(w.step===0){
+    if(!/^[a-z0-9][a-z0-9-]{1,31}$/.test(w.name)) return 'Give the agent a name of 2+ characters using lowercase letters, numbers and dashes.';
+    if(S.agents.some(a=>a.name===w.name)) return `You already have an agent called ${w.name}.`;
+    if(!w.purpose) return 'Add a short line about what it pays for.';
+  }
+  if(w.step===1){
+    const d=+w.daily, p=+w.perTx, ap=+w.approveAbove;
+    if(!(d>0) || !(p>0) || !(ap>=0) || w.approveAbove==='') return 'Fill in all three amounts.';
+    if(p > d) return 'Max per payment can’t be more than the daily budget.';
+    if(ap > p) return 'The “ask me” amount should be at or below the max per payment.';
+  }
+  if(w.step===2){
+    if(!allVendors(w).length) return 'Pick at least one vendor this agent may pay.';
+    if(!w.rails.length) return 'Turn on at least one payment rail.';
+  }
+  return '';
+}
+function wizNext(ev){
+  ev.preventDefault();
+  wizSave(ev.target);
+  const w = S.wiz;
+  w.err = wizValidate(w);
+  if(w.err){ render(); return; }
+  if(w.step < 3){ w.step++; render(); focusWiz(); return; }
+  // create
+  const vendors = allVendors(w);
+  vendors.forEach(v => { if(!VENDORS[v]) VENDORS[v] = {name:v, what:'API call', min:1, max:20}; });
+  const a = {id:uid('agt'), name:w.name, purpose:w.purpose, active:true, daily:+w.daily, perTx:+w.perTx, approveAbove:+w.approveAbove, vendors, rails:[...w.rails]};
+  S.agents.push(a);
+  w.done = {agentId:a.id, key:'sk_agent_' + Array.from({length:24},()=>'abcdef0123456789'[Math.floor(Math.random()*16)]).join('')};
+  render(); focusWiz();
+}
+function wizBack(){ const w=S.wiz; w.err=''; w.step=Math.max(0,w.step-1); render(); focusWiz(); }
+function wizGo(n){ S.wiz.err=''; S.wiz.step=n; render(); focusWiz(); }
+function focusWiz(){ const el = document.querySelector('.wiz input, .wiz h2'); if(el) el.focus({preventScroll:true}); window.scrollTo(0,0); }
+function wizDone(){
+  const {agentId, key} = S.wiz.done, a = S.agents.find(x=>x.id===agentId);
+  return `
+  <div class="card wiz" style="margin-top:8px">
+    <div class="success-ico" aria-hidden="true">✓</div>
+    <div><h2>${esc(a.name)} is live</h2><p class="muted" style="margin:4px 0 0">${limitSentence(a)}</p></div>
+    <div class="field"><span>Agent key</span>
+      <div class="keybox"><span style="flex:1">${key}</span><button type="button" class="btn sm" onclick="navigator.clipboard&&navigator.clipboard.writeText('${key}');this.textContent='Copied'">Copy</button></div>
+      <div class="warnline">Copy it now. For safety, it's only shown once.</div></div>
+    <div class="field"><span>Add it to your agent</span>
+<pre class="code">const res = await saifuro.fetch(url, {
+  agent: '${a.id}'
+})</pre></div>
+    <div class="wiz-foot"><a class="btn" href="#home" onclick="S.wiz=null">Back to home</a><button type="button" class="btn pri" onclick="S.wiz=null;go('agents/${a.id}')">View agent</button></div>
+  </div>`;
+}
+
+/* ---------- agent actions ---------- */
+function togglePause(aid){
+  const a = S.agents.find(x=>x.id===aid);
+  if(!a.active){ a.active=true; toast(`${a.name} resumed. It can pay again within its rules.`); render(); return; }
+  $('#dlgBody').innerHTML = `<h2>Pause ${esc(a.name)}?</h2>
+    <p class="muted" style="margin:0">Every payment it tries will be blocked until you resume it. Its key and rules stay as they are.</p>
+    <div class="acts"><button class="btn" onclick="dlg.close()">Cancel</button><button class="btn badfill" onclick="doPause('${aid}')">Pause agent</button></div>`;
+  dlg.showModal();
+}
+function doPause(aid){ const a=S.agents.find(x=>x.id===aid); a.active=false; dlg.close(); toast(`${a.name} paused.`); render(); }
+
+function exportCSV(){
+  const head = 'id,time,agent,vendor,item,rail,amount_usdc,status,rule,decided_by';
+  const q = s => `"${String(s??'').replace(/"/g,'""')}"`;
+  const rows = S.ledger.map(e=>[e.id, e.at.toISOString(), agentOf(e).name, e.vendor, e.what, e.rail, e.amount.toFixed(2), STATUS[e.status].label, e.rule, e.decidedBy||'policy'].map(q).join(','));
+  const a=document.createElement('a'); a.href=URL.createObjectURL(new Blob([head+'\n'+rows.join('\n')],{type:'text/csv'})); a.download='saifuro-activity.csv'; a.click();
+  toast('Activity exported for finance.');
+}
+function resetDemo(){ seed(); S.wiz=null; S.apTab='waiting'; S.filter='all'; go('home'); render(); toast('Demo data reset.'); }
 
 /* ---------- router ---------- */
 const dlg = $('#dlg');
+function go(r){ if(location.hash.slice(1)===r) render(); else location.hash = r; }
 function render(){
-  const r = (location.hash.slice(1) || 'overview');
-  const view = V[r] ? r : 'overview';
-  $('#view').innerHTML = V[view]();
-  document.querySelectorAll('.nav').forEach(n=>n.classList.toggle('on', n.dataset.r===view));
-  const h = held().length, c=$('#holdCount'); c.hidden=!h; c.textContent=h;
+  const r = location.hash.slice(1) || 'home';
+  let html, nav;
+  if(r==='agents/new'){ html = V['agents/new'](); nav='agents'; }
+  else if(r.startsWith('agents/')){ html = V.agent(r.split('/')[1]); nav='agents'; }
+  else if(V[r]){ html = V[r](); nav=r; }
+  else { html = V.home(); nav='home'; }
+  $('#view').innerHTML = html;
+  document.querySelectorAll('.nav').forEach(n=>n.classList.toggle('on', n.dataset.r===nav));
+  const h = waiting().length, c=$('#holdCount'); c.hidden=!h; c.textContent=h;
+  document.title = (h?`(${h}) `:'') + 'Saifuro Console — concept';
+  if(S.review && drawer.open) renderDrawer();
 }
 window.addEventListener('hashchange', ()=>{ render(); $('#view').focus({preventScroll:true}); window.scrollTo(0,0); });
+seed();
 render();
 </script>
 </body>
