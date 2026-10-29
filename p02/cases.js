@@ -10,7 +10,7 @@
       title: 'Let agents pay. Keep the final say.',
       lede: 'AI agents are starting to buy things on their own: data, compute, flights. Saifuro Console is a concept for the control panel behind that. Teams give each agent a budget, a vendor list and approval rules, so small payments settle on their own and big ones wait for a person. I designed it and built it as a working prototype.',
       facts: [['Role', 'Product designer and builder'], ['Year', '2026'], ['Platform', 'Web console, desktop first'], ['Type', 'Self-initiated concept, not affiliated with Saifuro']],
-      hero: { src: 'saifuro-hero.jpg?v=2', w: 1920, h: 1175, alt: 'The Saifuro sign-up page over a silver flow background: a headline reading Let your agents pay. Keep the final say, three product promises, and a create-your-workspace form with Continue with Google and a sample-details fill for the prototype.' },
+      hero: { src: 'saifuro-hero.jpg?v=2', dark: 'saifuro-hero-dark.jpg', w: 1920, h: 1175, alt: 'The Saifuro sign-up page over a silver flow background: a headline reading Let your agents pay. Keep the final say, three product promises, and a create-your-workspace form with Continue with Google and a sample-details fill for the prototype.' },
       stats: [['5', 'Core surfaces: overview, approvals, agents, activity, settings'], ['4', 'Steps to create an agent with its own key and limits'], ['6', 'Policy checks shown on every approval request']],
       sections: [
         { label: 'Overview', title: 'A spend control panel for teams running AI agents.',
@@ -44,7 +44,7 @@
           blocks: [
             { type: 'decision', label: 'Decision A', title: 'Put approvals first, sorted by urgency.',
               text: 'The overview opens on what needs a person. The request closest to expiring is always on top, with its time left and any risk flags beside it.',
-              images: [{ src: 'saifuro-overview.jpg', w: 1920, h: 1200, alt: 'The Saifuro overview: a needs-your-approval list with time left and risk flags, spend and approval stats, and spend over the last 24 hours.' }],
+              images: [{ src: 'saifuro-overview.jpg', dark: 'saifuro-overview-dark.jpg', w: 1920, h: 1200, alt: 'The Saifuro overview: a needs-your-approval list with time left and risk flags, spend and approval stats, and spend over the last 24 hours.' }],
               points: [['Urgency is visible', 'A countdown turns red when a request is about to expire.'], ['Risk is flagged', 'Tags like “Agent paused” or “Leaves 10% of budget” appear before you open anything.'], ['Numbers that matter', 'Spent today, waiting on you, and payments your rules blocked.']] },
             { type: 'decision', label: 'Decision B', title: 'Show the evidence, not just the amount.',
               text: 'Opening a request shows every policy check, the agent’s own reason and the effect on its daily budget, so a decision takes seconds instead of a Slack thread.',
@@ -52,16 +52,16 @@
               points: [['Checks in plain words', 'Each rule reads as a sentence, and the one that triggered review is marked.'], ['Fast for repeat users', 'A to approve, D to decline, J and K to move between requests.'], ['Safe declines', 'Declining asks for a reason the agent receives, with an undo.']] },
             { type: 'decision', label: 'Decision C', title: 'Make limits a sentence, not a form.',
               text: 'Creating an agent takes four steps: details, limits, vendors and review. Presets give a sensible start, and every number is summarised in one plain sentence before it goes live.',
-              images: [{ src: 'saifuro-limits.jpg', w: 1920, h: 1200, alt: 'The limits step of the new agent wizard: Light, Standard, Heavy and Custom presets, daily budget, max per payment and ask-me-above fields.' }, { src: 'saifuro-vendors.jpg', w: 1920, h: 1200, alt: 'The vendors step: a grid of selectable vendors with their API domains and a count of selected vendors.' }],
+              images: [{ src: 'saifuro-limits.jpg', dark: 'saifuro-limits-dark.jpg', w: 1920, h: 1200, alt: 'The limits step of the new agent wizard: Light, Standard, Heavy and Custom presets, daily budget, max per payment and ask-me-above fields.' }, { src: 'saifuro-vendors.jpg', dark: 'saifuro-vendors-dark.jpg', w: 1920, h: 1200, alt: 'The vendors step: a grid of selectable vendors with their API domains and a count of selected vendors.' }],
               points: [['Presets first', 'Light, Standard and Heavy cover most agents. Custom is there when needed.'], ['Every field explains itself', 'Helper text says what happens when a payment goes over each limit.'], ['Allowlist by default', 'Payments to any vendor not on the list are blocked.']] },
             { type: 'decision', label: 'Decision D', title: 'Treat the agent key like a password.',
               text: 'The key is shown once, at the end of setup, with a clear warning, a copy button and the code needed to use it. Leaving the page without saving it asks for confirmation.',
-              images: [{ src: 'saifuro-key.jpg', w: 1920, h: 1200, alt: 'The agent created screen: a summary sentence of its limits, a warning to copy the key now, the key with a copy button, a stored-safely checkbox and a code snippet.' }],
+              images: [{ src: 'saifuro-key.jpg', dark: 'saifuro-key-dark.jpg', w: 1920, h: 1200, alt: 'The agent created screen: a summary sentence of its limits, a warning to copy the key now, the key with a copy button, a stored-safely checkbox and a code snippet.' }],
               points: [['Shown once', 'The warning explains why, and how to rotate the key if it is lost.'], ['Ready to use', 'A short code snippet shows exactly where the key goes.'], ['No silent loss', 'Navigating away before confirming triggers a warning.']] }] },
         { label: 'Outcome', title: 'A working prototype, end to end.',
           lede: 'Everything in this case study works in the browser with sample data: sign up (one click fills in sample details), take the tour, approve and decline requests, create an agent, export the log and switch themes.',
           blocks: [
-            { type: 'figure', img: { src: 'saifuro-activity.jpg', w: 1920, h: 1200, alt: 'The activity log: every payment attempt with time, agent, vendor, payment rail, amount and status such as Paid, Pending or Blocked.' }, caption: 'Activity: every payment attempt and the rule that decided it.' },
+            { type: 'figure', img: { src: 'saifuro-overview.jpg', dark: 'saifuro-overview-dark.jpg', w: 1920, h: 1200, alt: 'The Saifuro dashboard overview: approvals waiting with time left and risk flags, spend and approval stats, spend over the last 24 hours and budget by agent.' }, caption: 'Overview: what needs you, and how every agent is spending.' },
             { type: 'cards', cols: 3, items: [
               { title: 'Agent pages', text: 'Each agent has its own spend, rules, vendors and pending requests, with pause and edit controls.' },
               { title: 'Approvers with limits', text: 'Owners, approvers with a spending limit, and viewers who can only look.' },
@@ -286,9 +286,12 @@
 
   /* ---------- Renderer ---------- */
   function esc(s) { return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;'); }
+  function isDark() { return document.documentElement.getAttribute('data-theme') === 'dark'; }
   function img(i, lazy) {
-    return '<button type="button" class="cs-zoom" data-full="' + IMG + i.src + '" aria-label="View larger image">' +
-      '<img src="' + IMG + i.src + '" width="' + i.w + '" height="' + i.h + '" alt="' + esc(i.alt) + '" decoding="async"' + (lazy ? ' loading="lazy"' : ' fetchpriority="high"') + '>' +
+    var src = IMG + (i.dark && isDark() ? i.dark : i.src);
+    var themed = i.dark ? ' data-light="' + IMG + i.src + '" data-dark="' + IMG + i.dark + '"' : '';
+    return '<button type="button" class="cs-zoom" data-full="' + src + '" aria-label="View larger image">' +
+      '<img src="' + src + '"' + themed + ' width="' + i.w + '" height="' + i.h + '" alt="' + esc(i.alt) + '" decoding="async"' + (lazy ? ' loading="lazy"' : ' fetchpriority="high"') + '>' +
       '<span class="cs-zoom-hint" aria-hidden="true">' + ZOOM + '</span></button>';
   }
   var ZOOM = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg>';
@@ -418,4 +421,13 @@
 
   window.CASES = CASES;
   window.renderCase = render;
+  /* Swap themed screenshots (light and dark) when the theme changes */
+  function swapThemed() {
+    var d = isDark();
+    document.querySelectorAll('img[data-dark]').forEach(function (el) {
+      var want = el.getAttribute(d ? 'data-dark' : 'data-light');
+      if (el.getAttribute('src') !== want) { el.setAttribute('src', want); var z = el.closest('.cs-zoom'); if (z) z.setAttribute('data-full', want); }
+    });
+  }
+  if ('MutationObserver' in window) new MutationObserver(swapThemed).observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
 })();

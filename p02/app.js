@@ -12,6 +12,7 @@
     document.getElementById('theme-label').textContent = t === 'dark' ? 'Light mode' : 'Dark mode';
     toggle.setAttribute('aria-label', t === 'dark' ? 'Switch to light mode' : 'Switch to dark mode');
     if (persist) { try { localStorage.setItem('theme', t); } catch (e) {} }
+    document.querySelectorAll('img[data-dark]').forEach(function (el) { el.setAttribute('src', el.getAttribute(t === 'dark' ? 'data-dark' : 'data-light')); });
   }
   applyTheme(root.getAttribute('data-theme') || 'light', false);
   if (toggle) toggle.addEventListener('click', function () {

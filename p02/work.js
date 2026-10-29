@@ -7,6 +7,27 @@
   var current = null;
   var ARROW = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 12h14M13 6l6 6-6 6"/></svg>';
 
+
+  /* Eased scroll for the section menu; the scroll-spy waits until it lands */
+  var gliding = false;
+  function glideTo(el, done) {
+    var start = window.scrollY, end = Math.max(0, el.getBoundingClientRect().top + start - 24);
+    var dist = end - start;
+    if (reduce || Math.abs(dist) < 2) { window.scrollTo({ top: end, behavior: 'instant' }); done(); return; }
+    var dur = Math.min(900, Math.max(450, Math.abs(dist) * 0.35)), t0 = null;
+    gliding = true;
+    function ease(x) { return x < .5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2; }
+    function stop() { gliding = false; window.removeEventListener('wheel', stop); window.removeEventListener('touchstart', stop); }
+    window.addEventListener('wheel', stop, { passive: true }); window.addEventListener('touchstart', stop, { passive: true });
+    (function step(ts) {
+      if (!gliding) return;
+      if (t0 === null) t0 = ts;
+      var k = Math.min(1, (ts - t0) / dur);
+      window.scrollTo({ top: start + dist * ease(k), behavior: 'instant' });
+      if (k < 1) requestAnimationFrame(step); else { stop(); done(); }
+    })(performance.now());
+  }
+
   var spy = null;
   function buildSub(key) {
     var old = document.querySelector('.side-sub'); if (old) old.remove();
@@ -29,8 +50,9 @@
         var t = document.getElementById(a.getAttribute('data-sec'));
         if (!t) return;
         var sec = t.closest('section');
-        sec.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'start' });
-        t.setAttribute('tabindex', '-1'); t.focus({ preventScroll: true });
+        links.forEach(function (x) { x.classList.toggle('is-on', x === a); if (x === a) x.setAttribute('aria-current', 'location'); else x.removeAttribute('aria-current'); });
+        glideTo(sec, function () { t.setAttribute('tabindex', '-1'); t.focus({ preventScroll: true }); });
+        if (history.replaceState) history.replaceState(null, '', '#' + a.getAttribute('data-sec'));
       });
     });
     if ('IntersectionObserver' in window) {
@@ -38,7 +60,7 @@
       links.forEach(function (a) { map[a.getAttribute('data-sec')] = a; });
       spy = new IntersectionObserver(function (es) {
         es.forEach(function (e) {
-          if (e.isIntersecting) {
+          if (e.isIntersecting && !gliding) {
             links.forEach(function (a) { a.classList.remove('is-on'); a.removeAttribute('aria-current'); });
             var a = map[e.target.querySelector('h2').id];
             if (a) { a.classList.add('is-on'); a.setAttribute('aria-current', 'location'); }
@@ -101,7 +123,7 @@
     if (!b) return;
     var src = b.querySelector('img');
     trigger = b;
-    img.src = b.getAttribute('data-full');
+    img.src = src.getAttribute('src');
     img.alt = src.alt;
     lb.showModal();
     document.body.classList.add('lb-open');
