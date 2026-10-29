@@ -83,7 +83,6 @@
     /* Figures break out of the text column so the sketches read at a glance */
     figure { position: relative; left: 50%; width: min(960px, calc(100vw - 48px)); transform: translateX(-50%); margin: var(--s-4xl) 0; }
     figure img { display: block; width: 100%; height: auto; border: 1px solid var(--line); border-radius: var(--r-md); background: #fafaf8; }
-    [data-theme="dark"] figure img { filter: invert(1) hue-rotate(180deg); border-color: #dcdcd8; }
     figcaption { margin-top: var(--s-sm); font-size: 13px; line-height: 20px; color: var(--muted); text-align: center; }
     .zoom { position: relative; display: block; width: 100%; padding: 0; border: 0; background: none; cursor: zoom-in; border-radius: var(--r-md); }
     .zoom-hint { position: absolute; top: var(--s-md); right: var(--s-md); width: 32px; height: 32px; display: grid; place-items: center; border: 1px solid var(--line-1); border-radius: var(--r-md); background: var(--bg); color: var(--fg); opacity: 0; transform: translateY(-2px); transition: opacity .15s var(--ease-out), transform .15s var(--ease-out); }
@@ -94,7 +93,7 @@
     .lb[open] { display: grid; place-items: center; animation: lb-in .2s var(--ease-out); }
     @keyframes lb-in { from { opacity: 0; } to { opacity: 1; } }
     .lb figure { position: static; left: auto; transform: none; width: auto; margin: 0; display: flex; flex-direction: column; align-items: center; gap: var(--s-md); max-width: 94vw; padding: 64px 0; }
-    .lb img { max-width: 94vw; max-height: calc(100dvh - 112px); width: auto; height: auto; object-fit: contain; border: 0; filter: none !important; }
+    .lb img { max-width: 94vw; max-height: calc(100dvh - 112px); width: auto; height: auto; object-fit: contain; border: 0; }
     .lb figcaption { color: #c9c9ce; }
     .lb-close { position: fixed; top: var(--s-lg); right: var(--s-lg); width: 44px; height: 44px; display: grid; place-items: center; border: 1px solid rgba(255,255,255,.22); border-radius: var(--r-md); background: rgba(16,16,18,.7); color: #fafafa; cursor: pointer; }
     .lb-close:hover { background: #2c2c30; border-color: rgba(255,255,255,.5); }
@@ -133,7 +132,7 @@
       <p>Now it’s a loop. I frame the problem, explore wide with AI, narrow it down with judgment, prototype in code and test with real users. Then I go around again.</p>
 
       <figure>
-        <button class="zoom" type="button" aria-label="Enlarge image"><img src="../../img/blog-workflow-loop.svg" width="1200" height="600" alt="Sketch: the old process as five boxes in a straight line, and the new process as a loop of frame, explore, narrow, prototype and test"><span class="zoom-hint" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></span></button>
+        <button class="zoom" type="button" aria-label="Enlarge image"><img src="../../img/blog-workflow-loop.png" width="2400" height="1200" alt="Sketch: the old process as five boxes in a straight line, and the new process as a loop of frame, explore, narrow, prototype and test"><span class="zoom-hint" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></span></button>
         <figcaption>The old flow ends at QA. The new one never really ends.</figcaption>
       </figure>
 
@@ -146,7 +145,7 @@
       </ul>
 
       <figure>
-        <button class="zoom" type="button" aria-label="Enlarge image"><img src="../../img/blog-workflow-judgment.svg" width="1200" height="600" loading="lazy" alt="Sketch: a pile of generated screens passes through a funnel of users, business goals and trade-offs, leaving the one screen that matters"><span class="zoom-hint" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></span></button>
+        <button class="zoom" type="button" aria-label="Enlarge image"><img src="../../img/blog-workflow-judgment.png" width="2400" height="1200" loading="lazy" alt="Sketch: a pile of generated screens passes through a funnel of users, business goals and trade-offs, leaving the one screen that matters"><span class="zoom-hint" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></span></button>
         <figcaption>Making got cheap. Judgment didn’t.</figcaption>
       </figure>
 
