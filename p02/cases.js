@@ -139,7 +139,8 @@
             { title: 'Every balance has a status', text: 'Available, staked, unstaking, in a pool and rewards are shown separately, so you always know what your money is doing.' },
             { title: 'Exits are upfront', text: 'Both ways to unstake show how long they take and what they cost before you sign.' },
             { title: 'The network is always visible', text: 'The current network and wallet sit in the header, so nothing happens on the wrong one.' },
-            { title: 'DeFi without the fear', text: 'People can stake, join pools and earn rewards with confidence.' }] }] },
+            { title: 'DeFi without the fear', text: 'People can stake, join pools and earn rewards with confidence.' }] },
+            { type: 'cta', label: 'Open the live prototype', href: '../pstake01/' }] },
         { label: 'Learnings', title: 'What I would bring to any product that handles money.',
           blocks: [{ type: 'numbered', items: [
             ['Show the state, then ask for action.', 'Tell people what their money is doing before you ask what they want to do with it.'],
@@ -203,7 +204,8 @@
           blocks: [
             { type: 'compare', before: 'A multi-day loop of emails, PDFs and correspondent banks.', after: 'A single Deal Room session to negotiate, document and settle in one place.' },
             { type: 'figure', img: { src: 'comdex-ui-trade.jpg', w: 1931, h: 1372, alt: 'A completed trade from Malaysia to Hong Kong: order progress, trade summary with feedback from both parties, an activity timeline, the final sale price and the contract documents.' }, caption: 'A completed trade: progress, summary, timeline and contract documents in one view.' },
-            { type: 'chips', title: 'What I would do next', items: ['Mobile companion app', 'Counterparty reputation graph', 'Live bank-rail status'] }] },
+            { type: 'chips', title: 'What I would do next', items: ['Mobile companion app', 'Counterparty reputation graph', 'Live bank-rail status'] },
+            { type: 'cta', label: 'Open the live prototype', href: '../comdex01/' }] },
         { label: 'Learnings', title: 'What I would carry into any complex B2B product.',
           blocks: [{ type: 'numbered', items: [
             ['Lead with the irreversible choice.', 'Ask for the listing type first, then let the form follow from it.'],
@@ -274,7 +276,8 @@
               { title: 'One product after login', text: 'Brand, site, sign-in, fund creation, network, documents and delegations sit in one product a GP can open.' },
               { title: 'Funds stood up in the product', text: 'Name the vehicle, attach documents, invite LPs, add portfolio companies and define units without leaving for email.' },
               { title: 'Operations have an owner', text: 'Documents, cap table steps and reviews can be assigned inside the fund, so work stays on the vehicle.' }] },
-            { type: 'chips', title: 'What shipped', items: ['Brand system', 'Marketing site', 'Sign-in and two-factor', 'Dashboard', 'Create new fund', 'Add LPs and portfolio', 'Cap table and units', 'Fund overview', 'Fund network', 'Fund management', 'Delegations', 'Trust and compliance features'] }] },
+            { type: 'chips', title: 'What shipped', items: ['Brand system', 'Marketing site', 'Sign-in and two-factor', 'Dashboard', 'Create new fund', 'Add LPs and portfolio', 'Cap table and units', 'Fund overview', 'Fund network', 'Fund management', 'Delegations', 'Trust and compliance features'] },
+            { type: 'cta', label: 'Open the live prototype', href: '../captl01/' }] },
         { label: 'Learnings', title: 'What this product taught the design.',
           blocks: [{ type: 'numbered', items: [
             ['The empty dashboard is the onboarding.', 'An empty fund table is the prompt to create the first vehicle, not a dead end.'],
