@@ -161,6 +161,14 @@
 
     @media (hover: none) { .slot-tag { opacity: 1; transform: none; } }
 
+
+    /* Writing */
+    .post-date { font-size: 13px; line-height: 19.5px; color: var(--muted); }
+    .post h3 { margin-top: var(--s-xs); font-size: 22px; line-height: 28px; font-weight: 700; letter-spacing: -0.4px; }
+    .post .desc { margin-top: var(--s-xs); font-size: 16px; line-height: 24px; color: var(--muted); }
+    .slot img.sketch { object-fit: contain; object-position: center; }
+    [data-theme="dark"] .slot img.sketch { filter: invert(1) hue-rotate(180deg); }
+
     /* Experience / Education */
     .row { display: flex; align-items: center; justify-content: space-between; gap: var(--s-lg); padding: var(--s-lg) 0; border-bottom: 1px solid var(--line); }
     .row:first-child { padding-top: 0; }
@@ -250,6 +258,22 @@
                   </a>
                 </article>
               </div>
+            </div>
+          </section>
+
+
+          <section class="sec open" data-acc>
+            <h2 class="sec-title"><button class="sec-head" type="button" id="h-writing" aria-expanded="true" aria-controls="p-writing">Writing <svg class="chev" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M6 15l6-6 6 6"/></svg></button></h2>
+            <div class="sec-body" id="p-writing" role="region" aria-labelledby="h-writing">
+              <article class="post">
+                <p class="post-date"><time datetime="2026-10-29">Oct 29, 2026</time> · 3 min read</p>
+                <h3>My workflow has been updated!</h3>
+                <p class="desc">From a straight line to a loop, and what I’m seeing across the industry.</p>
+                <a class="slot" href="writing/workflow.html" aria-label="Read the post: My workflow has been updated!">
+                  <img class="sketch" alt="Sketch: the old linear design process next to the new loop" width="1200" height="600" loading="lazy" decoding="async" src="img/blog-workflow-loop.svg">
+                  <span class="slot-tag" aria-hidden="true">Read post</span>
+                </a>
+              </article>
             </div>
           </section>
 

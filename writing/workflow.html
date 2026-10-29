@@ -1,0 +1,150 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>My workflow has been updated! — Sudheer Darla</title>
+  <meta name="description" content="My design process went from a straight line to a loop. Here’s what changed and what I’m seeing across the industry.">
+  <meta name="color-scheme" content="light dark">
+  <meta name="theme-color" content="#ffffff" id="theme-color">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="My workflow has been updated!">
+  <meta property="og:description" content="From a straight line to a loop, and what I’m seeing across the industry.">
+  <link rel="icon" href="../favicon.ico?v=2" sizes="any">
+  <link rel="icon" type="image/png" sizes="32x32" href="../favicon-32.png?v=2">
+  <link rel="apple-touch-icon" href="../apple-touch-icon.png?v=2">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;700;800;900&family=JetBrains+Mono:wght@400&display=swap" media="print" onload="this.media='all'">
+  <script>
+    (function () {
+      var t = null;
+      try { t = localStorage.getItem('theme'); } catch (e) {}
+      if (t !== 'light' && t !== 'dark') t = 'light';
+      document.documentElement.setAttribute('data-theme', t);
+    })();
+  </script>
+  <style>
+    :root {
+      --font-sans: "Geist", system-ui, -apple-system, "Segoe UI", sans-serif;
+      --font-mono: "JetBrains Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+
+      --bg: #ffffff;        --bg-1: #fafafa;      --bg-3: #f2f2f3;
+      --surface: #ffffff;   --surface-2: #fafafa; --elevated: #ffffff;
+      --line: #ebebed;      --line-1: #e1e1e4;    --line-strong: #c9c9ce;
+      --fg: #0b0b0c;        --fg-1: #1f1f22;      --fg-2: #45454a;
+      --muted: #6e6e75;     --muted-2: #9a9aa0;   --muted-3: #c6c6c9;
+      --accent: #0b0b0c;    --accent-2: #2c2c30;  --accent-ink: #ffffff;
+      --accent-soft: #0b0b0c0f;
+      --danger: #b42318;
+      --dot: #e1e1e4;
+
+      --r-md: 2px;
+      --shadow-md: 0 12px 28px -12px #0a0a0c29;
+      --ease-out: cubic-bezier(.2, .7, .2, 1);
+      --ease-in-out: cubic-bezier(.65, 0, .35, 1);
+
+      --s-xs: 4px; --s-sm: 8px; --s-md: 12px; --s-lg: 16px; --s-xl: 20px;
+      --s-2xl: 24px; --s-3xl: 32px; --s-4xl: 56px; --s-5xl: 92px;
+    }
+    [data-theme="dark"] {
+      --bg: #0b0b0c;        --bg-1: #101012;      --bg-3: #1f1f22;
+      --surface: #101012;   --surface-2: #1f1f22; --elevated: #1f1f22;
+      --line: #232327;      --line-1: #2c2c30;    --line-strong: #45454a;
+      --fg: #fafafa;        --fg-1: #f2f2f3;      --fg-2: #c9c9ce;
+      --muted: #9a9aa0;     --muted-2: #6e6e75;   --muted-3: #45454a;
+      --accent: #ffffff;    --accent-2: #ebebed;  --accent-ink: #0b0b0c;
+      --accent-soft: #ffffff0f;
+      --danger: #f97066;
+      --dot: #232327;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { color-scheme: light; -webkit-text-size-adjust: 100%; }
+    html[data-theme="dark"] { color-scheme: dark; }
+    .sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+    body { background: var(--bg); color: var(--fg); font-family: var(--font-sans); font-size: 17px; line-height: 28px; -webkit-font-smoothing: antialiased; min-height: 100vh; transition: background-color .2s var(--ease-out), color .2s var(--ease-out); }
+    a { color: inherit; }
+    button { font: inherit; color: inherit; background: none; border: 0; cursor: pointer; }
+    :focus-visible { outline: 2px solid var(--fg); outline-offset: 3px; border-radius: var(--r-md); }
+    .col { max-width: 680px; margin: 0 auto; padding: 0 var(--s-2xl); }
+    .back { display: inline-flex; align-items: center; gap: 6px; margin-top: var(--s-4xl); font-size: 14px; line-height: 20px; color: var(--muted); text-decoration: none; }
+    .back:hover { color: var(--fg); }
+    .date { margin-top: var(--s-3xl); font-size: 13px; line-height: 20px; color: var(--muted); }
+    h1 { margin-top: var(--s-sm); font-size: 36px; line-height: 42px; font-weight: 700; letter-spacing: -1.2px; text-wrap: balance; }
+    .lede { margin-top: var(--s-lg); font-size: 19px; line-height: 30px; color: var(--fg-2); text-wrap: pretty; }
+    article p, article li { color: var(--fg-2); text-wrap: pretty; }
+    article p + p { margin-top: var(--s-lg); }
+    h2 { margin-top: var(--s-4xl); margin-bottom: var(--s-md); font-size: 20px; line-height: 28px; font-weight: 700; letter-spacing: -0.3px; }
+    strong { color: var(--fg); font-weight: 600; }
+    ul.points { list-style: none; display: grid; gap: var(--s-lg); }
+    ul.points li { padding-left: 22px; position: relative; }
+    ul.points li::before { content: "→"; position: absolute; left: 0; color: var(--muted); }
+    figure { margin: var(--s-3xl) calc(var(--s-2xl) * -1); }
+    figure img { display: block; width: 100%; height: auto; border: 1px solid var(--line); border-radius: var(--r-md); background: #fafaf8; }
+    [data-theme="dark"] figure img { filter: invert(1) hue-rotate(180deg); border-color: #dcdcd8; }
+    figcaption { margin-top: var(--s-sm); padding: 0 var(--s-2xl); font-size: 13px; line-height: 20px; color: var(--muted); }
+    .flow { font-family: var(--font-mono); font-size: 14px; line-height: 24px; color: var(--fg-1); }
+    .end { margin-top: var(--s-4xl); padding: var(--s-2xl) 0 96px; border-top: 1px solid var(--line); display: flex; justify-content: space-between; gap: var(--s-lg); font-size: 14px; }
+    .end a { color: var(--fg-1); text-decoration: none; border-bottom: 1px solid var(--line-strong); }
+    .end a:hover { border-color: var(--fg); }
+    .toggle-fixed { position: fixed; z-index: 20; left: max(24px, calc((100vw - 1160px) / 2)); bottom: var(--s-2xl); }
+    @media (max-width: 960px) { .toggle-fixed { position: absolute; bottom: auto; left: auto; top: var(--s-md); right: var(--s-lg); min-height: 44px; } }
+    .toggle { display: inline-flex; align-items: center; gap: var(--s-sm); min-height: 32px; padding: 0 2px; }
+    .toggle-label { font-size: 13px; line-height: 16px; color: var(--muted); }
+    .track { position: relative; width: 30px; height: 16px; border-radius: var(--r-md); background: var(--bg-3); border: 1px solid var(--line-strong); transition: background-color .2s var(--ease-out), border-color .2s var(--ease-out); }
+    .knob { position: absolute; top: 2px; left: 2px; width: 10px; height: 10px; border-radius: var(--r-md); background: var(--fg); transition: transform .2s var(--ease-out), background-color .2s var(--ease-out); }
+    .toggle[aria-pressed="true"] .track { background: var(--accent); border-color: var(--accent); }
+    .toggle[aria-pressed="true"] .knob { transform: translateX(14px); background: var(--accent-ink); }
+    .toggle:hover .toggle-label { color: var(--fg); }
+    @media (max-width: 640px) { .col { padding: 0 var(--s-lg); } h1 { font-size: 30px; line-height: 36px; } figure { margin: var(--s-2xl) 0; } figcaption { padding: 0; } }
+    @media (prefers-reduced-motion: reduce) { *, *::before, *::after { transition-duration: .01ms !important; } }
+  </style>
+</head>
+<body>
+  <main class="col">
+    <a class="back" href="../#h-writing">← Back to home</a>
+    <article>
+      <p class="date"><time datetime="2026-10-29">Oct 29, 2026</time> · 3 min read</p>
+      <h1>My workflow has been updated!</h1>
+      <p class="lede">Product design is changing fast, and the way I work is changing with it.</p>
+
+      <h2>From a line to a loop</h2>
+      <p>For most of my career, every project followed the same path:</p>
+      <p class="flow">research → wireframes → mockups → handoff → QA</p>
+      <p>Each step finished before the next one started. By the time real users saw anything, most of the big decisions were already locked in.</p>
+      <p>Now it’s a loop. I frame the problem, explore wide with AI, narrow it down with judgment, prototype in code and test with real users. Then I go around again.</p>
+
+      <figure>
+        <img src="../img/blog-workflow-loop.svg" width="1200" height="600" alt="Sketch: the old process as five boxes in a straight line, and the new process as a loop of frame, explore, narrow, prototype and test">
+        <figcaption>The old flow ends at QA. The new one never really ends.</figcaption>
+      </figure>
+
+      <h2>What I’m seeing across the industry</h2>
+      <ul class="points">
+        <li><strong>Design and engineering are blurring.</strong> More teams want designers who can prototype and ship, not just hand off.</li>
+        <li><strong>AI is compressing the making phase.</strong> Generating screens is cheap now. Deciding which ones matter is the hard part.</li>
+        <li><strong>Product thinking is the differentiator.</strong> Understanding business goals, users and trade-offs matters more than pixel polish.</li>
+        <li><strong>Speed is expected.</strong> Teams want validated ideas in days, not weeks.</li>
+      </ul>
+
+      <figure>
+        <img src="../img/blog-workflow-judgment.svg" width="1200" height="600" loading="lazy" alt="Sketch: a pile of generated screens passes through a funnel of users, business goals and trade-offs, leaving the one screen that matters">
+        <figcaption>Making got cheap. Judgment didn’t.</figcaption>
+      </figure>
+
+      <h2>What stays the same</h2>
+      <p>The tools will keep changing. The designers who do well will be the ones who stay close to users, think in systems and keep learning. That’s what I’m holding on to.</p>
+    </article>
+    <div class="end">
+      <a href="../">← All work</a>
+      <a href="mailto:sudheer.darla11@gmail.com">Say hi<span class="sr"> (opens your email app)</span></a>
+    </div>
+  </main>
+  <button class="toggle toggle-fixed" type="button" id="theme" aria-pressed="false" aria-label="Switch to dark mode">
+    <span class="toggle-label" id="theme-label">Dark mode</span>
+    <span class="track" aria-hidden="true"><span class="knob"></span></span>
+  </button>
+  <script src="../app.js?v=5" defer></script>
+</body>
+</html>
