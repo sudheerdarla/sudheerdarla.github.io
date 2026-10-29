@@ -505,7 +505,7 @@ dialog.cmd[open]{animation:pop .15s ease-out}
 }
 
 /* ===== auth / landing ===== */
-body.anon .top{display:none}
+body.anon>.top{display:none}
 .auth{position:relative;min-height:calc(100vh - 30px);overflow:hidden;display:flex;flex-direction:column;isolation:isolate;background:radial-gradient(120% 95% at 82% 8%,#ffffff 0%,#eef0f3 34%,#dadee4 66%,#c4c9d1 100%)}
 [data-theme="dark"] .auth{background:radial-gradient(120% 95% at 82% 8%,#2b2e35 0%,#17191d 38%,#0b0c0e 72%,#050506 100%)}
 .auth canvas{position:absolute;inset:0;width:100%;height:100%;z-index:-2}
@@ -572,6 +572,38 @@ body.anon .top{display:none}
 .redirect .spin{width:28px;height:28px;border-width:2px}
 @media (max-width:960px){.hero{grid-template-columns:minmax(0,1fr);gap:32px;padding-top:8px}.hero h1{font-size:42px;line-height:46px;letter-spacing:-2px}.acard{max-width:520px}}
 @media (max-width:720px){.hero h1{font-size:34px;line-height:38px;letter-spacing:-1.4px;margin-top:16px}.hero .lede{font-size:16px;line-height:24px;margin-top:14px}.acard{padding:20px}.hero-pts,.rails-row{display:none}.otp{gap:6px}.otp .in{height:46px}}
+
+/* ===== login landing (static field + dark app shot) ===== */
+.auth.lp{--lp-bg:#f6f6f7;background:var(--lp-bg);min-height:100vh}
+[data-theme="dark"] .auth.lp{--lp-bg:#060607;background:var(--lp-bg)}
+.auth.lp::before,.auth.lp::after{display:none}
+.lp-nav{position:relative;z-index:2;border-bottom:1px solid var(--a400);background:color-mix(in oklch,var(--lp-bg) 60%,transparent);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}
+.lp-nav .wrap{height:56px;display:flex;align-items:center;justify-content:space-between;gap:12px}
+.lp-nav .r{display:flex;align-items:center;gap:4px}
+.lp-links{display:flex;gap:2px;margin-right:10px}
+.lp-links a{color:var(--g900);font-size:14px;text-decoration:none;padding:6px 10px;border-radius:6px;transition:color .15s,background .15s}
+.lp-links a:hover{color:var(--g1000);background:var(--a100)}
+.lp-nav .btn.pri{margin-right:6px}
+.lp-hero{max-width:1040px;margin:0 auto;padding:56px 24px 64px;display:grid;grid-template-columns:minmax(0,1fr) 392px;gap:56px;align-items:center;width:100%}
+.lp-mark{display:inline-flex;align-items:center;gap:10px;font-family:var(--font-mono);font-weight:600;font-size:20px;letter-spacing:6px;text-transform:uppercase}
+.lp-copy h1{font-size:44px;line-height:50px;font-weight:600;letter-spacing:-2px;margin-top:28px;max-width:480px}
+.lp-copy .lede{font-size:16px;line-height:24px;color:var(--g900);margin-top:16px;max-width:400px}
+.lp-rails{display:flex;gap:10px;align-items:center;margin-top:32px;font-family:var(--font-mono);font-size:12px;color:var(--g700)}
+.lp-rails i{width:3px;height:3px;border-radius:50%;background:var(--g600)}
+.lp .acard{padding:24px;gap:16px;background:color-mix(in oklch,var(--bg1) 92%,transparent)}
+.lp .acard h2{font-size:22px;line-height:28px;letter-spacing:-.6px}
+.lp-shot{max-width:1240px;margin:0 auto;padding:0 24px;width:100%}
+.lp-win{position:relative;height:640px;overflow:hidden;border-radius:14px 14px 0 0;background:var(--bg2);color:var(--g1000);box-shadow:0 0 0 1px rgba(255,255,255,.12),0 -20px 80px -30px rgba(0,0,0,.25),0 40px 100px -30px rgba(0,0,0,.6);-webkit-mask-image:linear-gradient(to bottom,#000 62%,transparent);mask-image:linear-gradient(to bottom,#000 62%,transparent)}
+html:not([data-theme="dark"]) .lp-win{box-shadow:0 0 0 1px rgba(0,0,0,.14),0 30px 80px -24px rgba(0,0,0,.35)}
+.lp-bar{height:40px;display:flex;align-items:center;gap:8px;padding:0 16px;background:var(--bg1);border-bottom:1px solid var(--a400)}
+.lp-bar i{width:12px;height:12px;border-radius:50%;background:#ff5f57}
+.lp-bar i:nth-child(2){background:#febc2e}.lp-bar i:nth-child(3){background:#28c840}
+.lp-url{margin:0 auto;font-size:12px;color:var(--g900);display:flex;gap:6px;align-items:center;padding:3px 12px;border-radius:6px;background:var(--g100)}
+.lp-app{pointer-events:none;user-select:none;background:var(--bg2)}
+.lp-app .top{position:relative}
+.lp-app .ph-in{padding-top:28px;padding-bottom:24px}
+@media (max-width:960px){.lp-hero{grid-template-columns:minmax(0,1fr);gap:36px;padding-top:48px}.lp .acard{max-width:440px}.lp-links{display:none}}
+@media (max-width:720px){.lp-hero{padding:32px 16px 40px}.lp-copy h1{font-size:32px;line-height:38px;letter-spacing:-1.2px;margin-top:20px}.lp-rails{display:none}.lp-shot{padding:0 16px}.lp-win{height:460px;border-radius:10px 10px 0 0}.lp-url{font-size:11px}.lp-nav .wrap{padding:0 16px}}
 
 /* ===== walkthrough ===== */
 .tour-block{position:fixed;inset:0;z-index:900}
@@ -1837,30 +1869,43 @@ const PW_LABEL=['','Too weak','Okay','Strong','Very strong'];
 V.auth=r=>{
   const mode=r==='signup'?'signup':'login';
   if(!UI.auth||UI.auth.mode!==mode){authInit(mode);if(r==='login/sso')UI.auth.sso=true}
-  return `<div class="auth ${getHero()}"><canvas id="bg" aria-hidden="true"></canvas>
-  <nav class="wrap auth-nav" aria-label="Site">
-    <a class="logo" href="#signup" aria-label="Saifuro">${logoSVG}<span>Saifuro</span></a>
-    <div style="display:flex;gap:8px;align-items:center">
-      ${mode==='signup'?`<span class="muted hide-sm">Have an account?</span><a class="btn sm glass" href="#login">Log in</a>`:`<span class="muted hide-sm">New to Saifuro?</span><a class="btn sm pri" href="#signup">Sign up</a>`}
-      <label class="sr" for="heroSel">Background</label><select id="heroSel" class="in sm glass hero-sel" onchange="setHero(this.value)" title="Hero background">${HEROES.map(([k,l])=>`<option value="${k}" ${getHero()===k?'selected':''}>${k}</option>`).join('')}</select>
+  return loginPage(mode);
+};
+const notInProto=t=>`href="#" onclick="event.preventDefault();toast({title:'${t} isn’t part of this prototype'})"`;
+function loginPage(mode){
+  return `<div class="auth lp"><canvas id="bg" aria-hidden="true"></canvas>
+  <nav class="lp-nav" aria-label="Site"><div class="wrap">
+    <a class="logo" href="#${mode}" aria-label="Saifuro">${logoSVG}<span>Saifuro</span></a>
+    <div class="r">
+      <div class="lp-links">${['Changelog','Docs','Pricing','Security'].map(l=>`<a ${notInProto(l)}>${l}</a>`).join('')}</div>
+      ${mode==='signup'?'<a class="btn sm" href="#login">Log in</a>':'<a class="btn sm pri" href="#signup">Sign up</a>'}
       <button class="iconbtn" onclick="setTheme(isDark()?'light':'dark');renderView()" aria-label="Switch to ${isDark()?'light':'dark'} theme">${ic(isDark()?'sun':'moon')}</button>
-    </div>
-  </nav>
-  <section class="wrap hero">
-    <div class="hero-copy">
-      <span class="hpill glass"><b>Pilot</b>Spend controls for AI agents</span>
-      <h1>Let your agents pay.<br><span class="grad">Keep the final say.</span></h1>
-      <p class="lede">Give every agent its own budget, vendor list and approval rules. Small payments settle on their own. Big ones wait for a person.</p>
-      <ul class="hero-pts">
-        <li><span class="pi glass">${ic('shield')}</span>Non-custodial. Funds stay in your own wallet.</li>
-        <li><span class="pi glass">${ic('inbox')}</span>Big payments wait for approval, here or in Slack.</li>
-        <li><span class="pi glass">${ic('activity')}</span>Every decision logged with the rule that made it.</li>
-      </ul>
-      <div class="rails-row"><span>Works across</span><span class="rail">x402</span><span class="rail">ACP</span><span class="rail">AP2</span><span class="rail">cards</span></div>
+    </div></div></nav>
+  <section class="lp-hero">
+    <div class="lp-copy">
+      <span class="lp-mark" aria-hidden="true">Saifuro</span>
+      <h1>Let your agents pay. Keep the final say.</h1>
+      <p class="lede">Budgets, vendor lists and approvals for every AI agent.</p>
+      <div class="lp-rails"><span>x402</span><i></i><span>ACP</span><i></i><span>AP2</span><i></i><span>cards</span></div>
     </div>
     <div class="acard" id="acard">${authCard()}</div>
-  </section></div>`;
-};
+  </section>${previewHTML()}</div>`;
+}
+function previewHTML(){
+  const keep=S;let body='';
+  try{S={...seed(),team:demoTeam(DEMO_ACCT),accounts:keep.accounts,org:{name:DEMO_ACCT.org,slug:DEMO_ACCT.slug},session:{email:DEMO_ACCT.email,name:DEMO_ACCT.name},sample:false};body=V.overview()}catch(e){body=''}finally{S=keep}
+  const tabs=TABS.map(([r,l],i)=>`<span class="tab ${i===0?'on':''}">${l}${r==='approvals'?'<span class="cnt">3</span>':''}</span>`).join('');
+  return `<section class="lp-shot" aria-label="Preview of the Saifuro dashboard">
+    <div class="lp-win" data-theme="dark" inert aria-hidden="true">
+      <div class="lp-bar"><i></i><i></i><i></i><span class="lp-url">${ic('lock',12)}app.saifuro.com/acme-research</span><span style="width:52px"></span></div>
+      <div class="lp-app">
+        <header class="top"><div class="wrap top-in"><span class="logo">${logoSVG}<span class="hide-sm">Saifuro</span></span><span class="slash" aria-hidden="true"><svg width="16" height="24" viewBox="0 0 16 24"><path d="M11 3 5 21" stroke="currentColor" stroke-width="1.2"/></svg></span><div class="ws"><span class="av" style="width:20px;height:20px;background:linear-gradient(135deg,#7928ca,#ff0080)"></span><span class="wsn">Acme Research</span><span class="badge b-gray" style="height:20px;font-size:11px">Pilot</span></div>
+          <div class="top-r"><span class="cmdk">${ic('search',14)}<span class="lbl-t">Search or jump to…</span><kbd>${MAC?'⌘K':'Ctrl K'}</kbd></span><span class="iconbtn">${ic('moon')}</span><span class="av me" style="background:linear-gradient(135deg,#0070f3,#50e3c2)"></span></div></div>
+          <nav class="wrap tabs">${tabs}</nav></header>
+        ${body}
+      </div>
+    </div></section>`;
+}
 function renderCard(focusSel){const c=$('#acard');if(!c)return;c.innerHTML=authCard();const f=focusSel?$(focusSel):($('#acard .in.err')||null);if(f)f.focus()}
 function af(k,label,{type='text',val='',ph='',ac='off',hint='',extra='',right=''}={}){
   const e=UI.auth.errs[k];
@@ -1929,10 +1974,10 @@ function authCard(){
     return `<div class="redirect"><span class="spin"></span><div><h2 style="font-size:20px;line-height:28px;letter-spacing:-.4px">Redirecting to ${esc(acct.idp||'your identity provider')}</h2><p class="sub">${esc(acct.org)} uses single sign-on. You’ll come straight back here.</p></div><button class="btn sm" onclick="UI.auth.redirect=null;clearTimeout(UI.auth.rt);renderCard()">Cancel</button></div>`;
   }
   const lockLeft=Math.ceil((A.lockUntil-Date.now())/1000);
-  return `<div><h2>Log in to Saifuro</h2><p class="sub">Welcome back. Use your work account.</p></div>
+  return `<div><h2>Log in to Saifuro</h2><p class="sub">Welcome back.</p></div>
     <div class="seg" role="tablist" style="display:grid;grid-template-columns:1fr 1fr"><button role="tab" aria-selected="${!A.sso}" class="${!A.sso?'on':''}" onclick="UI.auth.sso=false;UI.auth.errs={};renderCard()" style="justify-content:center">${ic('mail',14)}Email</button><button role="tab" aria-selected="${A.sso}" class="${A.sso?'on':''}" onclick="UI.auth.sso=true;UI.auth.errs={};renderCard('#a-sso')" style="justify-content:center">${ic('building',14)}Organization SSO</button></div>
     ${A.sso?`<form novalidate onsubmit="ssoGo(event)" oninput="authInput(event)">
-        <p class="muted" style="margin-top:-4px">Log in through your company’s identity provider, like Okta, Microsoft Entra ID or Google Workspace.</p>
+        <p class="muted" style="margin-top:-4px">Use your company’s identity provider.</p>
         <div class="field"><label class="lbl" for="a-sso">Workspace URL or work email</label><div class="slugrow ${E.sso?'err':''}"><span>saifuro.com/</span><input class="in mono" id="a-sso" name="sso" value="${esc(d.sso)}" placeholder="your-company" autocomplete="off" spellcheck="false" autocapitalize="off"></div>${fieldErr(E,'sso')}</div>
         <button class="btn pri block" id="authBtn">${ic('building')}Continue with SSO</button>
         <div class="demo-hint">${ic('info',14)}<span>Demo workspace: <b class="mono" style="color:var(--g1000)">acme-research</b></span><button type="button" class="btn xs" onclick="UI.auth.d.sso='acme-research';renderCard('#authBtn')">Fill</button></div>
@@ -2054,7 +2099,33 @@ let BG=null;
 const HEROES=[['hero01','Agent network'],['hero02','Silver flow']];
 function getHero(){try{const h=localStorage.getItem('s02-hero');return HEROES.some(x=>x[0]===h)?h:'hero02'}catch(e){return 'hero02'}}
 function setHero(h){try{localStorage.setItem('s02-hero',h)}catch(e){}const a=$('.auth');if(a){a.classList.remove('hero01','hero02');a.classList.add(h)}startBg();toast({title:`Background: ${h}`,body:HEROES.find(x=>x[0]===h)[1]})}
-function startBg(){getHero()==='hero01'?startHero01():startHero02()}
+function startBg(){if($('.auth.lp'))return startStatic();getHero()==='hero01'?startHero01():startHero02()}
+/* static login field: payment glyphs in soft drifts + a sparse star layer, seeded so it never shifts */
+function startStatic(){
+  stopBg();const c=$('#bg');if(!c)return;const ctx=c.getContext('2d');
+  const GL='$$0012478.:/+-x%#';
+  function rng(a){return()=>{a|=0;a=a+0x6D2B79F5|0;let t=Math.imul(a^a>>>15,1|a);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296}}
+  const blob=(x,y,cx,cy,rx,ry)=>Math.max(0,1-Math.hypot((x-cx)/rx,(y-cy)/ry));
+  function draw(){
+    const dpr=Math.min(2,devicePixelRatio||1),W=c.clientWidth,H=c.clientHeight;c.width=W*dpr;c.height=H*dpr;ctx.setTransform(dpr,0,0,dpr,0,0);
+    const dk=isDark(),ink=dk?'255,255,255':'0,0,0',k=dk?1:.7,R=rng(7);
+    ctx.font='11px "Geist Mono", ui-monospace, monospace';ctx.textBaseline='middle';
+    const top=Math.min(H,820);
+    for(let y=8;y<top;y+=15)for(let x=6;x<W;x+=11){
+      const u=x/W,v=y/top;
+      let d=Math.max(blob(u,v,.9,.28,.32,.55),blob(u,v,.06,.7,.18,.42)*.85,blob(u,v,.62,.05,.22,.18)*.6);
+      d*=.75+.25*Math.sin(u*23+v*9)*Math.sin(v*17-u*5);
+      const r=R(),g=R();
+      if(r<d*1.05)ctx.fillStyle=`rgba(${ink},${(.05+d*.3)*k})`,ctx.fillText(GL[Math.floor(g*GL.length)],x,y);
+    }
+    const n=Math.round(W*H/7000);
+    for(let i=0;i<n;i++){const x=R()*W,y=R()*H*.9,a=(.12+R()*.5)*k*(1-y/H*.6);ctx.fillStyle=`rgba(${ink},${a})`;ctx.beginPath();ctx.arc(x,y,.5+R()*.8,0,7);ctx.fill()}
+    for(let i=0;i<9;i++){const x=R()*W,y=R()*Math.min(H,700),s=4+R()*6,a=(.35+R()*.45)*k;
+      for(const [dx,dy] of [[1,0],[0,1]]){const g=ctx.createLinearGradient(x-dx*s,y-dy*s,x+dx*s,y+dy*s);g.addColorStop(0,`rgba(${ink},0)`);g.addColorStop(.5,`rgba(${ink},${a})`);g.addColorStop(1,`rgba(${ink},0)`);ctx.strokeStyle=g;ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(x-dx*s,y-dy*s);ctx.lineTo(x+dx*s,y+dy*s);ctx.stroke()}
+      ctx.fillStyle=`rgba(${ink},${a})`;ctx.beginPath();ctx.arc(x,y,1,0,7);ctx.fill()}
+  }
+  let last='';BG={raf:0,ro:new ResizeObserver(()=>{const key=c.clientWidth+'x'+c.clientHeight;if(key!==last){last=key;draw()}})};BG.ro.observe(c);
+}
 function startHero02(){
   stopBg();const c=$('#bg');if(!c)return;
   const ctx=c.getContext('2d'),reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
