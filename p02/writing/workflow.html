@@ -78,6 +78,7 @@
     h2 { margin-top: var(--s-4xl); margin-bottom: var(--s-md); font-size: 20px; line-height: 28px; font-weight: 700; letter-spacing: -0.3px; }
     strong { color: var(--fg); font-weight: 600; }
     ul.points { list-style: none; display: grid; gap: var(--s-lg); }
+    p + ul.points { margin-top: var(--s-lg); }
     ul.points li { padding-left: 22px; position: relative; }
     ul.points li::before { content: "→"; position: absolute; left: 0; color: var(--muted); }
     /* Figures break out of the text column so the sketches read at a glance */
@@ -121,7 +122,7 @@
   <main class="col">
     <a class="back" href="../#writing">← Back to home</a>
     <article>
-      <p class="date"><time datetime="2026-10-29">Oct 29, 2026</time> · 3 min read</p>
+      <p class="date"><time datetime="2026-10-29">Oct 29, 2026</time> · 4 min read</p>
       <h1>My workflow has been updated!</h1>
       <p class="lede">Product design is changing fast, and the way I work is changing with it.</p>
 
@@ -147,6 +148,20 @@
       <figure>
         <button class="zoom" type="button" aria-label="Enlarge image"><img src="../../img/blog-workflow-judgment.png" width="2400" height="1200" loading="lazy" alt="Sketch: a pile of generated screens passes through a funnel of users, business goals and trade-offs, leaving the one screen that matters"><span class="zoom-hint" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></span></button>
         <figcaption>Making got cheap. Judgment didn’t.</figcaption>
+      </figure>
+
+      <h2>How I use AI in my design work</h2>
+      <p>AI sits inside every step of my loop now, but it never makes the call. Here’s what that looks like in a normal week.</p>
+      <ul class="points">
+        <li><strong>Claude to think.</strong> I use it to pressure-test the problem, sum up research notes and draft the first round of copy. It’s a sparring partner, not the decider.</li>
+        <li><strong>Figma to design.</strong> Flows, key screens, components and tokens still start here. This is where I decide what good looks like.</li>
+        <li><strong>Claude Code to build.</strong> I turn the direction into a working prototype in real code, with every state, edge case and believable sample data. The Saifuro, PSTAKE, COMDEX and CAPTL prototypes on this site were built this way.</li>
+        <li><strong>GitHub to ship.</strong> Every prototype is versioned and lives at a real link, so people click through it instead of reading a deck.</li>
+      </ul>
+
+      <figure>
+        <button class="zoom" type="button" aria-label="Enlarge image"><img src="../../img/blog-workflow-ai.png" width="2400" height="1200" loading="lazy" alt="Sketch: four steps with real product logos. Claude to think, Figma to design, Claude Code to build, GitHub to ship, with me making the calls across every step"><span class="zoom-hint" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></span></button>
+        <figcaption>The tools do the heavy lifting. The framing, judgment and taste stay with me.</figcaption>
       </figure>
 
       <h2>What stays the same</h2>
