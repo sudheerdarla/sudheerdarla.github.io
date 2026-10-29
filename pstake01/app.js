@@ -97,7 +97,7 @@
     $('#walBtn').onclick = function (e) { e.stopPropagation(); var m = $('#walMenu'), h = m.hidden; closePops(); m.hidden = !h; };
     $('#walMenu').onclick = function (e) {
       var a = e.target.closest('[data-a]'); if (!a) return; closePops();
-      if (a.dataset.a === 'copy') { try { navigator.clipboard.writeText(n.full); } catch (x) {} toast('Address copied', n.full.slice(0, 22) + '…'); }
+      if (a.dataset.a === 'copy') { try { navigator.clipboard.writeText(n.full).catch(function () {}); } catch (x) {} toast('Address copied', n.full.slice(0, 22) + '…'); }
       if (a.dataset.a === 'exp') toast('Prototype', 'Explorer link is disabled in this demo');
       if (a.dataset.a === 'dis') { S.connected = false; save(); renderHeader(); render(); toast('Disconnected', 'Wallet removed from this session'); }
     };
