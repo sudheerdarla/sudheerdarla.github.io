@@ -2,17 +2,17 @@ const studies = {
   pstake: {
     title: 'pSTAKE Finance',
     sub: 'Web3 staking platform',
-    html: '<img class="long-study seam" width="2304" height="8000" alt="pSTAKE case study, part 1: staking people can actually read. Overview, scope, the problem holders faced and six moments where people got stuck" decoding="async" src="img/pstake-cs-1.jpg"><img class="long-study seam" width="2304" height="7095" alt="pSTAKE case study, part 2: the Network, Asset, State, Action mental model and the stake and unstake key decisions" decoding="async" loading="lazy" src="img/pstake-cs-2.jpg"><img class="long-study seam" width="2304" height="4910" alt="pSTAKE case study, part 3: how a chain switch changes everything, learnings and closing" decoding="async" loading="lazy" src="img/pstake-cs-3.jpg">'
+    html: '<img class="long-study seam" width="2304" height="8000" alt="pSTAKE case study, part 1: staking people can actually read. Overview, scope, the problem holders faced and six moments where people got stuck" decoding="async" src="../img/pstake-cs-1.jpg"><img class="long-study seam" width="2304" height="7095" alt="pSTAKE case study, part 2: the Network, Asset, State, Action mental model and the stake and unstake key decisions" decoding="async" loading="lazy" src="../img/pstake-cs-2.jpg"><img class="long-study seam" width="2304" height="4910" alt="pSTAKE case study, part 3: how a chain switch changes everything, learnings and closing" decoding="async" loading="lazy" src="../img/pstake-cs-3.jpg">'
   },
   comdex: {
     title: 'Comdex',
     sub: 'Commodity Trading platform',
-    html: '<img class="long-study" width="1312" height="8000" alt="Comdex case study: a global commodity trading platform, from research to handoff, covering the problem, process, key screens and outcomes" decoding="async" src="img/comdex-case-study.jpg?v=2">'
+    html: '<img class="long-study" width="1312" height="8000" alt="Comdex case study: a global commodity trading platform, from research to handoff, covering the problem, process, key screens and outcomes" decoding="async" src="../img/comdex-case-study.jpg?v=2">'
   },
   captl: {
     title: 'CAPTL',
     sub: 'Investor portfolio platform',
-    html: '<img class="long-study seam" width="2304" height="6409" alt="CAPTL case study, part 1: Investor OS overview, the project, problem statements and four roles with four frictions" decoding="async" src="img/captl-cs-1.jpg"><img class="long-study seam" width="2304" height="6987" alt="CAPTL case study, part 2: product timeline, user flows, what shipped and the first annotated key screens" decoding="async" loading="lazy" src="img/captl-cs-2.jpg"><img class="long-study seam" width="2304" height="6122" alt="CAPTL case study, part 3: annotated Add Fund, Fund Network and Fund Management screens, learnings and outcomes" decoding="async" loading="lazy" src="img/captl-cs-3.jpg">'
+    html: '<img class="long-study seam" width="2304" height="6409" alt="CAPTL case study, part 1: Investor OS overview, the project, problem statements and four roles with four frictions" decoding="async" src="../img/captl-cs-1.jpg"><img class="long-study seam" width="2304" height="6987" alt="CAPTL case study, part 2: product timeline, user flows, what shipped and the first annotated key screens" decoding="async" loading="lazy" src="../img/captl-cs-2.jpg"><img class="long-study seam" width="2304" height="6122" alt="CAPTL case study, part 3: annotated Add Fund, Fund Network and Fund Management screens, learnings and outcomes" decoding="async" loading="lazy" src="../img/captl-cs-3.jpg">'
   }
 };
 const drawer = document.getElementById('drawer');
