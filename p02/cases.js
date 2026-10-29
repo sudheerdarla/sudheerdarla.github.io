@@ -61,7 +61,7 @@
         { label: 'Outcome', title: 'A working prototype, end to end.',
           lede: 'Everything in this case study works in the browser with sample data: sign up (one click fills in sample details), take the tour, approve and decline requests, create an agent, export the log and switch themes.',
           blocks: [
-            { type: 'figure', img: { src: 'saifuro-outcome-laptop.jpg', w: 1920, h: 1200, alt: 'The Saifuro dashboard overview in dark mode on a laptop: approvals waiting with time left and risk flags, spend and approval stats, spend over the last 24 hours and budget by agent.' }, caption: 'Overview: what needs you, and how every agent is spending.' },
+            { type: 'figure', img: { src: 'saifuro-outcome-laptop.jpg', bare: true, w: 1920, h: 1200, alt: 'The Saifuro dashboard overview in dark mode on a laptop: approvals waiting with time left and risk flags, spend and approval stats, spend over the last 24 hours and budget by agent.' }, caption: 'Overview: what needs you, and how every agent is spending.' },
             { type: 'cards', cols: 3, items: [
               { title: 'Agent pages', text: 'Each agent has its own spend, rules, vendors and pending requests, with pause and edit controls.' },
               { title: 'Approvers with limits', text: 'Owners, approvers with a spending limit, and viewers who can only look.' },
@@ -291,7 +291,7 @@
     var src = IMG + (i.dark && isDark() ? i.dark : i.src);
     var themed = i.dark ? ' data-light="' + IMG + i.src + '" data-dark="' + IMG + i.dark + '"' : '';
     return '<button type="button" class="cs-zoom" data-full="' + src + '" aria-label="View larger image">' +
-      '<img src="' + src + '"' + themed + ' width="' + i.w + '" height="' + i.h + '" alt="' + esc(i.alt) + '" decoding="async"' + (lazy ? ' loading="lazy"' : ' fetchpriority="high"') + '>' +
+      '<img src="' + src + '"' + themed + (i.dark ? ' class="is-framed"' : i.bare ? ' class="is-bare"' : '') + ' width="' + i.w + '" height="' + i.h + '" alt="' + esc(i.alt) + '" decoding="async"' + (lazy ? ' loading="lazy"' : ' fetchpriority="high"') + '>' +
       '<span class="cs-zoom-hint" aria-hidden="true">' + ZOOM + '</span></button>';
   }
   var ZOOM = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg>';
