@@ -99,7 +99,7 @@
     .page { position: relative; }
     /* Content sits on a solid full-height panel (case study width and padding) so the dot grid stays out of the text */
     .main { padding: 0 var(--s-2xl); }
-    .col { max-width: 880px; min-height: 100vh; margin: 0 auto; padding: 0 clamp(20px, 5.5vw, 48px); background: var(--bg); border-left: 1px solid var(--line); border-right: 1px solid var(--line); }
+    .col { max-width: 880px; min-height: 100vh; margin: 0 auto; padding: 0 clamp(20px, 5.5vw, 48px); background: var(--bg); border-left: 1px solid var(--line); border-right: 1px solid var(--line); display: flex; flex-direction: column; }
 
     /* Top bar + theme toggle */
     /* Theme toggle, fixed bottom left (same spot as on the case study page) */
@@ -125,7 +125,7 @@
     .nav-link { display: inline-flex; align-items: center; min-height: 32px; min-width: 32px; justify-content: center; font-size: 15px; line-height: 15px; font-weight: 500; color: var(--fg-1); padding: 0 6px; border-bottom: 1px solid transparent; transition: border-color .15s var(--ease-out), color .15s; }
     .nav-link:hover { color: var(--fg); border-bottom-color: var(--fg); }
 
-    .bio { margin-top: var(--s-3xl); display: flex; flex-direction: column; gap: var(--s-lg); font-size: 16px; line-height: 26.4px; color: var(--fg-2); }
+    .bio { margin-top: var(--s-3xl); display: flex; flex-direction: column; gap: var(--s-lg); max-width: 640px; font-size: 16px; line-height: 26.4px; color: var(--fg-2); }
 
 
     .sections { margin-top: var(--s-3xl); display: flex; flex-direction: column; gap: 0; }
@@ -189,7 +189,8 @@
     .skills ul { margin-top: var(--s-md); display: flex; flex-direction: column; gap: var(--s-md); }
     .skills li { font-size: 16px; line-height: 24px; color: var(--fg-2); }
 
-    .footer { margin-top: var(--s-3xl); padding: var(--s-2xl) 0 var(--s-3xl); display: flex; justify-content: center; }
+    /* Pinned to the bottom of the full-height panel, even when a short tab is open */
+    .footer { margin-top: auto; padding: var(--s-4xl) 0 var(--s-3xl); display: flex; justify-content: center; }
 
     @media (max-width: 640px) {
       .main { padding: 0 var(--s-md); }
@@ -217,7 +218,7 @@
           <img class="avatar" width="96" height="96" fetchpriority="high" decoding="async" alt="Portrait of Sudheer Darla" src="../img/avatar-sudheer.jpg">
           <div class="header-text">
             <h1 class="name">Sudheer Darla</h1>
-            <p class="tagline">Product Designer · 7+ years<br>0–1 Fintech/SaaS · Complex and high-stakes flows.</p>
+            <p class="tagline">Product Designer · 7+ years · 0–1 Fintech/SaaS<br>Complex and high-stakes flows.</p>
           </div>
           <nav class="social" aria-label="Social links">
             <a class="nav-link" href="https://www.linkedin.com/in/sudheerdarla/" target="_blank" rel="noopener">LinkedIn<span class="sr"> (opens in a new tab)</span></a>
