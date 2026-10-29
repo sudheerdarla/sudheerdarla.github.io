@@ -75,6 +75,7 @@
 
   function paint(key) {
     host.innerHTML = window.renderCase(key);
+    if (window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches) host.querySelectorAll('video[autoplay]').forEach(function (v) { v.removeAttribute('autoplay'); v.pause(); });
     var n = order[(order.indexOf(key) + 1) % order.length];
     next.innerHTML = '<a href="index.html"><span class="cs-label">All work</span></a>' +
       '<a href="#' + n + '"><span class="cs-label">Next</span><b>' + window.CASES[n].name + '</b>' + ARROW + '</a>';
@@ -122,8 +123,9 @@
     if (!b) return;
     var src = b.querySelector('img');
     trigger = b;
-    img.src = b.getAttribute('data-full');
+    img.src = src.getAttribute('src');
     img.alt = src.alt;
+    img.classList.toggle('is-framed', src.classList.contains('is-framed'));
     lb.showModal();
     document.body.classList.add('lb-open');
     document.getElementById('lb-close').focus();

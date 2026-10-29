@@ -20,8 +20,9 @@
 
 .menu-btn { display: none; }
 @media (max-width: 960px) {
-  /* Mobile top bar: scrolls with the page. Back on the left, theme and menu on the right. */
-  .rail { position: absolute; left: 0; right: 0; bottom: auto; width: auto; padding: var(--s-md) var(--s-lg); flex-direction: row; align-items: center; gap: var(--s-sm);
+  /* Mobile top bar: pinned to the top while the page scrolls. Back on the left, theme and menu on the right. */
+  html { scroll-padding-top: 84px; }
+  .rail { position: fixed; left: 0; right: 0; bottom: auto; width: auto; padding: var(--s-md) var(--s-lg); flex-direction: row; align-items: center; gap: var(--s-sm);
     background: var(--bg); border-bottom: 1px solid var(--line); }
   .rail .toggle { order: 2; margin-left: auto; min-height: 44px; }
   .menu-btn { order: 3; display: inline-grid; place-items: center; width: 44px; height: 44px; margin-right: -10px; border-radius: var(--r-md); color: var(--fg); }
@@ -45,9 +46,9 @@
 .side { overflow-y: auto; scrollbar-width: none; }
 .side::-webkit-scrollbar { display: none; }
 .side-sub { padding: var(--s-xs) 0 var(--s-md) var(--s-md); border-bottom: 1px solid var(--line); }
-.side-sub a { display: flex; align-items: baseline; gap: 10px; padding: 5px 0 5px var(--s-md); border-left: 1px solid var(--line); font-size: 13px; line-height: 18px; color: var(--muted); transition: color .15s var(--ease-out), border-color .15s var(--ease-out); }
+.side-sub a { display: flex; align-items: baseline; gap: 10px; padding: 5px 0 5px var(--s-md); font-size: 13px; line-height: 18px; color: var(--muted); transition: color .15s var(--ease-out), border-color .15s var(--ease-out); }
 .side-sub a em { flex: none; font-style: normal; font-family: var(--font-mono); font-size: 10.5px; color: var(--muted-2); }
 .side-sub a:hover { color: var(--fg); }
-.side-sub a.is-on { color: var(--fg); font-weight: 600; border-left-color: var(--fg); }
+.side-sub a.is-on { color: var(--fg); font-weight: 600; }
 .side-sub a.is-on em { color: var(--fg-1); }
 .side li:has(.side-sub) > .side-link { border-bottom-color: transparent; }

@@ -5,16 +5,16 @@
 
   var CASES = {
     pstake: {
-      name: 'pSTAKE Finance',
+      name: 'PSTAKE Finance',
       kicker: ['Case study', 'Web3', 'Liquid staking'],
       title: 'Unlocking liquidity for staked assets.',
-      lede: 'pSTAKE Finance lets people stake their crypto and still use it. More than $30M in assets went through the platform. My job was to make it obvious which network you are on, which asset you picked and what that asset is doing right now, so nobody needs to be a crypto expert to use it.',
+      lede: 'PSTAKE Finance lets people stake their crypto and still use it. More than $30M in assets went through the platform. My job was to make it obvious which network you are on, which asset you picked and what that asset is doing right now, so nobody needs to be a crypto expert to use it.',
       facts: [['Role', 'Product designer: Brand, Site, IA, Key flows'], ['Year', '2022, Dubai'], ['Platform', 'Desktop Web App'], ['Scope', 'Dashboard, Network, Stake, Unstake, DeFi']],
-      hero: { src: 'pstake-cs-hero.webp', w: 1497, h: 909, bare: true, alt: 'The pSTAKE stake screen: OSMO staked for stkOSMO with the exchange rate and network fee, a Liquid Stake button, APY and total value unlocked cards, a network selector showing Persistence and BNB Smart Chain, Flash and Regular unstaking methods, and a stake confirmation.' },
+      hero: { src: 'p02/pstake-hero.jpg', w: 2880, h: 1800, alt: 'The PSTAKE stake screen: OSMO staked for stkOSMO with the exchange rate and network fee, a Liquid Stake button, APY and total value unlocked cards, a network selector showing Persistence and BNB Smart Chain, Flash and Regular unstaking methods, and a stake confirmation.' },
       stats: [['$30M+', 'Staked assets value unlocked'], ['5', 'Product areas I designed end to end'], ['2', 'Ways to exit, each with its time and fee shown upfront']],
       sections: [
         { label: 'Overview', title: 'One app to Stake, Unstake, Earn and track your crypto.',
-          lede: 'Before pSTAKE, people jumped between staking sites, swap apps, block explorers and spreadsheets. pSTAKE put all of it in one place. Every balance shows what it is doing, and every button tells you what will happen.',
+          lede: 'Before PSTAKE, people jumped between staking sites, swap apps, block explorers and spreadsheets. PSTAKE put all of it in one place. Every balance shows what it is doing, and every button tells you what will happen.',
           blocks: [{ type: 'lists', groups: [
             { title: 'What I designed', items: ['Switching between networks', 'Staking and Unstaking (wait 14 days, or exit instantly for a fee)', 'The DeFi tab: creating and joining pools', 'How rewards and past activity are shown'] },
             { title: 'Not my part', muted: true, items: ['Smart contracts', 'How APY is calculated', 'Which networks launched'] }] }] },
@@ -46,29 +46,30 @@
           blocks: [
             { type: 'decision', label: 'Decision A', title: 'Show the result before asking for action.',
               text: 'The stake screen reads like a receipt, top to bottom: what you put in, what you get back, what it costs, and where that leaves you.',
-              images: [{ src: 'pstake-ui-stake.jpg', w: 1919, h: 1248, alt: 'The stake screen with four numbered callouts: the you-stake and you-receive panels, the exchange rate and network fee, the Liquid Stake button, and the APY and total value unlocked cards.' }],
+              images: [{ src: 'p02/pstake-stake.jpg', w: 1600, h: 1120, alt: 'The stake screen: OSMO in, stkOSMO out with balances and a MAX button, the exchange rate and network fee, and the Liquid Stake button.' }],
               points: [['In, then out', 'What you stake sits above what you receive, with your balance and a MAX button.'], ['Costs before you sign', 'The rate, expected rewards and network fee all sit above the button.'], ['One main button', 'Liquid Stake is the only bold button, and it only turns on once the amount is valid.'], ['Earnings in view', 'APY and total value unlocked sit right below, so you never open another tab to check.']] },
             { type: 'decision', label: 'Decision B', title: 'Make unstaking clear, not scary.',
               text: 'Waiting days for your assets feels like losing them. So the exit screen shows the time and fee of each option before you commit.',
-              images: [{ src: 'pstake-ui-unstake.jpg', w: 1919, h: 1252, alt: 'The unstake screen with three numbered callouts: the Flash and Regular unstake method cards, the exchange rate above the methods, and a disabled Enter an amount button.' }],
+              images: [{ src: 'p02/pstake-unstake.jpg', w: 2880, h: 1800, alt: 'The unstake screen: the exchange rate above the Flash and Regular unstake method cards, each with its time, fee and what you receive.' }],
               points: [['Two clear options', 'Flash and Regular Unstake are shown side by side, each with its time and fee.'], ['Rate first', 'The current exchange rate is shown first, so the amount you get back is never a surprise.'], ['No accidents', 'The button stays off until you enter an amount.']] },
             { type: 'decision', label: 'Decision C', title: 'Always show which network you are on.',
               text: 'Your assets and actions depend on the network. So the current network and your connected wallet stay visible, and changing either one is a deliberate step.',
-              images: [{ src: 'pstake-ui-menus.jpg', w: 939, h: 687, alt: 'Header menus: the network list with Persistence checked, and the wallet menu with the connected address, balance, copy address, view on explorer and disconnect.' }, { src: 'pstake-ui-wallet.jpg', w: 939, h: 687, alt: 'The connect wallet dialog, with popular wallets grouped above more wallets and the installed one tagged Detected.' }],
-              points: [['Network in the header', 'The header shows the current network, and the menu marks it with a check.'], ['Wallet tools together', 'Balance, copy address and explorer link sit together. Disconnect is kept apart.'], ['Easy to connect', 'Wallets are grouped, and the one you already have installed is marked Detected.']] }] },
+              images: [{ src: 'p02/pstake-menus.jpg', w: 2880, h: 1800, alt: 'The wallet menu open from the header: the connected address and network, balance, copy address, view on explorer and disconnect.' }, { src: 'p02/pstake-wallet.jpg', w: 2880, h: 1800, alt: 'The connect wallet dialog, with popular wallets grouped above more wallets and the one already linked tagged Connected.' }],
+              points: [['Network in the header', 'The header shows the current network, and the menu marks it with a check.'], ['Wallet tools together', 'Balance, copy address and explorer link sit together. Disconnect is kept apart.'], ['Easy to connect', 'Wallets are grouped, and the one you already use is marked Connected.']] }] },
         { label: 'Brand and design system', title: 'I built the brand and the system behind every screen.',
-          lede: 'I owned the pSTAKE brand and its design system: the colours, type and shared components that every screen is built from. One system kept staking, unstaking and DeFi feeling like one product.',
+          lede: 'I owned the PSTAKE brand and its design system: the colours, type and shared components that every screen is built from. One system kept staking, unstaking and DeFi feeling like one product.',
           blocks: [{ type: 'system',
             colors: [['Night', '#0E0D12', 'bg/base', 'App background'], ['Surface', '#18171D', 'bg/surface', 'Panels and cards'], ['Raised', '#201E26', 'bg/raised', 'Inputs, menus, chips'], ['Coral', '#E15365', 'accent/primary', 'The one primary action'], ['Mint', '#3CC47C', 'status/positive', 'Yield and success'], ['Fog', '#8E8C96', 'text/secondary', 'Labels and helper text']],
             typo: [['Display', '32', '40', 'Bold', '33.99 OSMO'], ['Title', '20', '28', 'Semibold', 'Select network'], ['Body', '14', '20', 'Regular', 'Estimated annual yield'], ['Label', '11', '16', 'Mono, caps', 'Unstaking method']],
             principles: [['Dark and calm', 'A quiet dark base, so balances and states stand out.'], ['One coral action', 'Coral marks the single next step on each screen.'], ['Numbers first', 'Amounts are the largest text, labels stay small.']] }] },
         { label: 'Outcome', title: 'People trusted it with more than $30M.',
-          lede: 'More than $30M in staked assets went through pSTAKE. Each of the six moments where people got stuck now has a clear answer on screen.',
+          lede: 'More than $30M in staked assets went through PSTAKE. Each of the six moments where people got stuck now has a clear answer on screen.',
           blocks: [{ type: 'cards', cols: 2, items: [
             { title: 'Every balance has a status', text: 'Available, staked, unstaking, in a pool and rewards are shown separately, so you always know what your money is doing.' },
             { title: 'Exits are upfront', text: 'Both ways to unstake show how long they take and what they cost before you sign.' },
             { title: 'The network is always visible', text: 'The current network and wallet sit in the header, so nothing happens on the wrong one.' },
-            { title: 'DeFi without the fear', text: 'People can stake, join pools and earn rewards with confidence.' }] }] },
+            { title: 'DeFi without the fear', text: 'People can stake, join pools and earn rewards with confidence.' }] },
+            { type: 'cta', label: 'Open the live prototype', href: 'pstake01/' }] },
         { label: 'Learnings', title: 'What I would bring to any product that handles money.',
           blocks: [{ type: 'numbered', items: [
             ['Show the state, then ask for action.', 'Tell people what their money is doing before you ask what they want to do with it.'],
@@ -79,16 +80,16 @@
     },
 
     comdex: {
-      name: 'Comdex',
+      name: 'COMDEX',
       kicker: ['Case study', 'Fintech', 'B2B commodity trading'],
       title: 'One platform for global commodity trade, from discovery to settlement.',
-      lede: 'Commodity deals in a $17T market still run on emails, calls and PDFs. I designed Comdex end to end: one desktop product that works like a trading terminal and takes a deal from discovery to settlement.',
+      lede: 'Commodity deals in a $17T market still run on emails, calls and PDFs. I designed COMDEX end to end: one desktop product that works like a trading terminal and takes a deal from discovery to settlement.',
       facts: [['Role', 'Product designer'], ['Team', '1 PM, 3 engineers'], ['Year', '2019'], ['Platform', 'Desktop web app']],
-      hero: { src: 'comdex-ui-dash.jpg', w: 1937, h: 1437, alt: 'The Comdex trader dashboard: wallet balance, receivables and payables, a buy versus sell volume chart, trade statistics, team activity, market news and a table of traders.' },
+      hero: { src: 'p02/comdex-dash.jpg', w: 2880, h: 1800, alt: 'The COMDEX trader dashboard: wallet balance, receivables and payables, a buy versus sell volume chart, trade statistics, team activity, market news and a table of traders.' },
       stats: [['$10M+', 'Pilot trade volume processed on the platform'], ['Days to 1', 'A multi-day email and PDF loop became one Deal Room session'], ['3 + 1', 'Product modules, plus a public block explorer']],
       sections: [
         { label: 'Overview', title: 'One closed-loop system of record for a trade.',
-          lede: 'Comdex brings discovery, negotiation and settlement into one product, so a trader can find a counterparty, agree terms and settle with confidence without leaving it.',
+          lede: 'COMDEX brings discovery, negotiation and settlement into one product, so a trader can find a counterparty, agree terms and settle with confidence without leaving it.',
           blocks: [{ type: 'lists', groups: [
             { title: 'What I designed', items: ['Marketing website', 'Discovery: markets, orders and new listings', 'Settlement: Deal Room, escrow and title transfer', 'Finance: sell offers and finance requests', 'Public block explorer'] },
             { title: 'How I worked', muted: true, items: ['With 1 PM and 3 engineers', 'Tested flows with traders', 'Five core flows handed off as hi-fi'] }] }] },
@@ -97,7 +98,7 @@
           blocks: [{ type: 'table', head: ['Pain point', 'Design response'], rows: [
             ['Paper title in transit', 'On-chain title and a document pack, kept in the Deal Room'],
             ['Correspondent-bank delays', 'Escrow and dUSD, so capital is not stuck overnight'],
-            ['Unknown counterparties', 'One Comdex ID with reusable KYC and reputation']] }] },
+            ['Unknown counterparties', 'One COMDEX ID with reusable KYC and reputation']] }] },
         { label: 'Process', title: 'From research to handoff in four phases.',
           blocks: [{ type: 'cards', cols: 4, items: [
             { tag: 'Phase 1', title: 'Discover', list: ['Market and gap research', 'Competitor review', 'User personas'] },
@@ -105,9 +106,9 @@
             { tag: 'Phase 3', title: 'Develop', list: ['Mock-ups', 'Lo-fi prototype', 'Tests with traders'] },
             { tag: 'Phase 4', title: 'Deliver', list: ['Hi-fi prototype', 'Engineering handoff'] }] }] },
         { label: 'Structure', title: 'One closed loop, from sign-up to settlement.',
-          lede: 'Seven steps cover the whole deal, so a trader never leaves Comdex to finish one.',
+          lede: 'Seven steps cover the whole deal, so a trader never leaves COMDEX to finish one.',
           blocks: [{ type: 'flow', legend: 'Marked steps are where the old process lost days, and the core of the redesign.', rows: [
-            ['Sign in', ['Log in or sign up', 'Comdex ID', 'KYC']],
+            ['Sign in', ['Log in or sign up', 'COMDEX ID', 'KYC']],
             ['Hub', ['Discovery', 'Settlement', 'Finance']],
             ['Discovery', ['Dashboard', 'Markets', 'Orders', 'New sell order']],
             ['Create order', ['Commodity', 'Documents', 'Confirm']],
@@ -117,22 +118,23 @@
         { label: 'Key decisions', title: 'Three screens that made the loop work.',
           blocks: [
             { type: 'decision', label: 'Decision A', title: 'One verified record for every counterparty.',
-              text: 'A single Comdex ID powers KYC, settlement and compliance from one source of truth.',
-              images: [{ src: 'comdex-ui-kyc.jpg', w: 1939, h: 1378, alt: 'Trader onboarding: a setup progress stepper on the left and the organization profile form on the right, with registration zone, legal details and beneficial owners.' }],
-              points: [['Guided stepper', 'Traders always see what is verified and what is left.'], ['Verify once, reuse everywhere', 'The Comdex ID follows the trader into every deal and counterparty check.']] },
+              text: 'A single COMDEX ID powers KYC, settlement and compliance from one source of truth.',
+              images: [{ src: 'p02/comdex-kyc.jpg', w: 2880, h: 1800, alt: 'Trader onboarding: a setup progress stepper on the left and the organization profile form on the right, with registration zone, legal details and beneficial owners.' }],
+              points: [['Guided stepper', 'Traders always see what is verified and what is left.'], ['Verify once, reuse everywhere', 'The COMDEX ID follows the trader into every deal and counterparty check.']] },
             { type: 'decision', label: 'Decision B', title: 'Lead with the choice that cannot be undone.',
               text: 'The new sell order asks for the listing type first, and the rest of the form follows from it.',
-              images: [{ src: 'comdex-ui-order.jpg', w: 1937, h: 1372, alt: 'The new sell order form: listing type cards, commodity and shipment details, and a live order summary with the total shipment value.' }],
+              images: [{ src: 'p02/comdex-order.jpg', w: 2880, h: 1800, alt: 'The new sell order form: listing type cards, commodity and shipment details, and a live order summary with the total shipment value.' }],
               points: [['Listing type first', 'It is the one choice that cannot be undone, so everything below adapts to it.'], ['Fields mirror trade documents', 'Traders fill in what they already know from paper, with no new mental model.'], ['Running total, always visible', 'The order value updates live, so there are no surprises at confirmation.']] },
             { type: 'decision', label: 'Decision C', title: 'Fiat in, trading unlocked.',
               text: 'Deposits no longer wait 24 hours on a correspondent bank.',
-              images: [{ src: 'comdex-ui-fiat.jpg', w: 1941, h: 1378, alt: 'The add funds dialog: bank transfer details with copy buttons, a reference for the transfer memo, a transaction ID field and a receipt upload.' }],
+              images: [{ src: 'p02/comdex-fiat.jpg', w: 2880, h: 1800, alt: 'The add funds dialog: bank transfer details with copy buttons, a reference for the transfer memo, a transaction ID field and a receipt upload.' }],
               points: [['Bank details, ready to copy', 'Laid out like the wire slip traders already send.'], ['A reference ties the wire to you', 'No back and forth to match a payment to an account.'], ['Upload proof, start trading', 'Funds unlock as dUSD instead of waiting on a correspondent bank.']] }] },
         { label: 'Outcome', title: 'Days of email became one session.',
           blocks: [
             { type: 'compare', before: 'A multi-day loop of emails, PDFs and correspondent banks.', after: 'A single Deal Room session to negotiate, document and settle in one place.' },
-            { type: 'figure', img: { src: 'comdex-ui-trade.jpg', w: 1931, h: 1372, alt: 'A completed trade from Malaysia to Hong Kong: order progress, trade summary with feedback from both parties, an activity timeline, the final sale price and the contract documents.' }, caption: 'A completed trade: progress, summary, timeline and contract documents in one view.' },
-            { type: 'chips', title: 'What I would do next', items: ['Mobile companion app', 'Counterparty reputation graph', 'Live bank-rail status'] }] },
+            { type: 'figure', img: { src: 'p02/comdex-trade.jpg', w: 2880, h: 1800, alt: 'A completed trade from Malaysia to Hong Kong: order progress, trade summary with feedback from both parties, an activity timeline, the final sale price and the contract documents.' }, caption: 'A completed trade: progress, summary, timeline and contract documents in one view.' },
+            { type: 'chips', title: 'What I would do next', items: ['Mobile companion app', 'Counterparty reputation graph', 'Live bank-rail status'] },
+            { type: 'cta', label: 'Open the live prototype', href: 'comdex01/' }] },
         { label: 'Learnings', title: 'What I would carry into any complex B2B product.',
           blocks: [{ type: 'numbered', items: [
             ['Lead with the irreversible choice.', 'Ask for the listing type first, then let the form follow from it.'],
@@ -148,7 +150,7 @@
       title: 'An investor workspace for funds, people and paperwork.',
       lede: 'Private equity still runs on inboxes and shared drives. CAPTL gives a general partner one place to stand up a fund, attach LPs and portfolio companies, collect the documents and hand work to the people who owe it.',
       facts: [['Role', 'Product designer: brand, site, IA, key flows'], ['Team', '3 engineers'], ['Year', '2020'], ['Platform', 'Web, desktop first']],
-      hero: { src: 'captl-ui-hero.jpg', w: 1999, h: 1214, alt: 'The CAPTL fund overview: fund corpus, capital commitment, distribution, drawdown and undrawn commitment cards, a fund comparison donut chart and metrics such as NAV, DPI, IRR, RVPI, MOIC and TVPI.' },
+      hero: { src: 'p02/captl-hero.jpg', w: 2880, h: 1800, alt: 'The CAPTL fund overview: fund corpus, capital commitment, distribution, drawdown and undrawn commitment cards, a fund comparison donut chart and metrics such as NAV, DPI, IRR, RVPI, MOIC and TVPI.' },
       stats: [['12', 'Product surfaces shipped, from brand to delegations'], ['6', 'Primary user flows designed as frames'], ['4', 'Roles served: GP, fund team, LP and ops']],
       sections: [
         { label: 'Overview', title: 'A fund as a first-class object.',
@@ -179,23 +181,23 @@
           blocks: [
             { type: 'decision', label: 'Screen 1', title: 'Overview: the pulse of one fund.',
               text: 'The first read after opening a vehicle: allocation, commitments, performance multiples, life cycle and unit classes. A summary sheet, not a wall of charts.',
-              images: [{ src: 'captl-ui-overview.jpg', w: 1268, h: 928, alt: 'The fund overview screen with fund corpus and commitment cards, a comparison donut chart and performance metrics.' }],
+              images: [{ src: 'p02/captl-overview.jpg', w: 2400, h: 1720, alt: 'The fund overview screen with fund corpus and commitment cards, a comparison donut chart and performance metrics.' }],
               points: [['Zeros are states, not gaps', 'Values such as DPI and IRR read as early-fund states, not missing data.'], ['Depth sits underneath', 'Cap table, capital calls and the distribution waterfall live under this summary.'], ['A timeline with meaning', 'The timeline records the vehicle’s life, not just a sparkline.']] },
             { type: 'decision', label: 'Screen 2', title: 'Cap table: set up ownership step by step.',
               text: 'A wizard, not a report. Create the cap table, define unit classes, then issue units. Each step can be finished here or handed off.',
-              images: [{ src: 'captl-ui-cap.jpg', w: 1268, h: 932, alt: 'The analytics screen, cap table tab: a two-step wizard to create fund units and then issue them, with a before-you-start checklist and a cap table summary.' }],
+              images: [{ src: 'p02/captl-cap.jpg', w: 2880, h: 1800, alt: 'The analytics screen, cap table tab: a two-step wizard to create fund units and then issue them, with a before-you-start checklist and a cap table summary.' }],
               points: [['Order is enforced', 'Issuing stays locked until units exist, so nothing is issued before it is defined.'], ['Assign task', 'Legal and ops work stays inside the product.'], ['Foundation first', 'Capital calls and the waterfall depend on this step.']] },
             { type: 'decision', label: 'Screen 3', title: 'Add fund: documents, LPs and portfolio.',
               text: 'The second step of standing up a vehicle: attach the trust deed and IMA, invite limited partners, add portfolio companies, then submit.',
-              images: [{ src: 'captl-ui-addfund.jpg', w: 1268, h: 928, alt: 'The add new fund screen, step 2 of 2: fund creation documents with upload or delegate, limited partners and a submission checklist.' }],
+              images: [{ src: 'p02/captl-addfund.jpg', w: 2880, h: 1800, alt: 'The add new fund screen, step 2 of 2: fund creation documents with upload or delegate, limited partners and a submission checklist.' }],
               points: [['Upload or delegate', 'Missing documents never stall the create flow.'], ['Complete LP cards', 'Invited LPs carry tax ID and representations on the same card.'], ['A safe last step', 'Submit is the final gate, and Back keeps the draft.']] },
             { type: 'decision', label: 'Screen 4', title: 'Fund network: see the relationships.',
               text: 'Who sits around a fund: team, service providers, LPs and portfolio companies, with documents and tasks attached. A fund is a set of relationships, not a folder.',
-              images: [{ src: 'captl-ui-network.jpg', w: 1268, h: 928, alt: 'The fund network screen: partners, principals, associates and analysts in role groups with selectable cards.' }],
+              images: [{ src: 'p02/captl-network.jpg', w: 2880, h: 1800, alt: 'The fund network screen: partners, principals, associates and analysts in role groups with selectable cards.' }],
               points: [['Role groups', 'Both sides of private markets are explicit.'], ['Work lives on the network', 'Documents and tasks attach to people, not a generic inbox.'], ['Built to scale', 'A real fund has many more people than a dashboard row, and the groups grow with it.']] },
             { type: 'decision', label: 'Screen 5', title: 'Fund management: run the work.',
               text: 'The operations home for every vehicle: listed funds, vintage, created date and a way to add another. This is where a partner or ops lead spends the week.',
-              images: [{ src: 'captl-ui-mgmt.jpg', w: 1268, h: 930, alt: 'The fund management screen: a table of listed funds with vintage and created date, and a prompt to stand up another vehicle.' }],
+              images: [{ src: 'p02/captl-mgmt.jpg', w: 2880, h: 1800, alt: 'The fund management screen: a table of listed funds with vintage and created date, and a prompt to stand up another vehicle.' }],
               points: [['A focused list', 'Vehicles only, unlike the metrics-heavy overview.'], ['A familiar prompt', 'Add fund repeats the promise of the first empty dashboard.'], ['Connected pages', 'Pairs with fund details for the profile and delegations for handoff.']] }] },
         { label: 'Outcome', title: 'One workspace instead of a pile of tools.',
           blocks: [
@@ -203,7 +205,8 @@
               { title: 'One product after login', text: 'Brand, site, sign-in, fund creation, network, documents and delegations sit in one product a GP can open.' },
               { title: 'Funds stood up in the product', text: 'Name the vehicle, attach documents, invite LPs, add portfolio companies and define units without leaving for email.' },
               { title: 'Operations have an owner', text: 'Documents, cap table steps and reviews can be assigned inside the fund, so work stays on the vehicle.' }] },
-            { type: 'chips', title: 'What shipped', items: ['Brand system', 'Marketing site', 'Sign-in and two-factor', 'Dashboard', 'Create new fund', 'Add LPs and portfolio', 'Cap table and units', 'Fund overview', 'Fund network', 'Fund management', 'Delegations', 'Trust and compliance features'] }] },
+            { type: 'chips', title: 'What shipped', items: ['Brand system', 'Marketing site', 'Sign-in and two-factor', 'Dashboard', 'Create new fund', 'Add LPs and portfolio', 'Cap table and units', 'Fund overview', 'Fund network', 'Fund management', 'Delegations', 'Trust and compliance features'] },
+            { type: 'cta', label: 'Open the live prototype', href: 'captl01/' }] },
         { label: 'Learnings', title: 'What this product taught the design.',
           blocks: [{ type: 'numbered', items: [
             ['The empty dashboard is the onboarding.', 'An empty fund table is the prompt to create the first vehicle, not a dead end.'],
@@ -215,13 +218,16 @@
 
   /* ---------- Renderer ---------- */
   function esc(s) { return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;'); }
+  function isDark() { return document.documentElement.getAttribute('data-theme') === 'dark'; }
   function img(i, lazy) {
-    return '<button type="button" class="cs-zoom" data-full="' + IMG + i.src + '" aria-label="View larger image">' +
-      '<img src="' + IMG + i.src + '" width="' + i.w + '" height="' + i.h + '" alt="' + esc(i.alt) + '" decoding="async"' + (lazy ? ' loading="lazy"' : ' fetchpriority="high"') + '>' +
+    var src = IMG + (i.dark && isDark() ? i.dark : i.src);
+    var themed = i.dark ? ' data-light="' + IMG + i.src + '" data-dark="' + IMG + i.dark + '"' : '';
+    return '<button type="button" class="cs-zoom" data-full="' + src + '" aria-label="View larger image">' +
+      '<img src="' + src + '"' + themed + (i.dark ? ' class="is-framed"' : i.bare ? ' class="is-bare"' : '') + ' width="' + i.w + '" height="' + i.h + '" alt="' + esc(i.alt) + '" decoding="async"' + (lazy ? ' loading="lazy"' : ' fetchpriority="high"') + '>' +
       '<span class="cs-zoom-hint" aria-hidden="true">' + ZOOM + '</span></button>';
   }
   var ZOOM = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg>';
-  var LOGO = '<svg class="ds-logo-svg" viewBox="0 0 93 23" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="pSTAKE logo"> <rect width="22.9073" height="22.9064" rx="11.4532" fill="currentColor"/> <path d="M17.0306 12.9891C17.0306 13.8369 16.8361 14.6152 16.4469 15.3241C16.0577 16.019 15.4601 16.5819 14.6539 17.0128C13.8478 17.4437 12.8471 17.6591 11.6518 17.6591H9.44184V22.9129H5.87677V8.27734H11.6518C12.8193 8.27734 13.8061 8.47888 14.6122 8.88195C15.4184 9.28501 16.023 9.84097 16.426 10.5498C16.8291 11.2587 17.0306 12.0717 17.0306 12.9891ZM11.3807 14.8237C12.0618 14.8237 12.5691 14.6639 12.9027 14.3442C13.2362 14.0245 13.403 13.5728 13.403 12.9891C13.403 12.4053 13.2362 11.9536 12.9027 11.6339C12.5691 11.3143 12.0618 11.1544 11.3807 11.1544H9.44184V14.8237H11.3807Z" fill="var(--logo-inner)"/> <path d="M17.1043 4.56958H5.87701V6.92495H17.1043V4.56958Z" fill="#E50913"/> <path d="M32.5986 20.4652C31.5103 20.4652 30.5351 20.2885 29.673 19.9352C28.8109 19.5819 28.1183 19.0589 27.5954 18.3664C27.0866 17.6739 26.8181 16.84 26.7898 15.8648H30.6482C30.7047 16.416 30.8955 16.84 31.2206 17.1368C31.5457 17.4195 31.9697 17.5608 32.4926 17.5608C33.0297 17.5608 33.4537 17.4407 33.7646 17.2004C34.0755 16.946 34.231 16.5997 34.231 16.1616C34.231 15.7941 34.1038 15.4903 33.8494 15.25C33.6091 15.0097 33.3053 14.8119 32.9378 14.6564C32.5845 14.5009 32.0757 14.3243 31.4114 14.1264C30.4503 13.8296 29.6659 13.5328 29.0582 13.236C28.4505 12.9392 27.9275 12.5011 27.4894 11.9216C27.0513 11.3421 26.8322 10.586 26.8322 9.65321C26.8322 8.26815 27.3339 7.18695 28.3374 6.40961C29.3409 5.61815 30.6482 5.22241 32.2594 5.22241C33.8989 5.22241 35.2203 5.61815 36.2238 6.40961C37.2273 7.18695 37.7643 8.27521 37.835 9.67441H33.913C33.8847 9.19388 33.7081 8.81935 33.383 8.55081C33.0579 8.26815 32.641 8.12681 32.1322 8.12681C31.6941 8.12681 31.3407 8.24695 31.0722 8.48721C30.8037 8.71335 30.6694 9.04548 30.6694 9.48361C30.6694 9.96415 30.8955 10.3387 31.3478 10.6072C31.8001 10.8757 32.5067 11.1655 33.4678 11.4764C34.4289 11.8015 35.2062 12.1124 35.7998 12.4092C36.4075 12.706 36.9305 13.1371 37.3686 13.7024C37.8067 14.2677 38.0258 14.9956 38.0258 15.886C38.0258 16.734 37.8067 17.5043 37.3686 18.1968C36.9446 18.8893 36.3227 19.4405 35.503 19.8504C34.6833 20.2603 33.7151 20.4652 32.5986 20.4652Z" fill="currentColor"/> <path d="M50.9628 5.43441V8.33881H47.0196V20.3168H43.3944V8.33881H39.4512V5.43441H50.9628Z" fill="currentColor"/> <path d="M62.0466 17.688H56.4922L55.6018 20.3168H51.807L57.1918 5.43441H61.3894L66.7742 20.3168H62.937L62.0466 17.688ZM61.1138 14.8896L59.2694 9.44121L57.4462 14.8896H61.1138Z" fill="currentColor"/> <path d="M77.0414 20.3168L72.0382 13.7448V20.3168H68.413V5.43441H72.0382V11.964L76.999 5.43441H81.2602L75.4938 12.7272L81.4722 20.3168H77.0414Z" fill="currentColor"/> <path d="M86.8202 8.33881V11.3492H91.675V14.1476H86.8202V17.4124H92.311V20.3168H83.195V5.43441H92.311V8.33881H86.8202Z" fill="currentColor"/> </svg>';
+  var LOGO = '<span class="ds-word" role="img" aria-label="PSTAKE">PSTAKE</span>';
   var CHECK = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>';
   var DASH = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true" focusable="false"><path d="M6 12h12"/></svg>';
   var ARROW = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 12h14M13 6l6 6-6 6"/></svg>';
@@ -265,7 +271,8 @@
     },
     decision: function (b) {
       return '<div class="cs-decision"><h3>' + b.title + '</h3><p class="cs-text">' + b.text + '</p>' +
-        '<div class="cs-shots' + (b.images.length > 1 ? ' two' : '') + '">' + b.images.map(function (i) { return '<figure class="cs-figure">' + img(i, true) + '</figure>'; }).join('') + '</div>' +
+        (b.video ? '<figure class="cs-figure cs-video"><video poster="' + IMG + b.video.poster + '" width="' + b.video.w + '" height="' + b.video.h + '" autoplay muted loop playsinline controls preload="metadata" aria-label="' + b.video.label + '"><source src="' + IMG + b.video.src + '" type="video/mp4"><source src="' + IMG + b.video.src.replace('.mp4', '.webm') + '" type="video/webm"></video></figure>' :
+        '<div class="cs-shots' + (b.images.length > 1 ? ' two' : '') + '">' + b.images.map(function (i) { return '<figure class="cs-figure">' + img(i, true) + '</figure>'; }).join('') + '</div>') +
         '<ol class="cs-points' + (b.points.length === 4 ? ' four' : '') + '">' + b.points.map(function (p) {
           return '<li><h4>' + p[0] + '</h4><p>' + p[1] + '</p></li>';
         }).join('') + '</ol></div>';
@@ -305,8 +312,8 @@
           '<div class="ds-stat"><small>APY</small><b>9.92%</b><small>Estimated annual yield</small></div>') +
         cell('07', 'Toast', 'Success',
           '<div class="ds-toast"><span class="ds-ok"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span><div><b>Stake confirmed</b><small>3.998656 stkOSMO added to your balance</small></div></div>');
-      return '<div class="ds" role="group" aria-label="pSTAKE brand and design system">' +
-        '<div class="ds-top"><span class="ds-top-logo">' + LOGO.replace('role="img" aria-label="pSTAKE logo"', 'aria-hidden="true" focusable="false"') + '</span><span class="ds-top-r">Design system</span></div>' +
+      return '<div class="ds" role="group" aria-label="PSTAKE brand and design system">' +
+        '<div class="ds-top"><span class="ds-top-logo">' + LOGO.replace('role="img" aria-label="PSTAKE"', 'aria-hidden="true"') + '</span><span class="ds-top-r">Design system</span></div>' +
         '<div class="ds-part"><p class="ds-h">Brand</p><div class="ds-brand">' +
           '<div class="ds-logo is-dark">' + LOGO + '<em>On dark</em></div>' +
           '<div class="ds-logo is-light">' + LOGO + '<em>On light</em></div></div></div>' +
@@ -317,6 +324,7 @@
         '</div>' +
         '<ul class="ds-principles">' + b.principles.map(function (p, i) { return '<li><h3>' + p[0] + '</h3><p>' + p[1] + '</p></li>'; }).join('') + '</ul>';
     },
+    cta: function (b) { return '<div class="cs-btns"><a class="cs-btn is-primary" href="' + b.href + '" target="_blank" rel="noopener">' + b.label + ' ' + OUT + '<span class="sr"> (opens in a new tab)</span></a></div>'; },
     numbered: function (b) {
       return '<ol class="cs-numbered">' + b.items.map(function (r) { return '<li><h3>' + r[0] + '</h3><p>' + r[1] + '</p></li>'; }).join('') + '</ol>';
     }
@@ -325,7 +333,7 @@
   function render(key) {
     var c = CASES[key];
     var h = '<article class="cs" aria-labelledby="cs-title">';
-    h += '<header class="cs-hero"><p class="cs-kicker">' + c.name + '<span>' + c.kicker.slice(1).map(function (k, i) { return i && !/^[A-Z0-9]{2}/.test(k) ? k.charAt(0).toLowerCase() + k.slice(1) : k; }).join(', ') + '</span></p>' +
+    h += '<header class="cs-hero"><p class="cs-kicker">' + c.name + (c.tag ? ' <em class="cs-tag">' + c.tag + '</em>' : '') + '<span>' + c.kicker.slice(1).map(function (k, i) { return i && !/^[A-Z0-9]{2}/.test(k) ? k.charAt(0).toLowerCase() + k.slice(1) : k; }).join(', ') + '</span></p>' +
       '<h1 id="cs-title" tabindex="-1">' + c.title + '</h1><p class="cs-intro">' + c.lede + '</p>' +
       '<dl class="cs-facts">' + c.facts.map(function (f) { return '<div><dt>' + f[0] + '</dt><dd>' + f[1] + '</dd></div>'; }).join('') + '</dl></header>';
     h += '<figure class="cs-figure cs-hero-figure' + (c.hero.bare ? ' is-bare' : '') + '">' + img(c.hero, false) + '</figure>';
@@ -345,4 +353,13 @@
 
   window.CASES = CASES;
   window.renderCase = render;
+  /* Swap themed screenshots (light and dark) when the theme changes */
+  function swapThemed() {
+    var d = isDark();
+    document.querySelectorAll('img[data-dark]').forEach(function (el) {
+      var want = el.getAttribute(d ? 'data-dark' : 'data-light');
+      if (el.getAttribute('src') !== want) { el.setAttribute('src', want); var z = el.closest('.cs-zoom'); if (z) z.setAttribute('data-full', want); }
+    });
+  }
+  if ('MutationObserver' in window) new MutationObserver(swapThemed).observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
 })();
