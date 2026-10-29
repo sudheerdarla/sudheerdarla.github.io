@@ -1057,5 +1057,28 @@
     }
   });
 
+  /* prototype menu (bottom left): jump to any screen or flow */
+  if (window.protoMenu) protoMenu(function () {
+    function nav(h) { return function () { closeModal(); closePops(); if (location.hash === h) render(); else location.hash = h; }; }
+    var deal = S.trades.filter(function (t) { return t.status === 'negotiating' || t.status === 'payment' || t.status === 'awaiting'; })[0] || S.trades[0];
+    return [
+      { title: 'Jump to a screen', items: [
+        { label: 'Dashboard', run: nav('#/dashboard') },
+        { label: 'Trades', run: nav('#/trades') },
+        { label: 'Deal room', hint: deal ? ST[deal.status].l : '', run: deal ? nav('#/trades/' + deal.id) : nav('#/trades') },
+        { label: 'Transactions', run: nav('#/transactions') },
+        { label: 'Account', run: nav('#/account') },
+        { label: 'Settings', run: nav('#/settings') }] },
+      { title: 'Try a flow', items: [
+        { label: 'New sell order', run: nav('#/order/new') },
+        { label: 'Trader onboarding', hint: kycPct() + '% done', run: nav('#/onboarding') },
+        { label: 'Add funds', hint: 'Bank transfer', run: function () { closeModal(); addFunds(); } },
+        { label: 'Invite a trader', run: function () { closeModal(); invite(); } },
+        { label: 'Search and commands', hint: 'Ctrl K', run: function () { closeModal(); cmd(); } }] },
+      { title: 'Demo data', items: [
+        { label: 'Reset demo data', run: function () { closeModal(); S = seed(); save(); if (location.hash === '#/dashboard') render(); else location.hash = '#/dashboard'; toast('Demo reset', 'Trades, wallet and onboarding are back to the start'); } }] }
+    ];
+  });
+
   render();
 })();

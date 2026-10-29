@@ -846,5 +846,44 @@
       if (e.shiftKey && (document.activeElement === a || document.activeElement === $('#layer .modal'))) { b.focus(); e.preventDefault(); } else if (!e.shiftKey && document.activeElement === b) { a.focus(); e.preventDefault(); }
     }
   });
+  /* prototype menu (bottom left): jump to any screen or flow */
+  if (window.protoMenu) protoMenu(function () {
+    function nav(h) { if (location.hash === h) render(); else location.hash = h; }
+    function go(h, ui) {
+      return function () {
+        closeModal(); closePops();
+        if (!authed) { authed = true; try { sessionStorage.setItem('captl01-auth', '1'); } catch (e) {} }
+        if (ui) { Object.keys(ui).forEach(function (k) { S.ui[k] = ui[k]; }); save(); }
+        nav(h);
+      };
+    }
+    return [
+      { title: 'Sign in', items: [
+        { label: 'Log in with two-factor', run: function () { closeModal(); closePops(); authed = false; try { sessionStorage.removeItem('captl01-auth'); } catch (e) {} nav('#/login'); } }] },
+      { title: 'Fund', items: [
+        { label: 'Fund overview', run: go('#/overview') },
+        { label: 'Documents', run: go('#/management', { mTab: 'docs' }) },
+        { label: 'Tasks', run: go('#/management', { mTab: 'tasks' }) },
+        { label: 'Delegations', run: go('#/management', { mTab: 'deleg' }) },
+        { label: 'Limited partners', run: go('#/constituents', { cTab: 'lps' }) },
+        { label: 'Portfolio companies', run: go('#/constituents', { cTab: 'port' }) },
+        { label: 'Cap table', run: go('#/analytics', { aTab: 'cap' }) },
+        { label: 'Capital calls', run: go('#/analytics', { aTab: 'calls' }) },
+        { label: 'Distribution waterfall', run: go('#/analytics', { aTab: 'wf' }) }] },
+      { title: 'Workspace', items: [
+        { label: 'All funds', run: go('#/funds') },
+        { label: 'Fund network', run: go('#/network') },
+        { label: 'Calendar', run: go('#/calendar') },
+        { label: 'Updates', run: go('#/updates') },
+        { label: 'Activities', run: go('#/activities') }] },
+      { title: 'Try a flow', items: [
+        { label: 'Add a fund', run: go('#/funds/new') },
+        { label: 'Assign a task', run: function () { go('#/management', { mTab: 'tasks' })(); setTimeout(function () { assignTask(); }, 30); } },
+        { label: 'Search and commands', hint: 'Ctrl K', run: function () { go(location.hash && authed ? location.hash : '#/overview')(); setTimeout(cmd, 30); } }] },
+      { title: 'Demo data', items: [
+        { label: 'Reset demo data', run: function () { closeModal(); S = seed(); save(); render(); toast('Demo reset', 'Funds, LPs and tasks are back to the start'); } }] }
+    ];
+  });
+
   render();
 })();
