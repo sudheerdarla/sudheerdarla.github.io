@@ -35,7 +35,7 @@
     water: '<path d="M3 6h18M3 12h12M3 18h6"/>'
   };
   function ic(n, cls) { return '<svg class="i' + (cls ? ' ' + cls : '') + '" viewBox="0 0 24 24" aria-hidden="true">' + P[n] + '</svg>'; }
-  var LOGO = '<svg viewBox="0 0 36 36" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><circle cx="18" cy="18" r="15"/><path d="M18 8v20M18 13l-5 4M18 13l5 4M18 19l-6 4.5M18 19l6 4.5M11 11.5h14"/></svg>';
+  var LOGO = '';
 
   /* ---------- utils ---------- */
   var $ = function (s, r) { return (r || document).querySelector(s); };

@@ -1,4 +1,4 @@
-/* Comdex prototype. Simulated data only; state persists in localStorage so a demo survives reloads. */
+/* COMDEX prototype. Simulated data only; state persists in localStorage so a demo survives reloads. */
 (function () {
   'use strict';
 
@@ -53,7 +53,7 @@
     out: '<path d="M10 4H6a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h4M15 8l4 4-4 4M19 12H9"/>'
   };
   function ic(n, cls) { return '<svg class="i' + (cls ? ' ' + cls : '') + '" viewBox="0 0 24 24" aria-hidden="true">' + P[n] + '</svg>'; }
-  var LOGO = '<svg viewBox="0 0 28 28" aria-hidden="true"><path d="M23 5H8.5L4 9.5v9L8.5 23H23v-4H10.2L8 16.8v-5.6L10.2 9H23z" fill="#e0322f"/><path d="M23 11h-9.5L12 12.5v3l1.5 1.5H23z" fill="#e0322f" opacity=".55"/></svg>';
+  var LOGO = '';
 
   /* ---------- utils ---------- */
   var $ = function (s, r) { return (r || document).querySelector(s); };
@@ -107,7 +107,7 @@
           offers: [{ at: NOW - 3 * DAY, by: 'you', amount: 8450, doc: 'Contract_v1.pdf', st: 'Active' }, { at: NOW - 2 * 3600e3, by: 'buyer', amount: 8320, doc: 'Buyer_Counter.pdf', st: 'Pending' }],
           act: [
             { at: NOW - 3 * DAY, ic: 'doc', t: 'You placed the order', sub: 'Copper cathodes · 500 MT · CIF Rotterdam' },
-            { at: NOW - 2.9 * DAY, ic: 'shield', t: 'Comdex verified your documents', sub: 'Bill of lading and contract approved for settlement.' },
+            { at: NOW - 2.9 * DAY, ic: 'shield', t: 'COMDEX verified your documents', sub: 'Bill of lading and contract approved for settlement.' },
             { at: NOW - 2.9 * DAY + MIN, ic: 'globe', t: 'Order listed for trade', sub: 'Private listing, invite sent to desk@vandijkmetals.nl' },
             { at: NOW - 2 * 3600e3, ic: 'swap', t: 'Buyer sent a counter-offer', sub: 'Van Dijk Metals offered $8,320.00 / MT.', file: 'Buyer_Counter.pdf' }
           ],
@@ -230,7 +230,7 @@
     verified: function (d) {
       var t = trade(d.id); if (!t || t.status !== 'review') return;
       t.status = 'listed';
-      t.act.push({ at: Date.now(), ic: 'shield', t: 'Comdex verified your documents', sub: 'Bill of lading and contract approved for settlement.' });
+      t.act.push({ at: Date.now(), ic: 'shield', t: 'COMDEX verified your documents', sub: 'Bill of lading and contract approved for settlement.' });
       t.act.push({ at: Date.now() + 1, ic: 'globe', t: 'Order listed for trade', sub: t.visibility === 'public' ? 'Public listing, open to all verified traders' : 'Private listing, visible to invited counterparties' });
       notify('Order verified and listed', t.commodity + ' is now live', '#/trades/' + t.id);
       toast('Documents verified', t.commodity + ' is now listed', { href: '#/trades/' + t.id });
@@ -245,8 +245,8 @@
     kycReview: function () {
       if (S.kyc.status !== 'review') return;
       S.kyc.status = 'verified';
-      notify('Organization verified', 'Your Comdex ID is active for trading', '#/account');
-      toast('Organization verified', 'ABC Traders Pte. Ltd. can now trade on Comdex', { href: '#/account', long: true });
+      notify('Organization verified', 'Your COMDEX ID is active for trading', '#/account');
+      toast('Organization verified', 'ABC Traders Pte. Ltd. can now trade on COMDEX', { href: '#/account', long: true });
     }
   };
   setInterval(function () {
@@ -319,12 +319,12 @@
     var titles = {
       dashboard: [greet() + ', ' + S.org, 'Here’s what’s happening with your trades today.'],
       trades: ['Trades', 'Every order from draft to settlement, with the next step on each.'],
-      transactions: ['Transactions', 'Deposits, escrow settlements and withdrawals in your Comdex wallet.'],
-      account: ['Account', 'Your organization, Comdex ID and verification status.'],
+      transactions: ['Transactions', 'Deposits, escrow settlements and withdrawals in your COMDEX wallet.'],
+      account: ['Account', 'Your organization, COMDEX ID and verification status.'],
       settings: ['Settings', 'Notifications, security and display preferences.']
     }[p] || ['', ''];
     return '<div class="shell"><aside class="side" id="side" aria-label="Main">' +
-      '<a class="logo" href="#/dashboard" aria-label="Comdex home">' + LOGO + 'COMDEX</a>' +
+      '<a class="logo" href="#/dashboard" aria-label="COMDEX home">' + LOGO + 'COMDEX</a>' +
       '<p class="nav-h">Main menu</p><nav class="nav">' + nl('dashboard', 'Dashboard', 'grid') + nl('trades', 'Trades', 'swap', badge ? '<span class="badge" aria-label="' + badge + ' need action">' + badge + '</span>' : '') + nl('transactions', 'Transactions', 'dollar') + nl('account', 'Account', 'user') + '</nav>' +
       '<div class="side-foot"><nav class="nav">' + nl('settings', 'Settings', 'gear') + '<a href="#" data-a="help">' + ic('help') + 'Help &amp; support</a></nav>' +
       '<div class="me">' + av(S.user.name) + '<div><b>' + esc(S.org) + '</b><span>' + esc(S.user.role + ' · ' + S.user.city) + '</span></div></div></div></aside>' +
@@ -496,8 +496,8 @@
     var tot = money(total(t), 2);
     switch (t.status) {
       case 'draft': return '<div class="banner a"><div class="bh"><span class="bi">' + ic('pen') + '</span><div><h3>This order is still a draft</h3><p>Add shipment dates and the original bill of lading, then publish it to start receiving offers.</p></div></div><div class="acts"><a class="btn pri" href="#/order/' + t.id + '">Continue editing</a><button class="btn danger" data-a="delDraft" data-id="' + t.id + '">' + ic('trash', 'sm') + 'Delete draft</button></div></div>';
-      case 'review': return '<div class="banner a"><div class="bh"><span class="bi">' + ic('shield') + '</span><div><h3>Comdex is verifying your documents</h3><p>You chose Trade settlement, so we check the bill of lading and contract before the order goes live. This usually takes under a business day.</p></div></div></div>';
-      case 'listed': return '<div class="banner b"><div class="bh"><span class="bi">' + ic('globe') + '</span><div><h3>Listed — waiting for a buyer</h3><p>' + (t.visibility === 'public' ? 'Visible to every verified trader on Comdex.' : 'Visible only to the counterparties you invited.') + ' Offers will appear here and you’ll be notified.</p></div></div><div class="acts"><button class="btn sec" data-a="simOffer" data-id="' + t.id + '">Simulate a buyer offer</button><span style="color:var(--mut);align-self:center;font-size:13px">Prototype shortcut</span></div></div>';
+      case 'review': return '<div class="banner a"><div class="bh"><span class="bi">' + ic('shield') + '</span><div><h3>COMDEX is verifying your documents</h3><p>You chose Trade settlement, so we check the bill of lading and contract before the order goes live. This usually takes under a business day.</p></div></div></div>';
+      case 'listed': return '<div class="banner b"><div class="bh"><span class="bi">' + ic('globe') + '</span><div><h3>Listed — waiting for a buyer</h3><p>' + (t.visibility === 'public' ? 'Visible to every verified trader on COMDEX.' : 'Visible only to the counterparties you invited.') + ' Offers will appear here and you’ll be notified.</p></div></div><div class="acts"><button class="btn sec" data-a="simOffer" data-id="' + t.id + '">Simulate a buyer offer</button><span style="color:var(--mut);align-self:center;font-size:13px">Prototype shortcut</span></div></div>';
       case 'negotiating':
         var o = t.offers.filter(function (x) { return x.by === 'buyer' && x.st === 'Pending'; })[0];
         var diff = (o.amount - t.price) / t.price * 100;
@@ -507,7 +507,7 @@
         var mine = t.offers.filter(function (x) { return x.by === 'you' && x.st === 'Pending'; })[0];
         return '<div class="banner b"><div class="bh"><span class="bi">' + ic('mail') + '</span><div><h3>Counter sent — waiting for ' + esc(t.buyer.name) + '</h3><p>You offered <b class="num">' + money(mine.amount, 2) + ' / MT</b>. Buyers usually respond within a few hours; we’ll notify you.</p></div></div></div>';
       case 'payment':
-        if (!t.receipt) return '<div class="banner b"><div class="bh"><span class="bi">' + ic('bank') + '</span><div><h3>Waiting for the buyer’s payment</h3><p>' + esc(t.buyer.name) + ' pays <b class="num">' + tot + '</b> into Comdex escrow in dUSD. Title stays with you until you confirm.</p></div></div></div>';
+        if (!t.receipt) return '<div class="banner b"><div class="bh"><span class="bi">' + ic('bank') + '</span><div><h3>Waiting for the buyer’s payment</h3><p>' + esc(t.buyer.name) + ' pays <b class="num">' + tot + '</b> into COMDEX escrow in dUSD. Title stays with you until you confirm.</p></div></div></div>';
         return '<div class="banner a"><div class="bh"><span class="bi">' + ic('doc') + '</span><div><h3>Buyer uploaded proof of payment</h3><p>Escrow holds <b class="num">' + tot + '</b>. Confirming releases it to your wallet and transfers title on-chain. This can’t be undone.</p></div></div>' +
           '<div class="acts"><button class="btn ok" data-a="confirmPay" data-id="' + t.id + '">' + ic('checks', 'sm') + 'Confirm payment & release title</button><button class="btn sec" data-a="fakeDoc" data-v="Transaction_Receipt.pdf">' + ic('doc', 'sm') + 'View receipt</button></div></div>';
       case 'completed':
@@ -542,12 +542,12 @@
   function kvl(rows) { return '<dl class="kvl">' + rows.map(function (r) { return '<dt>' + r[0] + '</dt><dd>' + (r[1] ? esc(r[1]) : '<span style="color:var(--dim)">Not provided</span>') + '</dd>'; }).join('') + '</dl>'; }
   function tdObl(t) {
     var o = t.obl || {};
-    return '<p style="color:var(--mut);margin-bottom:14px">The original bill of lading is the title document. On Comdex it’s recorded on-chain, so ownership moves with the trade.</p>' +
+    return '<p style="color:var(--mut);margin-bottom:14px">The original bill of lading is the title document. On COMDEX it’s recorded on-chain, so ownership moves with the trade.</p>' +
       kvl([['OBL number', o.no], ['Carrier', o.carrier], ['Vessel', o.vessel], ['Date of issue', o.issued ? dFmt(o.issued) : ''], ['Port of loading', t.from.port + ', ' + t.from.country], ['Port of discharge', t.to.port + ', ' + t.to.country], ['Consignee', 'To order'], ['Title holder', t.status === 'completed' ? t.buyer.name : S.org + ' Pte. Ltd.']]) +
       (o.file ? '<div class="file" style="margin-top:16px"><span class="pdf">PDF</span><div class="m"><b>' + esc(o.file) + '</b><small>Original bill of lading</small></div><button class="act" data-a="fakeDoc" data-v="' + esc(o.file) + '" aria-label="Download">' + ic('down', 'sm') + '</button></div>' : '');
   }
   function tdCommodity(t) {
-    return kvl([['Commodity', t.commodity], ['Name on bill of lading', t.blName], ['Quality', t.quality], ['Quantity', (t.qty || 0).toLocaleString() + ' MT'], ['Delivery term', t.term], ['Listing type', t.listing === 'settlement' ? 'Trade settlement · Comdex verifies' : 'Trade discovery · parties verify'], ['Visibility', t.visibility === 'public' ? 'Public' : 'Private'], ['Asking price', money(t.price, 2) + ' / MT'], ['Shipment window', t.shipFrom ? dFmt(t.shipFrom) + ' – ' + dFmt(t.shipBy) : '']]);
+    return kvl([['Commodity', t.commodity], ['Name on bill of lading', t.blName], ['Quality', t.quality], ['Quantity', (t.qty || 0).toLocaleString() + ' MT'], ['Delivery term', t.term], ['Listing type', t.listing === 'settlement' ? 'Trade settlement · COMDEX verifies' : 'Trade discovery · parties verify'], ['Visibility', t.visibility === 'public' ? 'Public' : 'Private'], ['Asking price', money(t.price, 2) + ' / MT'], ['Shipment window', t.shipFrom ? dFmt(t.shipFrom) + ' – ' + dFmt(t.shipBy) : '']]);
   }
   function tdAside(t) {
     var final = t.status === 'completed' || t.agreed;
@@ -580,13 +580,13 @@
     var stc = st === 'verified' ? '<span class="pill g">Verified</span>' : st === 'review' ? '<span class="pill a">Under review</span>' : '<span class="pill b">' + p + '% complete</span>';
     return '<div class="acct"><div class="col">' +
       '<section class="card sec"><h2>Organization</h2>' + kvl([['Legal name', k.d.legal], ['Short name', k.d.short], ['Registration zone', ZONES[k.d.zone][1] + ' · ' + ZONES[k.d.zone][2]], ['Registered address', k.d.address ? k.d.address + (k.d.postal ? ', ' + k.d.postal : '') : ''], ['Beneficial owners', k.owners.map(function (o) { return o.name + ' (' + o.pct + '%)'; }).join(', ')]]) + '</section>' +
-      '<section class="card sec"><h2>Comdex ID</h2><p style="color:var(--mut);margin-bottom:12px">One verified identity that follows you into every deal, counterparty check and settlement.</p>' +
+      '<section class="card sec"><h2>COMDEX ID</h2><p style="color:var(--mut);margin-bottom:12px">One verified identity that follows you into every deal, counterparty check and settlement.</p>' +
       (k.chain ? '<div class="addr">' + ic('key', 'sm') + '<span style="flex:1">' + k.chain + '</span><button class="cp" data-a="copy" data-v="' + k.chain + '" aria-label="Copy address">' + ic('copy', 'sm') + '</button></div>' : '<div class="note a">' + ic('info', 'sm') + '<span>Your blockchain account is created in step 7 of onboarding.</span></div>') + '</section>' +
       '<section class="card sec"><h2>Team</h2>' + S.traders.map(function (t) { return '<div class="toggle-r"><div class="who" style="flex:1">' + av(t.name) + '<div><b>' + esc(t.name) + '</b><small>' + esc(t.email) + '</small></div></div>' + (t.st === 'active' ? '<span class="pill g">Active</span>' : '<span class="pill a">Pending</span>') + '</div>'; }).join('') + '<button class="btn soft" style="margin-top:12px" data-a="invite">' + ic('uplus', 'sm') + 'Invite trader</button></section>' +
       '</div><div class="col"><section class="card kyc-card"><div style="display:flex;gap:16px;align-items:center"><div class="ring" style="--p:' + (st === 'progress' ? p : 100) + '"><span>' + (st === 'progress' ? p + '%' : ic('check')) + '</span></div><div><b style="font-size:16px">Trader verification</b><div style="margin-top:6px">' + stc + '</div></div></div>' +
       '<p style="color:var(--mut);margin:16px 0">' + (st === 'verified' ? 'Your organization is verified. Counterparties see a verified badge on every order.' : st === 'review' ? 'Our onboarding team is checking your documents. Most reviews finish within one business day.' : 'Finish verification once and reuse it on every trade. About ' + Math.max(2, (9 - Object.keys(k.done).length) * 2) + ' minutes left.') + '</p>' +
       (st === 'progress' ? '<a class="btn pri block" href="#/onboarding">Continue setup' + ic('right', 'sm') + '</a>' : '<a class="btn sec block" href="#/onboarding">View submission</a>') + '</section>' +
-      '<section class="card kyc-card"><b style="font-size:15px">Wallet</b><div style="font-size:24px;font-weight:700;margin:8px 0 2px" class="num">' + money(S.wallet, 2) + '</div><p style="color:var(--mut);margin-bottom:14px">Held as dUSD on Comdex.</p><button class="btn sec block" data-a="addFunds">' + ic('plus', 'sm') + 'Add funds</button></section>' +
+      '<section class="card kyc-card"><b style="font-size:15px">Wallet</b><div style="font-size:24px;font-weight:700;margin:8px 0 2px" class="num">' + money(S.wallet, 2) + '</div><p style="color:var(--mut);margin-bottom:14px">Held as dUSD on COMDEX.</p><button class="btn sec block" data-a="addFunds">' + ic('plus', 'sm') + 'Add funds</button></section>' +
       '<button class="btn danger" data-a="reset">' + ic('refresh', 'sm') + 'Reset prototype data</button></div></div>';
   }
   function sw(k, label, sub) { return '<div class="toggle-r"><div><b>' + label + '</b><small>' + sub + '</small></div><label class="sw"><input type="checkbox" data-pref="' + k + '"' + (S.prefs[k] ? ' checked' : '') + ' aria-label="' + label + '"><span></span></label></div>'; }
@@ -606,11 +606,11 @@
   /* ---------- add funds ---------- */
   function addFunds() {
     var st = { copied: false, txid: '', amt: '', file: null };
-    var bank = [['Account holder', 'Comdex Company PTE Limited'], ['Account number', '09238409283'], ['SWIFT code', 'DBSSGSGSG'], ['Bank', 'DBS Bank Ltd., Singapore']];
+    var bank = [['Account holder', 'COMDEX Company PTE Limited'], ['Account number', '09238409283'], ['SWIFT code', 'DBSSGSGSG'], ['Bank', 'DBS Bank Ltd., Singapore']];
     function done() { return (st.copied ? 1 : 0) + (st.txid.length >= 6 && num(st.amt) > 0 ? 1 : 0) + (st.file ? 1 : 0); }
-    modal('<div class="m-head"><span class="hic">' + ic('wallet') + '</span><div class="t"><h2>Add funds to your wallet</h2><p>Make a bank transfer to Comdex, then share the details below so we can match and credit it.</p></div><button class="x" data-a="close" aria-label="Close">' + ic('x') + '</button></div>' +
+    modal('<div class="m-head"><span class="hic">' + ic('wallet') + '</span><div class="t"><h2>Add funds to your wallet</h2><p>Make a bank transfer to COMDEX, then share the details below so we can match and credit it.</p></div><button class="x" data-a="close" aria-label="Close">' + ic('x') + '</button></div>' +
       '<div class="m-body"><div class="steps-v">' +
-      '<div class="sv on" id="s1"><span class="n">1</span><div><h3>Transfer to Comdex’s bank account</h3><div class="kv"><div class="kv-h">' + ic('bank', 'sm') + 'Bank transfer details<button class="link" id="cpAll">' + ic('copy', 'sm') + 'Copy all</button></div>' +
+      '<div class="sv on" id="s1"><span class="n">1</span><div><h3>Transfer to COMDEX’s bank account</h3><div class="kv"><div class="kv-h">' + ic('bank', 'sm') + 'Bank transfer details<button class="link" id="cpAll">' + ic('copy', 'sm') + 'Copy all</button></div>' +
         bank.map(function (b) { return '<div class="kv-r"><span>' + b[0] + '</span><b>' + b[1] + '</b><button class="cp" data-cp="' + b[1] + '" aria-label="Copy ' + b[0] + '">' + ic('copy', 'sm') + '</button></div>'; }).join('') + '</div>' +
         '<div class="memo">' + ic('alert') + '<div><b>Add this reference to the transfer memo</b><p>Your Trader ID, or a contract number for an advance payment.</p></div><span class="code">' + S.user.id + '<button class="cp" data-cp="' + S.user.id + '" aria-label="Copy reference">' + ic('copy', 'sm') + '</button></span></div></div></div>' +
       '<div class="sv" id="s2"><span class="n">2</span><div><h3>Enter the transaction details</h3><div class="g2"><div class="f"><label for="txid">Transaction ID</label><div class="inp"><span class="ic">' + ic('hash', 'sm') + '</span><input id="txid" placeholder="e.g. DBS2610150042" autocomplete="off"></div></div>' +
@@ -626,7 +626,7 @@
     }
     function rc() {
       $('#rcpt').innerHTML = st.file ? '<div class="file"><span class="pdf">PDF</span><div class="m"><b>' + esc(st.file.name) + '</b><small>' + Math.max(1, Math.round(st.file.size / 1024)) + ' KB · ready to submit</small></div><button class="act" id="rmF" aria-label="Remove file">' + ic('x', 'sm') + '</button></div>'
-        : '<label class="drop" id="drop"><span class="ic">' + ic('up') + '</span><span><b>Drop your receipt here, or <span>browse</span></b><small>PDF only · Comdex must be named as the beneficiary</small></span><input type="file" accept="application/pdf,.pdf" class="sr" id="fileIn"></label><p class="msg" id="fErr" style="color:var(--red);font-size:12.5px;margin-top:6px" hidden></p>';
+        : '<label class="drop" id="drop"><span class="ic">' + ic('up') + '</span><span><b>Drop your receipt here, or <span>browse</span></b><small>PDF only · COMDEX must be named as the beneficiary</small></span><input type="file" accept="application/pdf,.pdf" class="sr" id="fileIn"></label><p class="msg" id="fErr" style="color:var(--red);font-size:12.5px;margin-top:6px" hidden></p>';
       if (st.file) $('#rmF').onclick = function () { st.file = null; rc(); upd(); };
       else {
         var drop = $('#drop'), inp = $('#fileIn');
@@ -728,13 +728,13 @@
     return '<div class="f' + (o.cls ? ' ' + o.cls : '') + '"><label for="f_' + k + '">' + label + (o.req ? ' <span class="req">*</span>' : '') + '</label><div class="inp' + (o.locked ? ' locked' : '') + '">' + (o.pre || '') + input + (o.unit ? '<span class="unit">' + o.unit + '</span>' : '') + (o.locked ? ic('lock', 'sm') : '') + '</div>' + (o.help ? '<span class="help">' + o.help + '</span>' : '') + '<span class="msg" data-msg="' + k + '" hidden></span></div>';
   }
   function oStep1(F) {
-    return '<section class="card sec"><div class="sec-h"><span class="hic">' + ic('hand') + '</span><div><h2>Listing type</h2><p>How do you want Comdex to handle this trade? This can’t be changed after you publish.</p></div></div>' +
+    return '<section class="card sec"><div class="sec-h"><span class="hic">' + ic('hand') + '</span><div><h2>Listing type</h2><p>How do you want COMDEX to handle this trade? This can’t be changed after you publish.</p></div></div>' +
       '<div class="lt" role="radiogroup" aria-label="Listing type">' +
-        '<button role="radio" aria-checked="' + (F.listing === 'settlement') + '" data-a="oSet" data-k="listing" data-v="settlement" class="' + (F.listing === 'settlement' ? 'on' : '') + '"><span class="ic">' + ic('shield') + '</span><span><b>Trade settlement</b><small>Comdex handles all verifications related to the trade.</small></span><span class="rd"></span></button>' +
+        '<button role="radio" aria-checked="' + (F.listing === 'settlement') + '" data-a="oSet" data-k="listing" data-v="settlement" class="' + (F.listing === 'settlement' ? 'on' : '') + '"><span class="ic">' + ic('shield') + '</span><span><b>Trade settlement</b><small>COMDEX handles all verifications related to the trade.</small></span><span class="rd"></span></button>' +
         '<button role="radio" aria-checked="' + (F.listing === 'discovery') + '" data-a="oSet" data-k="listing" data-v="discovery" class="' + (F.listing === 'discovery' ? 'on' : '') + '"><span class="ic">' + ic('globe') + '</span><span><b>Trade discovery</b><small>Both parties handle verifications themselves. Faster to list.</small></span><span class="rd"></span></button></div>' +
       '<div class="vis-row"><div class="f"><span class="lab" id="visL">Visibility</span><div class="seg lg" role="radiogroup" aria-labelledby="visL"><button role="radio" aria-checked="' + (F.visibility === 'private') + '" data-a="oSet" data-k="visibility" data-v="private" class="' + (F.visibility === 'private' ? 'on' : '') + '">' + ic('lock', 'sm') + 'Private</button><button role="radio" aria-checked="' + (F.visibility === 'public') + '" data-a="oSet" data-k="visibility" data-v="public" class="' + (F.visibility === 'public' ? 'on' : '') + '">' + ic('globe', 'sm') + 'Public</button></div></div>' +
       (F.visibility === 'private' ? '<div class="f"><label for="f_invite">Invite counterparty</label><div style="display:flex;gap:10px"><div class="inp" style="flex:1"><span class="ic">' + ic('mail', 'sm') + '</span><input id="f_invite" data-f="invite" type="email" value="' + esc(F.invite) + '" placeholder="buyer@company.com" autocomplete="off"></div><button class="btn sec" data-a="oInvite" style="height:46px;color:var(--blue);border-color:#bcd0f8">Send invite</button></div><span class="msg" data-msg="invite" hidden></span></div>'
-        : '<p style="color:var(--mut);align-self:center">Every verified trader on Comdex can see and respond to this order.</p>') + '</div>' +
+        : '<p style="color:var(--mut);align-self:center">Every verified trader on COMDEX can see and respond to this order.</p>') + '</div>' +
       (F.invited.length ? '<div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:12px">' + F.invited.map(function (m, i) { return '<span class="pill b" style="height:30px">' + esc(m) + '<button data-a="oUninvite" data-i="' + i + '" aria-label="Remove ' + esc(m) + '" style="display:grid;color:inherit">' + ic('x', 'sm') + '</button></span>'; }).join('') + '</div>' : '') + '</section>' +
       '<section class="card sec"><div class="sec-h"><span class="hic">' + ic('box') + '</span><div><h2>Commodity details</h2><p>As listed on the bill of lading.</p></div></div><div class="g3">' +
         fld('contract', 'Contract ID', F.contract, { locked: true }) + fld('commodity', 'Commodity', F.commodity, { req: true, opts: COMMODITIES }) + fld('blName', 'Name on bill of lading', F.blName, { req: true }) +
@@ -746,16 +746,16 @@
   }
   function oStep2(F) {
     var o = F.obl;
-    return '<section class="card sec"><div class="sec-h"><span class="hic">' + ic('doc') + '</span><div><h2>Original bill of lading</h2><p>The OBL is the title document. Comdex records it on-chain so ownership moves with the trade.</p></div></div>' +
+    return '<section class="card sec"><div class="sec-h"><span class="hic">' + ic('doc') + '</span><div><h2>Original bill of lading</h2><p>The OBL is the title document. COMDEX records it on-chain so ownership moves with the trade.</p></div></div>' +
       '<div class="g2">' + fld('obl.no', 'OBL number', o.no, { req: true, ph: 'e.g. SGSIN2611208' }) + fld('obl.carrier', 'Carrier', o.carrier, { req: true, ph: 'e.g. Maersk' }) + fld('obl.vessel', 'Vessel name', o.vessel, { req: true, ph: 'e.g. Maersk Kensington' }) + fld('obl.issued', 'Date of issue', o.issued, { req: true, type: 'date' }) + '</div>' +
       '<div class="f" style="margin-top:20px"><span class="lab">Upload OBL <span style="color:var(--red)">*</span></span>' + (o.file ? '<div class="file"><span class="pdf">PDF</span><div class="m"><b>' + esc(o.file) + '</b><small>' + (o.size || 240) + ' KB · uploaded</small></div><button class="act" data-a="oRmFile" aria-label="Remove file">' + ic('x', 'sm') + '</button></div>'
         : '<label class="drop" id="oDrop"><span class="ic">' + ic('up') + '</span><span><b>Drop the scanned OBL here, or <span>browse</span></b><small>PDF only · all pages, including endorsements</small></span><input type="file" accept="application/pdf,.pdf" class="sr" id="oFile"></label>') + '<span class="msg" data-msg="obl.file" hidden></span></div></section>' +
-      '<section class="card sec"><div class="note">' + ic('info', 'sm') + '<span>' + (F.listing === 'settlement' ? 'You chose <b>Trade settlement</b>: Comdex checks this OBL against the carrier before your order goes live.' : 'You chose <b>Trade discovery</b>: buyers verify this OBL themselves, so make sure the scan is complete and legible.') + '</span></div></section>';
+      '<section class="card sec"><div class="note">' + ic('info', 'sm') + '<span>' + (F.listing === 'settlement' ? 'You chose <b>Trade settlement</b>: COMDEX checks this OBL against the carrier before your order goes live.' : 'You chose <b>Trade discovery</b>: buyers verify this OBL themselves, so make sure the scan is complete and legible.') + '</span></div></section>';
   }
   function oStep3(F) {
     var tot = num(F.qty) * num(F.price);
     return '<section class="card sec"><div class="sec-h"><span class="hic">' + ic('checks') + '</span><div><h2>Review and publish</h2><p>Check everything against your documents. Buyers see exactly this.</p></div></div><div class="review">' +
-      '<div><div style="display:flex;justify-content:space-between;margin-bottom:8px"><b>Listing</b><button class="link" data-a="oGo" data-v="1">Edit</button></div>' + kvl([['Listing type', F.listing === 'settlement' ? 'Trade settlement · Comdex verifies' : 'Trade discovery · parties verify'], ['Visibility', F.visibility === 'public' ? 'Public' : 'Private' + (F.invited.length ? ' · ' + F.invited.join(', ') : ' · no invites yet')]]) + '</div>' +
+      '<div><div style="display:flex;justify-content:space-between;margin-bottom:8px"><b>Listing</b><button class="link" data-a="oGo" data-v="1">Edit</button></div>' + kvl([['Listing type', F.listing === 'settlement' ? 'Trade settlement · COMDEX verifies' : 'Trade discovery · parties verify'], ['Visibility', F.visibility === 'public' ? 'Public' : 'Private' + (F.invited.length ? ' · ' + F.invited.join(', ') : ' · no invites yet')]]) + '</div>' +
       '<div><div style="display:flex;justify-content:space-between;margin-bottom:8px"><b>Commodity &amp; shipment</b><button class="link" data-a="oGo" data-v="1">Edit</button></div>' + kvl([['Commodity', F.commodity + ' · ' + F.blName], ['Quality', F.quality], ['Quantity', num(F.qty).toLocaleString() + ' MT'], ['Delivery term', F.term], ['Route', F.fromPort + ', ' + F.fromC + ' → ' + F.toPort + ', ' + F.toC], ['Shipment window', F.shipFrom && F.shipBy ? dFmt(F.shipFrom) + ' – ' + dFmt(F.shipBy) : ''], ['Price', money(num(F.price), 2) + ' / MT']]) + '</div>' +
       '<div><div style="display:flex;justify-content:space-between;margin-bottom:8px"><b>Bill of lading</b><button class="link" data-a="oGo" data-v="2">Edit</button></div>' + kvl([['OBL number', F.obl.no], ['Carrier · vessel', (F.obl.carrier || '') + ' · ' + (F.obl.vessel || '')], ['Date of issue', F.obl.issued ? dFmt(F.obl.issued) : ''], ['File', F.obl.file]]) + '</div>' +
       '<label class="chk"><input type="checkbox" data-f="agree"' + (F.agree ? ' checked' : '') + '><span>I confirm these details match the original bill of lading and that ' + esc(S.org) + ' holds title to this cargo worth <b class="num">' + money(tot, 2) + '</b>.</span></label><span class="msg" data-msg="agree" style="color:var(--red);font-size:12.5px" hidden></span></div></section>';
@@ -769,7 +769,7 @@
       r('Listing', (F.listing === 'settlement' ? 'Trade settlement' : 'Trade discovery') + ' · ' + (F.visibility === 'public' ? 'Public' : 'Private')) + r('Commodity', F.commodity) + r('Quality', F.quality) + r('Quantity', q ? q.toLocaleString() + ' MT' : '') + r('Delivery term', F.term) +
       r('Route', F.fromPort && F.toPort ? F.fromPort + ' → ' + F.toPort : '') + r('Shipment window', F.shipFrom && F.shipBy ? shortRange(F.shipFrom, F.shipBy) : '') + r('Price', p ? money(p, 2) + ' / MT' : '') +
       '<div class="sum-tot"><small>Total shipment value</small><strong class="num">' + money(tot, 2) + '<span>USD</span></strong><em class="num">' + (q ? q.toLocaleString() : 0) + ' MT × ' + money(p, 2) + '</em></div>' +
-      '<button class="btn pri block" data-a="oNext">' + cta + (oStep < 3 ? ic('right', 'sm') : '') + '</button><p class="hint">' + ic('info', 'sm') + (oStep < 3 ? 'You can review everything before confirming.' : F.listing === 'settlement' ? 'Comdex verifies before it goes live.' : 'Goes live immediately.') + '</p></section>' +
+      '<button class="btn pri block" data-a="oNext">' + cta + (oStep < 3 ? ic('right', 'sm') : '') + '</button><p class="hint">' + ic('info', 'sm') + (oStep < 3 ? 'You can review everything before confirming.' : F.listing === 'settlement' ? 'COMDEX verifies before it goes live.' : 'Goes live immediately.') + '</p></section>' +
       (next.length ? '<section class="card sum-card"><h3 style="font-size:15px;color:var(--mut);font-weight:500">Up next</h3><div class="next-list">' + next.map(function (n) { return '<div><i>' + n[0] + '</i><span><b>' + n[1] + '</b><small>' + n[2] + '</small></span></div>'; }).join('') + '</div></section>' : '');
   }
   function shortRange(a, b) { var x = new Date(a), y = new Date(b); return x.getMonth() === y.getMonth() ? x.getDate() + ' – ' + y.getDate() + ' ' + MON[y.getMonth()] + ' ' + y.getFullYear() : dFmt(a) + ' – ' + dFmt(b); }
@@ -837,7 +837,7 @@
     { t: 'Verify OTP', s: 'Phone verified', ic: 'key' }, { t: 'Create admin password', s: 'Password set', ic: 'lock' },
     { t: 'Organization profile', s: 'Name, address, owners', ic: 'bld' }, { t: 'Organization KYC', s: 'Registration documents', ic: 'doc' },
     { t: 'Bank account details', s: 'For withdrawals', ic: 'bank' }, { t: 'Admin profile & KYC', s: 'Your identity', ic: 'id' },
-    { t: 'Blockchain account', s: 'Your Comdex ID', ic: 'key' }, { t: 'Service agreement', s: 'Sign the terms', ic: 'sign' }, { t: 'Final review', s: 'Submit for approval', ic: 'checks' }
+    { t: 'Blockchain account', s: 'Your COMDEX ID', ic: 'key' }, { t: 'Service agreement', s: 'Sign the terms', ic: 'sign' }, { t: 'Final review', s: 'Submit for approval', ic: 'checks' }
   ];
   var ownerEdit = -1, ownerAdd = false;
   function obField(k, label, o) { o = o || {}; var v = S.kyc.d[k] || ''; return '<div class="f"><label for="k_' + k + '">' + label + (o.req ? ' <span class="req">*</span>' : '') + '</label><div class="inp">' + (o.pre ? '<span class="ic">' + ic(o.pre, 'sm') + '</span>' : '') + (o.opts ? '<select id="k_' + k + '" data-k="' + k + '">' + o.opts.map(function (x) { return '<option' + (x === v ? ' selected' : '') + '>' + x + '</option>'; }).join('') + '</select>' + ic('chevd', 'sm') : '<input id="k_' + k + '" data-k="' + k + '" value="' + esc(v) + '"' + (o.ph ? ' placeholder="' + esc(o.ph) + '"' : '') + (o.type ? ' type="' + o.type + '"' : '') + (o.max ? ' maxlength="' + o.max + '"' : '') + ' autocomplete="off">' + (o.max ? '<span style="color:var(--dim);font-size:13px" data-count="' + k + '">' + v.length + '/' + o.max + '</span>' : '')) + '</div>' + (o.help ? '<span class="help">' + o.help + '</span>' : '') + '<span class="msg" data-kmsg="' + k + '" hidden></span></div>'; }
@@ -859,8 +859,8 @@
     if (n === 4) return '<div class="ob-row"><div><b>Registration documents</b><p>Clear scans or exports. We check them against ' + ZONES[k.d.zone][1] + ' registry records.</p></div><div style="display:grid;gap:16px">' + obUpload('coi', 'Certificate of incorporation', 'PDF, PNG or JPG') + obUpload('moa', 'Memorandum & articles', 'Latest version, PDF') + obUpload('poa', 'Proof of address', 'Utility bill or bank letter, last 3 months') + '</div></div>';
     if (n === 5) return '<div class="ob-row"><div><b>Withdrawal account</b><p>Settlements in dUSD can be withdrawn to this account. It must be in the organization’s name.</p></div><div style="display:grid;gap:16px">' + obField('bank', 'Bank name', { req: true, ph: 'e.g. DBS Bank Ltd.' }) + obField('holder', 'Account holder', { req: true, ph: k.d.legal }) + '<div class="g2">' + obField('acct', 'Account number', { req: true, ph: '0000000000' }) + obField('swift', 'SWIFT / BIC', { req: true, ph: 'e.g. DBSSSGSG' }) + '</div>' + obField('bccy', 'Account currency', { req: true, opts: ['USD', ZONES[k.d.zone][2]] }) + '</div></div>';
     if (n === 6) return '<div class="ob-row"><div><b>About you</b><p>You’re the admin for ' + esc(k.d.short || 'your organization') + '. We verify your identity once.</p></div><div style="display:grid;gap:16px"><div class="g2">' + obField('aname', 'Full name', { req: true, ph: 'As on your passport' }) + obField('anat', 'Nationality', { req: true, ph: 'e.g. Singaporean' }) + '</div>' + obField('arole', 'Role in organization', { req: true, opts: ['Director', 'Chief Financial Officer', 'Head of Trading', 'Compliance Officer'] }) + obUpload('passport', 'Passport', 'Photo page, PDF or image') + '</div></div>';
-    if (n === 7) return '<div class="ob-row"><div><b>Comdex ID</b><p>Your organization’s blockchain account. It signs title transfers and records every settlement.</p></div><div style="display:grid;gap:14px">' + (k.chain ? '<div class="addr">' + ic('key', 'sm') + '<span style="flex:1">' + k.chain + '</span><button class="cp" data-a="copy" data-v="' + k.chain + '" aria-label="Copy address">' + ic('copy', 'sm') + '</button></div><div class="note">' + ic('shield', 'sm') + '<span>Keys are held in Comdex custody and require two-factor confirmation for every transfer.</span></div>' : '<div class="note a">' + ic('info', 'sm') + '<span>Creating the account is free and takes a few seconds. You only do this once.</span></div><div><button class="btn pri" data-a="kChain">' + ic('key', 'sm') + 'Create blockchain account</button></div>') + '<span class="msg" data-kmsg="chain" style="color:var(--red);font-size:12.5px" hidden></span></div></div>';
-    if (n === 8) return '<div class="ob-row"><div><b>Comdex service agreement</b><p>Read and sign on behalf of ' + esc(k.d.legal || 'your organization') + '.</p></div><div style="display:grid;gap:16px"><div class="terms" tabindex="0"><h4>1. Scope</h4><p>Comdex provides a platform for discovery, negotiation and settlement of physical commodity trades between verified members.</p><h4>2. Escrow</h4><p>Buyer funds are held in escrow as dUSD and released to the seller only after the seller confirms payment and title transfer.</p><h4>3. Documents</h4><p>Members are responsible for the accuracy of bills of lading, contracts and certificates they upload. Under Trade settlement, Comdex performs additional verification.</p><h4>4. Fees</h4><p>An escrow fee of 0.1% of shipment value applies to each completed settlement.</p><h4>5. Governing law</h4><p>This agreement is governed by the laws of the member’s registration zone.</p></div>' +
+    if (n === 7) return '<div class="ob-row"><div><b>COMDEX ID</b><p>Your organization’s blockchain account. It signs title transfers and records every settlement.</p></div><div style="display:grid;gap:14px">' + (k.chain ? '<div class="addr">' + ic('key', 'sm') + '<span style="flex:1">' + k.chain + '</span><button class="cp" data-a="copy" data-v="' + k.chain + '" aria-label="Copy address">' + ic('copy', 'sm') + '</button></div><div class="note">' + ic('shield', 'sm') + '<span>Keys are held in COMDEX custody and require two-factor confirmation for every transfer.</span></div>' : '<div class="note a">' + ic('info', 'sm') + '<span>Creating the account is free and takes a few seconds. You only do this once.</span></div><div><button class="btn pri" data-a="kChain">' + ic('key', 'sm') + 'Create blockchain account</button></div>') + '<span class="msg" data-kmsg="chain" style="color:var(--red);font-size:12.5px" hidden></span></div></div>';
+    if (n === 8) return '<div class="ob-row"><div><b>COMDEX service agreement</b><p>Read and sign on behalf of ' + esc(k.d.legal || 'your organization') + '.</p></div><div style="display:grid;gap:16px"><div class="terms" tabindex="0"><h4>1. Scope</h4><p>COMDEX provides a platform for discovery, negotiation and settlement of physical commodity trades between verified members.</p><h4>2. Escrow</h4><p>Buyer funds are held in escrow as dUSD and released to the seller only after the seller confirms payment and title transfer.</p><h4>3. Documents</h4><p>Members are responsible for the accuracy of bills of lading, contracts and certificates they upload. Under Trade settlement, COMDEX performs additional verification.</p><h4>4. Fees</h4><p>An escrow fee of 0.1% of shipment value applies to each completed settlement.</p><h4>5. Governing law</h4><p>This agreement is governed by the laws of the member’s registration zone.</p></div>' +
       '<label class="chk"><input type="checkbox" data-k="agree"' + (k.d.agree ? ' checked' : '') + '><span>I have authority to sign for ' + esc(k.d.legal || 'this organization') + ' and agree to the service agreement.</span></label><span class="msg" data-kmsg="agree" style="color:var(--red);font-size:12.5px" hidden></span>' + obField('signer', 'Type your full name to sign', { req: true, ph: k.d.aname || 'Full name' }) + '</div></div>';
     if (n === 9) return '<div class="ob-row" style="grid-template-columns:1fr"><div class="rv">' + OB.slice(0, 8).map(function (s, i) { var d = k.done[i + 1]; return '<div class="rv-i"><span class="' + (d ? 'ok' : 'no') + '">' + ic(d ? 'check' : 'alert', 'sm') + '</span><div class="m"><b>' + s.t + '</b><small>' + (d ? 'Complete' : 'Needs attention') + '</small></div>' + (i > 1 ? '<button class="link" data-a="kGo" data-v="' + (i + 1) + '">' + (d ? 'Edit' : 'Finish') + '</button>' : '') + '</div>'; }).join('') + '</div>' +
       (k.status === 'review' ? '<div class="note" style="margin-top:16px">' + ic('info', 'sm') + '<span>Submitted ' + ago(k.submittedAt) + '. Our onboarding team is reviewing it.</span></div>' : k.status === 'verified' ? '<div class="note" style="margin-top:16px;background:var(--green-s);color:var(--green)">' + ic('check', 'sm') + '<span>Verified. You’re ready to trade.</span></div>' : '') + '</div>';
@@ -890,7 +890,7 @@
   function renderOnboarding() {
     var k = S.kyc, n = k.cur, p = kycPct(), left = OB.length - Object.keys(k.done).length, s = OB[n - 1];
     var locked = k.status !== 'progress';
-    app.innerHTML = '<div class="flow"><header class="flow-top"><a class="logo" href="#/dashboard" style="padding:0" aria-label="Comdex home">' + LOGO + 'COMDEX</a><span style="width:1px;height:28px;background:var(--line)"></span><b style="font-weight:500">Trader onboarding</b>' +
+    app.innerHTML = '<div class="flow"><header class="flow-top"><a class="logo" href="#/dashboard" style="padding:0" aria-label="COMDEX home">' + LOGO + 'COMDEX</a><span style="width:1px;height:28px;background:var(--line)"></span><b style="font-weight:500">Trader onboarding</b>' +
       '<span style="margin-left:auto"></span><button class="btn sec" data-a="help" style="border:0">' + ic('help', 'sm') + 'Help</button><a class="btn sec" href="#/account">Save &amp; exit</a></header>' +
       '<div class="ob"><aside class="card ob-side"><div class="ob-prog"><small>Setup progress</small><div class="row"><strong>' + p + '% complete</strong><span>' + (left ? '~' + left * 2 + ' min left' : k.status === 'verified' ? 'Verified' : 'Ready') + '</span></div></div>' +
       '<div class="segbar" aria-hidden="true">' + OB.map(function (x, i) { return '<i class="' + (k.done[i + 1] ? 'd' : i + 1 === n ? 'c' : '') + '"></i>'; }).join('') + '</div>' +
@@ -935,11 +935,11 @@
     tf: function (el) { S.ui.tradeFilter = el.dataset.v; save(); render(); },
     approve: function (el) { var t = S.traders.filter(function (x) { return x.id === el.dataset.id; })[0]; t.st = 'active'; S.team.unshift({ who: S.user.name, t: 'approved', obj: t.name, at: Date.now(), ic: 'check' }); if (!S.traders.some(function (x) { return x.st === 'pending'; })) S.ui.tTab = 'active'; save(); render(); toast('Trader approved', t.name + ' can now create and respond to orders'); },
     exportTraders: function () { download('comdex-traders.csv', 'Name,Trader ID,Email,Trades,Receivables,Payables,Status\n' + S.traders.map(function (t) { return [t.name, t.id, t.email, t.trades, t.rec, t.pay, t.st].join(','); }).join('\n'), 'text/csv'); toast('Export ready', 'comdex-traders.csv downloaded', { icon: 'down', blue: true }); },
-    news: function () { toast('Market news', 'Full articles open in the Comdex news reader, which isn’t part of this prototype.', { icon: 'info', blue: true }); },
+    news: function () { toast('Market news', 'Full articles open in the COMDEX news reader, which isn’t part of this prototype.', { icon: 'info', blue: true }); },
     openTrade: function (el) { location.hash = '#/trades/' + el.dataset.id; },
     tdTab: function (el) { tdTab = el.dataset.v; refreshTrade(route()[1]); var b = $('#layer [data-a="tdTab"][data-v="' + tdTab + '"]'); if (b) b.focus(); },
     copy: function (el) { copy(el.dataset.v, el); },
-    fakeDoc: function (el, e) { e.preventDefault(); var n = el.dataset.v; download(n.replace(/\.pdf$/, '') + '.txt', n + '\n\nPlaceholder for the document stored with this trade on Comdex. In the product this opens the signed PDF.'); toast('Downloading ' + n, 'Prototype file, standing in for the real PDF', { icon: 'down', blue: true }); },
+    fakeDoc: function (el, e) { e.preventDefault(); var n = el.dataset.v; download(n.replace(/\.pdf$/, '') + '.txt', n + '\n\nPlaceholder for the document stored with this trade on COMDEX. In the product this opens the signed PDF.'); toast('Downloading ' + n, 'Prototype file, standing in for the real PDF', { icon: 'down', blue: true }); },
     dlSummary: function (el) {
       var t = trade(el.dataset.id), lines = ['COMDEX TRADE SUMMARY', '', 'Order: ' + t.id, 'Status: ' + ST[t.status].l, 'Route: ' + t.from.port + ', ' + t.from.country + ' -> ' + t.to.port + ', ' + t.to.country, 'Commodity: ' + t.commodity + ' (' + t.blName + ')', 'Quality: ' + t.quality, 'Quantity: ' + t.qty + ' MT', 'Term: ' + t.term, 'Price: ' + money(unit(t), 2) + ' / MT', 'Value: ' + money(total(t), 2), 'Contract ID: ' + t.contract, 'Buyer: ' + (t.buyer && t.buyer.name || '-'), '', 'ACTIVITY'].concat(t.act.map(function (a) { return dtFmt(a.at) + '  ' + a.t + (a.sub ? ' - ' + a.sub : ''); }));
       download('Comdex_' + t.id.slice(0, 8) + '_summary.txt', lines.join('\n')); toast('Summary downloaded', 'Comdex_' + t.id.slice(0, 8) + '_summary.txt', { icon: 'down', blue: true });
@@ -1007,7 +1007,7 @@
       if (oStep < 3) { oStep++; renderOrder(); window.scrollTo(0, 0); return; }
       var t = saveOrder(orderForm.listing === 'settlement' ? 'review' : 'listed'); orderForm = null;
       location.hash = '#/trades/' + t.id;
-      toast(t.status === 'review' ? 'Submitted for verification' : 'Order published', t.status === 'review' ? 'Comdex is checking your documents' : t.commodity + ' is live. Offers will appear in the deal room.');
+      toast(t.status === 'review' ? 'Submitted for verification' : 'Order published', t.status === 'review' ? 'COMDEX is checking your documents' : t.commodity + ' is live. Offers will appear in the deal room.');
     },
     oBack: function () { if (oStep > 1) { oStep--; renderOrder(); window.scrollTo(0, 0); } else A.oClose(); },
     oDraft: function () { var t = saveOrder('draft'); orderForm = null; location.hash = '#/trades'; toast('Draft saved', t.commodity + ' · find it under Drafts', { icon: 'pen', blue: true }); },
@@ -1019,7 +1019,7 @@
     kSubmit: function () { if (!obValid(9, true)) return; S.kyc.done[9] = true; S.kyc.status = 'review'; S.kyc.submittedAt = Date.now(); job('kycReview', {}, 9000); save(); renderOnboarding(); toast('Submitted for review', 'We’ll notify you when your organization is verified', { long: true }); },
     kZone: function (el) { S.kyc.d.zone = el.dataset.v; S.kyc.savedAt = Date.now(); save(); renderOnboarding(); $('[data-a="kZone"][data-v="' + el.dataset.v + '"]').focus(); },
     kRm: function (el) { delete S.kyc.files[el.dataset.k]; save(); renderOnboarding(); },
-    kChain: function (el) { el.disabled = true; el.innerHTML = '<span class="i" style="width:16px;height:16px;border:2px solid rgba(255,255,255,.4);border-top-color:#fff;border-radius:50%;animation:spin .7s linear infinite"></span>Creating…'; setTimeout(function () { S.kyc.chain = 'comdex1' + uid(32).toLowerCase(); S.kyc.savedAt = Date.now(); save(); renderOnboarding(); toast('Blockchain account created', 'Your Comdex ID is ready'); }, 1200); },
+    kChain: function (el) { el.disabled = true; el.innerHTML = '<span class="i" style="width:16px;height:16px;border:2px solid rgba(255,255,255,.4);border-top-color:#fff;border-radius:50%;animation:spin .7s linear infinite"></span>Creating…'; setTimeout(function () { S.kyc.chain = 'comdex1' + uid(32).toLowerCase(); S.kyc.savedAt = Date.now(); save(); renderOnboarding(); toast('Blockchain account created', 'Your COMDEX ID is ready'); }, 1200); },
     oAdd: function () { ownerAdd = true; ownerEdit = -1; renderOnboarding(); var n = $('#ow_n'); if (n) n.focus(); },
     oEdit: function (el) { ownerEdit = +el.dataset.i; ownerAdd = false; renderOnboarding(); var n = $('#ow_n'); if (n) n.focus(); },
     oDel: function (el) { S.kyc.owners.splice(+el.dataset.i, 1); save(); renderOnboarding(); },

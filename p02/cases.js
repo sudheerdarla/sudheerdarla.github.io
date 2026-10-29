@@ -76,16 +76,16 @@
     },
 
     pstake: {
-      name: 'pSTAKE Finance',
+      name: 'PSTAKE Finance',
       kicker: ['Case study', 'Web3', 'Liquid staking'],
       title: 'Unlocking liquidity for staked assets.',
-      lede: 'pSTAKE Finance lets people stake their crypto and still use it. More than $30M in assets went through the platform. My job was to make it obvious which network you are on, which asset you picked and what that asset is doing right now, so nobody needs to be a crypto expert to use it.',
+      lede: 'PSTAKE Finance lets people stake their crypto and still use it. More than $30M in assets went through the platform. My job was to make it obvious which network you are on, which asset you picked and what that asset is doing right now, so nobody needs to be a crypto expert to use it.',
       facts: [['Role', 'Product designer: Brand, Site, IA, Key flows'], ['Year', '2022, Dubai'], ['Platform', 'Desktop Web App'], ['Scope', 'Dashboard, Network, Stake, Unstake, DeFi']],
-      hero: { src: 'pstake-cs-hero.webp', w: 1497, h: 909, bare: true, alt: 'The pSTAKE stake screen: OSMO staked for stkOSMO with the exchange rate and network fee, a Liquid Stake button, APY and total value unlocked cards, a network selector showing Persistence and BNB Smart Chain, Flash and Regular unstaking methods, and a stake confirmation.' },
+      hero: { src: 'pstake-cs-hero.webp', w: 1497, h: 909, bare: true, alt: 'The PSTAKE stake screen: OSMO staked for stkOSMO with the exchange rate and network fee, a Liquid Stake button, APY and total value unlocked cards, a network selector showing Persistence and BNB Smart Chain, Flash and Regular unstaking methods, and a stake confirmation.' },
       stats: [['$30M+', 'Staked assets value unlocked'], ['5', 'Product areas I designed end to end'], ['2', 'Ways to exit, each with its time and fee shown upfront']],
       sections: [
         { label: 'Overview', title: 'One app to Stake, Unstake, Earn and track your crypto.',
-          lede: 'Before pSTAKE, people jumped between staking sites, swap apps, block explorers and spreadsheets. pSTAKE put all of it in one place. Every balance shows what it is doing, and every button tells you what will happen.',
+          lede: 'Before PSTAKE, people jumped between staking sites, swap apps, block explorers and spreadsheets. PSTAKE put all of it in one place. Every balance shows what it is doing, and every button tells you what will happen.',
           blocks: [{ type: 'lists', groups: [
             { title: 'What I designed', items: ['Switching between networks', 'Staking and Unstaking (wait 14 days, or exit instantly for a fee)', 'The DeFi tab: creating and joining pools', 'How rewards and past activity are shown'] },
             { title: 'Not my part', muted: true, items: ['Smart contracts', 'How APY is calculated', 'Which networks launched'] }] }] },
@@ -128,13 +128,13 @@
               images: [{ src: 'pstake-ui-menus.jpg', w: 939, h: 687, alt: 'Header menus: the network list with Persistence checked, and the wallet menu with the connected address, balance, copy address, view on explorer and disconnect.' }, { src: 'pstake-ui-wallet.jpg', w: 939, h: 687, alt: 'The connect wallet dialog, with popular wallets grouped above more wallets and the installed one tagged Detected.' }],
               points: [['Network in the header', 'The header shows the current network, and the menu marks it with a check.'], ['Wallet tools together', 'Balance, copy address and explorer link sit together. Disconnect is kept apart.'], ['Easy to connect', 'Wallets are grouped, and the one you already have installed is marked Detected.']] }] },
         { label: 'Brand and design system', title: 'I built the brand and the system behind every screen.',
-          lede: 'I owned the pSTAKE brand and its design system: the colours, type and shared components that every screen is built from. One system kept staking, unstaking and DeFi feeling like one product.',
+          lede: 'I owned the PSTAKE brand and its design system: the colours, type and shared components that every screen is built from. One system kept staking, unstaking and DeFi feeling like one product.',
           blocks: [{ type: 'system',
             colors: [['Night', '#0E0D12', 'bg/base', 'App background'], ['Surface', '#18171D', 'bg/surface', 'Panels and cards'], ['Raised', '#201E26', 'bg/raised', 'Inputs, menus, chips'], ['Coral', '#E15365', 'accent/primary', 'The one primary action'], ['Mint', '#3CC47C', 'status/positive', 'Yield and success'], ['Fog', '#8E8C96', 'text/secondary', 'Labels and helper text']],
             typo: [['Display', '32', '40', 'Bold', '33.99 OSMO'], ['Title', '20', '28', 'Semibold', 'Select network'], ['Body', '14', '20', 'Regular', 'Estimated annual yield'], ['Label', '11', '16', 'Mono, caps', 'Unstaking method']],
             principles: [['Dark and calm', 'A quiet dark base, so balances and states stand out.'], ['One coral action', 'Coral marks the single next step on each screen.'], ['Numbers first', 'Amounts are the largest text, labels stay small.']] }] },
         { label: 'Outcome', title: 'People trusted it with more than $30M.',
-          lede: 'More than $30M in staked assets went through pSTAKE. Each of the six moments where people got stuck now has a clear answer on screen.',
+          lede: 'More than $30M in staked assets went through PSTAKE. Each of the six moments where people got stuck now has a clear answer on screen.',
           blocks: [{ type: 'cards', cols: 2, items: [
             { title: 'Every balance has a status', text: 'Available, staked, unstaking, in a pool and rewards are shown separately, so you always know what your money is doing.' },
             { title: 'Exits are upfront', text: 'Both ways to unstake show how long they take and what they cost before you sign.' },
@@ -150,16 +150,16 @@
     },
 
     comdex: {
-      name: 'Comdex',
+      name: 'COMDEX',
       kicker: ['Case study', 'Fintech', 'B2B commodity trading'],
       title: 'One platform for global commodity trade, from discovery to settlement.',
-      lede: 'Commodity deals in a $17T market still run on emails, calls and PDFs. I designed Comdex end to end: one desktop product that works like a trading terminal and takes a deal from discovery to settlement.',
+      lede: 'Commodity deals in a $17T market still run on emails, calls and PDFs. I designed COMDEX end to end: one desktop product that works like a trading terminal and takes a deal from discovery to settlement.',
       facts: [['Role', 'Product designer'], ['Team', '1 PM, 3 engineers'], ['Year', '2019'], ['Platform', 'Desktop web app']],
-      hero: { src: 'comdex-ui-dash.jpg', w: 1937, h: 1437, alt: 'The Comdex trader dashboard: wallet balance, receivables and payables, a buy versus sell volume chart, trade statistics, team activity, market news and a table of traders.' },
+      hero: { src: 'comdex-ui-dash.jpg', w: 1937, h: 1437, alt: 'The COMDEX trader dashboard: wallet balance, receivables and payables, a buy versus sell volume chart, trade statistics, team activity, market news and a table of traders.' },
       stats: [['$10M+', 'Pilot trade volume processed on the platform'], ['Days to 1', 'A multi-day email and PDF loop became one Deal Room session'], ['3 + 1', 'Product modules, plus a public block explorer']],
       sections: [
         { label: 'Overview', title: 'One closed-loop system of record for a trade.',
-          lede: 'Comdex brings discovery, negotiation and settlement into one product, so a trader can find a counterparty, agree terms and settle with confidence without leaving it.',
+          lede: 'COMDEX brings discovery, negotiation and settlement into one product, so a trader can find a counterparty, agree terms and settle with confidence without leaving it.',
           blocks: [{ type: 'lists', groups: [
             { title: 'What I designed', items: ['Marketing website', 'Discovery: markets, orders and new listings', 'Settlement: Deal Room, escrow and title transfer', 'Finance: sell offers and finance requests', 'Public block explorer'] },
             { title: 'How I worked', muted: true, items: ['With 1 PM and 3 engineers', 'Tested flows with traders', 'Five core flows handed off as hi-fi'] }] }] },
@@ -168,7 +168,7 @@
           blocks: [{ type: 'table', head: ['Pain point', 'Design response'], rows: [
             ['Paper title in transit', 'On-chain title and a document pack, kept in the Deal Room'],
             ['Correspondent-bank delays', 'Escrow and dUSD, so capital is not stuck overnight'],
-            ['Unknown counterparties', 'One Comdex ID with reusable KYC and reputation']] }] },
+            ['Unknown counterparties', 'One COMDEX ID with reusable KYC and reputation']] }] },
         { label: 'Process', title: 'From research to handoff in four phases.',
           blocks: [{ type: 'cards', cols: 4, items: [
             { tag: 'Phase 1', title: 'Discover', list: ['Market and gap research', 'Competitor review', 'User personas'] },
@@ -176,9 +176,9 @@
             { tag: 'Phase 3', title: 'Develop', list: ['Mock-ups', 'Lo-fi prototype', 'Tests with traders'] },
             { tag: 'Phase 4', title: 'Deliver', list: ['Hi-fi prototype', 'Engineering handoff'] }] }] },
         { label: 'Structure', title: 'One closed loop, from sign-up to settlement.',
-          lede: 'Seven steps cover the whole deal, so a trader never leaves Comdex to finish one.',
+          lede: 'Seven steps cover the whole deal, so a trader never leaves COMDEX to finish one.',
           blocks: [{ type: 'flow', legend: 'Marked steps are where the old process lost days, and the core of the redesign.', rows: [
-            ['Sign in', ['Log in or sign up', 'Comdex ID', 'KYC']],
+            ['Sign in', ['Log in or sign up', 'COMDEX ID', 'KYC']],
             ['Hub', ['Discovery', 'Settlement', 'Finance']],
             ['Discovery', ['Dashboard', 'Markets', 'Orders', 'New sell order']],
             ['Create order', ['Commodity', 'Documents', 'Confirm']],
@@ -188,9 +188,9 @@
         { label: 'Key decisions', title: 'Three screens that made the loop work.',
           blocks: [
             { type: 'decision', label: 'Decision A', title: 'One verified record for every counterparty.',
-              text: 'A single Comdex ID powers KYC, settlement and compliance from one source of truth.',
+              text: 'A single COMDEX ID powers KYC, settlement and compliance from one source of truth.',
               images: [{ src: 'comdex-ui-kyc.jpg', w: 1939, h: 1378, alt: 'Trader onboarding: a setup progress stepper on the left and the organization profile form on the right, with registration zone, legal details and beneficial owners.' }],
-              points: [['Guided stepper', 'Traders always see what is verified and what is left.'], ['Verify once, reuse everywhere', 'The Comdex ID follows the trader into every deal and counterparty check.']] },
+              points: [['Guided stepper', 'Traders always see what is verified and what is left.'], ['Verify once, reuse everywhere', 'The COMDEX ID follows the trader into every deal and counterparty check.']] },
             { type: 'decision', label: 'Decision B', title: 'Lead with the choice that cannot be undone.',
               text: 'The new sell order asks for the listing type first, and the rest of the form follows from it.',
               images: [{ src: 'comdex-ui-order.jpg', w: 1937, h: 1372, alt: 'The new sell order form: listing type cards, commodity and shipment details, and a live order summary with the total shipment value.' }],
@@ -295,7 +295,7 @@
       '<span class="cs-zoom-hint" aria-hidden="true">' + ZOOM + '</span></button>';
   }
   var ZOOM = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg>';
-  var LOGO = '<svg class="ds-logo-svg" viewBox="0 0 93 23" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="pSTAKE logo"> <rect width="22.9073" height="22.9064" rx="11.4532" fill="currentColor"/> <path d="M17.0306 12.9891C17.0306 13.8369 16.8361 14.6152 16.4469 15.3241C16.0577 16.019 15.4601 16.5819 14.6539 17.0128C13.8478 17.4437 12.8471 17.6591 11.6518 17.6591H9.44184V22.9129H5.87677V8.27734H11.6518C12.8193 8.27734 13.8061 8.47888 14.6122 8.88195C15.4184 9.28501 16.023 9.84097 16.426 10.5498C16.8291 11.2587 17.0306 12.0717 17.0306 12.9891ZM11.3807 14.8237C12.0618 14.8237 12.5691 14.6639 12.9027 14.3442C13.2362 14.0245 13.403 13.5728 13.403 12.9891C13.403 12.4053 13.2362 11.9536 12.9027 11.6339C12.5691 11.3143 12.0618 11.1544 11.3807 11.1544H9.44184V14.8237H11.3807Z" fill="var(--logo-inner)"/> <path d="M17.1043 4.56958H5.87701V6.92495H17.1043V4.56958Z" fill="#E50913"/> <path d="M32.5986 20.4652C31.5103 20.4652 30.5351 20.2885 29.673 19.9352C28.8109 19.5819 28.1183 19.0589 27.5954 18.3664C27.0866 17.6739 26.8181 16.84 26.7898 15.8648H30.6482C30.7047 16.416 30.8955 16.84 31.2206 17.1368C31.5457 17.4195 31.9697 17.5608 32.4926 17.5608C33.0297 17.5608 33.4537 17.4407 33.7646 17.2004C34.0755 16.946 34.231 16.5997 34.231 16.1616C34.231 15.7941 34.1038 15.4903 33.8494 15.25C33.6091 15.0097 33.3053 14.8119 32.9378 14.6564C32.5845 14.5009 32.0757 14.3243 31.4114 14.1264C30.4503 13.8296 29.6659 13.5328 29.0582 13.236C28.4505 12.9392 27.9275 12.5011 27.4894 11.9216C27.0513 11.3421 26.8322 10.586 26.8322 9.65321C26.8322 8.26815 27.3339 7.18695 28.3374 6.40961C29.3409 5.61815 30.6482 5.22241 32.2594 5.22241C33.8989 5.22241 35.2203 5.61815 36.2238 6.40961C37.2273 7.18695 37.7643 8.27521 37.835 9.67441H33.913C33.8847 9.19388 33.7081 8.81935 33.383 8.55081C33.0579 8.26815 32.641 8.12681 32.1322 8.12681C31.6941 8.12681 31.3407 8.24695 31.0722 8.48721C30.8037 8.71335 30.6694 9.04548 30.6694 9.48361C30.6694 9.96415 30.8955 10.3387 31.3478 10.6072C31.8001 10.8757 32.5067 11.1655 33.4678 11.4764C34.4289 11.8015 35.2062 12.1124 35.7998 12.4092C36.4075 12.706 36.9305 13.1371 37.3686 13.7024C37.8067 14.2677 38.0258 14.9956 38.0258 15.886C38.0258 16.734 37.8067 17.5043 37.3686 18.1968C36.9446 18.8893 36.3227 19.4405 35.503 19.8504C34.6833 20.2603 33.7151 20.4652 32.5986 20.4652Z" fill="currentColor"/> <path d="M50.9628 5.43441V8.33881H47.0196V20.3168H43.3944V8.33881H39.4512V5.43441H50.9628Z" fill="currentColor"/> <path d="M62.0466 17.688H56.4922L55.6018 20.3168H51.807L57.1918 5.43441H61.3894L66.7742 20.3168H62.937L62.0466 17.688ZM61.1138 14.8896L59.2694 9.44121L57.4462 14.8896H61.1138Z" fill="currentColor"/> <path d="M77.0414 20.3168L72.0382 13.7448V20.3168H68.413V5.43441H72.0382V11.964L76.999 5.43441H81.2602L75.4938 12.7272L81.4722 20.3168H77.0414Z" fill="currentColor"/> <path d="M86.8202 8.33881V11.3492H91.675V14.1476H86.8202V17.4124H92.311V20.3168H83.195V5.43441H92.311V8.33881H86.8202Z" fill="currentColor"/> </svg>';
+  var LOGO = '<span class="ds-word" role="img" aria-label="PSTAKE">PSTAKE</span>';
   var CHECK = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>';
   var DASH = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true" focusable="false"><path d="M6 12h12"/></svg>';
   var ARROW = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 12h14M13 6l6 6-6 6"/></svg>';
@@ -380,8 +380,8 @@
           '<div class="ds-stat"><small>APY</small><b>9.92%</b><small>Estimated annual yield</small></div>') +
         cell('07', 'Toast', 'Success',
           '<div class="ds-toast"><span class="ds-ok"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span><div><b>Stake confirmed</b><small>3.998656 stkOSMO added to your balance</small></div></div>');
-      return '<div class="ds" role="group" aria-label="pSTAKE brand and design system">' +
-        '<div class="ds-top"><span class="ds-top-logo">' + LOGO.replace('role="img" aria-label="pSTAKE logo"', 'aria-hidden="true" focusable="false"') + '</span><span class="ds-top-r">Design system</span></div>' +
+      return '<div class="ds" role="group" aria-label="PSTAKE brand and design system">' +
+        '<div class="ds-top"><span class="ds-top-logo">' + LOGO.replace('role="img" aria-label="PSTAKE"', 'aria-hidden="true"') + '</span><span class="ds-top-r">Design system</span></div>' +
         '<div class="ds-part"><p class="ds-h">Brand</p><div class="ds-brand">' +
           '<div class="ds-logo is-dark">' + LOGO + '<em>On dark</em></div>' +
           '<div class="ds-logo is-light">' + LOGO + '<em>On light</em></div></div></div>' +

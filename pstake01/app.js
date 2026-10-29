@@ -1,4 +1,4 @@
-/* pSTAKE prototype — all data is simulated, state lives in memory + localStorage. */
+/* PSTAKE prototype — all data is simulated, state lives in memory + localStorage. */
 (function () {
   'use strict';
   var $ = function (s, r) { return (r || document).querySelector(s); };
