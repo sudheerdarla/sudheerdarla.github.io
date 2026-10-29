@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>pSTAKE Prototype</title>
+<meta name="description" content="Interactive prototype of the pSTAKE liquid staking app: stake, unstake, dashboard and DeFi.">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="app" id="app">
+  <aside class="side" id="side">
+    <div class="logo">PSTAKE</div>
+    <nav id="nav" aria-label="Main">
+      <button data-view="staking" class="on"><svg viewBox="0 0 24 24"><path d="M12 3c1 3 5 5 5 10a5 5 0 0 1-10 0c0-2 1-3 2-4 0 2 1 3 2 3 0-3-1-6 1-9z"/></svg>Staking</button>
+      <button data-view="defi"><svg viewBox="0 0 24 24"><path d="M12 3l9 5-9 5-9-5 9-5zM3 13l9 5 9-5M3 17.5l9 5 9-5"/></svg>DeFi</button>
+      <button data-view="dashboard"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>Dashboard</button>
+      <a href="#" data-ext><svg viewBox="0 0 24 24"><path d="M7 4L3 8l4 4M3 8h14M17 20l4-4-4-4M21 16H7"/></svg>Transactions<i class="ext">↗</i></a>
+      <a href="#" data-ext><svg viewBox="0 0 24 24"><path d="M3 5h7a2 2 0 0 1 2 2v13a2 2 0 0 0-2-2H3zM21 5h-7a2 2 0 0 0-2 2v13a2 2 0 0 1 2-2h7z"/></svg>Docs<i class="ext">↗</i></a>
+      <a href="#" data-ext><svg viewBox="0 0 24 24"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/></svg>Governance<i class="ext">↗</i></a>
+    </nav>
+    <div class="side-foot"><p>Terms of Use · Privacy Policy</p><p class="proto">Prototype · simulated data</p></div>
+  </aside>
+
+  <main class="main">
+    <header class="top">
+      <button class="burger" id="burger" aria-label="Menu"><svg viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
+      <div class="menu-wrap">
+        <button class="chip" id="netBtn" aria-haspopup="true" aria-expanded="false"><span class="dot" id="netDot">P</span><span id="netName">Persistence</span><svg class="chev" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></button>
+        <div class="pop" id="netMenu" hidden>
+          <p class="pop-h">Select network</p>
+          <button class="net-opt" data-net="persistence"><span class="dot">P</span>Persistence<svg class="tick" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></button>
+          <button class="net-opt" data-net="bnb"><span class="dot y">B</span>BNB Smart Chain<svg class="tick" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></button>
+        </div>
+      </div>
+      <div class="menu-wrap" id="walletArea"></div>
+    </header>
+    <div id="view"></div>
+  </main>
+</div>
+
+<div class="scrim" id="scrim" hidden>
+  <div class="modal" id="modal" role="dialog" aria-modal="true"></div>
+</div>
+<div class="toasts" id="toasts" aria-live="polite"></div>
+<script src="app.js"></script>
+</body>
+</html>
