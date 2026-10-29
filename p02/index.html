@@ -97,9 +97,9 @@
 
     /* ---------- Layout ---------- */
     .page { position: relative; }
-    /* Content sits on a solid panel (like the case study box) so the dot grid stays out of the text */
-    .main { padding: var(--s-2xl) var(--s-2xl) var(--s-4xl); }
-    .col { max-width: 768px; margin: 0 auto; padding: 0 var(--s-3xl); background: var(--bg); border: 1px solid var(--line); border-radius: var(--r-md); }
+    /* Content sits on a solid full-height panel (case study width and padding) so the dot grid stays out of the text */
+    .main { padding: 0 var(--s-2xl); }
+    .col { max-width: 880px; min-height: 100vh; margin: 0 auto; padding: 0 clamp(20px, 5.5vw, 48px); background: var(--bg); border-left: 1px solid var(--line); border-right: 1px solid var(--line); }
 
     /* Top bar + theme toggle */
     /* Theme toggle, fixed bottom left (same spot as on the case study page) */
@@ -116,7 +116,7 @@
     .toggle:hover .toggle-label { color: var(--fg); }
 
     /* Header */
-    .header { display: flex; align-items: flex-end; gap: var(--s-2xl); padding-top: var(--s-3xl); }
+    .header { display: flex; align-items: flex-end; gap: var(--s-2xl); padding-top: clamp(32px, 7vw, 56px); }
     .header-text { flex: 1; min-width: 0; }
     .avatar { width: 96px; height: 96px; border-radius: 50%; object-fit: cover; background: var(--bg-3); border: 2px solid #ffffff; flex: none; }
     .name { font-size: 24px; line-height: 28px; font-weight: 700; letter-spacing: -0.84px; }
@@ -127,8 +127,6 @@
 
     .bio { margin-top: var(--s-3xl); display: flex; flex-direction: column; gap: var(--s-lg); font-size: 16px; line-height: 26.4px; color: var(--fg-2); }
 
-    .tags { margin-top: var(--s-3xl); display: flex; flex-wrap: wrap; gap: var(--s-sm); }
-    .tag { font-size: 13px; line-height: 18px; font-weight: 500; padding: 3px 10px; border: 1px solid var(--line-1); border-radius: var(--r-md); background: var(--bg); color: var(--fg-1); }
 
     .sections { margin-top: var(--s-3xl); display: flex; flex-direction: column; gap: 0; }
 
@@ -171,7 +169,6 @@
     .post h3 { margin-top: var(--s-xs); font-size: 22px; line-height: 28px; font-weight: 700; letter-spacing: -0.4px; }
     .post .desc { margin-top: var(--s-xs); font-size: 16px; line-height: 24px; color: var(--muted); }
     .slot img.sketch { object-fit: contain; object-position: center; }
-    [data-theme="dark"] .slot img.sketch { filter: invert(1) hue-rotate(180deg); }
 
     /* Experience / Education */
     .row { display: flex; align-items: center; justify-content: space-between; gap: var(--s-lg); padding: var(--s-lg) 0; border-bottom: 1px solid var(--line); }
@@ -192,11 +189,12 @@
     .skills ul { margin-top: var(--s-md); display: flex; flex-direction: column; gap: var(--s-md); }
     .skills li { font-size: 16px; line-height: 24px; color: var(--fg-2); }
 
-    .footer { margin-top: var(--s-3xl); padding: var(--s-2xl) 0 var(--s-3xl); display: flex; justify-content: center; border-top: 1px solid var(--line); }
+    .footer { margin-top: var(--s-3xl); padding: var(--s-2xl) 0 var(--s-3xl); display: flex; justify-content: center; }
 
     @media (max-width: 640px) {
-      .main { padding: 64px var(--s-md) var(--s-3xl); }
-      .col { padding: 0 var(--s-lg); }
+      .main { padding: 0 var(--s-md); }
+      .col { padding: 64px var(--s-lg) 0; }
+      .header { padding-top: 0; }
       .tabs { gap: var(--s-lg); flex-wrap: nowrap; overflow-x: auto; scrollbar-width: none; margin: 0 calc(var(--s-lg) * -1); padding: 0 var(--s-lg); }
       .tabs::-webkit-scrollbar { display: none; }
       .tab::after { bottom: 0; }
@@ -231,10 +229,6 @@
           <p>Product designer with 7+ years of experience taking fintech, Web3 and SaaS products from zero to one. I design the core flows, interfaces and systems behind them, from how a product is structured to how it feels in use.</p>
           <p>I’ve shipped a commodity trading platform, a private equity fund workspace, and a liquid staking product that unlocked more than $30M in staked assets value. My focus is trust-heavy, multi-step products where clarity of state, cost and risk matters most.</p>
         </section>
-
-        <ul class="tags" aria-label="Core skills">
-          <li class="tag">Product Design</li><li class="tag">Figma</li><li class="tag">Rapid Prototyping</li><li class="tag">User Experience Design</li><li class="tag">AI Driven</li>
-        </ul>
 
         <div class="sections">
           <h2 class="sr">Work and background</h2>
@@ -304,7 +298,7 @@
                 <h3>My workflow has been updated!</h3>
                 <p class="desc">From a straight line to a loop, and what I’m seeing across the industry.</p>
                 <a class="slot" href="writing/workflow.html" aria-label="Read the post: My workflow has been updated!">
-                  <img class="sketch" alt="Sketch: the old linear design process next to the new loop" width="1200" height="600" loading="lazy" decoding="async" src="../img/blog-workflow-loop.svg">
+                  <img class="sketch" alt="Sketch: the old linear design process next to the new loop" width="2400" height="1200" loading="lazy" decoding="async" src="../img/blog-workflow-loop.png">
                   <span class="slot-tag" aria-hidden="true">Read post</span>
                 </a>
               </article>
