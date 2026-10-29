@@ -307,5 +307,24 @@
     };
   }
 
+  /* prototype menu (bottom left): jump to any screen or flow */
+  if (window.protoMenu) protoMenu(function () {
+    function go(v, tab) { closeModal(); closePops(); S.view = v; if (tab) { S.tab = tab; amount = ''; } save(); render(); }
+    var other = S.net === 'bnb' ? 'persistence' : 'bnb';
+    return [
+      { title: 'Jump to a screen', items: [
+        { label: 'Stake', run: function () { go('staking', 'stake'); } },
+        { label: 'Unstake', hint: 'Flash or regular', run: function () { go('staking', 'unstake'); } },
+        { label: 'DeFi pools', run: function () { go('defi'); } },
+        { label: 'Dashboard', run: function () { go('dashboard'); } }] },
+      { title: 'Try a flow', items: [
+        { label: S.connected ? 'Connect a different wallet' : 'Connect a wallet', run: function () { closeModal(); S.connected = false; save(); renderHeader(); render(); connectModal(); } },
+        { label: 'Switch to ' + NETS[other].name, run: function () { closeModal(); $('.net-opt[data-net="' + other + '"]').click(); } },
+        { label: 'Add to a pool', run: function () { go('defi'); addModal(POOLS[S.net][0].id); } }] },
+      { title: 'Demo data', items: [
+        { label: 'Reset demo data', run: function () { closeModal(); S = fresh(); amount = ''; save(); renderHeader(); render(); toast('Demo reset', 'Balances and activity are back to the start'); } }] }
+    ];
+  });
+
   renderHeader(); render();
 })();
