@@ -37,8 +37,8 @@
     bnb: [{ id: 'bnb', a: 'stkBNB', b: 'BNB', apr: 9.8, tvl: '$5.6M', base: 'BNB' }]
   };
   var WALLETS = [
-    ['Metamask', '#f6851b', 1, 'Popular'], ['Binance Wallet', '#f3ba2f', 0, 'Popular'], ['Keplr Wallet', '#3b82c4', 0, 'Popular'],
-    ['Math Wallet', '#2b2b33', 0, 'More wallets'], ['Coin98 Wallet', '#d9b92f', 0, 'More wallets'], ['Wallet Connect', '#3b99fc', 0, 'More wallets']
+    ['MetaMask', 'metamask', 1, 'Popular'], ['Binance Wallet', 'binance', 0, 'Popular'], ['Keplr Wallet', 'keplr', 0, 'Popular'],
+    ['Math Wallet', 'math', 0, 'More wallets'], ['Coin98 Wallet', 'coin98', 0, 'More wallets'], ['WalletConnect', 'walletconnect', 0, 'More wallets']
   ];
 
   function fresh() {
@@ -116,7 +116,7 @@
     var h = '<button class="x" aria-label="Close">×</button><h2>Connect wallet</h2><p class="sub">Choose a wallet to start staking on ' + net().name + '.</p>', cur = '';
     WALLETS.forEach(function (w, i) {
       if (w[3] !== cur) { cur = w[3]; h += '<p class="sec-h">' + cur + '</p>'; }
-      h += '<button class="wal" data-i="' + i + '"><span class="dot" style="background:' + w[1] + '">' + w[0][0] + '</span>' + w[0] + (w[2] ? '<span class="tag">Connected</span>' : '<span class="go">›</span>') + '</button>';
+      h += '<button class="wal" data-i="' + i + '"><span class="wlogo w-' + w[1] + '"><img src="wallets/' + w[1] + '.svg" alt="" width="22" height="22"></span>' + w[0] + (w[2] ? '<span class="tag">Connected</span>' : '<span class="go">›</span>') + '</button>';
     });
     h += '<p class="legal">By connecting, you agree to the Terms of Use and Privacy Policy.</p>';
     openModal(h);
