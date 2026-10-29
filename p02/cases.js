@@ -10,7 +10,7 @@
       title: 'Let agents pay. Keep the final say.',
       lede: 'AI agents are starting to buy things on their own: data, compute, flights. Saifuro Console is a concept for the control panel behind that. Teams give each agent a budget, a vendor list and approval rules, so small payments settle on their own and big ones wait for a person. I designed it and built it as a working prototype.',
       facts: [['Role', 'Product designer and builder'], ['Year', '2026'], ['Platform', 'Web console, desktop first'], ['Type', 'Self-initiated concept, not affiliated with Saifuro']],
-      hero: { src: 'p02/saifuro-hero.jpg', dark: 'p02/saifuro-hero-dark.jpg', w: 2880, h: 1800, alt: 'The Saifuro sign-up page in front of a still field of payment symbols: the headline Let your agents pay. Keep the final say, a one-line summary, and the create-your-workspace form.' },
+      hero: { src: 'p02/saifuro-login.jpg', dark: 'p02/saifuro-login-dark.jpg', w: 2880, h: 1800, alt: 'The Saifuro log-in page: the headline Let your agents pay. Keep the final say, a one-line summary and the log-in card over a still field of payment symbols, with a dark preview of the dashboard below.' },
       stats: [['5', 'Core surfaces: overview, approvals, agents, activity, settings'], ['4', 'Steps to create an agent with its own key and limits'], ['6', 'Policy checks shown on every approval request']],
       sections: [
         { label: 'Overview', title: 'A spend control panel for teams running AI agents.',
