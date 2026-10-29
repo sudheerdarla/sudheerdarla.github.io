@@ -66,7 +66,7 @@
               { title: 'Agent pages', text: 'Each agent has its own spend, rules, vendors and pending requests, with pause and edit controls.' },
               { title: 'Approvers with limits', text: 'Owners, approvers with a spending limit, and viewers who can only look.' },
               { title: 'Keyboard first', text: 'A command menu jumps to any page, agent or action, and shortcuts cover every review.' }] },
-            { type: 'cta', label: 'Open the live prototype', href: '../s02/' }] },
+            { type: 'cta', label: 'Open the live prototype', href: '../s02/#login' }] },
         { label: 'Learnings', title: 'What designing for agents taught me.',
           blocks: [{ type: 'numbered', items: [
             ['Automation needs a clear off switch.', 'People trust agents more when limits, pauses and deadlines are always visible.'],
