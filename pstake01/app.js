@@ -116,7 +116,7 @@
     var h = '<button class="x" aria-label="Close">×</button><h2>Connect wallet</h2><p class="sub">Choose a wallet to start staking on ' + net().name + '.</p>', cur = '';
     WALLETS.forEach(function (w, i) {
       if (w[3] !== cur) { cur = w[3]; h += '<p class="sec-h">' + cur + '</p>'; }
-      h += '<button class="wal" data-i="' + i + '"><span class="dot" style="background:' + w[1] + '">' + w[0][0] + '</span>' + w[0] + (w[2] ? '<span class="tag">Detected</span>' : '<span class="go">›</span>') + '</button>';
+      h += '<button class="wal" data-i="' + i + '"><span class="dot" style="background:' + w[1] + '">' + w[0][0] + '</span>' + w[0] + (w[2] ? '<span class="tag">Connected</span>' : '<span class="go">›</span>') + '</button>';
     });
     h += '<p class="legal">By connecting, you agree to the Terms of Use and Privacy Policy.</p>';
     openModal(h);
