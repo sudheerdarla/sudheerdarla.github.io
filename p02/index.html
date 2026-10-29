@@ -199,7 +199,8 @@
       .toggle-label { display: none; }
       .toggle-fixed { right: 20px; }
       .header { padding-top: 0; }
-      .tabs { gap: var(--s-lg); flex-wrap: nowrap; overflow-x: auto; scrollbar-width: none; margin: 0 -20px; padding: 0 20px;
+      /* Tabs scroll sideways; the end padding lets the last tab clear the fade */
+      .tabs { gap: var(--s-xl); flex-wrap: nowrap; overflow-x: auto; overscroll-behavior-x: contain; -webkit-overflow-scrolling: touch; scrollbar-width: none; margin: 0 -20px; padding: 0 48px 0 20px; scroll-padding: 0 48px 0 20px;
         -webkit-mask-image: linear-gradient(to right, #000 calc(100% - 32px), transparent); mask-image: linear-gradient(to right, #000 calc(100% - 32px), transparent); }
       .tabs::-webkit-scrollbar { display: none; }
       .tab::after { bottom: 0; }
@@ -321,6 +322,6 @@
             <span class="toggle-label" id="theme-label">Dark mode</span>
             <span class="track" aria-hidden="true"><span class="knob"></span></span>
           </button>
-    <script src="app.js?v=8" defer></script>
+    <script src="app.js?v=9" defer></script>
 </body>
 </html>

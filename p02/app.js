@@ -29,6 +29,8 @@
       document.getElementById(x.getAttribute('aria-controls')).hidden = !on;
     });
     if (focus) t.focus();
+    /* Keep the chosen tab in view when the tab row scrolls sideways on phones */
+    if (t.scrollIntoView) t.scrollIntoView({ block: 'nearest', inline: 'nearest', behavior: 'smooth' });
   }
   tabs.forEach(function (t, i) {
     t.addEventListener('click', function () { select(t, false); });
