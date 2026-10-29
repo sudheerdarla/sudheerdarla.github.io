@@ -123,7 +123,7 @@
     .cs-hero { padding: clamp(32px, 7cqw, 56px) var(--pad) var(--s-3xl); }
     .cs-kicker { color: var(--fg); }
     .cs-tag { font-style: normal; font-weight: 400; color: var(--muted); }
-    .cs-figure video { display: block; width: 100%; height: auto; border: 1px solid var(--line); border-radius: var(--r-md); background: var(--bg-3); }
+    .cs-figure video { display: block; width: 100%; height: auto; border: 1px solid var(--line); border-radius: 0; background: var(--bg-3); }
     .side .side-link b .tag { text-transform: none; font-weight: 400; color: var(--muted); letter-spacing: 0; }
     .cs-kicker span { margin-left: 8px; padding-left: 8px; border-left: 1px solid var(--line-strong); color: var(--muted); font-weight: 400; }
     .cs-hero h1 { margin-top: var(--s-lg); max-width: 18em; font-size: clamp(28px, 5cqw, 40px); line-height: 1.12; font-weight: 800; letter-spacing: -0.025em; outline: none; }
@@ -132,7 +132,7 @@
     .cs-facts div { padding: 14px 16px 14px 0; border-bottom: 1px solid var(--line); }
     .cs-facts dd { margin-top: 4px; font-size: 14px; line-height: 21px; font-weight: 500; color: var(--fg); }
     .cs-hero-figure { margin: 0 var(--pad); }
-    .cs-figure img { display: block; width: 100%; height: auto; border: 1px solid var(--line); border-radius: var(--r-md); background: var(--bg-3); }
+    .cs-figure img { display: block; width: 100%; height: auto; border: 1px solid var(--line); border-radius: 0; background: var(--bg-3); }
     .cs-figure img.is-framed, .cs-hero-figure img.is-framed, .lb img.is-framed { border: 1px solid rgba(128, 128, 136, .28); }
     .cs-figure img.is-bare { border: 0; }
     .cs-figure figcaption { margin-top: var(--s-sm); font-size: 13px; line-height: 19.5px; color: var(--muted); }
@@ -407,7 +407,7 @@
       .cs-host.enter .cs-hero > *, .cs-host.enter .cs-hero-figure, .cs-host.enter .cs-stats { animation: none; }
     }
     /* Zoomable images + lightbox */
-    .cs-zoom { position: relative; display: block; width: 100%; padding: 0; border: 0; background: none; cursor: zoom-in; border-radius: var(--r-md); }
+    .cs-zoom { position: relative; display: block; width: 100%; padding: 0; border: 0; background: none; cursor: zoom-in; border-radius: 0; }
     .cs-zoom-hint { position: absolute; top: var(--s-md); right: var(--s-md); width: 32px; height: 32px; display: grid; place-items: center; border: 1px solid var(--line-1); border-radius: var(--r-md); background: var(--bg); color: var(--fg); opacity: 0; transform: translateY(-2px); transition: opacity .15s var(--ease-out), transform .15s var(--ease-out); }
     .cs-zoom:hover .cs-zoom-hint, .cs-zoom:focus-visible .cs-zoom-hint { opacity: 1; transform: none; }
     @media (hover: none) { .cs-zoom-hint { opacity: 1; transform: none; } }
@@ -418,7 +418,7 @@
     .lb[open] { display: grid; place-items: center; animation: lb-in .2s var(--ease-out); }
     @keyframes lb-in { from { opacity: 0; } to { opacity: 1; } }
     .lb figure { display: flex; flex-direction: column; align-items: center; gap: var(--s-md); max-width: 92vw; padding: 64px 0; }
-    .lb img { display: block; max-width: 92vw; max-height: calc(100dvh - 112px); width: auto; height: auto; object-fit: contain; border-radius: var(--r-md); }
+    .lb img { display: block; max-width: 92vw; max-height: calc(100dvh - 112px); width: auto; height: auto; object-fit: contain; border-radius: 0; }
     .lb figcaption { max-width: 60em; font-size: 13px; line-height: 19.5px; color: #c9c9ce; text-align: center; }
     .lb-close { position: fixed; top: var(--s-lg); right: var(--s-lg); width: 44px; height: 44px; display: grid; place-items: center; border: 1px solid rgba(255,255,255,.22); border-radius: var(--r-md); background: rgba(16,16,18,.7); color: #fafafa; cursor: pointer; transition: background-color .15s var(--ease-out), border-color .15s var(--ease-out); }
     .lb-close:hover { background: #2c2c30; border-color: rgba(255,255,255,.5); }
@@ -459,7 +459,7 @@
     <button class="lb-close" type="button" id="lb-close" aria-label="Close image viewer"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true" focusable="false"><path d="M18 6L6 18M6 6l12 12"/></svg></button>
     <figure><img id="lb-img" alt=""></figure>
   </dialog>
-  <script src="cases.js?v=17"></script>
+  <script src="cases.js?v=18"></script>
   <script src="app.js?v=4" defer></script>
   <script src="work.js?v=10" defer></script>
 </body>
