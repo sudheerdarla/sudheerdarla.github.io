@@ -68,7 +68,7 @@
     button { font: inherit; color: inherit; background: none; border: 0; cursor: pointer; }
     :focus-visible { outline: 2px solid var(--fg); outline-offset: 3px; border-radius: var(--r-md); }
     .col { max-width: 680px; margin: 0 auto; padding: 0 var(--s-2xl); }
-    .back { display: inline-flex; align-items: center; gap: 6px; margin-top: var(--s-4xl); font-size: 14px; line-height: 20px; color: var(--muted); text-decoration: none; }
+    .back { display: inline-flex; align-items: center; gap: 6px; min-height: 44px; margin-top: var(--s-3xl); font-size: 14px; line-height: 20px; color: var(--muted); text-decoration: none; }
     .back:hover { color: var(--fg); }
     .date { margin-top: var(--s-3xl); font-size: 13px; line-height: 20px; color: var(--muted); }
     h1 { margin-top: var(--s-sm); font-size: 36px; line-height: 42px; font-weight: 700; letter-spacing: -1.2px; text-wrap: balance; }
@@ -88,7 +88,7 @@
     .zoom { position: relative; display: block; width: 100%; padding: 0; border: 0; background: none; cursor: zoom-in; border-radius: var(--r-md); }
     .zoom-hint { position: absolute; top: var(--s-md); right: var(--s-md); width: 32px; height: 32px; display: grid; place-items: center; border: 1px solid var(--line-1); border-radius: var(--r-md); background: var(--bg); color: var(--fg); opacity: 0; transform: translateY(-2px); transition: opacity .15s var(--ease-out), transform .15s var(--ease-out); }
     .zoom:hover .zoom-hint, .zoom:focus-visible .zoom-hint { opacity: 1; transform: none; }
-    @media (hover: none) { .zoom-hint { opacity: 1; transform: none; } }
+    @media (hover: none) { .zoom-hint { display: none; } }
     .lb { width: 100vw; height: 100vh; height: 100dvh; max-width: none; max-height: none; margin: 0; padding: 0; border: 0; background: rgba(10, 10, 12, .98); color: #fafafa; overflow: hidden; }
     .lb::backdrop { background: rgba(8, 8, 10, .6); }
     .lb[open] { display: grid; place-items: center; animation: lb-in .2s var(--ease-out); }
@@ -103,8 +103,9 @@
     @media (prefers-reduced-motion: reduce) { .lb[open] { animation: none; } }
     .flow { font-family: var(--font-mono); font-size: 14px; line-height: 24px; color: var(--fg-1); }
     .end { margin-top: var(--s-4xl); padding: var(--s-2xl) 0 96px; border-top: 1px solid var(--line); display: flex; justify-content: space-between; gap: var(--s-lg); font-size: 14px; }
-    .end a { color: var(--fg-1); text-decoration: none; border-bottom: 1px solid var(--line-strong); }
-    .end a:hover { border-color: var(--fg); }
+    .end a { display: inline-flex; align-items: center; min-height: 44px; color: var(--fg-1); text-decoration: none; }
+    .end a span:not(.sr) { border-bottom: 1px solid var(--line-strong); }
+    .end a:hover span:not(.sr) { border-color: var(--fg); }
     .toggle-fixed { position: fixed; z-index: 20; left: max(24px, calc((100vw - 1160px) / 2)); bottom: var(--s-2xl); }
     @media (max-width: 960px) { .toggle-fixed { position: absolute; bottom: auto; left: auto; top: var(--s-md); right: var(--s-lg); min-height: 44px; } }
     .toggle { display: inline-flex; align-items: center; gap: var(--s-sm); min-height: 32px; padding: 0 2px; }
@@ -114,7 +115,7 @@
     .toggle[aria-pressed="true"] .track { background: var(--accent); border-color: var(--accent); }
     .toggle[aria-pressed="true"] .knob { transform: translateX(14px); background: var(--accent-ink); }
     .toggle:hover .toggle-label { color: var(--fg); }
-    @media (max-width: 640px) { .col { padding: 0 var(--s-lg); } h1 { font-size: 30px; line-height: 36px; } figure { width: calc(100vw - 32px); margin: var(--s-3xl) 0; } }
+    @media (max-width: 640px) { .col { padding: 0 20px; } .toggle-fixed { right: 20px; } .back { margin-top: var(--s-md); } .toggle-label { display: none; } .date { margin-top: var(--s-2xl); } h1 { font-size: 30px; line-height: 36px; } h2 { margin-top: 40px; } figure { width: calc(100vw - 40px); margin: var(--s-3xl) 0; } .flow { font-size: 12.5px; } .end { padding-bottom: 64px; } }
     @media (prefers-reduced-motion: reduce) { *, *::before, *::after { transition-duration: .01ms !important; } }
   </style>
 </head>
@@ -168,8 +169,8 @@
       <p>The tools will keep changing. The designers who do well will be the ones who stay close to users, think in systems and keep learning. That’s what I’m holding on to.</p>
     </article>
     <div class="end">
-      <a href="../#writing">← All writing</a>
-      <a href="mailto:sudheer.darla11@gmail.com">Say hi<span class="sr"> (opens your email app)</span></a>
+      <a href="../#writing"><span>← All writing</span></a>
+      <a href="mailto:sudheer.darla11@gmail.com"><span>Say hi</span><span class="sr"> (opens your email app)</span></a>
     </div>
   </main>
   <button class="toggle toggle-fixed" type="button" id="theme" aria-pressed="false" aria-label="Switch to dark mode">

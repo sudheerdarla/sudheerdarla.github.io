@@ -113,6 +113,12 @@
     @media (max-width: 960px) {
       .content { margin: 0; max-width: none; padding: 92px var(--s-md) var(--s-3xl); }
     }
+    /* Phones: the case study fills the screen edge to edge instead of floating in a framed card */
+    @media (max-width: 640px) {
+      .content { padding: 69px 0 0; }
+      .box { border: 0; border-radius: 0; }
+      .rail .toggle-label { display: none; }
+    }
 
     /* ---------- Case study system ---------- */
     .cs { --pad: clamp(20px, 5.5cqw, 48px); counter-reset: none; }
@@ -241,6 +247,7 @@
 
     /* End + next */
     .cs-end { margin-top: var(--s-4xl); padding: var(--s-4xl) var(--pad); border-top: 1px solid var(--line); }
+    @media (max-width: 640px) { .cs-sec, .cs-end { margin-top: var(--s-3xl); padding-top: 40px; } .cs-end { padding-bottom: 40px; } }
     .cs-end h2 { font-size: clamp(22px, 3.6cqw, 28px); line-height: 1.2; font-weight: 700; letter-spacing: -0.02em; }
     .cs-btns { margin-top: var(--s-2xl); display: flex; flex-wrap: wrap; gap: var(--s-sm); }
     .cs-btn { display: inline-flex; align-items: center; gap: 6px; min-height: 40px; padding: 0 var(--s-lg); border: 1px solid var(--line-strong); border-radius: var(--r-md); font-size: 14px; font-weight: 500; color: var(--fg); transition: background-color .15s var(--ease-out), border-color .15s var(--ease-out); }
@@ -410,7 +417,8 @@
     .cs-zoom { position: relative; display: block; width: 100%; padding: 0; border: 0; background: none; cursor: zoom-in; border-radius: 0; }
     .cs-zoom-hint { position: absolute; top: var(--s-md); right: var(--s-md); width: 32px; height: 32px; display: grid; place-items: center; border: 1px solid var(--line-1); border-radius: var(--r-md); background: var(--bg); color: var(--fg); opacity: 0; transform: translateY(-2px); transition: opacity .15s var(--ease-out), transform .15s var(--ease-out); }
     .cs-zoom:hover .cs-zoom-hint, .cs-zoom:focus-visible .cs-zoom-hint { opacity: 1; transform: none; }
-    @media (hover: none) { .cs-zoom-hint { opacity: 1; transform: none; } }
+    /* Touch screens: the whole image is the tap target, so the corner button would only cover the screenshot */
+    @media (hover: none) { .cs-zoom-hint { display: none; } }
     .cs-hero-figure.is-bare img { border: 0; background: none; }
     .cs-block-title + .cs-cards { margin-top: var(--s-md); }
     .lb { width: 100vw; height: 100vh; height: 100dvh; max-width: none; max-height: none; margin: 0; padding: 0; border: 0; background: rgba(10, 10, 12, .98); color: #fafafa; overflow: hidden; }

@@ -162,7 +162,8 @@
       opacity: 0; transform: translateY(4px); transition: opacity .15s var(--ease-out), transform .15s var(--ease-out); }
     .slot:hover .slot-tag, .slot:focus-visible .slot-tag { opacity: 1; transform: none; }
 
-    @media (hover: none) { .slot-tag { opacity: 1; transform: none; } }
+    /* Touch screens: no hover, so the whole card is the link and the tag would only cover the screenshot */
+    @media (hover: none) { .slot-tag { display: none; } }
 
     /* Writing */
     .post-date { font-size: 13px; line-height: 19.5px; color: var(--muted); }
@@ -193,10 +194,13 @@
     .footer { margin-top: auto; padding: var(--s-4xl) 0 var(--s-3xl); display: flex; justify-content: center; }
 
     @media (max-width: 640px) {
-      .main { padding: 0 var(--s-md); }
-      .col { padding: 64px var(--s-lg) 0; }
+      .main { padding: 0; }
+      .col { padding: 64px 20px 0; border: 0; }
+      .toggle-label { display: none; }
+      .toggle-fixed { right: 20px; }
       .header { padding-top: 0; }
-      .tabs { gap: var(--s-lg); flex-wrap: nowrap; overflow-x: auto; scrollbar-width: none; margin: 0 calc(var(--s-lg) * -1); padding: 0 var(--s-lg); }
+      .tabs { gap: var(--s-lg); flex-wrap: nowrap; overflow-x: auto; scrollbar-width: none; margin: 0 -20px; padding: 0 20px;
+        -webkit-mask-image: linear-gradient(to right, #000 calc(100% - 32px), transparent); mask-image: linear-gradient(to right, #000 calc(100% - 32px), transparent); }
       .tabs::-webkit-scrollbar { display: none; }
       .tab::after { bottom: 0; }
       .header { align-items: flex-start; flex-direction: column; gap: var(--s-lg); }
