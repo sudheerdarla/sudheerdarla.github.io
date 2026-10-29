@@ -134,7 +134,9 @@
     .cs-hero { padding: clamp(32px, 7cqw, 56px) var(--pad) var(--s-3xl); }
     .cs-kicker { color: var(--fg); }
     .cs-tag { font-style: normal; font-weight: 400; color: var(--muted); }
-    .cs-figure video { display: block; width: 100%; height: auto; border: 1px solid var(--line); border-radius: 0; background: var(--bg-3); }
+    /* One subtle grey frame for every screenshot, light or dark, on the page and in the lightbox */
+    :root { --shot-border: rgba(128, 128, 136, .32); }
+    .cs-figure video { display: block; width: 100%; height: auto; border: 1px solid var(--shot-border); border-radius: 0; background: var(--bg-3); }
     .side .side-link b .tag { text-transform: none; font-weight: 400; color: var(--muted); letter-spacing: 0; }
     .cs-kicker span { margin-left: 8px; padding-left: 8px; border-left: 1px solid var(--line-strong); color: var(--muted); font-weight: 400; }
     .cs-hero h1 { margin-top: var(--s-lg); max-width: 18em; font-size: clamp(28px, 5cqw, 40px); line-height: 1.12; font-weight: 800; letter-spacing: -0.025em; outline: none; }
@@ -143,9 +145,7 @@
     .cs-facts div { padding: 14px 16px 14px 0; border-bottom: 1px solid var(--line); }
     .cs-facts dd { margin-top: 4px; font-size: 14px; line-height: 21px; font-weight: 500; color: var(--fg); }
     .cs-hero-figure { margin: 0 var(--pad); }
-    .cs-figure img { display: block; width: 100%; height: auto; border: 1px solid var(--line); border-radius: 0; background: var(--bg-3); }
-    .cs-figure img.is-framed, .cs-hero-figure img.is-framed, .lb img.is-framed { border: 1px solid rgba(128, 128, 136, .28); }
-    .cs-figure img.is-bare { border: 0; }
+    .cs-figure img { display: block; width: 100%; height: auto; border: 1px solid var(--shot-border); border-radius: 0; background: var(--bg-3); }
     .cs-figure figcaption { margin-top: var(--s-sm); font-size: 13px; line-height: 19.5px; color: var(--muted); }
 
     .cs-stats { margin: var(--s-3xl) var(--pad) 0; display: grid; grid-template-columns: 1fr; border-top: 1px solid var(--line); }
@@ -424,14 +424,13 @@
     .cs-zoom:hover .cs-zoom-hint, .cs-zoom:focus-visible .cs-zoom-hint { opacity: 1; transform: none; }
     /* Touch screens: the whole image is the tap target, so the corner button would only cover the screenshot */
     @media (hover: none) { .cs-zoom-hint { display: none; } }
-    .cs-hero-figure.is-bare img { border: 0; background: none; }
     .cs-block-title + .cs-cards { margin-top: var(--s-md); }
     .lb { width: 100vw; height: 100vh; height: 100dvh; max-width: none; max-height: none; margin: 0; padding: 0; border: 0; background: rgba(10, 10, 12, .98); color: #fafafa; overflow: hidden; }
     .lb::backdrop { background: rgba(8, 8, 10, .6); }
     .lb[open] { display: grid; place-items: center; animation: lb-in .2s var(--ease-out); }
     @keyframes lb-in { from { opacity: 0; } to { opacity: 1; } }
     .lb figure { display: flex; flex-direction: column; align-items: center; gap: var(--s-md); max-width: 92vw; padding: 64px 0; }
-    .lb img { display: block; max-width: 92vw; max-height: calc(100dvh - 112px); width: auto; height: auto; object-fit: contain; border-radius: 0; }
+    .lb img { display: block; max-width: 92vw; max-height: calc(100dvh - 112px); width: auto; height: auto; object-fit: contain; border: 1px solid var(--shot-border); border-radius: 0; }
     .lb figcaption { max-width: 60em; font-size: 13px; line-height: 19.5px; color: #c9c9ce; text-align: center; }
     .lb-close { position: fixed; top: var(--s-lg); right: var(--s-lg); width: 44px; height: 44px; display: grid; place-items: center; border: 1px solid rgba(255,255,255,.22); border-radius: var(--r-md); background: rgba(16,16,18,.7); color: #fafafa; cursor: pointer; transition: background-color .15s var(--ease-out), border-color .15s var(--ease-out); }
     .lb-close:hover { background: #2c2c30; border-color: rgba(255,255,255,.5); }
