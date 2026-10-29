@@ -80,10 +80,27 @@
     ul.points { list-style: none; display: grid; gap: var(--s-lg); }
     ul.points li { padding-left: 22px; position: relative; }
     ul.points li::before { content: "→"; position: absolute; left: 0; color: var(--muted); }
-    figure { margin: var(--s-3xl) calc(var(--s-2xl) * -1); }
+    /* Figures break out of the text column so the sketches read at a glance */
+    figure { position: relative; left: 50%; width: min(960px, calc(100vw - 48px)); transform: translateX(-50%); margin: var(--s-4xl) 0; }
     figure img { display: block; width: 100%; height: auto; border: 1px solid var(--line); border-radius: var(--r-md); background: #fafaf8; }
     [data-theme="dark"] figure img { filter: invert(1) hue-rotate(180deg); border-color: #dcdcd8; }
-    figcaption { margin-top: var(--s-sm); padding: 0 var(--s-2xl); font-size: 13px; line-height: 20px; color: var(--muted); }
+    figcaption { margin-top: var(--s-sm); font-size: 13px; line-height: 20px; color: var(--muted); text-align: center; }
+    .zoom { position: relative; display: block; width: 100%; padding: 0; border: 0; background: none; cursor: zoom-in; border-radius: var(--r-md); }
+    .zoom-hint { position: absolute; top: var(--s-md); right: var(--s-md); width: 32px; height: 32px; display: grid; place-items: center; border: 1px solid var(--line-1); border-radius: var(--r-md); background: var(--bg); color: var(--fg); opacity: 0; transform: translateY(-2px); transition: opacity .15s var(--ease-out), transform .15s var(--ease-out); }
+    .zoom:hover .zoom-hint, .zoom:focus-visible .zoom-hint { opacity: 1; transform: none; }
+    @media (hover: none) { .zoom-hint { opacity: 1; transform: none; } }
+    .lb { width: 100vw; height: 100vh; height: 100dvh; max-width: none; max-height: none; margin: 0; padding: 0; border: 0; background: rgba(10, 10, 12, .98); color: #fafafa; overflow: hidden; }
+    .lb::backdrop { background: rgba(8, 8, 10, .6); }
+    .lb[open] { display: grid; place-items: center; animation: lb-in .2s var(--ease-out); }
+    @keyframes lb-in { from { opacity: 0; } to { opacity: 1; } }
+    .lb figure { position: static; left: auto; transform: none; width: auto; margin: 0; display: flex; flex-direction: column; align-items: center; gap: var(--s-md); max-width: 94vw; padding: 64px 0; }
+    .lb img { max-width: 94vw; max-height: calc(100dvh - 112px); width: auto; height: auto; object-fit: contain; border: 0; filter: none !important; }
+    .lb figcaption { color: #c9c9ce; }
+    .lb-close { position: fixed; top: var(--s-lg); right: var(--s-lg); width: 44px; height: 44px; display: grid; place-items: center; border: 1px solid rgba(255,255,255,.22); border-radius: var(--r-md); background: rgba(16,16,18,.7); color: #fafafa; cursor: pointer; }
+    .lb-close:hover { background: #2c2c30; border-color: rgba(255,255,255,.5); }
+    .lb-close:focus-visible { outline: 2px solid #fafafa; outline-offset: 2px; }
+    body.lb-open { overflow: hidden; }
+    @media (prefers-reduced-motion: reduce) { .lb[open] { animation: none; } }
     .flow { font-family: var(--font-mono); font-size: 14px; line-height: 24px; color: var(--fg-1); }
     .end { margin-top: var(--s-4xl); padding: var(--s-2xl) 0 96px; border-top: 1px solid var(--line); display: flex; justify-content: space-between; gap: var(--s-lg); font-size: 14px; }
     .end a { color: var(--fg-1); text-decoration: none; border-bottom: 1px solid var(--line-strong); }
@@ -97,7 +114,7 @@
     .toggle[aria-pressed="true"] .track { background: var(--accent); border-color: var(--accent); }
     .toggle[aria-pressed="true"] .knob { transform: translateX(14px); background: var(--accent-ink); }
     .toggle:hover .toggle-label { color: var(--fg); }
-    @media (max-width: 640px) { .col { padding: 0 var(--s-lg); } h1 { font-size: 30px; line-height: 36px; } figure { margin: var(--s-2xl) 0; } figcaption { padding: 0; } }
+    @media (max-width: 640px) { .col { padding: 0 var(--s-lg); } h1 { font-size: 30px; line-height: 36px; } figure { width: calc(100vw - 32px); margin: var(--s-3xl) 0; } }
     @media (prefers-reduced-motion: reduce) { *, *::before, *::after { transition-duration: .01ms !important; } }
   </style>
 </head>
@@ -116,7 +133,7 @@
       <p>Now it’s a loop. I frame the problem, explore wide with AI, narrow it down with judgment, prototype in code and test with real users. Then I go around again.</p>
 
       <figure>
-        <img src="../../img/blog-workflow-loop.svg" width="1200" height="600" alt="Sketch: the old process as five boxes in a straight line, and the new process as a loop of frame, explore, narrow, prototype and test">
+        <button class="zoom" type="button" aria-label="Enlarge image"><img src="../../img/blog-workflow-loop.svg" width="1200" height="600" alt="Sketch: the old process as five boxes in a straight line, and the new process as a loop of frame, explore, narrow, prototype and test"><span class="zoom-hint" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></span></button>
         <figcaption>The old flow ends at QA. The new one never really ends.</figcaption>
       </figure>
 
@@ -129,7 +146,7 @@
       </ul>
 
       <figure>
-        <img src="../../img/blog-workflow-judgment.svg" width="1200" height="600" loading="lazy" alt="Sketch: a pile of generated screens passes through a funnel of users, business goals and trade-offs, leaving the one screen that matters">
+        <button class="zoom" type="button" aria-label="Enlarge image"><img src="../../img/blog-workflow-judgment.svg" width="1200" height="600" loading="lazy" alt="Sketch: a pile of generated screens passes through a funnel of users, business goals and trade-offs, leaving the one screen that matters"><span class="zoom-hint" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></span></button>
         <figcaption>Making got cheap. Judgment didn’t.</figcaption>
       </figure>
 
@@ -145,6 +162,27 @@
     <span class="toggle-label" id="theme-label">Dark mode</span>
     <span class="track" aria-hidden="true"><span class="knob"></span></span>
   </button>
+  <dialog class="lb" id="lb" aria-label="Enlarged image">
+    <button class="lb-close" type="button" aria-label="Close"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"/></svg></button>
+    <figure><img alt=""><figcaption></figcaption></figure>
+  </dialog>
+  <script>
+    /* Lightbox: click a sketch to see it full screen; Esc, the close button or a click outside the image closes it. */
+    (function () {
+      var lb = document.getElementById('lb'), img = lb.querySelector('img'), cap = lb.querySelector('figcaption'), last = null;
+      function close() { lb.close(); }
+      document.querySelectorAll('.zoom').forEach(function (b) {
+        b.addEventListener('click', function () {
+          var src = b.querySelector('img'), fc = b.closest('figure').querySelector('figcaption');
+          img.src = src.src; img.alt = src.alt; cap.textContent = fc ? fc.textContent : '';
+          last = b; lb.showModal(); document.body.classList.add('lb-open');
+        });
+      });
+      lb.addEventListener('close', function () { document.body.classList.remove('lb-open'); if (last) last.focus(); });
+      lb.querySelector('.lb-close').addEventListener('click', close);
+      lb.addEventListener('click', function (e) { if (e.target === lb || e.target.tagName === 'FIGURE') close(); });
+    })();
+  </script>
   <script src="../app.js?v=8" defer></script>
 </body>
 </html>
