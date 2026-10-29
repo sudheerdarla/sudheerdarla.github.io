@@ -125,6 +125,7 @@
     trigger = b;
     img.src = src.getAttribute('src');
     img.alt = src.alt;
+    img.classList.toggle('is-framed', src.classList.contains('is-framed'));
     lb.showModal();
     document.body.classList.add('lb-open');
     document.getElementById('lb-close').focus();
