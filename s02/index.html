@@ -1869,39 +1869,16 @@ const PW_LABEL=['','Too weak','Okay','Strong','Very strong'];
 V.auth=r=>{
   const mode=r==='signup'?'signup':'login';
   if(!UI.auth||UI.auth.mode!==mode){authInit(mode);if(r==='login/sso')UI.auth.sso=true}
-  if(mode==='login')return loginPage();
-  return `<div class="auth ${getHero()}"><canvas id="bg" aria-hidden="true"></canvas>
-  <nav class="wrap auth-nav" aria-label="Site">
-    <a class="logo" href="#signup" aria-label="Saifuro">${logoSVG}<span>Saifuro</span></a>
-    <div style="display:flex;gap:8px;align-items:center">
-      ${mode==='signup'?`<span class="muted hide-sm">Have an account?</span><a class="btn sm glass" href="#login">Log in</a>`:`<span class="muted hide-sm">New to Saifuro?</span><a class="btn sm pri" href="#signup">Sign up</a>`}
-      <label class="sr" for="heroSel">Background</label><select id="heroSel" class="in sm glass hero-sel" onchange="setHero(this.value)" title="Hero background">${HEROES.map(([k,l])=>`<option value="${k}" ${getHero()===k?'selected':''}>${k}</option>`).join('')}</select>
-      <button class="iconbtn" onclick="setTheme(isDark()?'light':'dark');renderView()" aria-label="Switch to ${isDark()?'light':'dark'} theme">${ic(isDark()?'sun':'moon')}</button>
-    </div>
-  </nav>
-  <section class="wrap hero">
-    <div class="hero-copy">
-      <span class="hpill glass"><b>Pilot</b>Spend controls for AI agents</span>
-      <h1>Let your agents pay.<br><span class="grad">Keep the final say.</span></h1>
-      <p class="lede">Give every agent its own budget, vendor list and approval rules. Small payments settle on their own. Big ones wait for a person.</p>
-      <ul class="hero-pts">
-        <li><span class="pi glass">${ic('shield')}</span>Non-custodial. Funds stay in your own wallet.</li>
-        <li><span class="pi glass">${ic('inbox')}</span>Big payments wait for approval, here or in Slack.</li>
-        <li><span class="pi glass">${ic('activity')}</span>Every decision logged with the rule that made it.</li>
-      </ul>
-      <div class="rails-row"><span>Works across</span><span class="rail">x402</span><span class="rail">ACP</span><span class="rail">AP2</span><span class="rail">cards</span></div>
-    </div>
-    <div class="acard" id="acard">${authCard()}</div>
-  </section></div>`;
+  return loginPage(mode);
 };
 const notInProto=t=>`href="#" onclick="event.preventDefault();toast({title:'${t} isn’t part of this prototype'})"`;
-function loginPage(){
+function loginPage(mode){
   return `<div class="auth lp"><canvas id="bg" aria-hidden="true"></canvas>
   <nav class="lp-nav" aria-label="Site"><div class="wrap">
-    <a class="logo" href="#login" aria-label="Saifuro">${logoSVG}<span>Saifuro</span></a>
+    <a class="logo" href="#${mode}" aria-label="Saifuro">${logoSVG}<span>Saifuro</span></a>
     <div class="r">
       <div class="lp-links">${['Changelog','Docs','Pricing','Security'].map(l=>`<a ${notInProto(l)}>${l}</a>`).join('')}</div>
-      <a class="btn sm pri" href="#signup">Sign up</a>
+      ${mode==='signup'?'<a class="btn sm" href="#login">Log in</a>':'<a class="btn sm pri" href="#signup">Sign up</a>'}
       <button class="iconbtn" onclick="setTheme(isDark()?'light':'dark');renderView()" aria-label="Switch to ${isDark()?'light':'dark'} theme">${ic(isDark()?'sun':'moon')}</button>
     </div></div></nav>
   <section class="lp-hero">
