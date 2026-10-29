@@ -102,7 +102,7 @@
     /* Top bar + theme toggle */
     /* Theme toggle, fixed bottom left (same spot as on the case study page) */
     .toggle-fixed { position: fixed; z-index: 20; left: max(24px, calc((100vw - 1160px) / 2)); bottom: var(--s-2xl); }
-    @media (max-width: 960px) { .toggle-fixed { left: var(--s-lg); bottom: var(--s-lg); padding: 6px 10px; border: 1px solid var(--line); border-radius: var(--r-md); background: var(--bg); } }
+    @media (max-width: 960px) { .toggle-fixed { position: absolute; left: auto; bottom: auto; top: var(--s-md); right: var(--s-lg); min-height: 44px; } }
     .toggle { display: inline-flex; align-items: center; gap: var(--s-sm); min-height: 32px; padding: 0 2px; }
     .toggle-label { font-size: 13px; line-height: 16px; color: var(--muted); }
     .track { position: relative; width: 30px; height: 16px; border-radius: var(--r-md); background: var(--bg-3);

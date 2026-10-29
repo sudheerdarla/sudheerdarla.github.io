@@ -111,7 +111,7 @@
     .box { border: 1px solid var(--line); border-radius: var(--r-md); background: var(--bg); overflow: hidden; container-type: inline-size; outline: none; }
 
     @media (max-width: 960px) {
-      .content { margin: 0; max-width: none; padding: 112px var(--s-lg) var(--s-3xl); }
+      .content { margin: 0; max-width: none; padding: 92px var(--s-md) var(--s-3xl); }
     }
 
     /* ---------- Case study system ---------- */
@@ -414,8 +414,8 @@
     .lb::backdrop { background: rgba(8, 8, 10, .6); }
     .lb[open] { display: grid; place-items: center; animation: lb-in .2s var(--ease-out); }
     @keyframes lb-in { from { opacity: 0; } to { opacity: 1; } }
-    .lb figure { display: flex; flex-direction: column; align-items: center; gap: var(--s-md); max-width: 92vw; padding: 64px 0 24px; }
-    .lb img { display: block; max-width: 92vw; max-height: calc(100dvh - 150px); width: auto; height: auto; object-fit: contain; border-radius: var(--r-md); }
+    .lb figure { display: flex; flex-direction: column; align-items: center; gap: var(--s-md); max-width: 92vw; padding: 64px 0; }
+    .lb img { display: block; max-width: 92vw; max-height: calc(100dvh - 112px); width: auto; height: auto; object-fit: contain; border-radius: var(--r-md); }
     .lb figcaption { max-width: 60em; font-size: 13px; line-height: 19.5px; color: #c9c9ce; text-align: center; }
     .lb-close { position: fixed; top: var(--s-lg); right: var(--s-lg); width: 44px; height: 44px; display: grid; place-items: center; border: 1px solid rgba(255,255,255,.22); border-radius: var(--r-md); background: rgba(16,16,18,.7); color: #fafafa; cursor: pointer; transition: background-color .15s var(--ease-out), border-color .15s var(--ease-out); }
     .lb-close:hover { background: #2c2c30; border-color: rgba(255,255,255,.5); }
@@ -424,13 +424,14 @@
     @media (prefers-reduced-motion: reduce) { .lb[open] { animation: none; } }
     @media print { .lb { display: none !important; } .rail { display: none !important; } .content { margin: 0; padding: 0; } }
   </style>
-  <link rel="stylesheet" href="rail.css?v=5">
+  <link rel="stylesheet" href="rail.css?v=6">
 </head>
 <body>
   <a class="skip" href="#cs-main">Skip to case study</a>
   <aside class="rail" aria-label="Case study navigation">
     <a class="back" href="index.html"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M19 12H5M11 18l-6-6 6-6"/></svg> Back to home</a>
-    <nav class="side" aria-label="Case studies">
+    <button class="menu-btn" type="button" id="menu-btn" aria-expanded="false" aria-controls="cs-menu" aria-label="Case studies menu"><svg class="i-open" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true" focusable="false"><path d="M4 7h16M4 12h16M4 17h16"/></svg><svg class="i-close" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true" focusable="false"><path d="M18 6L6 18M6 6l12 12"/></svg></button>
+    <nav class="side" id="cs-menu" aria-label="Case studies">
       <p class="side-title" aria-hidden="true">Case studies</p>
       <ul>
         <li><a class="side-link" href="#saifuro" data-cs="saifuro"><b>Saifuro Console <span class="tag">(concept design)</span></b><span>AI agent spend controls</span></a></li>
@@ -444,6 +445,7 @@
       <span class="track" aria-hidden="true"><span class="knob"></span></span>
     </button>
   </aside>
+  <div class="menu-scrim" id="menu-scrim" hidden></div>
   <div class="content">
     <main class="box" id="cs-main" tabindex="-1">
       <div class="cs-host" id="cs-host"></div>
@@ -452,10 +454,10 @@
   </div>
   <dialog class="lb" id="lb" aria-label="Image viewer">
     <button class="lb-close" type="button" id="lb-close" aria-label="Close image viewer"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true" focusable="false"><path d="M18 6L6 18M6 6l12 12"/></svg></button>
-    <figure><img id="lb-img" alt=""><figcaption id="lb-cap"></figcaption></figure>
+    <figure><img id="lb-img" alt=""></figure>
   </dialog>
   <script src="cases.js?v=12"></script>
   <script src="app.js?v=4" defer></script>
-  <script src="work.js?v=7" defer></script>
+  <script src="work.js?v=8" defer></script>
 </body>
 </html>

@@ -93,7 +93,6 @@
   var lb = document.getElementById('lb');
   if (!lb || typeof lb.showModal !== 'function') return;
   var img = document.getElementById('lb-img');
-  var cap = document.getElementById('lb-cap');
   var trigger = null;
   function close() { if (lb.open) lb.close(); }
   document.addEventListener('click', function (e) {
@@ -103,7 +102,6 @@
     trigger = b;
     img.src = b.getAttribute('data-full');
     img.alt = src.alt;
-    cap.textContent = src.alt;
     lb.showModal();
     document.body.classList.add('lb-open');
     document.getElementById('lb-close').focus();
@@ -115,4 +113,23 @@
     img.removeAttribute('src');
     if (trigger) { trigger.focus({ preventScroll: true }); trigger = null; }
   });
+})();
+
+/* Mobile case study menu */
+(function () {
+  var btn = document.getElementById('menu-btn'), menu = document.getElementById('cs-menu'), scrim = document.getElementById('menu-scrim');
+  if (!btn || !menu) return;
+  function set(open, focusBtn) {
+    btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+    btn.setAttribute('aria-label', open ? 'Close case studies menu' : 'Case studies menu');
+    menu.classList.toggle('is-open', open);
+    if (scrim) scrim.hidden = !open;
+    if (open) { var cur = menu.querySelector('[aria-current="page"]') || menu.querySelector('a'); if (cur) cur.focus({ preventScroll: true }); }
+    else if (focusBtn) btn.focus();
+  }
+  btn.addEventListener('click', function () { set(btn.getAttribute('aria-expanded') !== 'true', false); });
+  if (scrim) scrim.addEventListener('click', function () { set(false, true); });
+  menu.addEventListener('click', function (e) { if (e.target.closest('a') && btn.getAttribute('aria-expanded') === 'true') set(false, false); });
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && btn.getAttribute('aria-expanded') === 'true') set(false, true); });
+  window.addEventListener('resize', function () { if (window.innerWidth > 960 && btn.getAttribute('aria-expanded') === 'true') set(false, false); });
 })();
