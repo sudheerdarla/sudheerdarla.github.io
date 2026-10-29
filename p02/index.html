@@ -164,6 +164,13 @@
 
     @media (hover: none) { .slot-tag { opacity: 1; transform: none; } }
 
+    /* Writing */
+    .post-date { font-size: 13px; line-height: 19.5px; color: var(--muted); }
+    .post h3 { margin-top: var(--s-xs); font-size: 22px; line-height: 28px; font-weight: 700; letter-spacing: -0.4px; }
+    .post .desc { margin-top: var(--s-xs); font-size: 16px; line-height: 24px; color: var(--muted); }
+    .slot img.sketch { object-fit: contain; object-position: center; }
+    [data-theme="dark"] .slot img.sketch { filter: invert(1) hue-rotate(180deg); }
+
     /* Experience / Education */
     .row { display: flex; align-items: center; justify-content: space-between; gap: var(--s-lg); padding: var(--s-lg) 0; border-bottom: 1px solid var(--line); }
     .row:first-child { padding-top: 0; }
@@ -227,6 +234,7 @@
           <h2 class="sr">Work and background</h2>
           <div class="tabs" role="tablist" aria-label="Work and background">
             <button class="tab" type="button" role="tab" id="t-projects" aria-controls="p-projects" aria-selected="true">Projects</button>
+            <button class="tab" type="button" role="tab" id="t-writing" aria-controls="p-writing" aria-selected="false" tabindex="-1">Writing</button>
             <button class="tab" type="button" role="tab" id="t-experience" aria-controls="p-experience" aria-selected="false" tabindex="-1">Experience</button>
             <button class="tab" type="button" role="tab" id="t-education" aria-controls="p-education" aria-selected="false" tabindex="-1">Education</button>
             <button class="tab" type="button" role="tab" id="t-skills" aria-controls="p-skills" aria-selected="false" tabindex="-1">Skills</button>
@@ -267,6 +275,17 @@
                 </article>
               </div>
             </div>
+          <div class="panel" role="tabpanel" id="p-writing" aria-labelledby="t-writing" tabindex="0" hidden>
+              <article class="post">
+                <p class="post-date"><time datetime="2026-10-29">Oct 29, 2026</time> · 3 min read</p>
+                <h3>My workflow has been updated!</h3>
+                <p class="desc">From a straight line to a loop, and what I’m seeing across the industry.</p>
+                <a class="slot" href="writing/workflow.html" aria-label="Read the post: My workflow has been updated!">
+                  <img class="sketch" alt="Sketch: the old linear design process next to the new loop" width="1200" height="600" loading="lazy" decoding="async" src="../img/blog-workflow-loop.svg">
+                  <span class="slot-tag" aria-hidden="true">Read post</span>
+                </a>
+              </article>
+            </div>
           <div class="panel" role="tabpanel" id="p-experience" aria-labelledby="t-experience" tabindex="0" hidden>
               <div class="row"><div class="row-left"><div class="badge" aria-hidden="true">IV</div><div><h3>Independent ventures</h3><div class="meta">Founder, Hyderabad</div></div></div><div class="dates">2023 – 2026</div></div>
               <div class="row"><div class="row-left"><div class="badge" aria-hidden="true">HC</div><div><h3>Hive Consultancy Services</h3><div class="meta">Product Designer, Bengaluru</div></div></div><div class="dates">Apr 2023 – Aug 2023</div></div>
@@ -297,6 +316,6 @@
             <span class="toggle-label" id="theme-label">Dark mode</span>
             <span class="track" aria-hidden="true"><span class="knob"></span></span>
           </button>
-    <script src="app.js?v=7" defer></script>
+    <script src="app.js?v=8" defer></script>
 </body>
 </html>

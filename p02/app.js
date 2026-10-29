@@ -39,5 +39,8 @@
       select(tabs[(j + tabs.length) % tabs.length], true);
     });
   });
+  /* Open a tab from the URL, e.g. #writing */
+  var fromHash = document.getElementById('t-' + location.hash.slice(1));
+  if (fromHash && tabs.indexOf(fromHash) > -1) select(fromHash, false);
 
 })();
