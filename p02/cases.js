@@ -61,7 +61,7 @@
         { label: 'Outcome', title: 'A working prototype, end to end.',
           lede: 'Everything in this case study works in the browser with sample data: sign up (one click fills in sample details), take the tour, approve and decline requests, create an agent, export the log and switch themes.',
           blocks: [
-            { type: 'figure', img: { src: 'saifuro-overview.jpg', dark: 'saifuro-overview-dark.jpg', w: 1920, h: 1200, alt: 'The Saifuro dashboard overview: approvals waiting with time left and risk flags, spend and approval stats, spend over the last 24 hours and budget by agent.' }, caption: 'Overview: what needs you, and how every agent is spending.' },
+            { type: 'figure', img: { src: 'saifuro-outcome-laptop.jpg', w: 1920, h: 1200, alt: 'The Saifuro dashboard overview in dark mode on a laptop: approvals waiting with time left and risk flags, spend and approval stats, spend over the last 24 hours and budget by agent.' }, caption: 'Overview: what needs you, and how every agent is spending.' },
             { type: 'cards', cols: 3, items: [
               { title: 'Agent pages', text: 'Each agent has its own spend, rules, vendors and pending requests, with pause and edit controls.' },
               { title: 'Approvers with limits', text: 'Owners, approvers with a spending limit, and viewers who can only look.' },
