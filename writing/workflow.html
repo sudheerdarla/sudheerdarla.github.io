@@ -82,7 +82,8 @@
     ul.points li { padding-left: 22px; position: relative; }
     ul.points li::before { content: "→"; position: absolute; left: 0; color: var(--muted); }
     /* Figures break out of the text column so the sketches read at a glance */
-    figure { position: relative; left: 50%; width: min(960px, calc(100vw - 48px)); transform: translateX(-50%); margin: var(--s-4xl) 0; }
+    /* A little wider than the text, but never wide enough to slide under the fixed theme switch in the bottom-left corner */
+    figure { position: relative; left: 50%; width: min(800px, max(100%, calc(100vw - 340px))); transform: translateX(-50%); margin: var(--s-4xl) 0; }
     figure img { display: block; width: 100%; height: auto; border: 1px solid var(--line); border-radius: var(--r-md); background: #fafaf8; }
     figcaption { margin-top: var(--s-sm); font-size: 13px; line-height: 20px; color: var(--muted); text-align: center; }
     .zoom { position: relative; display: block; width: 100%; padding: 0; border: 0; background: none; cursor: zoom-in; border-radius: var(--r-md); }
