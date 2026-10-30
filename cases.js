@@ -85,7 +85,7 @@
       title: 'One platform for global commodity trade, from discovery to settlement.',
       lede: 'Commodity deals in a $17T market still run on emails, calls and PDFs. I designed COMDEX end to end: one desktop product that works like a trading terminal and takes a deal from discovery to settlement.',
       facts: [['Role', 'Product designer'], ['Team', '1 PM, 3 engineers'], ['Year', '2019'], ['Platform', 'Desktop web app']],
-      hero: { src: 'p02/comdex-dash.jpg', w: 2880, h: 1800, alt: 'The COMDEX trader dashboard: wallet balance, receivables and payables, a buy versus sell volume chart, trade statistics, team activity, market news and a table of traders.' },
+      hero: { src: 'p02/comdex-dash.jpg', w: 2880, h: 1800, alt: 'The COMDEX trader dashboard: wallet balance, receivables and payables, a copper price trend chart, trade statistics, team activity, market news and a table of traders.' },
       stats: [['$10M+', 'Pilot trade volume processed on the platform'], ['Days to 1', 'A multi-day email and PDF loop became one Deal Room session'], ['3 + 1', 'Product modules, plus a public block explorer']],
       sections: [
         { label: 'Overview', title: 'One closed-loop system of record for a trade.',
