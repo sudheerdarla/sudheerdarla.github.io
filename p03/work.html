@@ -171,12 +171,12 @@
     .cs-quote footer { margin-top: var(--s-md); font-size: 13px; line-height: 18px; font-weight: 500; color: var(--muted); }
 
     /* Cards */
-    .cs-cards { display: grid; gap: var(--s-md); }
-    .cs-card { display: flex; flex-direction: column; padding: var(--s-xl); border: 1px solid var(--line); border-radius: var(--r-md); background: var(--bg-1); }
+    .cs-cards { display: grid; gap: var(--s-lg); }
+    .cs-card { display: flex; flex-direction: column; padding: var(--s-2xl); border: 1px solid var(--line); border-radius: var(--r-md); background: var(--bg-1); }
     .cs-card .cs-label { margin-bottom: var(--s-sm); }
     .cs-card h3 { font-size: 16px; line-height: 24px; font-weight: 600; letter-spacing: -0.005em; }
-    .cs-card h3 + p { margin-top: var(--s-xs); }
-    .cs-card p:not(.cs-label) { font-size: 14px; line-height: 22px; color: var(--fg-2); }
+    .cs-card h3 + p { margin-top: var(--s-sm); }
+    .cs-card p:not(.cs-label) { font-size: 15px; line-height: 24px; color: var(--fg-2); }
     .cs-dots { margin-top: var(--s-sm); }
     .cs-dots li { position: relative; padding-left: 14px; font-size: 14px; line-height: 22px; color: var(--fg-2); }
     .cs-dots li::before { content: ""; position: absolute; left: 0; top: 10px; width: 4px; height: 4px; background: var(--muted-2); }
@@ -217,7 +217,7 @@
     .cs-block-title + .cs-figure, .cs-block-title + .cs-flow { margin-top: var(--s-md); }
 
     /* Steps */
-    .cs-steps { display: grid; grid-template-columns: 1fr 1fr; gap: var(--s-xl) var(--s-2xl); counter-reset: step; }
+    .cs-steps { display: grid; grid-template-columns: 1fr 1fr; gap: var(--s-2xl) var(--s-3xl); counter-reset: step; }
     .cs-steps li { counter-increment: step; }
         .cs-steps h3 { margin-top: 0; font-size: 15px; line-height: 22px; font-weight: 600; }
     .cs-steps p { font-size: 13.5px; line-height: 20px; color: var(--muted); }
@@ -228,11 +228,10 @@
     .cs-decision h3 { margin-top: 0; max-width: 24em; font-size: 20px; line-height: 28px; font-weight: 700; letter-spacing: -0.015em; }
     .cs-shots { margin-top: var(--s-2xl); display: grid; gap: var(--s-md); }
     .cs-decision .cs-video { margin-top: var(--s-2xl); }
-    .cs-points { margin-top: var(--s-2xl); display: grid; gap: var(--s-xl) var(--s-2xl); counter-reset: pt; }
-    .cs-points li { counter-increment: pt; display: grid; grid-template-columns: 24px 1fr; column-gap: var(--s-md); }
-    .cs-points li::before { content: counter(pt); grid-row: span 2; width: 24px; height: 24px; display: grid; place-items: center; border: 1px solid var(--line-strong); border-radius: var(--r-md); font-family: var(--font-mono); font-size: 11px; color: var(--fg); }
+    .cs-points { margin-top: var(--s-3xl); display: grid; gap: var(--s-2xl) var(--s-3xl); }
+    .cs-points li { padding-top: var(--s-md); border-top: 1px solid var(--line); }
     .cs-points h4 { font-size: 15px; line-height: 22px; font-weight: 600; }
-    .cs-points p { margin-top: 2px; font-size: 14px; line-height: 22px; color: var(--fg-2); }
+    .cs-points p { margin-top: var(--s-xs); font-size: 15px; line-height: 24px; color: var(--fg-2); }
 
     /* Compare */
     .cs-compare { display: grid; gap: var(--s-md); }
@@ -247,10 +246,10 @@
     .cs-chips li { padding: 6px 12px; border: 1px solid var(--line); border-radius: var(--r-md); font-size: 14px; line-height: 20px; color: var(--fg-1); }
 
     /* Numbered learnings */
-    .cs-numbered { display: grid; gap: var(--s-xl) var(--s-2xl); counter-reset: ln; }
+    .cs-numbered { display: grid; gap: var(--s-2xl) var(--s-3xl); counter-reset: ln; }
     .cs-numbered li { counter-increment: ln; }
         .cs-numbered h3 { margin-top: 0; font-size: 16px; line-height: 24px; font-weight: 600; }
-    .cs-numbered p { margin-top: var(--s-xs); font-size: 14px; line-height: 22px; color: var(--fg-2); }
+    .cs-numbered p { margin-top: var(--s-xs); font-size: 15px; line-height: 24px; color: var(--fg-2); }
 
     /* End + next */
     .cs-end { margin-top: var(--s-4xl); padding: var(--s-4xl) var(--pad); border-top: 1px solid var(--line); }
@@ -473,7 +472,7 @@
     <button class="lb-close" type="button" id="lb-close" aria-label="Close image viewer"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true" focusable="false"><path d="M18 6L6 18M6 6l12 12"/></svg></button>
     <figure><img id="lb-img" alt=""></figure>
   </dialog>
-  <script src="cases.js?v=26"></script>
+  <script src="cases.js?v=27"></script>
   <script src="app.js?v=4" defer></script>
   <script src="work.js?v=10" defer></script>
 </body>

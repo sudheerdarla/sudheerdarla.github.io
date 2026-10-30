@@ -36,7 +36,7 @@
   function paintLike(n) {
     likeBtn.setAttribute('aria-pressed', liked ? 'true' : 'false');
     if (typeof n === 'number') likeCount.textContent = n;
-    likeBtn.setAttribute('aria-label', (liked ? 'Liked' : 'Like this post') + (likeCount.textContent ? ', ' + likeCount.textContent + ' likes' : ''));
+    likeBtn.setAttribute('aria-label', (liked ? 'Liked' : 'Like this post') + (likeCount.textContent ? ', ' + likeCount.textContent + (likeCount.textContent === '1' ? ' like' : ' likes') : ''));
   }
   likeBtn.hidden = false;
   paintLike();
