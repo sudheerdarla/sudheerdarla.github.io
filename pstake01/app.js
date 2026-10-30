@@ -18,6 +18,9 @@
     poolNew: '<svg viewBox="0 0 24 24"><path d="m12 3 9 5-9 5-9-5z"/><path d="M3 13l9 5 3-1.7M19 15v6M16 18h6"/></svg>',
     poolOut: '<svg viewBox="0 0 24 24"><path d="m12 3 9 5-9 5-9-5z"/><path d="m3 13 9 5 9-5M12 22v-4"/></svg>',
     gift: '<svg viewBox="0 0 24 24"><rect x="3" y="8" width="18" height="5" rx="1"/><path d="M5 13v8h14v-8M12 8v13M12 8S10.5 3 8 4s-.5 4 4 4zm0 0s1.5-5 4-4 .5 4-4 4z"/></svg>',
+    list: '<svg viewBox="0 0 24 24"><path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/></svg>',
+    grid: '<svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg>',
+    swap: '<svg viewBox="0 0 24 24"><path d="M7 4v16M3 16l4 4 4-4M17 20V4M13 8l4-4 4 4"/></svg>',
     search: '<svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>',
     chev: '<svg viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>',
     dl: '<svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>',
@@ -42,10 +45,11 @@
   };
   var POOLS = {
     persistence: [
-      { id: 'osmo', a: 'stkOSMO', b: 'OSMO', apr: 18.4, tvl: '$2.1M', base: 'OSMO' },
-      { id: 'atom', a: 'stkATOM', b: 'ATOM', apr: 22.1, tvl: '$3.4M', base: 'ATOM' }
+      { id: 'osmo', a: 'stkOSMO', b: 'OSMO', w: [50, 50], apr: 18.4, tvl: 2100000, base: 'OSMO' },
+      { id: 'atom', a: 'stkATOM', b: 'ATOM', w: [50, 50], apr: 22.1, tvl: 3400000, base: 'ATOM' },
+      { id: 'mix', a: 'stkATOM', b: 'stkOSMO', w: [80, 20], apr: 26.3, tvl: 640000, base: 'ATOM' }
     ],
-    bnb: [{ id: 'bnb', a: 'stkBNB', b: 'BNB', apr: 9.8, tvl: '$5.6M', base: 'BNB' }]
+    bnb: [{ id: 'bnb', a: 'stkBNB', b: 'BNB', w: [50, 50], apr: 9.8, tvl: 5600000, base: 'BNB' }]
   };
   var WALLETS = [
     ['MetaMask', 'metamask', 1, 'Popular'], ['Binance Wallet', 'binance', 0, 'Popular'], ['Keplr Wallet', 'keplr', 0, 'Popular'],
@@ -59,7 +63,7 @@
         persistence: { OSMO: 4.734655, stkOSMO: 12.330099, ATOM: 10, stkATOM: 0 },
         bnb: { BNB: 2.5, stkBNB: 0 }
       },
-      unbonding: [], lp: {}, lpB: {}, customPools: { persistence: [], bnb: [] }, rewards: { persistence: { stkOSMO: 0.184, stkATOM: 0 }, bnb: { stkBNB: 0 } }, activity: [], txs: seedTxs()
+      unbonding: [], lp: { persistenceosmo: 2 }, lpB: { persistenceosmo: 2.000672 }, lpR: { persistenceosmo: { a: 0.0213, b: 0.0204, t: Date.now() } }, customPools: { persistence: [], bnb: [] }, defi: { tab: 'all', view: 'list' }, dv: 2, rewards: { persistence: { stkOSMO: 0.184, stkATOM: 0 }, bnb: { stkBNB: 0 } }, activity: [], txs: seedTxs()
     };
   }
   // History that explains the starting balances (12.330099 stkOSMO came from two stakes; the BNB stake was flash-unstaked).
@@ -67,6 +71,7 @@
     var D = 864e5, now = Date.now();
     function t(type, net, ago, give, get, extra) { return Object.assign({ id: 'seed' + ago + type, type: type, net: net, at: now - ago * D, give: give, get: get, hash: mkHash(net, type + ago), st: 'Confirmed', fee: NETS[net].fee + ' ' + NETS[net].gas }, extra || {}); }
     return [
+      t('poolAdd', 'persistence', 7.4, [[2, 'stkOSMO'], [2.000672, 'OSMO']], null, { pool: 'stkOSMO / OSMO', note: 'Deposited at 50 / 50' }),
       t('restake', 'persistence', 2.1, [0.0418, 'stkOSMO'], [0.0418, 'stkOSMO']),
       t('claim', 'persistence', 5.4, [0.0612, 'stkOSMO'], [0.061221, 'OSMO']),
       t('stake', 'persistence', 9.2, [4.334243, 'OSMO'], [4.332787, 'stkOSMO']),
@@ -84,6 +89,11 @@
   try { var saved = JSON.parse(localStorage.getItem('pstake01')); if (saved && saved.bal) S = saved; } catch (e) {}
   if (!S.txs) S.txs = seedTxs(); if (!S.customPools) S.customPools = { persistence: [], bnb: [] }; if (!S.lpB) S.lpB = {};
   if (!S.txf) S.txf = { g: 'all', net: 'all', q: '' };
+  if (S.dv !== 2) { // older saved demos: pools now carry weights and rewards
+    S.lpR = S.lpR || {}; S.defi = { tab: 'all', view: 'list' };
+    Object.keys(S.customPools).forEach(function (k) { S.customPools[k].forEach(function (p) { p.w = p.w || [50, 50]; p.tvl = 0; delete p.fee; }); });
+    S.dv = 2;
+  }
   function save() { try { localStorage.setItem('pstake01', JSON.stringify(S)); } catch (e) {} }
 
   /* ---------- helpers ---------- */
@@ -103,6 +113,7 @@
     stake: { l: 'Stake', g: 'staking', ic: 'stake', c: 's' }, unstake: { l: 'Unstake', g: 'unstaking', ic: 'unstake', c: 'u' },
     flash: { l: 'Flash unstake', g: 'unstaking', ic: 'flash', c: 'u' }, unlock: { l: 'Unstake completed', g: 'unstaking', ic: 'unlock', c: 'u' },
     poolCreate: { l: 'Create pool', g: 'pools', ic: 'poolNew', c: 'p' }, poolAdd: { l: 'Add to pool', g: 'pools', ic: 'pool', c: 'p' }, poolRemove: { l: 'Remove from pool', g: 'pools', ic: 'poolOut', c: 'p' },
+    swap: { l: 'Swap', g: 'trades', ic: 'swap', c: 'p' },
     claim: { l: 'Claim rewards', g: 'rewards', ic: 'gift', c: 'r' }, restake: { l: 'Restake rewards', g: 'rewards', ic: 'refresh', c: 'r' }
   };
   function recordTx(type, give, get, extra) {
@@ -281,7 +292,7 @@
     });
     var ub = S.unbonding.filter(function (u) { return u.net === S.net; }); ub.forEach(function (u) { unb += u.amt * n.tokens[u.sym].price; });
     var lpRows = '';
-    pools().forEach(function (p) { var v = (S.lp[S.net + p.id] || 0), vb = S.lpB[S.net + p.id] || 0; if (v > 0 || vb > 0) { pool += v * priceOf(p.a) + vb * priceOf(p.b); lpRows += '<div class="li"><span class="dot v">' + p.a[0] + '</span><div class="m"><b>' + p.a + ' / ' + p.b + '</b><small>' + aprLabel(p) + (p.fee ? ' · ' + p.fee + '% fee tier' : '') + '</small></div><div class="r"><b>' + f(v, 4) + ' ' + p.a + (vb ? ' + ' + f(vb, 4) + ' ' + p.b : '') + '</b><small>' + usd(v * priceOf(p.a) + vb * priceOf(p.b)) + '</small></div><span class="pill">' + (p.mine ? 'Your pool' : 'Pool') + '</span></div>'; } });
+    pools().forEach(function (p) { var v = (S.lp[S.net + p.id] || 0), vb = S.lpB[S.net + p.id] || 0; if (v > 0 || vb > 0) { pool += v * priceOf(p.a) + vb * priceOf(p.b); lpRows += '<div class="li"><span class="dot v">' + p.a[0] + '</span><div class="m"><b>' + p.a + ' / ' + p.b + '</b><small>' + aprLabel(p) + ' · ' + wLabel(p) + '</small></div><div class="r"><b>' + f(v, 4) + ' ' + p.a + (vb ? ' + ' + f(vb, 4) + ' ' + p.b : '') + '</b><small>' + usd(v * priceOf(p.a) + vb * priceOf(p.b)) + '</small></div><span class="pill">' + (p.mine ? 'Your pool' : 'Pool') + '</span></div>'; } });
     var rw = S.rewards[S.net], rwRows = '';
     Object.keys(rw).forEach(function (k) { if (rw[k] > 0) { var T = n.tokens[baseOf(k)]; rew += rw[k] * T.price / T.r; rwRows += '<div class="li"><span class="dot g">' + k[0] + '</span><div class="m"><b>' + f(rw[k], 4) + ' ' + k + '</b><small>' + usd(rw[k] * T.price / T.r) + '</small></div><button class="btn ghost sm" data-r="claim" data-k="' + k + '">Claim</button><button class="btn sm" data-r="restake" data-k="' + k + '">Restake</button></div>'; } });
     var ubRows = ub.map(function (u) { var i = S.unbonding.indexOf(u), pct = (u.total - u.left) / u.total * 100; return '<div class="li"><span class="dot ' + n.tokens[u.sym].cls + '">' + u.sym[0] + '</span><div class="m"><b>' + f(u.amt, 4) + ' ' + u.sym + '</b><small>' + u.left + ' days left of ' + u.total + '</small><div class="bar"><i style="width:' + pct + '%"></i></div></div><span class="pill y">Unstaking</span><button class="btn ghost sm" data-skip="' + i + '" title="Prototype shortcut">Skip 7d</button></div>'; }).join('');
@@ -315,44 +326,198 @@
   }
 
   /* defi */
+  var MIN_CLAIM = 0.01; // dollars
+  var DEMO_SPEED = 1440; // pool rewards accrue a day's worth every minute so the demo shows movement
+  function pkey(p) { return S.net + p.id; }
+  function wOf(p) { return p.w || [50, 50]; }
+  function wLabel(p) { return wOf(p)[0] + ' / ' + wOf(p)[1]; }
+  function dotCls(sym) { var n = net(), b = baseOf(sym); return n.tokens[b] && n.tokens[b].stk === sym ? 'g' : (n.tokens[sym] ? n.tokens[sym].cls : ''); }
+  function pairDots(p, big) { var st = big ? ' style="width:40px;height:40px"' : ''; return '<span class="pair"><span class="dot ' + dotCls(p.a) + '"' + st + '>' + p.a[0] + '</span><span class="dot ' + dotCls(p.b) + '"' + st + '>' + p.b[0] + '</span></span>'; }
+  function posOf(p) { var k = pkey(p); return { a: S.lp[k] || 0, b: S.lpB[k] || 0 }; }
+  function posVal(p) { var x = posOf(p); return x.a * priceOf(p.a) + x.b * priceOf(p.b); }
+  function tvlOf(p) { return (p.tvl || 0) + posVal(p); }
+  function shareOf(p) { var t = tvlOf(p); return t ? posVal(p) / t : 0; }
+  function rewOf(p) { var k = pkey(p); return S.lpR[k] || (S.lpR[k] = { a: 0, b: 0, t: Date.now() }); }
+  function rewVal(p) { var r = rewOf(p); return r.a * priceOf(p.a) + r.b * priceOf(p.b); }
+  function accrue(p) {
+    var r = rewOf(p), now = Date.now(), dt = Math.max(0, (now - (r.t || now)) / 1000); r.t = now;
+    if (!p.apr || posVal(p) <= 0) return;
+    var dv = posVal(p) * p.apr / 100 / 31536000 * dt * DEMO_SPEED, w = wOf(p);
+    r.a += dv * w[0] / 100 / priceOf(p.a); r.b += dv * w[1] / 100 / priceOf(p.b);
+  }
+  function accrueAll() { pools().forEach(accrue); }
+  // amounts that keep the pool's weights at the current price, given one side
+  function pairFor(p, side, amt) {
+    var w = wOf(p), pa = priceOf(p.a), pb = priceOf(p.b);
+    if (side === 'a') { var total = amt * pa / (w[0] / 100); return { a: amt, b: total * w[1] / 100 / pb }; }
+    var tot = amt * pb / (w[1] / 100); return { a: tot * w[0] / 100 / pa, b: amt };
+  }
+  function money(v) { return v >= 1e6 ? '$' + (v / 1e6).toFixed(2) + 'M' : v >= 1e3 ? '$' + (v / 1e3).toFixed(1) + 'K' : '$' + f(v, 2); }
+
   function renderDefi() {
-    var n = net();
-    view.innerHTML = '<div class="wrap wide"><div style="display:flex;align-items:flex-start;gap:12px;flex-wrap:wrap"><div style="flex:1;min-width:220px"><h1>DeFi</h1><p class="sub">Put your staked tokens to work in pools on ' + n.name + '.</p></div><button class="btn sm" id="newPool" style="margin-top:4px">+ Create pool</button></div>' +
-      '<p class="note">Pools are not staking. Returns vary with trading volume, and pool tokens can lose value relative to holding (impermanent loss).</p><div class="pools">' +
-      pools().map(function (p) {
-        var v = S.lp[S.net + p.id] || 0, vb = S.lpB[S.net + p.id] || 0, T = n.tokens[baseOf(p.b)] || n.tokens[p.base];
-        return '<div class="pool"><div class="pair"><span class="dot v">' + p.a[0] + '</span><span class="dot ' + (T ? T.cls : '') + '">' + p.b[0] + '</span></div><div class="m"><b>' + p.a + ' / ' + p.b + (p.mine ? ' <span class="pill" style="margin-left:6px">Created by you</span>' : '') + '</b><small>' + (v || vb ? 'You have ' + f(v, 4) + ' ' + p.a + (vb ? ' + ' + f(vb, 4) + ' ' + p.b : '') + ' in pool' : 'Not in pool') + (p.fee ? ' · ' + p.fee + '% fee tier' : '') + '</small></div>' +
-          '<div class="c"><small>APR</small><b style="color:' + (p.apr == null ? 'var(--mut)' : 'var(--grn)') + '">' + (p.apr == null ? 'New' : p.apr + '%') + '</b></div><div class="c"><small>TVL</small><b>' + (p.mine ? usd((v * priceOf(p.a)) + vb * priceOf(p.b)).replace('≈ ', '') : p.tvl) + '</b></div>' +
-          '<button class="btn sm" data-add="' + p.id + '">Add</button>' + (v || vb ? '<button class="btn ghost sm" data-rm="' + p.id + '">Remove</button>' : '') + '</div>';
-      }).join('') + '</div></div>';
-    $$('[data-add]').forEach(function (b) { b.onclick = function () { addModal(b.dataset.add); }; });
+    accrueAll(); save();
+    var n = net(), D = S.defi, all = pools(), mine = all.filter(function (p) { return posVal(p) > 0 || rewVal(p) > 0; }), list = D.tab === 'mine' ? mine : all;
+    var myV = mine.reduce(function (s, p) { return s + posVal(p); }, 0), myR = mine.reduce(function (s, p) { return s + rewVal(p); }, 0);
+    function row(p) {
+      var v = posVal(p), r = rewVal(p), w = wOf(p);
+      return '<button class="pl-row" data-pool="' + p.id + '"><span class="pl-pool">' + pairDots(p) + '<span><b>' + p.a + ' / ' + p.b + '</b><small>' + (p.mine ? 'Created by you' : n.name) + '</small></span></span>' +
+        '<span class="pl-w"><span class="wbar"><i style="width:' + w[0] + '%"></i></span><small>' + w[0] + '% · ' + w[1] + '%</small></span>' +
+        '<span class="num ' + (p.apr ? 'apr' : 'mutd') + '">' + (p.apr ? p.apr.toFixed(1) + '%' : 'New') + '</span>' +
+        '<span class="num">' + money(tvlOf(p)) + '</span>' +
+        '<span class="num">' + (v ? money(v) : '<span class="mutd">—</span>') + '</span>' +
+        '<span class="num">' + (r ? '<span class="apr">' + money(r) + '</span>' : '<span class="mutd">—</span>') + '</span>' +
+        '<span class="pl-chev" aria-hidden="true">›</span></button>';
+    }
+    function card(p) {
+      var v = posVal(p), r = rewVal(p), w = wOf(p);
+      return '<div class="pl-card"><button class="pl-card-main" data-pool="' + p.id + '"><span class="pl-pool">' + pairDots(p, true) + '<span><b>' + p.a + ' / ' + p.b + '</b><small>' + w[0] + '% ' + p.a + ' · ' + w[1] + '% ' + p.b + '</small></span></span>' +
+        '<span class="wbar"><i style="width:' + w[0] + '%"></i></span>' +
+        '<span class="pl-kv"><span><small>APR</small><b class="' + (p.apr ? 'apr' : 'mutd') + '">' + (p.apr ? p.apr.toFixed(1) + '%' : 'New') + '</b></span><span><small>TVL</small><b>' + money(tvlOf(p)) + '</b></span>' +
+        '<span><small>My liquidity</small><b>' + (v ? money(v) : '—') + '</b></span><span><small>Rewards</small><b class="' + (r ? 'apr' : '') + '">' + (r ? money(r) : '—') + '</b></span></span></button>' +
+        '<div class="pl-card-acts"><button class="btn sm" data-addp="' + p.id + '">Add liquidity</button><button class="btn ghost sm" data-trade="' + p.id + '">Trade pair</button></div></div>';
+    }
+    view.innerHTML = '<div class="wrap wide"><div class="dh"><div><h1>DeFi</h1><p class="sub">Provide two assets to a pool at its set weights and earn trading rewards on ' + n.name + '.</p></div><button class="btn sm" id="newPool">+ Create pool</button></div>' +
+      (S.connected && mine.length ? '<div class="tiles"><div class="tile"><small><i style="background:#7a5af8"></i>My liquidity</small><strong>' + money(myV) + '</strong><em>' + mine.length + ' pool' + (mine.length > 1 ? 's' : '') + ' on ' + n.name + '</em></div><div class="tile"><small><i style="background:#3ecf8e"></i>Unclaimed rewards</small><strong id="myRew">' + money(myR) + '</strong><em>Claim or restake from a pool</em></div></div>' : '') +
+      '<p class="note">Pools are not staking. Returns come from trading fees, and a pool’s mix can drift from holding the tokens yourself (impermanent loss).</p>' +
+      '<div class="pl-tools"><div class="seg" role="tablist"><button role="tab" data-ptab="all" class="' + (D.tab === 'all' ? 'on' : '') + '" aria-selected="' + (D.tab === 'all') + '">All pools<span class="n">' + all.length + '</span></button><button role="tab" data-ptab="mine" class="' + (D.tab === 'mine' ? 'on' : '') + '" aria-selected="' + (D.tab === 'mine') + '">My pools<span class="n">' + mine.length + '</span></button></div>' +
+      '<div class="seg vt" role="group" aria-label="Layout"><button data-pview="list" class="' + (D.view === 'list' ? 'on' : '') + '" aria-pressed="' + (D.view === 'list') + '" aria-label="List view">' + ICON.list + '</button><button data-pview="card" class="' + (D.view === 'card' ? 'on' : '') + '" aria-pressed="' + (D.view === 'card') + '" aria-label="Card view">' + ICON.grid + '</button></div></div>' +
+      (!list.length ? '<div class="list"><div class="empty" style="padding:40px 20px">' + (S.connected ? 'You’re not providing liquidity to any pool yet.' : 'Connect a wallet to see your pools.') + '<br><button class="btn sm" id="seeAll" style="margin-top:14px;display:inline-block">' + (S.connected ? 'Browse all pools' : 'Connect wallet') + '</button></div></div>'
+        : D.view === 'list' ? '<div class="list pl-list"><div class="pl-row pl-head"><span>Pool</span><span>Weights</span><span class="num">APR</span><span class="num">TVL</span><span class="num">My liquidity</span><span class="num">Rewards</span><span></span></div>' + list.map(row).join('') + '</div>'
+        : '<div class="pl-cards">' + list.map(card).join('') + '</div>') + '</div>';
     $('#newPool').onclick = createPoolModal;
-    $$('[data-rm]').forEach(function (b) {
-      b.onclick = function () {
-        var p = pools().filter(function (x) { return x.id === b.dataset.rm; })[0], k = S.net + p.id, v = S.lp[k] || 0, vb = S.lpB[k] || 0;
-        S.bal[S.net][p.a] += v; if (vb) S.bal[S.net][p.b] += vb; S.lp[k] = 0; S.lpB[k] = 0;
-        recordTx('poolRemove', null, vb ? [[v, p.a], [vb, p.b]] : [v, p.a], { pool: p.a + ' / ' + p.b });
-        log('Removed ' + f(v, 4) + ' ' + p.a + ' from pool'); save(); toast('Removed from pool', f(v, 4) + ' ' + p.a + (vb ? ' + ' + f(vb, 4) + ' ' + p.b : '') + ' returned'); renderDefi();
-      };
-    });
+    $$('[data-ptab]').forEach(function (b) { b.onclick = function () { S.defi.tab = b.dataset.ptab; save(); renderDefi(); }; });
+    $$('[data-pview]').forEach(function (b) { b.onclick = function () { S.defi.view = b.dataset.pview; save(); renderDefi(); }; });
+    $$('[data-pool]').forEach(function (b) { b.onclick = function () { poolDetail(b.dataset.pool); }; });
+    $$('[data-addp]').forEach(function (b) { b.onclick = function () { addModal(b.dataset.addp); }; });
+    $$('[data-trade]').forEach(function (b) { b.onclick = function () { tradeModal(b.dataset.trade); }; });
+    var sa = $('#seeAll'); if (sa) sa.onclick = function () { if (!S.connected) return connectModal(); S.defi.tab = 'all'; save(); renderDefi(); };
+  }
+  function poolById(id) { return pools().filter(function (x) { return x.id === id; })[0]; }
+
+  var detailTimer = null;
+  function poolDetail(id) {
+    var p = poolById(id); if (!p) return; accrue(p); save();
+    var x = posOf(p), v = posVal(p), r = rewOf(p), rv = rewVal(p), w = wOf(p), has = v > 0;
+    openModal('<button class="x" aria-label="Close">×</button><div class="pd-h">' + pairDots(p, true) + '<div><h2 style="margin:0">' + p.a + ' / ' + p.b + '</h2><p class="sub" style="margin:2px 0 0">' + (p.mine ? 'Created by you · ' : '') + net().name + '</p></div></div>' +
+      '<div class="wbar lg"><i style="width:' + w[0] + '%"></i></div><div class="row" style="margin-top:6px"><span>' + w[0] + '% ' + p.a + '</span><span>' + w[1] + '% ' + p.b + '</span></div>' +
+      '<div class="pd-stats"><div><small>APR</small><b class="' + (p.apr ? 'apr' : '') + '">' + (p.apr ? p.apr.toFixed(1) + '%' : 'New') + '</b></div><div><small>TVL</small><b>' + money(tvlOf(p)) + '</b></div><div><small>Your share</small><b>' + (has ? (shareOf(p) * 100).toFixed(shareOf(p) > .1 ? 1 : 4) + '%' : '—') + '</b></div></div>' +
+      '<div class="pd-box"><div class="row"><span>Your liquidity</span><b>' + (has ? usd(v).replace('≈ ', '') : '—') + '</b></div>' + (has ? '<div class="pd-amts"><span><span class="dot ' + dotCls(p.a) + '">' + p.a[0] + '</span>' + f(x.a, 4) + ' ' + p.a + '</span><span><span class="dot ' + dotCls(p.b) + '">' + p.b[0] + '</span>' + f(x.b, 4) + ' ' + p.b + '</span></div>' : '<p class="pd-empty">You don’t have liquidity in this pool yet. Add both assets to start earning.</p>') + '</div>' +
+      '<div class="pd-box"><div class="row"><span>Unclaimed rewards</span><b id="pdRv" class="apr">' + usd(rv).replace('≈ ', '') + '</b></div><div class="pd-amts"><span id="pdRa">' + f(r.a, 6) + ' ' + p.a + '</span><span id="pdRb">' + f(r.b, 6) + ' ' + p.b + '</span></div>' +
+        '<div class="pd-acts"><button class="btn ghost sm" id="pdClaim"' + (rv >= MIN_CLAIM ? '' : ' disabled') + '>Claim</button><button class="btn sm" id="pdRestake"' + (rv >= MIN_CLAIM && has ? '' : ' disabled') + '>Restake into pool</button></div>' +
+        (rv < MIN_CLAIM ? '<p class="pd-empty" id="pdMin" style="margin-top:8px">You can claim once rewards reach $0.01.</p>' : '') +
+        (p.apr ? '' : '<p class="pd-empty" style="margin-top:8px">New pools earn from trading fees once people trade the pair.</p>') + '</div>' +
+      '<div class="pd-main"><button class="btn" id="pdAdd">Add liquidity</button><button class="btn ghost" id="pdTrade">Trade pair</button>' + (has ? '<button class="btn ghost" id="pdRemove">Remove</button>' : '') + '</div>');
+    $('#pdAdd').onclick = function () { addModal(p.id); };
+    $('#pdTrade').onclick = function () { tradeModal(p.id); };
+    var rm = $('#pdRemove'); if (rm) rm.onclick = function () { removeModal(p.id); };
+    $('#pdClaim').onclick = function () { claimPool(p, false); };
+    $('#pdRestake').onclick = function () { claimPool(p, true); };
+    clearInterval(detailTimer);
+    detailTimer = setInterval(function () {
+      var el = $('#pdRv'); if (!el) return clearInterval(detailTimer);
+      accrue(p); var rr = rewOf(p); el.textContent = usd(rewVal(p)).replace('≈ ', ''); $('#pdRa').textContent = f(rr.a, 6) + ' ' + p.a; $('#pdRb').textContent = f(rr.b, 6) + ' ' + p.b;
+      if (rewVal(p) >= MIN_CLAIM) { $('#pdClaim').disabled = false; if (posVal(p) > 0) $('#pdRestake').disabled = false; var mm = $('#pdMin'); if (mm) mm.remove(); }
+    }, 1000);
+  }
+  function claimPool(p, restake) {
+    accrue(p); var r = rewOf(p), a = r.a, b = r.b, k = pkey(p); if (rewVal(p) < MIN_CLAIM) return;
+    if (restake) { S.lp[k] = (S.lp[k] || 0) + a; S.lpB[k] = (S.lpB[k] || 0) + b; recordTx('restake', [[a, p.a], [b, p.b]], [[a, p.a], [b, p.b]], { pool: p.a + ' / ' + p.b, note: 'Pool rewards added back at ' + wLabel(p) }); }
+    else { S.bal[S.net][p.a] += a; S.bal[S.net][p.b] += b; recordTx('claim', null, [[a, p.a], [b, p.b]], { pool: p.a + ' / ' + p.b, note: 'Pool rewards' }); }
+    r.a = 0; r.b = 0; r.t = Date.now(); log((restake ? 'Restaked ' : 'Claimed ') + p.a + ' / ' + p.b + ' rewards'); save();
+    toast(restake ? 'Rewards restaked' : 'Rewards claimed', f(a, 4) + ' ' + p.a + ' + ' + f(b, 4) + ' ' + p.b + (restake ? ' added to the pool' : ' sent to your wallet'));
+    poolDetail(p.id); render();
+  }
+
+  // two-asset deposit at the pool's weights (used by Add liquidity and Create pool)
+  function depositFields(p, st, onChange) {
+    var A = S.bal[S.net][p.a] || 0, B = S.bal[S.net][p.b] || 0;
+    return '<div class="dep"><div class="row"><span>' + wOf(p)[0] + '% · ' + p.a + '</span><span>Available <b>' + f(A, 4) + '</b> <button class="max" data-max="a">MAX</button></span></div><div class="dep-in"><span class="dot ' + dotCls(p.a) + '">' + p.a[0] + '</span><input class="amt" id="depA" inputmode="decimal" placeholder="0.00" aria-label="' + p.a + ' amount" value="' + (st.a ? +st.a.toFixed(6) : '') + '"><span class="u">' + p.a + '</span></div></div>' +
+      '<div class="dep-plus" aria-hidden="true">+</div>' +
+      '<div class="dep"><div class="row"><span>' + wOf(p)[1] + '% · ' + p.b + '</span><span>Available <b>' + f(B, 4) + '</b> <button class="max" data-max="b">MAX</button></span></div><div class="dep-in"><span class="dot ' + dotCls(p.b) + '">' + p.b[0] + '</span><input class="amt" id="depB" inputmode="decimal" placeholder="0.00" aria-label="' + p.b + ' amount" value="' + (st.b ? +st.b.toFixed(6) : '') + '"><span class="u">' + p.b + '</span></div></div>';
+  }
+  function bindDeposit(p, st, upd) {
+    function set(side, v) { var x = pairFor(p, side, v); st.a = x.a; st.b = x.b; if (side === 'a') $('#depB').value = v ? +x.b.toFixed(6) : ''; else $('#depA').value = v ? +x.a.toFixed(6) : ''; upd(); }
+    $('#depA').oninput = function () { this.value = this.value.replace(/[^0-9.]/g, ''); set('a', parseFloat(this.value) || 0); };
+    $('#depB').oninput = function () { this.value = this.value.replace(/[^0-9.]/g, ''); set('b', parseFloat(this.value) || 0); };
+    $$('[data-max]').forEach(function (b) { b.onclick = function () {
+      var A = S.bal[S.net][p.a] || 0, B = S.bal[S.net][p.b] || 0, fromA = pairFor(p, 'a', A), x = fromA.b <= B ? fromA : pairFor(p, 'b', B);
+      st.a = +x.a.toFixed(6); st.b = +x.b.toFixed(6); $('#depA').value = st.a || ''; $('#depB').value = st.b || ''; upd();
+    }; });
+  }
+  function depositCheck(p, st) {
+    var A = S.bal[S.net][p.a] || 0, B = S.bal[S.net][p.b] || 0;
+    if (!st.a || !st.b) return ['Enter an amount', ''];
+    if (st.a > A + 1e-9) return ['Insufficient ' + p.a, 'You have ' + f(A, 4) + ' ' + p.a + '. This pool needs both assets at ' + wLabel(p) + '.'];
+    if (st.b > B + 1e-9) return ['Insufficient ' + p.b, 'You have ' + f(B, 4) + ' ' + p.b + '. This pool needs both assets at ' + wLabel(p) + '.'];
+    return null;
   }
   function addModal(id) {
     if (!S.connected) return connectModal();
-    var p = pools().filter(function (x) { return x.id === id; })[0], bal = S.bal[S.net][p.a];
-    openModal('<button class="x" aria-label="Close">×</button><h2>Add to ' + p.a + ' / ' + p.b + '</h2><p class="sub">Deposit ' + p.a + ' into the pool. ' + aprLabel(p) + '.</p>' +
-      '<div class="row"><span>Amount</span><span>Available <b>' + f(bal) + ' ' + p.a + '</b> <button class="max" id="m2">MAX</button></span></div><input class="mini" id="a2" inputmode="decimal" placeholder="0.00" autofocus>' +
-      '<p class="err" id="e2" hidden></p>' +
-      (bal <= 0 ? '<p class="note" style="margin-top:12px">You have no ' + p.a + '. Stake ' + p.b + ' first.</p><button class="btn" id="g2">Go to Staking</button>' : '<button class="btn" id="g2" disabled>Enter an amount</button>'));
-    var inp = $('#a2'), g = $('#g2');
-    if (bal <= 0) { g.onclick = function () { closeModal(); S.view = 'staking'; S.tab = 'stake'; save(); render(); }; return; }
-    $('#m2').onclick = function () { inp.value = +bal.toFixed(6); upd(); };
-    inp.oninput = upd;
-    function upd() { var a = parseFloat(inp.value) || 0, e = $('#e2'); e.hidden = true; g.disabled = false;
-      if (!a) { g.disabled = true; g.textContent = 'Enter an amount'; } else if (a > bal) { g.disabled = true; g.textContent = 'Insufficient balance'; e.hidden = false; e.textContent = 'You only have ' + f(bal) + ' ' + p.a + '.'; } else g.textContent = 'Add to pool'; }
-    g.onclick = function () {
-      var a = parseFloat(inp.value); openModal('<div class="center"><div class="spinner"></div><h2>Waiting for signature</h2><p>Confirm the transaction in your wallet…</p></div>');
-      setTimeout(function () { S.bal[S.net][p.a] -= a; S.lp[S.net + p.id] = (S.lp[S.net + p.id] || 0) + a; recordTx('poolAdd', [a, p.a], null, { pool: p.a + ' / ' + p.b }); log('Added ' + f(a, 4) + ' ' + p.a + ' to pool'); save(); closeModal(); toast('Added to pool', f(a, 4) + ' ' + p.a + (p.apr == null ? ' added to your new pool' : ' now earning ' + p.apr + '% APR')); renderDefi(); }, 1300);
+    var p = poolById(id), st = { a: 0, b: 0 };
+    openModal('<button class="x" aria-label="Close">×</button><h2>Add liquidity</h2><p class="sub">' + p.a + ' / ' + p.b + ' takes both assets at ' + wOf(p)[0] + '% / ' + wOf(p)[1] + '% by value. Enter either amount and the other fills in.</p>' +
+      depositFields(p, st) + '<div class="kv"><div class="row"><span>Deposit value</span><b id="depV">$0.00</b></div><div class="row"><span>Pool APR</span><b>' + aprLabel(p) + '</b></div><div class="row"><span>Network fee</span><b>~' + net().fee + ' ' + net().gas + '</b></div></div>' +
+      '<p class="err" id="depErr" hidden></p><button class="btn" id="depGo" disabled>Enter an amount</button>');
+    function upd() {
+      var c = depositCheck(p, st), g = $('#depGo'), e = $('#depErr');
+      $('#depV').textContent = usd(st.a * priceOf(p.a) + st.b * priceOf(p.b)).replace('≈ ', '');
+      g.disabled = !!c; g.textContent = c ? c[0] : 'Add ' + f(st.a, 4) + ' ' + p.a + ' + ' + f(st.b, 4) + ' ' + p.b; e.hidden = !(c && c[1]); if (c) e.textContent = c[1];
+    }
+    bindDeposit(p, st, upd); $('#depA').focus();
+    $('#depGo').onclick = function () {
+      var a = st.a, b = st.b;
+      openModal('<div class="center"><div class="spinner"></div><h2>Waiting for signature</h2><p>Confirm the transaction in your wallet…</p></div>');
+      setTimeout(function () {
+        var k = pkey(p); accrue(p); S.bal[S.net][p.a] -= a; S.bal[S.net][p.b] -= b; S.lp[k] = (S.lp[k] || 0) + a; S.lpB[k] = (S.lpB[k] || 0) + b;
+        recordTx('poolAdd', [[a, p.a], [b, p.b]], null, { pool: p.a + ' / ' + p.b, note: 'Deposited at ' + wLabel(p) });
+        log('Added liquidity to ' + p.a + ' / ' + p.b); save(); closeModal(); render(); toast('Liquidity added', f(a, 4) + ' ' + p.a + ' + ' + f(b, 4) + ' ' + p.b + ' in ' + p.a + ' / ' + p.b);
+      }, 1300);
     };
+  }
+  function removeModal(id) {
+    var p = poolById(id), x = posOf(p), pct = 50;
+    function draw() {
+      openModal('<button class="x" aria-label="Close">×</button><h2>Remove liquidity</h2><p class="sub">You get both assets back in the pool’s current mix.</p>' +
+        '<div class="tiers four" role="radiogroup" aria-label="Amount to remove">' + [25, 50, 75, 100].map(function (v) { return '<button role="radio" aria-checked="' + (pct === v) + '" data-pct="' + v + '" class="' + (pct === v ? 'on' : '') + '"><b>' + v + '%</b></button>'; }).join('') + '</div>' +
+        '<div class="kv"><div class="row"><span>You receive</span><b>' + f(x.a * pct / 100, 4) + ' ' + p.a + '</b></div><div class="row"><span></span><b>' + f(x.b * pct / 100, 4) + ' ' + p.b + '</b></div><div class="row"><span>Value</span><b>' + usd(posVal(p) * pct / 100).replace('≈ ', '') + '</b></div></div>' +
+        (pct === 100 && rewVal(p) > 0 ? '<p class="note" style="margin-top:12px">Unclaimed rewards stay claimable after you remove liquidity.</p>' : '') + '<button class="btn" id="rmGo">Remove ' + pct + '%</button>');
+      $$('[data-pct]').forEach(function (b) { b.onclick = function () { pct = +b.dataset.pct; draw(); }; });
+      $('#rmGo').onclick = function () {
+        var k = pkey(p), a = x.a * pct / 100, b = x.b * pct / 100; accrue(p);
+        S.lp[k] -= a; S.lpB[k] -= b; if (S.lp[k] < 1e-9) S.lp[k] = 0; if (S.lpB[k] < 1e-9) S.lpB[k] = 0; S.bal[S.net][p.a] += a; S.bal[S.net][p.b] += b;
+        recordTx('poolRemove', null, [[a, p.a], [b, p.b]], { pool: p.a + ' / ' + p.b, note: 'Removed ' + pct + '%' });
+        log('Removed ' + pct + '% from ' + p.a + ' / ' + p.b); save(); closeModal(); render(); toast('Liquidity removed', f(a, 4) + ' ' + p.a + ' + ' + f(b, 4) + ' ' + p.b + ' returned');
+      };
+    }
+    draw();
+  }
+  function tradeModal(id) {
+    if (!S.connected) return connectModal();
+    var p = poolById(id), st = { from: p.a, to: p.b, amt: '' }, FEE = 0.003;
+    function draw(caret) {
+      var a = parseFloat(st.amt) || 0, bal = S.bal[S.net][st.from] || 0, liq = tvlOf(p), val = a * priceOf(st.from), impact = liq ? val / liq * 100 : 100;
+      var out = a * priceOf(st.from) / priceOf(st.to) * (1 - FEE) * (1 - Math.min(impact, 50) / 100);
+      var err = !a ? '' : a > bal + 1e-9 ? 'You only have ' + f(bal, 4) + ' ' + st.from + '.' : impact > 30 ? 'Not enough liquidity in this pool for a trade this size.' : '';
+      openModal('<button class="x" aria-label="Close">×</button><h2>Trade ' + p.a + ' / ' + p.b + '</h2><p class="sub">Swap against this pool at its current price.</p>' +
+        '<div class="box"><div class="row"><span>You pay</span><span>Available <b>' + f(bal, 4) + ' ' + st.from + '</b> <button class="max" id="trMax">MAX</button></span></div><div class="amt-row"><span class="tok"><span class="dot ' + dotCls(st.from) + '">' + st.from[0] + '</span>' + st.from + '</span><input class="amt" id="trIn" inputmode="decimal" placeholder="0.00" aria-label="Amount to pay" value="' + esc(st.amt) + '"></div><div class="row"><span></span><span>' + usd(val) + '</span></div></div>' +
+        '<button class="arrow flip" id="trFlip" aria-label="Switch direction">' + ICON.swap + '</button>' +
+        '<div class="box"><div class="row"><span>You receive</span><span>Balance <b>' + f(S.bal[S.net][st.to] || 0, 4) + ' ' + st.to + '</b></span></div><div class="amt-row"><span class="tok"><span class="dot ' + dotCls(st.to) + '">' + st.to[0] + '</span>' + st.to + '</span><input class="amt out" readonly tabindex="-1" aria-label="You receive" value="' + (a ? f(out, 6) : '') + '" placeholder="0.00"></div><div class="row"><span></span><span>' + usd(out * priceOf(st.to)) + '</span></div></div>' +
+        '<div class="kv"><div class="row"><span>Price</span><b>1 ' + st.from + ' = ' + f(priceOf(st.from) / priceOf(st.to), 6) + ' ' + st.to + '</b></div><div class="row"><span>Price impact</span><b class="' + (impact > 5 ? 'warn' : '') + '">' + (a ? (impact < 0.01 ? '<0.01' : impact.toFixed(2)) + '%' : '—') + '</b></div><div class="row"><span>Trading fee</span><b>0.3% · paid to liquidity providers</b></div></div>' +
+        '<p class="err"' + (err ? '' : ' hidden') + '>' + err + '</p><button class="btn" id="trGo"' + (!a || err ? ' disabled' : '') + '>' + (!a ? 'Enter an amount' : err ? 'Can’t trade' : 'Swap ' + st.from + ' for ' + st.to) + '</button>');
+      var inp = $('#trIn'); if (caret != null) { inp.focus(); inp.setSelectionRange(caret, caret); }
+      inp.oninput = function () { var c = inp.selectionStart; st.amt = inp.value.replace(/[^0-9.]/g, ''); draw(c); };
+      $('#trMax').onclick = function () { st.amt = String(+bal.toFixed(6)); draw(); };
+      $('#trFlip').onclick = function () { var t = st.from; st.from = st.to; st.to = t; st.amt = ''; draw(); };
+      $('#trGo').onclick = function () {
+        openModal('<div class="center"><div class="spinner"></div><h2>Waiting for signature</h2><p>Confirm the swap in your wallet…</p></div>');
+        setTimeout(function () {
+          S.bal[S.net][st.from] -= a; S.bal[S.net][st.to] = (S.bal[S.net][st.to] || 0) + out;
+          var sh = shareOf(p); if (sh > 0) { var r = rewOf(p), fv = val * FEE * sh, w = wOf(p); r.a += fv * w[0] / 100 / priceOf(p.a); r.b += fv * w[1] / 100 / priceOf(p.b); }
+          recordTx('swap', [a, st.from], [out, st.to], { pool: p.a + ' / ' + p.b, note: 'Pool fee 0.3%' });
+          log('Swapped ' + f(a, 4) + ' ' + st.from + ' for ' + st.to); save(); closeModal(); render(); toast('Swap complete', f(a, 4) + ' ' + st.from + ' → ' + f(out, 4) + ' ' + st.to);
+        }, 1300);
+      };
+    }
+    draw();
   }
 
   /* create pool */
@@ -360,34 +525,31 @@
     if (!S.connected) return connectModal();
     var n = net(), syms = [];
     Object.keys(n.tokens).forEach(function (k) { syms.push(n.tokens[k].stk); syms.push(k); });
-    var FEES = [['0.05', 'Stable pairs'], ['0.3', 'Most pairs'], ['1', 'Exotic pairs']];
-    var st = { a: syms[0], b: syms[1], fee: '0.05', amt: '' };
-    function taken(a, b, fee) { return pools().some(function (p) { return ((p.a === a && p.b === b) || (p.a === b && p.b === a)) && String(p.fee || '0.3') === fee; }); }
-    function draw(focusAmt) {
-      var exists = st.a === st.b ? 'Pick two different tokens.' : taken(st.a, st.b, st.fee) ? 'A ' + st.a + ' / ' + st.b + ' pool with a ' + st.fee + '% fee already exists. Add to it in DeFi, or pick another fee tier.' : '';
-      var a = parseFloat(st.amt) || 0, b = a * priceOf(st.a) / priceOf(st.b), balA = S.bal[S.net][st.a] || 0, balB = S.bal[S.net][st.b] || 0;
-      var short = a > balA ? 'You only have ' + f(balA, 4) + ' ' + st.a + '.' : b > balB ? 'This needs ' + f(b, 4) + ' ' + st.b + ' but you have ' + f(balB, 4) + '.' : '';
-      var msg = exists || short;
-      openModal('<button class="x" aria-label="Close">×</button><h2>Create a pool</h2><p class="sub">Start a new liquidity pool on ' + n.name + '. You seed both sides at the current price.</p>' +
-        '<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px"><label><span class="lbl2">Token A</span><select class="pair-sel" id="cpA">' + syms.map(function (x) { return '<option' + (x === st.a ? ' selected' : '') + '>' + x + '</option>'; }).join('') + '</select></label>' +
+    var WEIGHTS = [[50, 50, 'Balanced'], [80, 20, 'Weighted']];
+    var st = { a: syms[0], b: syms[1], w: 0 }, dep = { a: 0, b: 0 };
+    function taken() { var w = WEIGHTS[st.w]; return pools().some(function (p) { var pw = wOf(p); return (p.a === st.a && p.b === st.b && pw[0] === w[0]) || (p.a === st.b && p.b === st.a && pw[0] === w[1]); }); }
+    function draw() {
+      var w = WEIGHTS[st.w], p = { id: '_new', a: st.a, b: st.b, w: [w[0], w[1]] }, same = st.a === st.b, ex = !same && taken();
+      openModal('<button class="x" aria-label="Close">×</button><h2>Create a pool</h2><p class="sub">Pick a pair and its weights, then seed both assets at the current price.</p>' +
+        '<div class="two"><label><span class="lbl2">Token A</span><select class="pair-sel" id="cpA">' + syms.map(function (x) { return '<option' + (x === st.a ? ' selected' : '') + '>' + x + '</option>'; }).join('') + '</select></label>' +
         '<label><span class="lbl2">Token B</span><select class="pair-sel" id="cpB">' + syms.map(function (x) { return '<option' + (x === st.b ? ' selected' : '') + '>' + x + '</option>'; }).join('') + '</select></label></div>' +
-        '<span class="lbl2">Fee tier</span><div class="tiers" role="radiogroup" aria-label="Fee tier">' + FEES.map(function (x) { return '<button role="radio" aria-checked="' + (st.fee === x[0]) + '" data-fee="' + x[0] + '" class="' + (st.fee === x[0] ? 'on' : '') + '"><b>' + x[0] + '%</b><small>' + x[1] + '</small></button>'; }).join('') + '</div>' +
-        '<div class="row" style="margin-top:16px"><span>Initial ' + st.a + '</span><span>Available <b>' + f(balA, 4) + ' ' + st.a + '</b></span></div><input class="mini" id="cpAmt" inputmode="decimal" placeholder="0.00" aria-label="Initial ' + st.a + '" value="' + esc(st.amt) + '">' +
-        '<div class="kv"><div class="row"><span>Paired ' + st.b + '</span><b>' + f(b, 4) + ' ' + st.b + '</b></div><div class="row"><span>Starting price</span><b>1 ' + st.a + ' = ' + f(priceOf(st.a) / priceOf(st.b), 6) + ' ' + st.b + '</b></div><div class="row"><span>Network fee</span><b>~' + n.fee + ' ' + n.gas + '</b></div></div>' +
-        '<p class="err" id="cpErr"' + (msg ? '' : ' hidden') + '>' + msg + '</p><button class="btn" id="cpGo"' + (msg || !a ? ' disabled' : '') + '>' + (exists ? 'Pool exists' : !a ? 'Enter an amount' : short ? 'Insufficient balance' : 'Create pool') + '</button>');
-      $('#cpA').onchange = function () { st.a = this.value; draw(); };
-      $('#cpB').onchange = function () { st.b = this.value; draw(); };
-      $$('[data-fee]').forEach(function (x) { x.onclick = function () { st.fee = x.dataset.fee; draw(); }; });
-      var inp = $('#cpAmt');
-      if (focusAmt != null) { inp.focus(); inp.setSelectionRange(focusAmt, focusAmt); }
-      inp.oninput = function () { var pos = inp.selectionStart; st.amt = inp.value.replace(/[^0-9.]/g, ''); draw(pos); };
-      $('#cpGo').onclick = function () {
+        '<span class="lbl2">Pool weights</span><div class="tiers two-up" role="radiogroup" aria-label="Pool weights">' + WEIGHTS.map(function (x, i) { return '<button role="radio" aria-checked="' + (st.w === i) + '" data-w="' + i + '" class="' + (st.w === i ? 'on' : '') + '"><b>' + x[0] + ' / ' + x[1] + '</b><small>' + x[2] + ' · ' + x[0] + '% ' + st.a + ', ' + x[1] + '% ' + st.b + '</small></button>'; }).join('') + '</div>' +
+        (same || ex ? '<p class="err">' + (same ? 'Pick two different tokens.' : 'A ' + st.a + ' / ' + st.b + ' pool at ' + w[0] + ' / ' + w[1] + ' already exists. Add liquidity to it in DeFi instead.') + '</p><button class="btn" disabled>' + (same ? 'Pick two tokens' : 'Pool exists') + '</button>'
+          : '<span class="lbl2">Initial liquidity</span>' + depositFields(p, dep) + '<div class="kv"><div class="row"><span>Starting price</span><b>1 ' + st.a + ' = ' + f(priceOf(st.a) / priceOf(st.b), 6) + ' ' + st.b + '</b></div><div class="row"><span>Pool value</span><b id="depV">$0.00</b></div><div class="row"><span>Network fee</span><b>~' + n.fee + ' ' + n.gas + '</b></div></div><p class="err" id="depErr" hidden></p><button class="btn" id="depGo" disabled>Enter an amount</button>'));
+      $('#cpA').onchange = function () { st.a = this.value; dep = { a: 0, b: 0 }; draw(); };
+      $('#cpB').onchange = function () { st.b = this.value; dep = { a: 0, b: 0 }; draw(); };
+      $$('[data-w]').forEach(function (b) { b.onclick = function () { st.w = +b.dataset.w; dep = { a: 0, b: 0 }; draw(); }; });
+      if (same || ex) return;
+      function upd() { var c = depositCheck(p, dep), g = $('#depGo'), e = $('#depErr'); $('#depV').textContent = usd(dep.a * priceOf(p.a) + dep.b * priceOf(p.b)).replace('≈ ', ''); g.disabled = !!c; g.textContent = c ? c[0] : 'Create pool'; e.hidden = !(c && c[1]); if (c) e.textContent = c[1]; }
+      bindDeposit(p, dep, upd);
+      $('#depGo').onclick = function () {
+        var a = dep.a, b = dep.b;
         openModal('<div class="center"><div class="spinner"></div><h2>Creating pool</h2><p>Confirm the transaction in your wallet…</p></div>');
         setTimeout(function () {
-          var id = 'c' + Date.now().toString(36), p = { id: id, a: st.a, b: st.b, apr: null, tvl: '', base: baseOf(st.a), fee: st.fee, mine: true };
-          S.customPools[S.net].push(p); S.bal[S.net][st.a] -= a; S.bal[S.net][st.b] -= b; S.lp[S.net + id] = a; S.lpB[S.net + id] = b;
-          recordTx('poolCreate', [[a, st.a], [b, st.b]], null, { pool: st.a + ' / ' + st.b, note: st.fee + '% fee tier' });
-          log('Created ' + st.a + ' / ' + st.b + ' pool'); save(); closeModal(); render(); toast('Pool created', st.a + ' / ' + st.b + ' · ' + st.fee + '% fee tier is live');
+          var id = 'c' + Date.now().toString(36), np = { id: id, a: st.a, b: st.b, w: [w[0], w[1]], apr: null, tvl: 0, base: baseOf(st.a), mine: true };
+          S.customPools[S.net].push(np); S.bal[S.net][st.a] -= a; S.bal[S.net][st.b] -= b; S.lp[S.net + id] = a; S.lpB[S.net + id] = b;
+          recordTx('poolCreate', [[a, st.a], [b, st.b]], null, { pool: st.a + ' / ' + st.b, note: 'Weights ' + w[0] + ' / ' + w[1] });
+          log('Created ' + st.a + ' / ' + st.b + ' pool'); S.defi.tab = 'mine'; save(); closeModal(); render(); toast('Pool created', st.a + ' / ' + st.b + ' at ' + w[0] + ' / ' + w[1] + ' is live');
         }, 1400);
       };
     }
@@ -410,7 +572,7 @@
     return true;
   }
   function txAmounts(t) {
-    if (t.type === 'restake') return '<span class="pos">+' + f(t.get[0], 4) + ' ' + t.get[1] + '</span><i>restaked</i>';
+    if (t.type === 'restake') return amtList(t.get).map(function (a) { return '<span class="pos">+' + f(a[0], 4) + ' ' + a[1] + '</span>'; }).join(' ') + '<i>restaked</i>';
     var out = amtList(t.give).map(function (a) { return '<span class="neg">−' + f(a[0], 4) + ' ' + a[1] + '</span>'; }), inn = amtList(t.get).map(function (a) { return '<span class="pos">+' + f(a[0], 4) + ' ' + a[1] + '</span>'; });
     return out.concat(out.length && inn.length ? ['<i>→</i>'] : []).concat(inn).join(' ');
   }
@@ -422,13 +584,13 @@
     }
     function cnt(g) { return all.filter(function (t) { return (g === 'all' || TX[t.type].g === g) && (F.net === 'all' || t.net === F.net); }).length; }
     var staked = 0, rewards = 0;
-    all.forEach(function (t) { if (t.type === 'stake') staked += t.give[0] * priceOn(t.net, t.give[1]); if (t.type === 'claim' || t.type === 'restake') rewards += t.give[0] * priceOn(t.net, t.give[1]); });
+    all.forEach(function (t) { if (t.type === 'stake') staked += t.give[0] * priceOn(t.net, t.give[1]); if (t.type === 'claim' || t.type === 'restake') amtList(t.get).forEach(function (x) { rewards += x[0] * priceOn(t.net, x[1]); }); });
     view.innerHTML = '<div class="wrap wide"><div style="display:flex;align-items:flex-start;gap:12px;flex-wrap:wrap"><div style="flex:1;min-width:220px"><h1>Transactions</h1><p class="sub">Every stake, unstake, pool and reward action from this wallet, on every network.</p></div><button class="btn ghost sm" id="txCsv" style="margin-top:4px;display:inline-flex;align-items:center;gap:8px">' + ICON.dl + 'Export CSV</button></div>' +
       '<div class="tiles"><div class="tile"><small><i style="background:#e8546a"></i>Transactions</small><strong>' + all.length + '</strong><em>Across ' + Object.keys(NETS).length + ' networks</em></div>' +
       '<div class="tile"><small><i style="background:#3ecf8e"></i>Total staked</small><strong>' + usd(staked).replace('≈ ', '') + '</strong><em>At today’s prices</em></div>' +
       '<div class="tile"><small><i style="background:#5b8def"></i>Rewards used</small><strong>' + usd(rewards).replace('≈ ', '') + '</strong><em>Claimed or restaked</em></div>' +
       '<div class="tile"><small><i style="background:#f5b73b"></i>Unbonding now</small><strong>' + S.unbonding.length + '</strong><em>Regular unstakes in progress</em></div></div>' +
-      '<div class="tx-tools"><div class="seg" role="group" aria-label="Filter by type">' + [['all', 'All'], ['staking', 'Staking'], ['unstaking', 'Unstaking'], ['pools', 'Pools'], ['rewards', 'Rewards']].map(function (x) { return '<button data-g="' + x[0] + '" class="' + (F.g === x[0] ? 'on' : '') + '" aria-pressed="' + (F.g === x[0]) + '">' + x[1] + '<span class="n">' + cnt(x[0]) + '</span></button>'; }).join('') + '</div>' +
+      '<div class="tx-tools"><div class="seg" role="group" aria-label="Filter by type">' + [['all', 'All'], ['staking', 'Staking'], ['unstaking', 'Unstaking'], ['pools', 'Pools'], ['trades', 'Swaps'], ['rewards', 'Rewards']].map(function (x) { return '<button data-g="' + x[0] + '" class="' + (F.g === x[0] ? 'on' : '') + '" aria-pressed="' + (F.g === x[0]) + '">' + x[1] + '<span class="n">' + cnt(x[0]) + '</span></button>'; }).join('') + '</div>' +
       '<label class="sel"><select id="txNet" aria-label="Network"><option value="all">All networks</option>' + Object.keys(NETS).map(function (k) { return '<option value="' + k + '"' + (F.net === k ? ' selected' : '') + '>' + NETS[k].name + '</option>'; }).join('') + '</select>' + ICON.chev + '</label>' +
       '<label class="tx-search">' + ICON.search + '<input id="txQ" placeholder="Search token, pool or hash" value="' + esc(F.q) + '" aria-label="Search transactions"></label></div>' +
       '<div class="list"><div class="tx-head"><span></span><span>Type</span><span>Amount</span><span>Network</span><span>Status</span><span>Time</span></div>' +
@@ -476,7 +638,8 @@
         { label: S.connected ? 'Connect a different wallet' : 'Connect a wallet', run: function () { closeModal(); S.connected = false; save(); renderHeader(); render(); connectModal(); } },
         { label: 'Switch to ' + NETS[other].name, run: function () { closeModal(); $('.net-opt[data-net="' + other + '"]').click(); } },
         { label: 'Add to a pool', run: function () { go('defi'); addModal(POOLS[S.net][0].id); } },
-        { label: 'Create a pool', run: function () { go('defi'); createPoolModal(); } }] },
+        { label: 'Create a pool', run: function () { go('defi'); createPoolModal(); } },
+        { label: 'Trade a pair', run: function () { go('defi'); tradeModal(POOLS[S.net][0].id); } }] },
       { title: 'Demo data', items: [
         { label: 'Reset demo data', run: function () { closeModal(); S = fresh(); amount = ''; save(); renderHeader(); render(); toast('Demo reset', 'Balances and activity are back to the start'); } }] }
     ];
