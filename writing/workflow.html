@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>My workflow has been updated! — Sudheer Darla</title>
-  <meta name="description" content="My design process went from a straight line to a loop. Here’s what changed and what I’m seeing across the industry.">
+  <meta name="description" content="Product design is changing fast. How my process went from a straight line to a loop, the four shifts I’m seeing across the industry, and what still matters.">
   <meta name="color-scheme" content="light dark">
   <meta name="theme-color" content="#ffffff" id="theme-color">
   <meta property="og:type" content="article">
@@ -75,16 +75,19 @@
     .lede { margin-top: var(--s-lg); font-size: 19px; line-height: 30px; color: var(--fg-2); text-wrap: pretty; }
     article p, article li { color: var(--fg-2); text-wrap: pretty; }
     article p + p { margin-top: var(--s-lg); }
+    h3 { margin-top: var(--s-3xl); margin-bottom: var(--s-sm); font-size: 17px; line-height: 26px; font-weight: 600; color: var(--fg); }
+    h2 + p + h3 { margin-top: var(--s-2xl); }
     h2 { margin-top: var(--s-4xl); margin-bottom: var(--s-md); font-size: 20px; line-height: 28px; font-weight: 700; letter-spacing: -0.3px; }
     strong { color: var(--fg); font-weight: 600; }
     ul.points { list-style: none; display: grid; gap: var(--s-lg); }
     p + ul.points { margin-top: var(--s-lg); }
+    ul.points + p, figure + ul.points { margin-top: var(--s-lg); }
     ul.points li { padding-left: 22px; position: relative; }
     ul.points li::before { content: "→"; position: absolute; left: 0; color: var(--muted); }
     /* Figures break out of the text column so the sketches read at a glance */
     /* A little wider than the text, but never wide enough to slide under the fixed theme switch in the bottom-left corner */
     figure { position: relative; left: 50%; width: min(800px, max(100%, calc(100vw - 340px))); transform: translateX(-50%); margin: var(--s-4xl) 0; }
-    figure img { display: block; width: 100%; height: auto; border: 1px solid var(--line); border-radius: var(--r-md); background: #fafaf8; }
+    figure img { display: block; width: 100%; height: auto; border: 1px solid var(--line); border-radius: var(--r-md); background: var(--bg-1); }
     figcaption { margin-top: var(--s-sm); font-size: 13px; line-height: 20px; color: var(--muted); text-align: center; }
     .zoom { position: relative; display: block; width: 100%; padding: 0; border: 0; background: none; cursor: zoom-in; border-radius: var(--r-md); }
     .zoom-hint { position: absolute; top: var(--s-md); right: var(--s-md); width: 32px; height: 32px; display: grid; place-items: center; border: 1px solid var(--line-1); border-radius: var(--r-md); background: var(--bg); color: var(--fg); opacity: 0; transform: translateY(-2px); transition: opacity .15s var(--ease-out), transform .15s var(--ease-out); }
@@ -124,36 +127,76 @@
   <main class="col">
     <a class="back" href="../#writing">← Back to home</a>
     <article>
-      <p class="date"><time datetime="2026-10-29">Oct 29, 2026</time> · 4 min read</p>
+      <p class="date"><time datetime="2026-10-30">Oct 30, 2026</time> · 7 min read</p>
       <h1>My workflow has been updated!</h1>
-      <p class="lede">Product design is changing fast, and the way I work is changing with it.</p>
+      <p class="lede">Product design is changing fast, and the workflow is changing with it. Here’s how my process went from a straight line to a loop, what I’m seeing across the industry, and what I think still matters most.</p>
 
-      <h2>From a line to a loop</h2>
-      <p>For most of my career, every project followed the same path:</p>
+      <h2>The old flow was a straight line</h2>
+      <p>For most of my career, every project moved through the same five steps:</p>
       <p class="flow">research → wireframes → mockups → handoff → QA</p>
-      <p>Each step finished before the next one started. By the time real users saw anything, most of the big decisions were already locked in.</p>
-      <p>Now it’s a loop. I frame the problem, explore wide with AI, narrow it down with judgment, prototype in code and test with real users. Then I go around again.</p>
+      <p>It looked tidy on a slide. Each step had an owner and a deliverable, and each one finished before the next one started. Research became a deck. The deck became wireframes. Wireframes became polished mockups, and the mockups went over to engineering with a spec attached.</p>
+      <p>The problem was timing. Real users usually saw the product for the first time at the very end, when the big decisions were already locked in and changing them was expensive. Anything that got lost in the handoff came back in QA as a bug, a missing state or a quiet “that’s not what I meant”.</p>
+
+      <h2>The new flow is a loop</h2>
+      <p>Now the work goes around in circles, on purpose:</p>
+      <p class="flow">frame the problem → explore wide with AI → narrow with judgment → prototype in code → test with real users → repeat</p>
 
       <figure>
-        <button class="zoom" type="button" aria-label="Enlarge image"><img src="../img/blog-workflow-loop.png" width="2400" height="1200" alt="Sketch: the old process as five boxes in a straight line, and the new process as a loop of frame, explore, narrow, prototype and test"><span class="zoom-hint" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></span></button>
-        <figcaption>The old flow ends at QA. The new one never really ends.</figcaption>
+        <button class="zoom" type="button" aria-label="Enlarge image"><img src="../img/blog-wf-loop.png" data-light="../img/blog-wf-loop.png" data-dark="../img/blog-wf-loop-dark.png" width="2400" height="1200" alt="Diagram: the old process as five steps in a straight line, research, wireframes, mockups, handoff and QA. Below it, the new process as a loop: frame the problem, explore wide with AI, narrow with judgment, prototype in code, test with real users, and repeat."><span class="zoom-hint" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></span></button>
+        <figcaption>The old flow ends at QA. The new one keeps going.</figcaption>
       </figure>
+
+      <ul class="points">
+        <li><strong>Frame the problem.</strong> Before I open any tool, I write down who this is for, what they’re trying to get done and what success looks like for the business. A clear frame keeps every step after it honest.</li>
+        <li><strong>Explore wide with AI.</strong> This is where AI earns its place. I can look at ten directions in the time one used to take: different layouts, flows, copy, even rough data models. Going wide early stops me from falling for the first idea.</li>
+        <li><strong>Narrow with judgment.</strong> Most of those directions are wrong, and that’s fine. I cut them down by asking which ones actually fit the user, the goal and the constraints. This step is still slow and human, and it should be.</li>
+        <li><strong>Prototype in code.</strong> The direction that survives becomes a real, clickable prototype with real states, edge cases and believable data, not a static picture of one happy path.</li>
+        <li><strong>Test with real users.</strong> People use the thing, and I watch where they hesitate, misread or give up.</li>
+        <li><strong>Repeat.</strong> What I learn goes straight back into the frame, and the loop starts again, a little sharper each time.</li>
+      </ul>
+      <p>The difference isn’t only speed. In the line, feedback arrived once, at the end. In the loop, it arrives every few days, while it can still change the outcome.</p>
 
       <h2>What I’m seeing across the industry</h2>
-      <ul class="points">
-        <li><strong>Design and engineering are blurring.</strong> More teams want designers who can prototype and ship, not just hand off.</li>
-        <li><strong>AI is compressing the making phase.</strong> Generating screens is cheap now. Deciding which ones matter is the hard part.</li>
-        <li><strong>Product thinking is the differentiator.</strong> Understanding business goals, users and trade-offs matters more than pixel polish.</li>
-        <li><strong>Speed is expected.</strong> Teams want validated ideas in days, not weeks.</li>
-      </ul>
+      <p>This isn’t just my own shift. In job posts, in conversations with teams and in how products get built, the same four patterns keep showing up.</p>
+
+      <h3>Design and engineering are blurring</h3>
+      <p>More teams want designers who can prototype and ship, not just hand off. The wall between “design is done” and “engineering starts” is where a lot of quality used to leak out. Specs go over, questions come back, and some detail gets lost every round.</p>
+      <p>When a designer can build a working version, the conversation with engineers changes. We talk about real behaviour instead of annotated screenshots. Engineers come in earlier, and the prototype becomes something everyone can click, not a document someone has to interpret. Designers aren’t replacing engineers. The overlap between the two roles is simply where a lot of the best work happens now.</p>
 
       <figure>
-        <button class="zoom" type="button" aria-label="Enlarge image"><img src="../img/blog-workflow-judgment.png" width="2400" height="1200" loading="lazy" alt="Sketch: a pile of generated screens passes through a funnel of users, business goals and trade-offs, leaving the one screen that matters"><span class="zoom-hint" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></span></button>
-        <figcaption>Making got cheap. Judgment didn’t.</figcaption>
+        <button class="zoom" type="button" aria-label="Enlarge image"><img src="../img/blog-wf-blur.png" data-light="../img/blog-wf-blur.png" data-dark="../img/blog-wf-blur-dark.png" width="2400" height="1200" loading="lazy" alt="Diagram: on the left, design and engineering as two separate boxes with a wall between them and a spec thrown over it. On the right, design and engineering as two overlapping circles, with prototype and ship in the overlap."><span class="zoom-hint" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></span></button>
+        <figcaption>Less throwing specs over the wall, more building in the overlap.</figcaption>
       </figure>
 
-      <h2>How I use AI in my design work</h2>
-      <p>AI sits inside every step of my loop now, but it never makes the call. Here’s what that looks like in a normal week.</p>
+      <h3>AI is compressing the making phase</h3>
+      <p>Generating screens is cheap now. One prompt can give you a dozen layouts in a minute. That sounds like it makes design easier, but really it moves the hard part somewhere else.</p>
+      <p>Deciding which ones matter is the hard part. Every generated option still has to pass the same filters. Does it help the user do what they came to do? Does it serve the business goal? What are we trading away to get it? AI can’t answer those for you, because the answers live in context it doesn’t have. The making got faster. The judgment got more important.</p>
+
+      <figure>
+        <button class="zoom" type="button" aria-label="Enlarge image"><img src="../img/blog-wf-judgment.png" data-light="../img/blog-wf-judgment.png" data-dark="../img/blog-wf-judgment-dark.png" width="2400" height="1200" loading="lazy" alt="Diagram: a grid of many generated screens passes through a funnel with three filters, users, business goals and trade-offs, leaving the one screen that matters, marked with a check."><span class="zoom-hint" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></span></button>
+        <figcaption>Making got cheap. Deciding which screens matter didn’t.</figcaption>
+      </figure>
+
+      <h3>Product thinking is the differentiator</h3>
+      <p>Understanding business goals, users and trade-offs matters more than pixel polish. Polish still counts, because a product that feels careless loses trust. But polish is the part people see, and it sits on top of a lot of decisions they never see.</p>
+      <p>Who exactly is this for? Which problem is worth solving first? What moves the numbers for the business? What are we choosing not to build, and why? Designers who can answer those questions, and explain their reasoning to a PM, an engineer or a founder, end up shaping the product instead of decorating it.</p>
+
+      <figure>
+        <button class="zoom" type="button" aria-label="Enlarge image"><img src="../img/blog-wf-product.png" data-light="../img/blog-wf-product.png" data-dark="../img/blog-wf-product-dark.png" width="2400" height="1200" loading="lazy" alt="Diagram: pixel polish sits above a dashed line as the part people see. Below the line, three wider layers hold it up: trade-offs, business goals, and users at the base."><span class="zoom-hint" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></span></button>
+        <figcaption>Polish is what people notice. The layers underneath are what make it work.</figcaption>
+      </figure>
+
+      <h3>Speed is expected</h3>
+      <p>Teams want validated ideas in days, not weeks. A six-week cycle that only meets its first real user at the end is too slow when another team can test three ideas in the same week.</p>
+      <p>Speed doesn’t mean rushing or skipping research. It means keeping the loops small: put a rough version in front of people early, learn, adjust and test again. By the time real engineering time goes in, the idea has already been proven with real people.</p>
+
+      <figure>
+        <button class="zoom" type="button" aria-label="Enlarge image"><img src="../img/blog-wf-speed.png" data-light="../img/blog-wf-speed.png" data-dark="../img/blog-wf-speed-dark.png" width="2400" height="1200" loading="lazy" alt="Diagram: two six-week timelines. Above, one long pass of research, wireframes and mockups, and handoff and build, with the first real user at the end of week six. Below, three small loops inside the first week, each ending with real users, and the rest of the time spent building what was proven."><span class="zoom-hint" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></span></button>
+        <figcaption>Same six weeks. Feedback in the first one, not the last.</figcaption>
+      </figure>
+
+      <h2>How this looks in my own work</h2>
+      <p>AI sits inside every step of my loop now, but it never makes the call. Here’s what a normal week looks like.</p>
       <ul class="points">
         <li><strong>Claude to think.</strong> I use it to pressure-test the problem, sum up research notes and draft the first round of copy. It’s a sparring partner, not the decider.</li>
         <li><strong>Figma to design.</strong> Flows, key screens, components and tokens still start here. This is where I decide what good looks like.</li>
@@ -162,12 +205,18 @@
       </ul>
 
       <figure>
-        <button class="zoom" type="button" aria-label="Enlarge image"><img src="../img/blog-workflow-ai.png" width="2400" height="1200" loading="lazy" alt="Sketch: four steps with real product logos. Claude to think, Figma to design, Claude Code to build, GitHub to ship, with me making the calls across every step"><span class="zoom-hint" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></span></button>
+        <button class="zoom" type="button" aria-label="Enlarge image"><img src="../img/blog-wf-tools.png" data-light="../img/blog-wf-tools.png" data-dark="../img/blog-wf-tools-dark.png" width="2400" height="1200" loading="lazy" alt="Diagram: four steps in a row. Think with Claude, design with Figma, build with Claude Code and ship with GitHub, with a bracket underneath reading: me, in every step, framing, judgment and taste."><span class="zoom-hint" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></span></button>
         <figcaption>The tools do the heavy lifting. The framing, judgment and taste stay with me.</figcaption>
       </figure>
 
       <h2>What stays the same</h2>
-      <p>The tools will keep changing. The designers who do well will be the ones who stay close to users, think in systems and keep learning. That’s what I’m holding on to.</p>
+      <p>The tools will keep changing. Whatever I use today will look different in a year, and that’s fine. The designers who thrive will be the ones who stay close to users, think in systems, and keep learning.</p>
+      <ul class="points">
+        <li><strong>Stay close to users.</strong> Talk to them, watch them and test with them often. Everything else depends on it.</li>
+        <li><strong>Think in systems.</strong> Design the rules, components and flows behind a screen, not just the screen.</li>
+        <li><strong>Keep learning.</strong> New tools will keep arriving. Curiosity is what keeps the loop moving.</li>
+      </ul>
+      <p>That’s what I’m holding on to.</p>
     </article>
     <div class="end">
       <a href="../#writing"><span>← All writing</span></a>
@@ -199,6 +248,6 @@
       lb.addEventListener('click', function (e) { if (e.target === lb || e.target.tagName === 'FIGURE') close(); });
     })();
   </script>
-  <script src="../app.js?v=9" defer></script>
+  <script src="../app.js?v=10" defer></script>
 </body>
 </html>
