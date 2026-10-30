@@ -33,14 +33,14 @@
       name: 'Persistence', dot: 'P', cls: '', addr: 'persis…tc7zag', full: 'persistence1q9x8w7v6u5t4s3r2p0tc7zag',
       days: '21–25 days', fee: 0.0025, gas: 'OSMO', apy: 14.15, tvu: '45.38 ATOM',
       tokens: {
-        OSMO: { stk: 'stkOSMO', price: 0.765, r: 0.999664, cls: 'v', apy: 12.4 },
-        ATOM: { stk: 'stkATOM', price: 8.4, r: 1 / 1.046228, cls: 'b', apy: 14.15 }
+        OSMO: { stk: 'stkOSMO', price: 0.765, r: 0.999664, cls: 'v', apy: 12.4, tvu: 4812560 },
+        ATOM: { stk: 'stkATOM', price: 8.4, r: 1 / 1.046228, cls: 'b', apy: 14.15, tvu: 1204380 }
       }
     },
     bnb: {
       name: 'BNB Smart Chain', dot: 'B', cls: 'y', addr: '0x7a3f…c91f', full: '0x7a3f1d2e9b4c58a60e7f3b21d9c4a8e5f6b7c91f',
       days: '7–10 days', fee: 0.0004, gas: 'BNB', apy: 5.8, tvu: '1,204.5 BNB',
-      tokens: { BNB: { stk: 'stkBNB', price: 612, r: 0.9615, cls: 'y', apy: 5.8 } }
+      tokens: { BNB: { stk: 'stkBNB', price: 612, r: 0.9615, cls: 'y', apy: 5.8, tvu: 9150 } }
     }
   };
   var POOLS = {
@@ -99,6 +99,7 @@
   /* ---------- helpers ---------- */
   var net = function () { return NETS[S.net]; };
   function f(n, d) { d = d == null ? 6 : d; return Number(n).toLocaleString('en-US', { minimumFractionDigits: d, maximumFractionDigits: d }); }
+  function compactNum(v) { return v >= 1e6 ? (v / 1e6).toFixed(2) + 'M' : v >= 1e3 ? (v / 1e3).toFixed(1) + 'K' : f(v, 2); }
   function usd(n) { return '≈ $' + f(n, 2); }
   function baseOf(sym) { var t = net().tokens; for (var k in t) if (t[k].stk === sym) return k; return sym; }
   function priceOf(sym) { var t = net().tokens, b = baseOf(sym); return t[b].price * (t[b].stk === sym ? 1 / t[b].r : 1); }
@@ -139,7 +140,7 @@
   function closePops() { $$('.pop').forEach(function (p) { p.hidden = true; }); $('#netBtn').setAttribute('aria-expanded', 'false'); }
   function renderHeader() {
     var n = net();
-    $('#netName').textContent = n.name; $('#netDot').textContent = n.dot; $('#netDot').className = 'dot ' + n.cls;
+    $('#netName').textContent = n.name; $('#netLogo').src = 'chains/' + S.net + '.svg';
     $$('.net-opt').forEach(function (b) { b.classList.toggle('on', b.dataset.net === S.net); });
     var w = $('#walletArea');
     if (!S.connected) { w.innerHTML = '<button class="chip cta" id="connectBtn">Connect wallet</button>'; $('#connectBtn').onclick = connectModal; return; }
@@ -171,7 +172,7 @@
     var h = '<button class="x" aria-label="Close">×</button><h2>Connect wallet</h2><p class="sub">Choose a wallet to start staking on ' + net().name + '.</p>', cur = '';
     WALLETS.forEach(function (w, i) {
       if (w[3] !== cur) { cur = w[3]; h += '<p class="sec-h">' + cur + '</p>'; }
-      h += '<button class="wal" data-i="' + i + '"><span class="wlogo w-' + w[1] + '"><img src="wallets/' + w[1] + '.svg" alt="" width="22" height="22"></span>' + w[0] + (w[2] ? '<span class="tag">Connected</span>' : '<span class="go">›</span>') + '</button>';
+      h += '<button class="wal" data-i="' + i + '"><span class="wlogo w-' + w[1] + '"><img src="wallets/' + w[1] + '.svg" alt="" width="22" height="22"></span>' + w[0] + '<span class="go">›</span>' + '</button>';
     });
     h += '<p class="legal">By connecting, you agree to the Terms of Use and Privacy Policy.</p>';
     openModal(h);
@@ -212,12 +213,12 @@
       '<div class="arrow">' + ICON.down + '</div>' +
       '<div class="box"><div class="row"><span>You receive</span><span>Balance <b id="rbal"></b></span></div>' +
       '<div class="amt-row"><span class="tok"><span class="dot ' + (isS ? 'g' : T.cls) + '">' + to[0] + '</span>' + to + '</span><input class="amt out" id="out" readonly placeholder="0.00" aria-label="You receive" tabindex="-1"></div><div class="row"><span></span><span id="usdOut">≈ $0.00</span></div></div>' +
-      '<div class="info"><div class="row"><span>Exchange rate</span><b id="rate"></b></div>' +
+      '<div class="info"><div class="row"><span>Exchange rate</span><b class="rate-v"><span id="rate"></span></b></div>' +
       (isS ? '<div class="row"><span>Network fee</span><b>~' + n.fee + ' ' + n.gas + '</b></div>' : '') + '</div>' +
       (isS ? '' : '<p class="lbl">Unstaking method</p><button class="method" data-m="flash"><span class="radio"></span><div><strong>Flash Unstake ' + ICON.bolt + '</strong><small>Instantly · 0.5% fee</small></div><div class="r"><strong id="mFlash">0 ' + sel + '</strong><small>You receive</small></div></button>' +
         '<button class="method" data-m="regular"><span class="radio"></span><div><strong>Regular Unstake</strong><small>' + n.days + ' · 0% fee</small></div><div class="r"><strong id="mReg">~0 ' + sel + '</strong><small>You receive</small></div></button>') +
       '<p class="err" id="err" hidden></p><button class="btn" id="go"></button></div>' +
-      '<div class="stats"><div class="stat"><small>APY</small><strong class="g">' + T.apy.toFixed(2) + '%</strong></div><div class="stat"><small>Total Value Unlocked (TVU)</small><strong>' + n.tvu + '</strong></div></div>' +
+      '<div class="stats"><div class="stat"><small>' + sel + ' staking APY</small><strong class="g">' + T.apy.toFixed(2) + '%</strong><em>Earned on staked ' + sel + '</em></div><div class="stat"><small>Total Value Unlocked (TVU)</small><strong>' + compactNum(T.tvu) + ' ' + sel + '</strong><em>≈ $' + compactNum(T.tvu * T.price) + ' staked by all PSTAKE users</em></div></div>' +
       '<div id="nextStep"></div></div>';
 
     $$('.tabs button').forEach(function (b) { b.onclick = function () { S.tab = b.dataset.t; amount = ''; save(); renderStaking(); }; });
@@ -285,6 +286,16 @@
 
   /* dashboard */
   function renderDashboard() {
+    if (!S.connected) {
+      var nn = net();
+      function et(l, c) { return '<div class="tile"><small><i style="background:' + c + '"></i>' + l + '</small><strong class="mutd">—</strong><em>Connect to see</em></div>'; }
+      function es(h, t) { return '<h2 class="sect">' + h + '</h2><div class="list"><p class="empty">' + t + '</p></div>'; }
+      view.innerHTML = '<div class="wrap wide"><h1>Dashboard</h1><p class="sub">Every balance by state, on ' + nn.name + '.</p>' +
+        '<div class="connect-card"><div><b>Connect a wallet to see your dashboard</b><p>Your available, staked, unstaking, pooled and reward balances will show here.</p></div><button class="btn sm" id="cwD">Connect wallet</button></div>' +
+        '<div class="tiles">' + et('Available', '#3ecf8e') + et('Staked', '#e8546a') + et('Unstaking', '#f5b73b') + et('In pools', '#7a5af8') + et('Rewards', '#5b8def') + '</div>' +
+        es('Balances', 'No wallet connected. Balances for each asset appear once you connect.') + es('Unstaking', 'Regular unstakes show here with a countdown.') + es('Pool positions', 'Pools you provide liquidity to show here.') + es('Rewards', 'Staking rewards you can claim or restake show here.') + es('Activity', 'Your recent actions show here.') + '</div>';
+      $('#cwD').onclick = connectModal; return;
+    }
     var n = net(), B = S.bal[S.net], avail = 0, staked = 0, unb = 0, pool = 0, rew = 0, rows = '';
     Object.keys(n.tokens).forEach(function (k) {
       var T = n.tokens[k]; avail += B[k] * T.price; staked += B[T.stk] * T.price / T.r;
@@ -356,10 +367,10 @@
 
   function renderDefi() {
     accrueAll(); save();
-    var n = net(), D = S.defi, all = pools(), mine = all.filter(function (p) { return posVal(p) > 0 || rewVal(p) > 0; }), list = D.tab === 'mine' ? mine : all;
+    var n = net(), D = S.defi, all = pools(), mine = S.connected ? all.filter(function (p) { return posVal(p) > 0 || rewVal(p) > 0; }) : [], list = D.tab === 'mine' ? mine : all;
     var myV = mine.reduce(function (s, p) { return s + posVal(p); }, 0), myR = mine.reduce(function (s, p) { return s + rewVal(p); }, 0);
     function row(p) {
-      var v = posVal(p), r = rewVal(p), w = wOf(p);
+      var v = S.connected ? posVal(p) : 0, r = S.connected ? rewVal(p) : 0, w = wOf(p);
       return '<button class="pl-row" data-pool="' + p.id + '"><span class="pl-pool">' + pairDots(p) + '<span><b>' + p.a + ' / ' + p.b + '</b><small>' + (p.mine ? 'Created by you' : n.name) + '</small></span></span>' +
         '<span class="pl-w"><span class="wbar"><i style="width:' + w[0] + '%"></i></span><small>' + w[0] + '% · ' + w[1] + '%</small></span>' +
         '<span class="num ' + (p.apr ? 'apr' : 'mutd') + '">' + (p.apr ? p.apr.toFixed(1) + '%' : 'New') + '</span>' +
@@ -369,7 +380,7 @@
         '<span class="pl-chev" aria-hidden="true">›</span></button>';
     }
     function card(p) {
-      var v = posVal(p), r = rewVal(p), w = wOf(p);
+      var v = S.connected ? posVal(p) : 0, r = S.connected ? rewVal(p) : 0, w = wOf(p);
       return '<div class="pl-card"><button class="pl-card-main" data-pool="' + p.id + '"><span class="pl-pool">' + pairDots(p, true) + '<span><b>' + p.a + ' / ' + p.b + '</b><small>' + w[0] + '% ' + p.a + ' · ' + w[1] + '% ' + p.b + '</small></span></span>' +
         '<span class="wbar"><i style="width:' + w[0] + '%"></i></span>' +
         '<span class="pl-kv"><span><small>APR</small><b class="' + (p.apr ? 'apr' : 'mutd') + '">' + (p.apr ? p.apr.toFixed(1) + '%' : 'New') + '</b></span><span><small>TVL</small><b>' + money(tvlOf(p)) + '</b></span>' +
@@ -397,21 +408,21 @@
   var detailTimer = null;
   function poolDetail(id) {
     var p = poolById(id); if (!p) return; accrue(p); save();
-    var x = posOf(p), v = posVal(p), r = rewOf(p), rv = rewVal(p), w = wOf(p), has = v > 0;
+    var x = posOf(p), v = posVal(p), r = rewOf(p), rv = S.connected ? rewVal(p) : 0, w = wOf(p), has = S.connected && v > 0;
     openModal('<button class="x" aria-label="Close">×</button><div class="pd-h">' + pairDots(p, true) + '<div><h2 style="margin:0">' + p.a + ' / ' + p.b + '</h2><p class="sub" style="margin:2px 0 0">' + (p.mine ? 'Created by you · ' : '') + net().name + '</p></div></div>' +
       '<div class="wbar lg"><i style="width:' + w[0] + '%"></i></div><div class="row" style="margin-top:6px"><span>' + w[0] + '% ' + p.a + '</span><span>' + w[1] + '% ' + p.b + '</span></div>' +
       '<div class="pd-stats"><div><small>APR</small><b class="' + (p.apr ? 'apr' : '') + '">' + (p.apr ? p.apr.toFixed(1) + '%' : 'New') + '</b></div><div><small>TVL</small><b>' + money(tvlOf(p)) + '</b></div><div><small>Your share</small><b>' + (has ? (shareOf(p) * 100).toFixed(shareOf(p) > .1 ? 1 : 4) + '%' : '—') + '</b></div></div>' +
-      '<div class="pd-box"><div class="row"><span>Your liquidity</span><b>' + (has ? usd(v).replace('≈ ', '') : '—') + '</b></div>' + (has ? '<div class="pd-amts"><span><span class="dot ' + dotCls(p.a) + '">' + p.a[0] + '</span>' + f(x.a, 4) + ' ' + p.a + '</span><span><span class="dot ' + dotCls(p.b) + '">' + p.b[0] + '</span>' + f(x.b, 4) + ' ' + p.b + '</span></div>' : '<p class="pd-empty">You don’t have liquidity in this pool yet. Add both assets to start earning.</p>') + '</div>' +
+      (S.connected ? '<div class="pd-box"><div class="row"><span>Your liquidity</span><b>' + (has ? usd(v).replace('≈ ', '') : '—') + '</b></div>' + (has ? '<div class="pd-amts"><span><span class="dot ' + dotCls(p.a) + '">' + p.a[0] + '</span>' + f(x.a, 4) + ' ' + p.a + '</span><span><span class="dot ' + dotCls(p.b) + '">' + p.b[0] + '</span>' + f(x.b, 4) + ' ' + p.b + '</span></div>' : '<p class="pd-empty">You don’t have liquidity in this pool yet. Add both assets to start earning.</p>') + '</div>' +
       '<div class="pd-box"><div class="row"><span>Unclaimed rewards</span><b id="pdRv" class="apr">' + usd(rv).replace('≈ ', '') + '</b></div><div class="pd-amts"><span id="pdRa">' + f(r.a, 6) + ' ' + p.a + '</span><span id="pdRb">' + f(r.b, 6) + ' ' + p.b + '</span></div>' +
         '<div class="pd-acts"><button class="btn ghost sm" id="pdClaim"' + (rv >= MIN_CLAIM ? '' : ' disabled') + '>Claim</button><button class="btn sm" id="pdRestake"' + (rv >= MIN_CLAIM && has ? '' : ' disabled') + '>Restake into pool</button></div>' +
         (rv < MIN_CLAIM ? '<p class="pd-empty" id="pdMin" style="margin-top:8px">You can claim once rewards reach $0.01.</p>' : '') +
-        (p.apr ? '' : '<p class="pd-empty" style="margin-top:8px">New pools earn from trading fees once people trade the pair.</p>') + '</div>' +
+        (p.apr ? '' : '<p class="pd-empty" style="margin-top:8px">New pools earn from trading fees once people trade the pair.</p>') + '</div>' : '<div class="pd-box pd-connect"><p>Connect a wallet to see your liquidity and rewards in this pool.</p><button class="btn sm" id="pdConnect">Connect wallet</button></div>') +
       '<div class="pd-main"><button class="btn" id="pdAdd">Add liquidity</button><button class="btn ghost" id="pdTrade">Trade pair</button>' + (has ? '<button class="btn ghost" id="pdRemove">Remove</button>' : '') + '</div>');
     $('#pdAdd').onclick = function () { addModal(p.id); };
+    var pc = $('#pdConnect'); if (pc) pc.onclick = connectModal;
     $('#pdTrade').onclick = function () { tradeModal(p.id); };
     var rm = $('#pdRemove'); if (rm) rm.onclick = function () { removeModal(p.id); };
-    $('#pdClaim').onclick = function () { claimPool(p, false); };
-    $('#pdRestake').onclick = function () { claimPool(p, true); };
+    if ($('#pdClaim')) { $('#pdClaim').onclick = function () { claimPool(p, false); }; $('#pdRestake').onclick = function () { claimPool(p, true); }; }
     clearInterval(detailTimer);
     detailTimer = setInterval(function () {
       var el = $('#pdRv'); if (!el) return clearInterval(detailTimer);
@@ -597,7 +608,7 @@
       (list.length ? list.map(function (t) {
         var M = TX[t.type], s2 = txStatus(t), N = NETS[t.net];
         return '<button class="tx" data-tx="' + t.id + '"><span class="tx-ic ' + M.c + '">' + ICON[M.ic] + '</span><span><b>' + M.l + '</b><small>' + (t.pool ? esc(t.pool) + ' · ' : '') + '<span class="hash">' + t.hash.slice(0, 6) + '…' + t.hash.slice(-4) + '</span></small></span>' +
-          '<span class="amts">' + txAmounts(t) + '</span><span class="tx-net"><span class="dot ' + N.cls + '">' + N.dot + '</span>' + N.name + '</span><span><span class="pill ' + s2[1] + '">' + s2[0] + '</span></span><span><small style="color:var(--fg);font-size:13.5px">' + ago(t.at) + '</small><small>' + new Date(t.at).toLocaleDateString('en-US', { month: 'short', day: 'numeric' }) + '</small></span></button>';
+          '<span class="amts">' + txAmounts(t) + '</span><span class="tx-net"><img class="chain" src="chains/' + t.net + '.svg" alt="" width="20" height="20">' + N.name + '</span><span><span class="pill ' + s2[1] + '">' + s2[0] + '</span></span><span><small style="color:var(--fg);font-size:13.5px">' + ago(t.at) + '</small><small>' + new Date(t.at).toLocaleDateString('en-US', { month: 'short', day: 'numeric' }) + '</small></span></button>';
       }).join('') : '<div class="empty" style="padding:36px 20px">No transactions match these filters.<br><button class="btn ghost sm" id="txClear" style="margin-top:12px;display:inline-block">Clear filters</button></div>') +
       '<div class="tx-foot"><span>Showing ' + list.length + ' of ' + all.length + '</span><span>Newest first</span></div></div></div>';
     $$('[data-g]').forEach(function (b) { b.onclick = function () { S.txf.g = b.dataset.g; save(); renderTransactions(); }; });
