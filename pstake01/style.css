@@ -213,7 +213,7 @@ h1{font-size:26px;letter-spacing:-.01em}
 .pl-tools{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:14px;flex-wrap:wrap}
 .seg.vt button{padding:7px 10px;display:grid;place-items:center}.seg.vt svg{width:16px;height:16px}
 .pair{display:flex;flex:none}.pair .dot{width:30px;height:30px;border:2px solid var(--card);font-size:12px}.pair .dot+.dot{margin-left:-9px}
-.pl-row{display:grid;grid-template-columns:minmax(200px,2fr) minmax(110px,1fr) 80px 100px 120px 110px 20px;gap:16px;align-items:center;padding:14px 18px;width:100%;text-align:left;border-top:1px solid var(--line);transition:background .12s}
+.pl-row{display:grid;grid-template-columns:minmax(240px,2.4fr) 90px 120px 130px 120px 20px;gap:16px;align-items:center;padding:14px 18px;width:100%;text-align:left;border-top:1px solid var(--line);transition:background .12s}
 .pl-row:hover{background:rgba(255,255,255,.025)}
 .pl-head{border-top:0;font-size:11.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--dim);padding-top:12px;padding-bottom:10px;border-bottom:1px solid var(--line)}
 .pl-head:hover{background:none}.pl-head+.pl-row{border-top:0}
@@ -242,7 +242,7 @@ h1{font-size:26px;letter-spacing:-.01em}
 .pd-empty{color:var(--mut);font-size:13px;margin-top:8px}
 .pd-main{display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:8px;margin-top:6px}.pd-main .btn{margin:0;padding:14px 10px;font-size:15px}
 .pd-main:has(>:nth-child(2):last-child){grid-template-columns:1.4fr 1fr}
-.btn.ghost:disabled{background:transparent;border-color:var(--line)}
+.btn.ghost:disabled{background:transparent;border-color:var(--line);color:var(--dim);cursor:not-allowed}
 .dep{background:var(--card2);border:1px solid var(--line);border-radius:14px;padding:12px 14px}
 .dep:focus-within{border-color:rgba(232,84,106,.5)}
 .dep-in{display:flex;align-items:center;gap:10px;margin-top:8px}.dep-in .dot{width:28px;height:28px}.dep-in .amt{font-size:24px;text-align:left}.dep-in .u{color:var(--mut);font-weight:600}
@@ -252,9 +252,9 @@ h1{font-size:26px;letter-spacing:-.01em}
 .arrow.flip{cursor:pointer}.arrow.flip:hover{color:var(--fg)}
 @media(max-width:980px){
   .pl-head{display:none}
-  .pl-row{grid-template-columns:minmax(0,1fr) auto auto;grid-template-areas:"pool apr chev" "w tvl chev" "w mine chev";row-gap:6px}
-  .pl-row>:nth-child(1){grid-area:pool}.pl-row>:nth-child(2){grid-area:w}.pl-row>:nth-child(3){grid-area:apr}.pl-row>:nth-child(4){grid-area:tvl}.pl-row>:nth-child(5){grid-area:mine}.pl-row>:nth-child(6){display:none}.pl-row>:nth-child(7){grid-area:chev}
-  .pl-row>:nth-child(4)::before{content:"TVL ";color:var(--dim);font-size:12px}.pl-row>:nth-child(5)::before{content:"Mine ";color:var(--dim);font-size:12px}
+  .pl-row{grid-template-columns:minmax(0,1fr) auto auto;grid-template-areas:"pool apr chev" "pool liq chev" "pool mine chev";row-gap:4px}
+  .pl-row>:nth-child(1){grid-area:pool}.pl-row>:nth-child(2){grid-area:apr}.pl-row>:nth-child(3){grid-area:liq}.pl-row>:nth-child(4){grid-area:mine}.pl-row>:nth-child(5){display:none}.pl-row>:nth-child(6){grid-area:chev}
+  .pl-row>:nth-child(3)::before{content:"Liquidity ";color:var(--dim);font-size:12px}.pl-row>:nth-child(4)::before{content:"Mine ";color:var(--dim);font-size:12px}
 }
 @media(max-width:520px){.pd-stats{grid-template-columns:1fr 1fr 1fr}.pd-main{grid-template-columns:1fr}.pd-main:has(>:nth-child(2):last-child){grid-template-columns:1fr}.tiers.four{grid-template-columns:repeat(2,1fr)}}
 
@@ -270,3 +270,11 @@ img.chain{border-radius:50%;flex:none;display:block;box-shadow:0 0 0 1px rgba(25
 .connect-card div{flex:1;min-width:220px}.connect-card b{display:block;font-size:16px}.connect-card p{color:var(--mut);font-size:13.5px;margin-top:2px}.connect-card .btn{margin:0}
 .pd-connect{display:flex;align-items:center;gap:14px;flex-wrap:wrap}.pd-connect p{flex:1;min-width:180px;color:var(--mut);font-size:13.5px}.pd-connect .btn{margin:0}
 .tile .mutd{color:var(--dim)}
+
+/* token icons */
+img.tk{width:24px;height:24px;border-radius:50%;flex:none;display:block;object-fit:cover}
+.tok img.tk{width:28px;height:28px}.li img.tk{width:32px;height:32px}.next img.tk{width:32px;height:32px}
+.pair img.tk{width:30px;height:30px;box-shadow:0 0 0 2px var(--card)}.pair img.tk+img.tk{margin-left:-9px}
+.pair.lg img.tk{width:40px;height:40px}.pair.lg img.tk+img.tk{margin-left:-12px}
+.pd-amts img.tk{width:22px;height:22px}.dep-in img.tk{width:28px;height:28px}
+.pd-w{margin-top:14px;color:var(--mut)}
