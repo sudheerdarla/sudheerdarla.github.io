@@ -130,7 +130,7 @@
 
   /* ---------- modal ---------- */
   function openModal(html, onclose) {
-    $('#modal').innerHTML = html; $('#scrim').hidden = false; $('#modal').onclose = onclose;
+    $('#modal').className = 'modal'; $('#modal').innerHTML = html; $('#scrim').hidden = false; $('#modal').onclose = onclose;
     var x = $('#modal .x'); if (x) x.onclick = closeModal;
     var fi = $('#modal [autofocus],#modal button:not(.x)'); if (fi) fi.focus();
   }
@@ -418,6 +418,7 @@
         (rv < MIN_CLAIM ? '<p class="pd-empty" id="pdMin" style="margin-top:8px">You can claim once rewards reach $0.01.</p>' : '') +
         (p.apr ? '' : '<p class="pd-empty" style="margin-top:8px">New pools earn from trading fees once people trade the pair.</p>') + '</div>' : '<div class="pd-box pd-connect"><p>Connect a wallet to see your liquidity and rewards in this pool.</p><button class="btn sm" id="pdConnect">Connect wallet</button></div>') +
       '<div class="pd-main"><button class="btn" id="pdAdd">Add liquidity</button><button class="btn ghost" id="pdTrade">Trade pair</button>' + (has ? '<button class="btn ghost" id="pdRemove">Remove</button>' : '') + '</div>');
+    $('#modal').classList.add('wide');
     $('#pdAdd').onclick = function () { addModal(p.id); };
     var pc = $('#pdConnect'); if (pc) pc.onclick = connectModal;
     $('#pdTrade').onclick = function () { tradeModal(p.id); };
@@ -589,6 +590,14 @@
   }
   function renderTransactions() {
     var F = S.txf, all = S.txs.slice().sort(function (x, y) { return y.at - x.at; }), list = all.filter(txMatches);
+    if (!S.connected) {
+      function et(l, c, e) { return '<div class="tile"><small><i style="background:' + c + '"></i>' + l + '</small><strong class="mutd">—</strong><em>' + e + '</em></div>'; }
+      view.innerHTML = '<div class="wrap wide"><h1>Transactions</h1><p class="sub">Every stake, unstake, pool, swap and reward action from your wallet, on every network.</p>' +
+        '<div class="connect-card"><div><b>Connect a wallet to see your transactions</b><p>Stakes, unstakes, pool deposits, swaps and reward claims from your wallet will be listed here.</p></div><button class="btn sm" id="cwT">Connect wallet</button></div>' +
+        '<div class="tiles">' + et('Transactions', '#e8546a', 'Across all networks') + et('Total staked', '#3ecf8e', 'At today’s prices') + et('Rewards used', '#5b8def', 'Claimed or restaked') + et('Unbonding now', '#f5b73b', 'Regular unstakes') + '</div>' +
+        '<div class="list"><div class="tx-head"><span></span><span>Type</span><span>Amount</span><span>Network</span><span>Status</span><span>Time</span></div><div class="empty" style="padding:44px 20px">No wallet connected, so there’s no history to show yet.<br><button class="btn sm" id="cwT2" style="margin-top:14px;display:inline-block">Connect wallet</button></div></div></div>';
+      $('#cwT').onclick = connectModal; $('#cwT2').onclick = connectModal; return;
+    }
     function cnt(g) { return all.filter(function (t) { return (g === 'all' || TX[t.type].g === g) && (F.net === 'all' || t.net === F.net); }).length; }
     var staked = 0, rewards = 0;
     all.forEach(function (t) { if (t.type === 'stake') staked += t.give[0] * priceOn(t.net, t.give[1]); if (t.type === 'claim' || t.type === 'restake') amtList(t.get).forEach(function (x) { rewards += x[0] * priceOn(t.net, x[1]); }); });

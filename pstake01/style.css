@@ -278,3 +278,24 @@ img.tk{width:24px;height:24px;border-radius:50%;flex:none;display:block;object-f
 .pair.lg img.tk{width:40px;height:40px}.pair.lg img.tk+img.tk{margin-left:-12px}
 .pd-amts img.tk{width:22px;height:22px}.dep-in img.tk{width:28px;height:28px}
 .pd-w{margin-top:14px;color:var(--mut)}
+
+/* squarer buttons (connect + network chips keep their pill shape) */
+.btn{border-radius:6px}
+.tabs{border-radius:8px}.tabs button{border-radius:5px}
+.seg{border-radius:8px}.seg button{border-radius:5px}
+.tiers button,.method,.wal{border-radius:6px}.wal .wlogo{border-radius:6px}
+.dd button,.pop-act,nav button,nav a,.socials button{border-radius:6px}
+.pop-act.danger{border-radius:0 0 6px 6px}
+.tok{border-radius:6px}.max{border-radius:4px}
+.pl-card-acts .btn,.pd-acts .btn,.pd-main .btn{border-radius:6px}
+/* roomier pool detail */
+.modal.wide{max-width:600px;padding:32px}
+.modal.wide .pd-h{gap:16px}
+.modal.wide .pd-stats{gap:12px;margin:22px 0}
+.modal.wide .pd-stats div{padding:14px 16px}
+.modal.wide .pd-box{padding:18px 20px;margin-bottom:14px}
+.modal.wide .pd-amts{gap:24px;margin-top:12px}
+.modal.wide .pd-acts{gap:10px;margin-top:16px}
+.modal.wide .pd-main{gap:10px;margin-top:10px}
+.modal.wide{max-height:calc(100vh - 32px);overflow:auto}
+@media(max-width:520px){.modal.wide{padding:22px 18px}.modal.wide .pd-stats{gap:8px}.modal.wide .pd-stats div{padding:10px 12px}.modal.wide .pd-box{padding:14px 16px}}
