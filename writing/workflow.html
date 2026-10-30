@@ -84,6 +84,13 @@
     ul.points + p, figure + ul.points { margin-top: var(--s-lg); }
     ul.points li { padding-left: 22px; position: relative; }
     ul.points li::before { content: "→"; position: absolute; left: 0; color: var(--muted); }
+    /* Share */
+    .actions { margin-top: var(--s-4xl); display: flex; align-items: center; gap: var(--s-sm); flex-wrap: wrap; }
+    .act { display: inline-flex; align-items: center; gap: 8px; min-height: 40px; padding: 0 14px; border: 1px solid var(--line-1); border-radius: var(--r-md); background: var(--bg); font-size: 14px; line-height: 20px; color: var(--fg-1); text-decoration: none; transition: border-color .15s var(--ease-out), background-color .15s var(--ease-out); }
+    .act:hover { border-color: var(--fg); }
+    .act svg { flex: none; }
+    .act-label { margin-right: var(--s-xs); font-size: 13px; color: var(--muted); }
+    .share-status { font-size: 13px; color: var(--muted); }
     /* Figures break out of the text column so the sketches read at a glance */
     /* A little wider than the text, but never wide enough to slide under the fixed theme switch in the bottom-left corner */
     figure { position: relative; left: 50%; width: min(800px, max(100%, calc(100vw - 340px))); transform: translateX(-50%); margin: var(--s-4xl) 0; }
@@ -218,6 +225,14 @@
       </ul>
       <p>That’s what I’m holding on to.</p>
     </article>
+    <div class="actions" aria-label="Share this post">
+      <span class="act-label">Share</span>
+      <button class="act" type="button" id="share-native" hidden><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12v7a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-7M16 6l-4-4-4 4M12 2v13"/></svg>Share</button>
+      <button class="act" type="button" id="share-copy"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.5.5l3-3a5 5 0 0 0-7-7l-1.7 1.7M14 11a5 5 0 0 0-7.5-.5l-3 3a5 5 0 0 0 7 7l1.7-1.7"/></svg><span>Copy link</span></button>
+      <a class="act" id="share-li" target="_blank" rel="noopener" href="#">LinkedIn<span class="sr"> (opens in a new tab)</span></a>
+      <a class="act" id="share-x" target="_blank" rel="noopener" href="#">X<span class="sr"> (opens in a new tab)</span></a>
+      <span class="share-status" id="share-status" role="status" aria-live="polite"></span>
+    </div>
     <div class="end">
       <a href="../#writing"><span>← All writing</span></a>
       <a href="mailto:sudheer.darla11@gmail.com"><span>Say hi</span><span class="sr"> (opens your email app)</span></a>
@@ -246,6 +261,23 @@
       lb.addEventListener('close', function () { document.body.classList.remove('lb-open'); if (last) last.focus(); });
       lb.querySelector('.lb-close').addEventListener('click', close);
       lb.addEventListener('click', function (e) { if (e.target === lb || e.target.tagName === 'FIGURE') close(); });
+    })();
+  </script>
+  <script>
+    /* Share: native share sheet where the device has one, plus copy link, LinkedIn and X */
+    (function () {
+      var url = location.href.split('#')[0], title = document.title.replace(/ — .*$/, '');
+      var st = document.getElementById('share-status');
+      document.getElementById('share-li').href = 'https://www.linkedin.com/sharing/share-offsite/?url=' + encodeURIComponent(url);
+      document.getElementById('share-x').href = 'https://x.com/intent/post?text=' + encodeURIComponent(title) + '&url=' + encodeURIComponent(url);
+      var nat = document.getElementById('share-native');
+      if (navigator.share) { nat.hidden = false; nat.addEventListener('click', function () { navigator.share({ title: title, url: url }).catch(function () {}); }); }
+      document.getElementById('share-copy').addEventListener('click', function () {
+        var b = this.querySelector('span');
+        function ok() { b.textContent = 'Copied'; st.textContent = 'Link copied'; setTimeout(function () { b.textContent = 'Copy link'; st.textContent = ''; }, 2000); }
+        if (navigator.clipboard) navigator.clipboard.writeText(url).then(ok, function () { prompt('Copy this link', url); });
+        else prompt('Copy this link', url);
+      });
     })();
   </script>
   <script src="../app.js?v=10" defer></script>
