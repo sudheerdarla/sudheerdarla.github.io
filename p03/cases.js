@@ -84,7 +84,7 @@
       hero: { src: 'p02/pstake-hero.jpg', w: 2880, h: 1800, alt: 'The PSTAKE stake screen: OSMO staked for stkOSMO with the exchange rate and network fee, a Liquid Stake button, APY and total value unlocked cards, a network selector showing Persistence and BNB Smart Chain, Flash and Regular unstaking methods, and a stake confirmation.' },
       stats: [['$30M+', 'Staked assets value unlocked'], ['5', 'Product areas I designed end to end'], ['2', 'Ways to exit, each with its time and fee shown upfront']],
       sections: [
-        { label: 'Overview', title: 'One app to Stake, Unstake, Earn and track your crypto.',
+        { label: 'Overview', title: 'One app to stake, unstake, earn and track your crypto.',
           lede: 'Before PSTAKE, people jumped between staking sites, swap apps, block explorers and spreadsheets. PSTAKE put all of it in one place. Every balance shows what it is doing, and every button tells you what will happen.',
           blocks: [{ type: 'lists', groups: [
             { title: 'What I designed', items: ['Switching between networks', 'Staking and Unstaking (wait 14 days, or exit instantly for a fee)', 'The DeFi tab: creating and joining pools', 'How rewards and past activity are shown'] },
@@ -244,9 +244,12 @@
             { title: 'A fund is a network, not a folder', text: 'People, money, documents and tasks all hang off the fund they belong to.' },
             { title: 'Nothing should block the flow', text: 'If someone else owes a piece, hand it to them and keep going.' },
             { title: 'Teach the domain in the interface', text: 'Fund terms are dense. Each number carries a short explanation, and steps unlock in the order the rules require.' }] }] },
-        { label: 'Structure', title: 'Six journeys cover the product.',
-          lede: 'The product grew in stages, from sign-in to capital and day-to-day operations. Every main path was designed end to end.',
-          blocks: [{ type: 'flow', rows: [
+        { label: 'Structure', title: 'Every screen hangs off the fund.',
+          lede: 'Before designing screens I mapped the whole product: how people get in, what sits across all funds, and what lives inside each one. Every task, document and person has one home, so nothing ends up in a generic inbox.',
+          blocks: [
+            { type: 'figure', img: { src: 'p03/captl-ia.png', w: 3200, h: 3924, alt: 'CAPTL information architecture: from the website through register and two-factor setup to sign in, then into four areas. Workspace holds activities, updates and calendar. Funds holds fund management and the fund network. Each fund holds overview, management, constituents and analytics. Account holds settings, docs and support.' } },
+            { type: 'note', text: 'Six journeys through the structure' },
+            { type: 'flow', rows: [
             ['First visit', ['Register', 'Set up two-factor', 'Sign in', 'Empty fund list']],
             ['Stand up a fund', ['Fund list', 'Fund details', 'Documents and investors', 'Fund goes live'], true],
             ['Build the network', ['Fund', 'Add team and advisers', 'Add investors and companies', 'Fund network'], true],
@@ -255,23 +258,23 @@
             ['Return visit', ['Sign in', 'Two-factor check', 'Overview of each fund']]], legend: 'Key journeys covered below' }] },
         { label: 'Key decisions', title: 'Five decisions that shaped the product.',
           blocks: [
-            { type: 'decision', label: 'Decision 1', title: 'Create a fund without waiting on paperwork.',
+            { type: 'decision', label: 'Decision A', title: 'Create a fund without waiting on paperwork.',
               text: 'Step two of creating a fund asks for three legal documents, investors and any portfolio companies. Each document can be uploaded now or delegated to the person who has it. Delegating creates a tracked task, and the partner submits the fund anyway.',
               images: [{ src: 'p03/captl-create.jpg', w: 2880, h: 1800, alt: 'Creating a fund, step 2 of 2: each legal document has Delegate and Upload buttons, investors can be invited below, and a checklist sits on the right.' }],
               points: [['Upload or delegate', 'Both options sit on every document, side by side.'], ['A live checklist', 'The side panel shows what’s done, pending or optional.'], ['A safe last step', 'Submit is the final gate, and Back keeps the draft.']] },
-            { type: 'decision', label: 'Decision 2', title: 'One screen for the health of a fund.',
+            { type: 'decision', label: 'Decision B', title: 'One screen for the health of a fund.',
               text: 'The overview answers a partner’s first questions: how big is the fund, how much has been called and paid out, where the money went, and how it’s performing. A new fund has no returns yet, and a row of zeros reads like broken data, so a new fund shows dashes and a one-line note saying that’s expected.',
               images: [{ src: 'p03/captl-dashboard.jpg', w: 2880, h: 1800, alt: 'The overview of an active fund: money cards, an allocation donut and six performance metrics.' }, { src: 'p03/captl-newfund.jpg', w: 2880, h: 1800, alt: 'The overview of a brand-new fund: metrics show dashes marked Early-fund state, with a note that zeros are expected before the first capital call.' }],
               points: [['Money first', 'Five cards cover commitments, money called, money paid out and what’s left.'], ['Explained metrics', 'Each return metric has a ? with a plain definition.'], ['Early, not empty', 'New funds show an expected state instead of misleading zeros.']] },
-            { type: 'decision', label: 'Decision 3', title: 'Set up ownership in the right order.',
+            { type: 'decision', label: 'Decision C', title: 'Set up ownership in the right order.',
               text: 'Before a fund can call capital or pay out profits, it has to define who owns what: the unit classes investors hold, then the units each investor gets. The cap table is a two-step wizard. Issuing units stays locked until the classes exist, and either step can be handed to legal or operations.',
               images: [{ src: 'p03/captl-steps.jpg', w: 2880, h: 1800, alt: 'The cap table wizard: step 1 defines unit classes, step 2 is locked until step 1 is done, with a live summary and an Assign task card on the right.' }],
               points: [['Order is enforced', 'You can’t issue units you haven’t defined.'], ['Live summary', 'Totals update as classes are added.'], ['Foundation first', 'Capital calls and the profit split depend on this step.']] },
-            { type: 'decision', label: 'Decision 4', title: 'Show the people around a fund.',
+            { type: 'decision', label: 'Decision D', title: 'Show the people around a fund.',
               text: 'A fund is a set of relationships: the internal team, outside advisers such as lawyers and auditors, the investors and the companies it backs. The fund network puts all of them in one place, grouped by role, so a partner can see and reach anyone involved.',
               images: [{ src: 'p03/captl-network.jpg', w: 2880, h: 1800, alt: 'The fund network: tabs for team, service providers, investors and portfolio, with team members grouped into partners, principals, associates and analysts.' }],
               points: [['Grouped by role', 'Partners, principals, associates and analysts, each with its own list.'], ['Both sides of the fund', 'Investors and portfolio companies have their own tabs.'], ['Built to grow', 'Real funds have many more people than a spreadsheet row.']] },
-            { type: 'decision', label: 'Decision 5', title: 'Documents in, tasks out.',
+            { type: 'decision', label: 'Decision E', title: 'Documents in, tasks out.',
               text: 'Each fund has a management page for the work that keeps it running. Missing documents, open tasks and handoffs to outside parties each have a tab, and overdue work is flagged. Any task can be assigned to anyone in the fund’s network with a due date, and they’re notified by email.',
               images: [{ src: 'p03/captl-tasks.jpg', w: 2880, h: 1800, alt: 'The management page, tasks tab: open tasks with owners and due dates, one flagged overdue, and the fund details on the right.' }, { src: 'p03/captl-assign.jpg', w: 2880, h: 1800, alt: 'The Assign task window: a task name, who it goes to and a due date.' }],
               points: [['Every task has an owner', 'Each one shows who has it and when it’s due.'], ['Overdue is visible', 'Late work turns red and shows as a count in the sidebar.'], ['Outsiders included', 'Lawyers and administrators get tasks too, not just email.']] }] },
@@ -342,6 +345,7 @@
           r[1].map(function (t) { return '<li>' + t + '</li>'; }).join('') + '</ol></li>';
       }).join('') + '</ol>' + (b.legend ? '<p class="cs-legend"><span aria-hidden="true"></span>' + b.legend + '</p>' : '');
     },
+    note: function (b) { return '<p class="cs-label cs-block-title">' + b.text + '</p>'; },
     steps: function (b) {
       return '<ol class="cs-steps">' + b.items.map(function (s) { return '<li><h3>' + s[0] + '</h3><p>' + s[1] + '</p></li>'; }).join('') + '</ol>';
     },
