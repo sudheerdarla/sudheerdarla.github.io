@@ -1,0 +1,327 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="robots" content="noindex">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sudheer Darla — Product Designer</title>
+  <meta name="description" content="Product Designer based in Hyderabad. 7+ years. 0–1 Fintech/SaaS. Complex and high-stakes flows.">
+  <meta name="color-scheme" content="light dark">
+  <meta name="theme-color" content="#ffffff" id="theme-color">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Sudheer Darla — Product Designer">
+  <meta property="og:description" content="Product Designer. 7+ years. 0–1 Fintech/SaaS. Complex and high-stakes flows.">
+  <meta property="og:image" content="https://sudheerdarla.github.io/img/pstake-thumb.jpg">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="icon" href="../favicon.ico?v=2" sizes="any">
+  <link rel="icon" type="image/png" sizes="32x32" href="../favicon-32.png?v=2">
+  <link rel="apple-touch-icon" href="../apple-touch-icon.png?v=2">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;700;800;900&family=JetBrains+Mono:wght@400&display=swap" media="print" onload="this.media='all'">
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;700;800;900&family=JetBrains+Mono:wght@400&display=swap"></noscript>
+  <script>
+    /* Set the theme before first paint so there is no flash. */
+    (function () {
+      var t = null;
+      try { t = localStorage.getItem('theme'); } catch (e) {}
+      if (t !== 'light' && t !== 'dark') {
+        t = 'light';
+      }
+      document.documentElement.setAttribute('data-theme', t);
+    })();
+  </script>
+  <style>
+    /* ---------- Actuity tokens (from DESIGN_actuity.md) ---------- */
+    :root {
+      --font-sans: "Geist", system-ui, -apple-system, "Segoe UI", sans-serif;
+      --font-mono: "JetBrains Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+
+      --bg: #ffffff;        --bg-1: #fafafa;      --bg-3: #f2f2f3;
+      --surface: #ffffff;   --surface-2: #fafafa; --elevated: #ffffff;
+      --line: #ebebed;      --line-1: #e1e1e4;    --line-strong: #c9c9ce;
+      --fg: #0b0b0c;        --fg-1: #1f1f22;      --fg-2: #45454a;
+      --muted: #6e6e75;     --muted-2: #9a9aa0;   --muted-3: #c6c6c9;
+      --accent: #0b0b0c;    --accent-2: #2c2c30;  --accent-ink: #ffffff;
+      --accent-soft: #0b0b0c0f;
+      --danger: #b42318;
+      --dot: #e1e1e4;
+
+      --r-md: 2px;
+      --shadow-md: 0 12px 28px -12px #0a0a0c29;
+      --ease-out: cubic-bezier(.2, .7, .2, 1);
+      --ease-in-out: cubic-bezier(.65, 0, .35, 1);
+
+      --s-xs: 4px; --s-sm: 8px; --s-md: 12px; --s-lg: 16px; --s-xl: 20px;
+      --s-2xl: 24px; --s-3xl: 32px; --s-4xl: 56px; --s-5xl: 92px;
+    }
+    [data-theme="dark"] {
+      --bg: #0b0b0c;        --bg-1: #101012;      --bg-3: #1f1f22;
+      --surface: #101012;   --surface-2: #1f1f22; --elevated: #1f1f22;
+      --line: #232327;      --line-1: #2c2c30;    --line-strong: #45454a;
+      --fg: #fafafa;        --fg-1: #f2f2f3;      --fg-2: #c9c9ce;
+      --muted: #9a9aa0;     --muted-2: #6e6e75;   --muted-3: #45454a;
+      --accent: #ffffff;    --accent-2: #ebebed;  --accent-ink: #0b0b0c;
+      --accent-soft: #ffffff0f;
+      --danger: #f97066;
+      --dot: #232327;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { color-scheme: light; scroll-behavior: smooth; scrollbar-gutter: stable; -webkit-text-size-adjust: 100%; }
+    html[data-theme="dark"] { color-scheme: dark; }
+    .sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+    h1, h2, h3 { text-wrap: balance; }
+    .bio p, .desc, .meta { text-wrap: pretty; }
+    body {
+      background-color: var(--bg);
+      background-image: radial-gradient(circle, var(--dot) 0.75px, transparent 0.75px);
+      background-size: 24px 24px;
+      background-position: 12px 12px;
+      background-attachment: fixed;
+      color: var(--fg);
+      font-family: var(--font-sans);
+      font-size: 16px; line-height: 24px;
+      -webkit-font-smoothing: antialiased;
+      min-height: 100vh;
+      transition: background-color .2s var(--ease-out), color .2s var(--ease-out);
+    }
+    a { color: inherit; text-decoration: none; }
+    button { font: inherit; color: inherit; background: none; border: 0; cursor: pointer; }
+    ul { list-style: none; }
+    :focus-visible { outline: 2px solid var(--fg); outline-offset: 3px; border-radius: var(--r-md); }
+
+    .skip { position: absolute; left: 16px; top: -64px; z-index: 100; background: var(--accent); color: var(--accent-ink);
+      padding: 10px 16px; border-radius: var(--r-md); font-size: 13px; font-weight: 500; }
+    .skip:focus { top: 16px; }
+
+    /* ---------- Layout ---------- */
+    .page { position: relative; }
+    /* Content sits on a solid full-height panel (case study width and padding) so the dot grid stays out of the text */
+    .main { padding: 0 var(--s-2xl); }
+    .col { max-width: 880px; min-height: 100vh; margin: 0 auto; padding: 0 clamp(20px, 5.5vw, 48px); background: var(--bg); border-left: 1px solid var(--line); border-right: 1px solid var(--line); display: flex; flex-direction: column; }
+
+    /* Top bar + theme toggle */
+    /* Theme toggle, fixed bottom left (same spot as on the case study page) */
+    .toggle-fixed { position: fixed; z-index: 20; left: max(24px, calc((100vw - 1160px) / 2)); bottom: var(--s-2xl); }
+    @media (max-width: 960px) { .toggle-fixed { position: absolute; left: auto; bottom: auto; top: var(--s-md); right: var(--s-lg); min-height: 44px; } }
+    .toggle { display: inline-flex; align-items: center; gap: var(--s-sm); min-height: 32px; padding: 0 2px; }
+    .toggle-label { font-size: 13px; line-height: 16px; color: var(--muted); }
+    .track { position: relative; width: 30px; height: 16px; border-radius: var(--r-md); background: var(--bg-3);
+      border: 1px solid var(--line-strong); transition: background-color .2s var(--ease-out), border-color .2s var(--ease-out); }
+    .knob { position: absolute; top: 2px; left: 2px; width: 10px; height: 10px; border-radius: var(--r-md); background: var(--fg);
+      transition: transform .2s var(--ease-out), background-color .2s var(--ease-out); }
+    .toggle[aria-pressed="true"] .track { background: var(--accent); border-color: var(--accent); }
+    .toggle[aria-pressed="true"] .knob { transform: translateX(14px); background: var(--accent-ink); }
+    .toggle:hover .toggle-label { color: var(--fg); }
+
+    /* Header */
+    .header { display: flex; align-items: flex-end; gap: var(--s-2xl); padding-top: clamp(32px, 7vw, 56px); }
+    .header-text { flex: 1; min-width: 0; }
+    .avatar { width: 96px; height: 96px; border-radius: 50%; object-fit: cover; background: var(--bg-3); border: 2px solid #ffffff; flex: none; }
+    .name { font-size: 24px; line-height: 28px; font-weight: 700; letter-spacing: -0.84px; }
+    .tagline { margin-top: var(--s-sm); font-size: 14px; line-height: 20px; color: var(--muted); }
+    .social { display: flex; gap: var(--s-xs); margin: 0 -6px 0 auto; flex: none; }
+    .nav-link { display: inline-flex; align-items: center; min-height: 32px; min-width: 32px; justify-content: center; font-size: 15px; line-height: 15px; font-weight: 500; color: var(--fg-1); padding: 0 6px; border-bottom: 1px solid transparent; transition: border-color .15s var(--ease-out), color .15s; }
+    .nav-link:hover { color: var(--fg); border-bottom-color: var(--fg); }
+
+    .bio { margin-top: var(--s-3xl); display: flex; flex-direction: column; gap: var(--s-lg); max-width: 640px; font-size: 16px; line-height: 26.4px; color: var(--fg-2); }
+
+
+    .sections { margin-top: var(--s-3xl); display: flex; flex-direction: column; gap: 0; }
+
+    /* Tabs */
+    .tabs { display: flex; gap: var(--s-xl); border-bottom: 1px solid color-mix(in srgb, var(--line-strong) 40%, transparent); flex-wrap: wrap; }
+    .tab { position: relative; flex: none; min-height: 44px; padding: 0; font-size: 15px; line-height: 20px; font-weight: 500; color: var(--muted); transition: color .15s var(--ease-out); }
+    .tab:hover { color: var(--fg); }
+    .tab[aria-selected="true"] { color: var(--fg); }
+    .tab::after { content: ""; position: absolute; left: 0; right: 0; bottom: -1px; height: 2px; background: var(--fg); transform: scaleX(0); transition: transform .2s var(--ease-out); }
+    .tab[aria-selected="true"]::after { transform: scaleX(1); }
+    .tab:focus-visible { outline: 2px solid var(--fg); outline-offset: 4px; border-radius: 4px; }
+    .panel { padding: var(--s-2xl) 0; outline: none; }
+    .panel:focus-visible { outline: 2px solid var(--fg); outline-offset: 4px; border-radius: 2px; }
+    @media (prefers-reduced-motion: reduce) { .tab::after { transition: none; } }
+
+    /* Eyebrow */
+    .eyebrow { font-size: 14px; line-height: 20px; font-weight: 600; color: var(--fg); }
+    
+    /* Projects */
+    .projects { display: flex; flex-direction: column; gap: var(--s-4xl); }
+    .project h3 .concept { text-transform: none; font-weight: 400; font-size: 15px; color: var(--muted); letter-spacing: 0; }
+    .project h3 { font-size: 18px; line-height: 24px; font-weight: 800; letter-spacing: 0; text-transform: uppercase; }
+    .project .desc { margin-top: var(--s-xs); font-size: 16px; line-height: 24px; color: var(--muted); }
+    .slot { position: relative; display: block; width: 100%; aspect-ratio: 2 / 1; margin-top: var(--s-lg); overflow: hidden;
+      border: 1px solid var(--line); border-radius: var(--r-md); background: var(--bg-3); text-align: left;
+      transition: border-color .15s var(--ease-out), box-shadow .25s var(--ease-out); }
+    .slot img { width: 100%; height: 100%; object-fit: cover; object-position: top center; display: block; transition: transform .5s var(--ease-out); }
+    .slot img.is-center { object-position: center; }
+    .slot:hover { border-color: var(--line-strong); box-shadow: var(--shadow-md); }
+    .slot:hover img { transform: scale(1.015); }
+    .slot-tag { position: absolute; right: var(--s-md); bottom: var(--s-md); font-size: 12px; line-height: 16px; font-weight: 500;
+      padding: 4px 8px; border-radius: var(--r-md); background: var(--accent); color: var(--accent-ink);
+      opacity: 0; transform: translateY(4px); transition: opacity .15s var(--ease-out), transform .15s var(--ease-out); }
+    .slot:hover .slot-tag, .slot:focus-visible .slot-tag { opacity: 1; transform: none; }
+
+    /* Touch screens: no hover, so the whole card is the link and the tag would only cover the screenshot */
+    @media (hover: none) { .slot-tag { display: none; } }
+
+    /* Writing */
+    .post-date { font-size: 13px; line-height: 19.5px; color: var(--muted); }
+    .post h3 { margin-top: var(--s-xs); font-size: 22px; line-height: 28px; font-weight: 700; letter-spacing: -0.4px; }
+    .post .desc { margin-top: var(--s-xs); font-size: 16px; line-height: 24px; color: var(--muted); }
+    .slot img.sketch { object-fit: contain; object-position: center; }
+
+    /* Experience / Education */
+    .row { display: flex; align-items: center; justify-content: space-between; gap: var(--s-lg); padding: var(--s-lg) 0; border-bottom: 1px solid var(--line); }
+    .row:first-child { padding-top: 0; }
+    .row:last-child, .edu:last-child { border-bottom: 0; }
+    .row-left { display: flex; align-items: center; gap: var(--s-md); min-width: 0; }
+    .badge { width: 36px; height: 36px; flex: none; display: grid; place-items: center; border: 1px solid var(--line-1); border-radius: var(--r-md);
+      background: var(--bg-3); font-family: var(--font-mono); font-size: 11px; color: var(--fg-1); }
+    .row h3 { font-size: 16px; line-height: 26.4px; font-weight: 500; }
+    .meta { font-size: 13px; line-height: 19.5px; color: var(--muted); }
+    .dates { font-size: 13px; line-height: 19.5px; color: var(--muted); white-space: nowrap; }
+    .edu { padding: var(--s-lg) 0; border-bottom: 1px solid var(--line); }
+    .edu:first-child { padding-top: 0; }
+    .edu h3 { font-size: 16px; line-height: 26.4px; font-weight: 500; }
+
+    /* Skills */
+    .skills { display: grid; grid-template-columns: 1fr 1fr; gap: var(--s-3xl); }
+    .skills ul { margin-top: var(--s-md); display: flex; flex-direction: column; gap: var(--s-md); }
+    .skills li { font-size: 16px; line-height: 24px; color: var(--fg-2); }
+
+    /* Pinned to the bottom of the full-height panel, even when a short tab is open */
+    .footer { margin-top: auto; padding: var(--s-4xl) 0 var(--s-3xl); display: flex; justify-content: center; }
+
+    @media (max-width: 640px) {
+      .main { padding: 0; }
+      .col { padding: 64px 20px 0; border: 0; }
+      .toggle-label { display: none; }
+      .toggle-fixed { right: 20px; }
+      .header { padding-top: 0; }
+      /* Tabs scroll sideways; the end padding lets the last tab clear the fade */
+      .tabs { gap: var(--s-xl); flex-wrap: nowrap; overflow-x: auto; overscroll-behavior-x: contain; -webkit-overflow-scrolling: touch; scrollbar-width: none; margin: 0 -20px; padding: 0 48px 0 20px; scroll-padding: 0 48px 0 20px;
+        -webkit-mask-image: linear-gradient(to right, #000 calc(100% - 32px), transparent); mask-image: linear-gradient(to right, #000 calc(100% - 32px), transparent); }
+      .tabs::-webkit-scrollbar { display: none; }
+      .tab::after { bottom: 0; }
+      .header { align-items: flex-start; flex-direction: column; gap: var(--s-lg); }
+      .header { flex-wrap: wrap; }
+      .social { margin: 0 0 0 -6px; flex-basis: 100%; }
+      .row { flex-direction: column; align-items: flex-start; gap: var(--s-sm); }
+      .skills { grid-template-columns: 1fr; }
+    }
+    @media print { body { background: #fff; color: #000; } .toggle-fixed, .skip, .slot-tag { display: none !important; } .panel[hidden] { display: block !important; } .tabs { display: none; } .slot { break-inside: avoid; } }
+    @media (prefers-reduced-motion: reduce) { *, *::before, *::after { transition-duration: .01ms !important; scroll-behavior: auto !important; } }
+  </style>
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+  <div class="page">
+    <main id="main" class="main">
+      <div class="col">
+        <header class="header">
+          <img class="avatar" width="96" height="96" fetchpriority="high" decoding="async" alt="Portrait of Sudheer Darla" src="../img/avatar-sudheer.jpg">
+          <div class="header-text">
+            <h1 class="name">Sudheer Darla</h1>
+            <p class="tagline">Product Designer · 7+ years · 0–1 Fintech/SaaS<br>Complex and high-stakes flows.</p>
+          </div>
+          <nav class="social" aria-label="Social links">
+            <a class="nav-link" href="https://www.linkedin.com/in/sudheerdarla/" target="_blank" rel="noopener">LinkedIn<span class="sr"> (opens in a new tab)</span></a>
+            <a class="nav-link" href="https://x.com/sudheerdarla_" target="_blank" rel="noopener">X<span class="sr"> (opens in a new tab)</span></a>
+          </nav>
+        </header>
+
+        <section class="bio" aria-label="About">
+          <p>Product designer with 7+ years of experience taking fintech, Web3 and SaaS products from zero to one. I design the core flows, interfaces and systems behind them, from how a product is structured to how it feels in use.</p>
+          <p>I’ve shipped a commodity trading platform, a private equity fund workspace, and a liquid staking product that unlocked more than $30M in staked assets value. My focus is trust-heavy, multi-step products where clarity of state, cost and risk matters most.</p>
+        </section>
+
+        <div class="sections">
+          <h2 class="sr">Work and background</h2>
+          <div class="tabs" role="tablist" aria-label="Work and background">
+            <button class="tab" type="button" role="tab" id="t-projects" aria-controls="p-projects" aria-selected="true">Projects</button>
+            <button class="tab" type="button" role="tab" id="t-experience" aria-controls="p-experience" aria-selected="false" tabindex="-1">Experience</button>
+            <button class="tab" type="button" role="tab" id="t-education" aria-controls="p-education" aria-selected="false" tabindex="-1">Education</button>
+            <button class="tab" type="button" role="tab" id="t-skills" aria-controls="p-skills" aria-selected="false" tabindex="-1">Skills</button>
+            <button class="tab" type="button" role="tab" id="t-writing" aria-controls="p-writing" aria-selected="false" tabindex="-1">Writing</button>
+          </div>
+          <div class="panel" role="tabpanel" id="p-projects" aria-labelledby="t-projects" tabindex="0">
+              <div class="projects">
+                <article class="project">
+                  <h3>Saifuro Console <span class="concept">(concept design)</span></h3>
+                  <p class="desc">AI agent spend controls</p>
+                  <a class="slot" href="work.html#saifuro" aria-label="Read the case study: Saifuro Console">
+                    <img alt="Saifuro Console overview with approvals waiting, spend and budget by agent" width="1600" height="1000" decoding="async" src="../img/saifuro-thumb.jpg" data-light="../img/saifuro-thumb.jpg" data-dark="../img/saifuro-thumb-dark.jpg">
+                    <span class="slot-tag" aria-hidden="true">Read case study</span>
+                  </a>
+                </article>
+                <article class="project">
+                  <h3>PSTAKE Finance</h3>
+                  <p class="desc">Web3 staking platform</p>
+                  <a class="slot" href="work.html#pstake" aria-label="Read the case study: PSTAKE Finance">
+                    <img class="is-center" alt="PSTAKE stake screen with the network selector, Flash and Regular unstaking methods and a stake confirmation" width="1434" height="715" decoding="async" src="../img/pstake-home-thumb.webp?v=2">
+                    <span class="slot-tag" aria-hidden="true">Read case study</span>
+                  </a>
+                </article>
+                <article class="project">
+                  <h3>COMDEX</h3>
+                  <p class="desc">Commodity trading platform</p>
+                  <a class="slot" href="work.html#comdex" aria-label="Read the case study: COMDEX">
+                    <img alt="COMDEX commodity trading dashboard" width="1600" height="971" loading="lazy" decoding="async" src="../img/comdex-thumb.jpg">
+                    <span class="slot-tag" aria-hidden="true">Read case study</span>
+                  </a>
+                </article>
+                <article class="project">
+                  <h3>CAPTL</h3>
+                  <p class="desc">Investor portfolio platform</p>
+                  <a class="slot" href="work.html#captl" aria-label="Read the case study: CAPTL">
+                    <img alt="CAPTL investor portfolio screens" width="1440" height="1024" loading="lazy" decoding="async" src="../img/captl-thumb.jpg">
+                    <span class="slot-tag" aria-hidden="true">Read case study</span>
+                  </a>
+                </article>
+              </div>
+            </div>
+          <div class="panel" role="tabpanel" id="p-experience" aria-labelledby="t-experience" tabindex="0" hidden>
+              <div class="row"><div class="row-left"><div class="badge" aria-hidden="true">IV</div><div><h3>Independent ventures</h3><div class="meta">Founder, Hyderabad</div></div></div><div class="dates">2023 – 2026</div></div>
+              <div class="row"><div class="row-left"><div class="badge" aria-hidden="true">HC</div><div><h3>Hive Consultancy Services</h3><div class="meta">Product Designer, Bengaluru</div></div></div><div class="dates">Apr 2023 – Aug 2023</div></div>
+              <div class="row"><div class="row-left"><div class="badge" aria-hidden="true">WL</div><div><h3>Wise Log Solutions</h3><div class="meta">UI/UX Designer, Dubai</div></div></div><div class="dates">Jul 2022 – Mar 2023</div></div>
+              <div class="row"><div class="row-left"><div class="badge" aria-hidden="true">CM</div><div><h3>CMMT Technologies</h3><div class="meta">UI/UX Designer, Bengaluru</div></div></div><div class="dates">Feb 2020 – Jun 2022</div></div>
+              <div class="row"><div class="row-left"><div class="badge" aria-hidden="true">CT</div><div><h3>Cosmic Tech Labs</h3><div class="meta">User Experience Designer, Hyderabad</div></div></div><div class="dates">Jul 2018 – Oct 2019</div></div>
+            </div>
+          <div class="panel" role="tabpanel" id="p-education" aria-labelledby="t-education" tabindex="0" hidden>
+              <div class="edu"><h3>Mahatma Gandhi Institute of Technology, Hyderabad</h3><div class="meta">Bachelor of Technology, Computer Science</div><div class="meta">2013 – 2016</div></div>
+              <div class="edu"><h3>Polytechnic College, Kothagudem</h3><div class="meta">Diploma in Electrical and Electronics Engineering</div><div class="meta">2010 – 2013</div></div>
+            </div>
+          <div class="panel" role="tabpanel" id="p-skills" aria-labelledby="t-skills" tabindex="0" hidden>
+              <div class="skills">
+                <div><h3 class="eyebrow">Design</h3><ul><li>Product Design</li><li>Figma</li><li>Rapid Prototyping</li><li>Design Systems</li><li>User Experience Design (UED)</li><li>Illustrator</li></ul></div>
+                <div><h3 class="eyebrow">Engineering</h3><ul><li>HTML/CSS/JS/React JS</li><li>Python</li><li>Git</li></ul></div>
+              </div>
+            </div>
+          <div class="panel" role="tabpanel" id="p-writing" aria-labelledby="t-writing" tabindex="0" hidden>
+              <article class="post">
+                <p class="post-date"><time datetime="2026-10-29">Oct 29, 2026</time> · 4 min read</p>
+                <h3>My workflow has been updated!</h3>
+                <p class="desc">From a straight line to a loop, and what I’m seeing across the industry.</p>
+                <a class="slot" href="writing/workflow.html" aria-label="Read the post: My workflow has been updated!">
+                  <img class="sketch" alt="Sketch: the old linear design process next to the new loop" width="2400" height="1200" loading="lazy" decoding="async" src="../img/blog-workflow-loop.png">
+                  <span class="slot-tag" aria-hidden="true">Read post</span>
+                </a>
+              </article>
+            </div>
+        </div>
+
+        <footer class="footer">
+          <a class="nav-link" href="mailto:sudheer.darla11@gmail.com">Say hi<span class="sr"> (opens your email app)</span></a>
+        </footer>
+      </div>
+    </main>
+  </div>
+
+    <button class="toggle toggle-fixed" type="button" id="theme" aria-pressed="false" aria-label="Switch to dark mode">
+            <span class="toggle-label" id="theme-label">Dark mode</span>
+            <span class="track" aria-hidden="true"><span class="knob"></span></span>
+          </button>
+    <script src="app.js?v=9" defer></script>
+</body>
+</html>
