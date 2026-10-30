@@ -77,7 +77,7 @@
   function seed() {
     var t0 = NOW - 18 * DAY;
     return {
-      v: 3, org: 'ABC Traders', user: { name: 'Arjun Rao', role: 'Admin', city: 'Singapore', id: 'COM12340' },
+      v: 4, org: 'ABC Traders', user: { name: 'Arjun Rao', role: 'Admin', city: 'Singapore', id: 'COM12340' },
       wallet: 150000000, base: { rec: 25000000, pay: 3000000 },
       trades: [
         {
@@ -156,14 +156,15 @@
         files: {}, savedAt: NOW - 3 * MIN
       },
       prefs: { email: true, offers: true, digest: false, twofa: true, ccy: 'USD' },
-      ui: { range: 'M', chart: 'fin', tTab: 'active', tradeFilter: 'all' },
+      ui: { range: 'M', chart: 'mkt', tTab: 'active', tradeFilter: 'all' },
       jobs: []
     };
   }
   var KEY = 'comdex01';
   var S;
   try { S = JSON.parse(localStorage.getItem(KEY)); } catch (e) { S = null; }
-  if (!S || S.v !== 3) S = seed();
+  if (S && S.v === 3) { S.v = 4; S.ui.chart = 'mkt'; } // market stats became the default chart
+  if (!S || S.v !== 4) S = seed();
   function save() { try { localStorage.setItem(KEY, JSON.stringify(S)); } catch (e) {} }
 
   /* ---------- derived ---------- */
@@ -315,17 +316,19 @@
 
   function shell(p, body) {
     var badge = S.trades.filter(needsMe).length, unread = S.notifs.filter(function (n) { return !n.read; }).length;
-    function nl(k, label, icon, extra) { return '<a href="#/' + k + '" class="' + (p === k ? 'on' : '') + '"' + (p === k ? ' aria-current="page"' : '') + '>' + ic(icon) + label + (extra || '') + '</a>'; }
+    var cur = p === 'order' ? 'trades' : p;
+    function nl(k, label, icon, extra) { return '<a href="#/' + k + '" class="' + (cur === k ? 'on' : '') + '"' + (cur === k ? ' aria-current="page"' : '') + '>' + ic(icon) + label + (extra || '') + '</a>'; }
     var titles = {
       dashboard: [greet() + ', ' + S.org, 'Here’s what’s happening with your trades today.'],
       trades: ['Trades', 'Every order from draft to settlement, with the next step on each.'],
       transactions: ['Transactions', 'Deposits, escrow settlements and withdrawals in your COMDEX wallet.'],
       account: ['Account', 'Your organization, COMDEX ID and verification status.'],
-      settings: ['Settings', 'Notifications, security and display preferences.']
+      settings: ['Settings', 'Notifications, security and display preferences.'],
+      order: [orderForm && orderForm.id ? 'Edit draft order' : 'New sell order', 'List a commodity shipment and choose how buyers can reach you.']
     }[p] || ['', ''];
     return '<div class="shell"><aside class="side" id="side" aria-label="Main">' +
       '<a class="logo" href="#/dashboard" aria-label="COMDEX home">' + LOGO + 'COMDEX</a>' +
-      '<p class="nav-h">Main menu</p><nav class="nav">' + nl('dashboard', 'Dashboard', 'grid') + nl('trades', 'Trades', 'swap', badge ? '<span class="badge" aria-label="' + badge + ' need action">' + badge + '</span>' : '') + nl('transactions', 'Transactions', 'dollar') + nl('account', 'Account', 'user') + '</nav>' +
+      '<nav class="nav">' + nl('dashboard', 'Dashboard', 'grid') + nl('trades', 'Trades', 'swap', badge ? '<span class="badge" aria-label="' + badge + ' need action">' + badge + '</span>' : '') + nl('transactions', 'Transactions', 'dollar') + nl('account', 'Account', 'user') + '</nav>' +
       '<div class="side-foot"><nav class="nav">' + nl('settings', 'Settings', 'gear') + '<a href="#" data-a="help">' + ic('help') + 'Help &amp; support</a></nav>' +
       '<div class="me">' + av(S.user.name) + '<div><b>' + esc(S.org) + '</b><span>' + esc(S.user.role + ' · ' + S.user.city) + '</span></div></div></div></aside>' +
       '<main class="main" id="main"><header class="top"><button class="icon-btn burger" data-a="burger" aria-label="Open menu">' + ic('menu') + '</button>' +
@@ -351,7 +354,7 @@
     return out;
   }
   function chartSvg(k, W) {
-    W = W || 1000; var R = RANGES[k], d = series(k), H = 290, padL = 48, padB = 30, top = 10, mid = (H - padB - top) / 2 + top;
+    W = W || 1000; var R = RANGES[k], d = series(k), H = 220, padL = 48, padB = 30, top = 10, mid = (H - padB - top) / 2 + top;
     var max = Math.max.apply(null, d.map(function (x) { return Math.max(x.s, x.b); })), step = niceStep(max), lim = step * 2;
     var bw = (W - padL) / d.length, bar = Math.min(18, bw * .42), g = '';
     [-2, -1, 0, 1, 2].forEach(function (m) { var y = mid - m * (mid - top) / 2; g += '<line class="gl" x1="' + padL + '" x2="' + W + '" y1="' + y + '" y2="' + y + '"/><text class="ax" x="' + (padL - 10) + '" y="' + (y + 4) + '" text-anchor="end">' + (m === 0 ? '0' : (m < 0 ? '−' : '') + compact(Math.abs(m) * step).replace('$', '')) + '</text>'; });
@@ -367,7 +370,7 @@
   }
   function niceStep(max) { var raw = max / 2, p = Math.pow(10, Math.floor(Math.log10(raw))), n = raw / p; return (n <= 1 ? 1 : n <= 2 ? 2 : n <= 5 ? 5 : 10) * p; }
   function priceSvg(k, W) {
-    W = W || 1000; var R = RANGES[k], r = rng(R.seed + 40), H = 290, padL = 56, padB = 30, top = 14, pts = [], v = 9120;
+    W = W || 1000; var R = RANGES[k], r = rng(R.seed + 40), H = 220, padL = 56, padB = 30, top = 14, pts = [], v = 9120;
     for (var i = 0; i < R.n; i++) { v += (r() - .45) * 140; pts.push(v); }
     var mn = Math.min.apply(null, pts) - 60, mx = Math.max.apply(null, pts) + 60, bw = (W - padL) / (R.n - 1), g = '';
     for (var j = 0; j <= 4; j++) { var y = top + (H - padB - top) * j / 4, val = mx - (mx - mn) * j / 4; g += '<line class="gl" x1="' + padL + '" x2="' + W + '" y1="' + y + '" y2="' + y + '"/><text class="ax" x="' + (padL - 10) + '" y="' + (y + 4) + '" text-anchor="end">' + Math.round(val).toLocaleString() + '</text>'; }
@@ -386,14 +389,15 @@
       : '<h2>Copper · LME cash</h2><div class="big num">$' + Math.round(c.last).toLocaleString() + '<small>per MT · ' + ((c.last - c.first) >= 0 ? '+' : '') + ((c.last - c.first) / c.first * 100).toFixed(1) + '% over period</small></div>';
     return '<div class="grid-dash"><div class="col">' +
       '<div class="kpis">' +
-        '<div class="card kpi wallet"><div class="kpi-h"><span class="ic">' + ic('wallet', 'sm') + '</span>Wallet balance<button class="refresh" data-a="refreshWallet" aria-label="Refresh balance">' + ic('refresh', 'sm') + '</button></div><strong class="num">' + money(S.wallet) + '</strong><span class="delta">' + ic('ur', 'sm') + '4.2%</span><span>vs last month</span><div class="fund"><button class="btn" data-a="addFunds">' + ic('plus', 'sm') + 'Add funds</button></div></div>' +
+        '<div class="card kpi wallet"><div class="kpi-h"><span class="ic">' + ic('wallet', 'sm') + '</span>Wallet balance<button class="refresh" data-a="refreshWallet" aria-label="Refresh balance">' + ic('refresh', 'sm') + '</button></div><strong class="num">' + money(S.wallet) + '</strong><div class="fund"><button class="btn" data-a="addFunds">' + ic('plus', 'sm') + 'Add funds</button></div></div>' +
         '<div class="card kpi"><div class="kpi-h"><span class="ic" style="background:var(--green-s);color:var(--green)">' + ic('dl', 'sm') + '</span>Total receivables</div><strong class="num">' + money(receivables()) + '</strong><span class="delta">' + ic('ur', 'sm') + '12.5%</span><span>vs last month</span></div>' +
         '<div class="card kpi"><div class="kpi-h"><span class="ic" style="background:var(--red-s);color:var(--red)">' + ic('ur', 'sm') + '</span>Total payables</div><strong class="num">' + money(S.base.pay) + '</strong><span class="delta">' + ic('dl', 'sm') + '2.1%</span><span>vs last month</span></div>' +
       '</div>' +
       '<section class="card chart-card" aria-label="Volume chart"><div class="chart-top"><div style="margin-right:auto">' + head + '</div>' +
         '<div class="seg" role="group" aria-label="Chart type"><button data-a="chart" data-v="fin" class="' + (fin ? 'on' : '') + '" aria-pressed="' + fin + '">Financials</button><button data-a="chart" data-v="mkt" class="' + (!fin ? 'on' : '') + '" aria-pressed="' + !fin + '">Market stats</button></div>' +
-        '<div class="seg" role="group" aria-label="Period">' + ['D', 'W', 'M', 'Y'].map(function (x) { return '<button data-a="range" data-v="' + x + '" class="' + (k === x ? 'on' : '') + '" aria-pressed="' + (k === x) + '" title="' + RANGES[x].label + '">' + x + '</button>'; }).join('') + '</div></div>' +
+        '</div><div class="chart-sub">' +
         (fin ? '<div class="legend"><span><i style="background:#1f5ae8"></i>Sell</span><span><i style="background:#c9d3e6"></i>Buy</span></div>' : '<div class="legend"><span><i style="background:#1f5ae8"></i>USD per metric ton</span></div>') +
+        '<div class="seg" role="group" aria-label="Period" style="margin-left:auto">' + ['D', 'W', 'M', 'Y'].map(function (x) { return '<button data-a="range" data-v="' + x + '" class="' + (k === x ? 'on' : '') + '" aria-pressed="' + (k === x) + '" title="' + RANGES[x].label + '">' + x + '</button>'; }).join('') + '</div></div>' +
         '<div class="chart" id="chart">' + c.svg + '</div></section>' +
       '<section class="card"><div class="tabs" style="align-items:center"><h2 style="font-size:16px;font-weight:600;margin-right:6px">Traders</h2>' +
         '<button data-a="tTab" data-v="active" class="' + (S.ui.tTab === 'active' ? 'on' : '') + '">Active <span class="ct">' + actC + '</span></button>' +
@@ -715,10 +719,10 @@
     if (!orderForm) { var src = id && id !== 'new' ? trade(id) : null; if (id && id !== 'new' && (!src || src.status !== 'draft')) { location.hash = '#/trades'; return; } orderForm = newForm(src); oStep = 1; }
     var F = orderForm;
     var steps = ['Commodity details', 'OBL details', 'Confirm'];
-    app.innerHTML = '<div class="flow"><header class="flow-top"><button class="back" data-a="oBack" aria-label="Back">' + ic('left') + '</button><div class="crumb"><small>Orders / New</small><b>New sell order</b></div>' +
+    app.innerHTML = shell('order', '<div class="flow in-shell"><header class="flow-top card"><button class="back" data-a="oBack" aria-label="Back">' + ic('left') + '</button>' +
       '<nav class="wiz" aria-label="Steps">' + steps.map(function (s, i) { var n = i + 1; return (i ? '<hr>' : '') + '<span class="' + (n === oStep ? 'on' : n < oStep ? 'done' : '') + '"' + (n === oStep ? ' aria-current="step"' : '') + '><i>' + (n < oStep ? ic('check') : n) + '</i><b>' + s + '</b></span>'; }).join('') + '</nav>' +
       '<button class="btn sec" data-a="oDraft">Save draft</button><button class="x" data-a="oClose" aria-label="Close">' + ic('x') + '</button></header>' +
-      '<div class="flow-body"><div class="col" id="oMain">' + (oStep === 1 ? oStep1(F) : oStep === 2 ? oStep2(F) : oStep3(F)) + '</div><aside class="sum" id="oSum">' + oSummary(F) + '</aside></div></div>';
+      '<div class="flow-body"><div class="col" id="oMain">' + (oStep === 1 ? oStep1(F) : oStep === 2 ? oStep2(F) : oStep3(F)) + '</div><aside class="sum" id="oSum">' + oSummary(F) + '</aside></div></div>');
     bindOrder();
   }
   function fld(k, label, val, o) {
@@ -733,7 +737,7 @@
         '<button role="radio" aria-checked="' + (F.listing === 'settlement') + '" data-a="oSet" data-k="listing" data-v="settlement" class="' + (F.listing === 'settlement' ? 'on' : '') + '"><span class="ic">' + ic('shield') + '</span><span><b>Trade settlement</b><small>COMDEX handles all verifications related to the trade.</small></span><span class="rd"></span></button>' +
         '<button role="radio" aria-checked="' + (F.listing === 'discovery') + '" data-a="oSet" data-k="listing" data-v="discovery" class="' + (F.listing === 'discovery' ? 'on' : '') + '"><span class="ic">' + ic('globe') + '</span><span><b>Trade discovery</b><small>Both parties handle verifications themselves. Faster to list.</small></span><span class="rd"></span></button></div>' +
       '<div class="vis-row"><div class="f"><span class="lab" id="visL">Visibility</span><div class="seg lg" role="radiogroup" aria-labelledby="visL"><button role="radio" aria-checked="' + (F.visibility === 'private') + '" data-a="oSet" data-k="visibility" data-v="private" class="' + (F.visibility === 'private' ? 'on' : '') + '">' + ic('lock', 'sm') + 'Private</button><button role="radio" aria-checked="' + (F.visibility === 'public') + '" data-a="oSet" data-k="visibility" data-v="public" class="' + (F.visibility === 'public' ? 'on' : '') + '">' + ic('globe', 'sm') + 'Public</button></div></div>' +
-      (F.visibility === 'private' ? '<div class="f"><label for="f_invite">Invite counterparty</label><div style="display:flex;gap:10px"><div class="inp" style="flex:1"><span class="ic">' + ic('mail', 'sm') + '</span><input id="f_invite" data-f="invite" type="email" value="' + esc(F.invite) + '" placeholder="buyer@company.com" autocomplete="off"></div><button class="btn sec" data-a="oInvite" style="height:46px;color:var(--blue);border-color:#bcd0f8">Send invite</button></div><span class="msg" data-msg="invite" hidden></span></div>'
+      (F.visibility === 'private' ? '<div class="f"><label for="f_invite">Invite counterparty</label><div style="display:flex;gap:10px"><div class="inp" style="flex:1"><span class="ic">' + ic('mail', 'sm') + '</span><input id="f_invite" data-f="invite" type="email" value="' + esc(F.invite) + '" placeholder="buyer@company.com" autocomplete="off"></div><button class="btn sec" data-a="oInvite" style="color:var(--blue);border-color:#bcd0f8">Send invite</button></div><span class="msg" data-msg="invite" hidden></span></div>'
         : '<p style="color:var(--mut);align-self:center">Every verified trader on COMDEX can see and respond to this order.</p>') + '</div>' +
       (F.invited.length ? '<div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:12px">' + F.invited.map(function (m, i) { return '<span class="pill b" style="height:30px">' + esc(m) + '<button data-a="oUninvite" data-i="' + i + '" aria-label="Remove ' + esc(m) + '" style="display:grid;color:inherit">' + ic('x', 'sm') + '</button></span>'; }).join('') + '</div>' : '') + '</section>' +
       '<section class="card sec"><div class="sec-h"><span class="hic">' + ic('box') + '</span><div><h2>Commodity details</h2><p>As listed on the bill of lading.</p></div></div><div class="g3">' +
