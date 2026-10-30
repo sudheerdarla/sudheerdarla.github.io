@@ -84,6 +84,32 @@
     ul.points + p, figure + ul.points { margin-top: var(--s-lg); }
     ul.points li { padding-left: 22px; position: relative; }
     ul.points li::before { content: "→"; position: absolute; left: 0; color: var(--muted); }
+    /* Like */
+    .like[aria-pressed="true"] { border-color: var(--fg); background: var(--fg); color: var(--bg); }
+    .like[aria-pressed="true"] svg path { fill: currentColor; }
+    .like-count:empty { display: none; }
+    .like:not([hidden]) + .act-label { margin-left: var(--s-sm); padding-left: var(--s-md); border-left: 1px solid var(--line-1); line-height: 28px; }
+    /* Comments */
+    .comments { margin-top: var(--s-4xl); }
+    .comments h2 { margin-top: 0; }
+    .comments h2 span { color: var(--muted); font-weight: 500; }
+    .c-list { list-style: none; border-top: 1px solid var(--line); }
+    .c-item { padding: var(--s-lg) 0; border-bottom: 1px solid var(--line); }
+    .c-head { display: flex; align-items: baseline; gap: var(--s-sm); font-size: 14px; line-height: 20px; }
+    .c-head b { color: var(--fg); font-weight: 600; }
+    .c-head time { font-size: 13px; color: var(--muted); }
+    .c-body { margin-top: 4px; font-size: 16px; line-height: 26px; white-space: pre-wrap; overflow-wrap: anywhere; }
+    .c-empty { padding: var(--s-lg) 0; font-size: 15px; color: var(--muted); border-bottom: 1px solid var(--line); }
+    .c-form { margin-top: var(--s-2xl); display: grid; gap: var(--s-md); }
+    .c-form label { display: block; margin-bottom: 6px; font-size: 13px; line-height: 18px; font-weight: 500; color: var(--fg-1); }
+    .c-form input, .c-form textarea { width: 100%; font: inherit; font-size: 16px; line-height: 24px; color: var(--fg); background: var(--bg); border: 1px solid var(--line-strong); border-radius: var(--r-md); padding: 10px 12px; }
+    .c-form textarea { min-height: 120px; resize: vertical; }
+    .c-form input:focus-visible, .c-form textarea:focus-visible { outline: 2px solid var(--fg); outline-offset: 1px; }
+    .c-row { display: flex; align-items: center; gap: var(--s-md); flex-wrap: wrap; }
+    .c-submit { min-height: 44px; padding: 0 18px; border-radius: var(--r-md); background: var(--fg); color: var(--bg); font-size: 15px; font-weight: 600; }
+    .c-submit:disabled { opacity: .6; cursor: progress; }
+    .c-status { font-size: 14px; color: var(--muted); }
+    .c-note { font-size: 13px; line-height: 18px; color: var(--muted); }
     /* Share */
     .actions { margin-top: var(--s-4xl); display: flex; align-items: center; gap: var(--s-sm); flex-wrap: wrap; }
     .act { display: inline-flex; align-items: center; gap: 8px; min-height: 40px; padding: 0 14px; border: 1px solid var(--line-1); border-radius: var(--r-md); background: var(--bg); font-size: 14px; line-height: 20px; color: var(--fg-1); text-decoration: none; transition: border-color .15s var(--ease-out), background-color .15s var(--ease-out); }
@@ -225,7 +251,8 @@
       </ul>
       <p>That’s what I’m holding on to.</p>
     </article>
-    <div class="actions" aria-label="Share this post">
+    <div class="actions" aria-label="Like and share this post" data-post="workflow">
+      <button class="act like" type="button" id="like" aria-pressed="false" hidden><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" aria-hidden="true"><path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10z"/></svg><span>Like</span><span class="like-count" id="like-count"></span></button>
       <span class="act-label">Share</span>
       <button class="act" type="button" id="share-native" hidden><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12v7a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-7M16 6l-4-4-4 4M12 2v13"/></svg>Share</button>
       <button class="act" type="button" id="share-copy"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.5.5l3-3a5 5 0 0 0-7-7l-1.7 1.7M14 11a5 5 0 0 0-7.5-.5l-3 3a5 5 0 0 0 7 7l1.7-1.7"/></svg><span>Copy link</span></button>
@@ -233,6 +260,16 @@
       <a class="act" id="share-x" target="_blank" rel="noopener" href="#">X<span class="sr"> (opens in a new tab)</span></a>
       <span class="share-status" id="share-status" role="status" aria-live="polite"></span>
     </div>
+    <section class="comments" id="comments" aria-labelledby="c-title" hidden>
+      <h2 id="c-title">Comments <span id="c-count"></span></h2>
+      <ul class="c-list" id="c-list"><li class="c-empty">Loading comments…</li></ul>
+      <form class="c-form" id="c-form" novalidate>
+        <div><label for="c-name">Name</label><input id="c-name" name="name" maxlength="60" autocomplete="name" required></div>
+        <div><label for="c-body">Comment</label><textarea id="c-body" name="body" maxlength="2000" required></textarea></div>
+        <div class="c-row"><button class="c-submit" id="c-submit" type="submit">Post comment</button><span class="c-status" id="c-status" role="status" aria-live="polite"></span></div>
+        <p class="c-note">Comments are public. No account needed.</p>
+      </form>
+    </section>
     <div class="end">
       <a href="../#writing"><span>← All writing</span></a>
       <a href="mailto:sudheer.darla11@gmail.com"><span>Say hi</span><span class="sr"> (opens your email app)</span></a>
@@ -280,6 +317,7 @@
       });
     })();
   </script>
+  <script src="engage.js?v=1" defer></script>
   <script src="../app.js?v=10" defer></script>
 </body>
 </html>
