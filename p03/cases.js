@@ -244,9 +244,18 @@
             { title: 'A fund is a network, not a folder', text: 'People, money, documents and tasks all hang off the fund they belong to.' },
             { title: 'Nothing should block the flow', text: 'If someone else owes a piece, hand it to them and keep going.' },
             { title: 'Teach the domain in the interface', text: 'Fund terms are dense. Each number carries a short explanation, and steps unlock in the order the rules require.' }] }] },
-        { label: 'Structure', title: 'Six journeys cover the product.',
-          lede: 'The product grew in stages, from sign-in to capital and day-to-day operations. Every main path was designed end to end.',
-          blocks: [{ type: 'flow', rows: [
+        { label: 'Structure', title: 'Every screen hangs off the fund.',
+          lede: 'Before designing screens I mapped the whole product: how people get in, what sits across all funds, and what lives inside each one. Every task, document and person has one home, so nothing ends up in a generic inbox.',
+          blocks: [
+            { type: 'ia', label: 'Option A · Embedded diagram', entry: ['Sign in', 'Two-factor', 'Register', 'Website'], groups: [
+              { title: 'Workspace', cols: [['Activities', ['Feed across funds', 'Filter by fund']], ['Updates', ['New update', 'Choose audience']], ['Calendar', ['Calls and due dates', 'Add event']]] },
+              { title: 'Funds', cols: [['Fund management', ['Fund list', 'Add fund', 'Fund details']], ['Fund network', ['Team members', 'Service providers', 'Investors (LPs)', 'Portfolio']]] },
+              { title: 'Each fund', cols: [['Overview', ['Money cards', 'Metrics', 'Life cycle', 'Unit classes']], ['Management', ['Documents', 'Tasks', 'Delegations']], ['Constituents', ['Investors (LPs)', 'Portfolio companies']], ['Analytics', ['Cap table', 'Capital calls', 'Profit waterfall']]] },
+              { title: 'Account', cols: [['Settings', ['Two-factor', 'Access']], ['Docs', ['How-to guides']], ['Support', ['Contact support']]] }] },
+            { type: 'note', text: 'Option B · Image' },
+            { type: 'figure', img: { src: 'p03/captl-ia.png', w: 3200, h: 3924, alt: 'CAPTL information architecture: from the website through register and two-factor setup to sign in, then into four areas. Workspace holds activities, updates and calendar. Funds holds fund management and the fund network. Each fund holds overview, management, constituents and analytics. Account holds settings, docs and support.' } },
+            { type: 'note', text: 'Six journeys through the structure' },
+            { type: 'flow', rows: [
             ['First visit', ['Register', 'Set up two-factor', 'Sign in', 'Empty fund list']],
             ['Stand up a fund', ['Fund list', 'Fund details', 'Documents and investors', 'Fund goes live'], true],
             ['Build the network', ['Fund', 'Add team and advisers', 'Add investors and companies', 'Fund network'], true],
@@ -341,6 +350,16 @@
         return '<li class="cs-flow-row' + (r[2] ? ' is-key' : '') + '"><h3>' + r[0] + (r[2] ? '<span class="sr"> (key step)</span>' : '') + '</h3><ol>' +
           r[1].map(function (t) { return '<li>' + t + '</li>'; }).join('') + '</ol></li>';
       }).join('') + '</ol>' + (b.legend ? '<p class="cs-legend"><span aria-hidden="true"></span>' + b.legend + '</p>' : '');
+    },
+    note: function (b) { return '<p class="cs-label cs-block-title">' + b.text + '</p>'; },
+    ia: function (b) {
+      return (b.label ? '<p class="cs-label cs-block-title">' + b.label + '</p>' : '') + '<div class="cs-ia">' +
+        '<ol class="cs-ia-entry" aria-label="Entry path">' + b.entry.map(function (t, i) { return '<li' + (i === b.entry.length - 1 ? ' class="is-start"' : '') + '>' + t + '</li>'; }).join('') + '</ol>' +
+        '<div class="cs-ia-tree">' + b.groups.map(function (g) {
+          return '<section class="cs-ia-group"><h3 class="cs-ia-role">' + g.title + '</h3><div class="cs-ia-cols">' + g.cols.map(function (c) {
+            return '<div class="cs-ia-col"><p class="cs-ia-head">' + c[0] + '</p><ul>' + c[1].map(function (t) { return '<li>' + t + '</li>'; }).join('') + '</ul></div>';
+          }).join('') + '</div></section>';
+        }).join('') + '</div></div>';
     },
     steps: function (b) {
       return '<ol class="cs-steps">' + b.items.map(function (s) { return '<li><h3>' + s[0] + '</h3><p>' + s[1] + '</p></li>'; }).join('') + '</ol>';

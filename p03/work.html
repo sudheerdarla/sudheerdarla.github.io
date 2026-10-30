@@ -214,6 +214,47 @@
     .cs-legend { display: flex; align-items: center; gap: var(--s-sm); margin-top: var(--s-md) !important; font-size: 13px; line-height: 19.5px; color: var(--muted); }
     .cs-legend span { display: inline-block; }
 
+    /* Information architecture */
+    .cs-block-title + .cs-ia, .cs-block-title + .cs-figure, .cs-block-title + .cs-flow { margin-top: var(--s-md); }
+    .cs-ia { padding: var(--s-xl); border: 1px solid var(--line); background: var(--bg-1); }
+    .cs-ia-entry { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; }
+    .cs-ia-entry li { position: relative; padding: 6px 12px; border: 1px solid var(--line-1); background: var(--bg-3); font-size: 13px; line-height: 20px; font-weight: 500; color: var(--fg-1); }
+    .cs-ia-entry li + li { margin-left: 18px; }
+    .cs-ia-entry li + li::before { content: ""; position: absolute; left: -17px; top: 50%; width: 11px; border-top: 1px dashed var(--muted-2); }
+    .cs-ia-entry li + li::after { content: ""; position: absolute; left: -17px; top: calc(50% - 3px); width: 6px; height: 6px; border-left: 1px solid var(--muted); border-bottom: 1px solid var(--muted); transform: rotate(45deg); }
+    .cs-ia-group::after { content: ""; position: absolute; left: -11px; top: 13px; width: 6px; height: 6px; border-top: 1px solid var(--muted); border-right: 1px solid var(--muted); transform: rotate(45deg); }
+    .cs-ia-entry li.is-start { border-color: #d9c645; background: #efe07a; color: #0b0b0c; }
+    .cs-ia-tree { margin: var(--s-md) 0 0 14px; padding: var(--s-md) 0 0 22px; border-left: 1px dashed var(--muted-2); }
+    .cs-ia-group { position: relative; }
+    .cs-ia-group + .cs-ia-group { margin-top: var(--s-xl); }
+    .cs-ia-group::before { content: ""; position: absolute; left: -22px; top: 16px; width: 16px; border-top: 1px dashed var(--muted-2); }
+    .cs .cs-ia-role { display: inline-flex; align-items: center; gap: 10px; padding: 6px 12px; background: var(--fg); color: var(--bg); font-size: 13px; line-height: 20px; font-weight: 600; }
+    .cs-ia-role::before, .cs-ia-role::after { content: ""; width: 6px; height: 6px; background: var(--bg); }
+    .cs-ia-cols { display: grid; grid-template-columns: repeat(auto-fill, minmax(148px, 1fr)); gap: var(--s-sm); margin-top: 10px; }
+    .cs-ia-head { padding: 7px 10px; border: 1px solid var(--line-1); background: var(--bg-3); font-size: 13px; line-height: 20px; font-weight: 600; color: var(--fg); text-align: center; }
+    .cs-ia-col ul { display: grid; gap: 6px; margin-top: 6px; }
+    .cs-ia-col li { padding: 6px 10px; border: 1px solid var(--line); background: var(--surface); font-size: 13px; line-height: 19px; color: var(--fg-2); text-align: center; }
+    @media (max-width: 640px) {
+      .cs-ia { padding: var(--s-lg) var(--s-md); }
+      .cs-ia-entry { flex-wrap: nowrap; gap: 4px; }
+      .cs-ia-entry li { padding: 4px 6px; font-size: 12px; line-height: 18px; white-space: nowrap; }
+      .cs-ia-entry li + li { margin-left: 12px; }
+      .cs-ia-entry li + li::before { left: -12px; width: 8px; }
+      .cs-ia-entry li + li::after { left: -12px; }
+      .cs-ia-tree { margin-left: 8px; padding-left: 16px; }
+      .cs-ia-group::before { left: -16px; width: 10px; }
+      .cs-ia-group::after { left: -11px; }
+      .cs-ia-cols { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .cs-ia-head, .cs-ia-col li { padding: 6px; font-size: 12px; line-height: 17px; }
+    }
+    @media (max-width: 420px) {
+      .cs-ia-entry { flex-direction: column-reverse; align-items: flex-start; gap: 0; }
+      .cs-ia-entry li { padding: 5px 10px; }
+      .cs-ia-entry li + li { margin: 0 0 16px; }
+      .cs-ia-entry li + li::before { left: 14px; top: 100%; width: 0; height: 16px; border-top: 0; border-left: 1px dashed var(--muted-2); }
+      .cs-ia-entry li + li::after { left: 11px; top: calc(100% + 8px); transform: rotate(-45deg); }
+    }
+
     /* Steps */
     .cs-steps { display: grid; grid-template-columns: 1fr 1fr; gap: 0 var(--s-2xl); counter-reset: step; border-top: 1px solid var(--line); }
     .cs-steps li { counter-increment: step; padding: 14px 0; border-bottom: 1px solid var(--line); }
