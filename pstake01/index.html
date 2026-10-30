@@ -5,6 +5,9 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>PSTAKE Prototype</title>
 <meta name="description" content="Interactive prototype of the PSTAKE liquid staking app: stake, unstake, dashboard and DeFi.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -35,11 +38,11 @@
     <header class="top">
       <button class="burger" id="burger" aria-label="Menu"><svg viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
       <div class="menu-wrap">
-        <button class="chip" id="netBtn" aria-haspopup="true" aria-expanded="false"><span class="dot" id="netDot">P</span><span id="netName">Persistence</span><svg class="chev" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></button>
+        <button class="chip" id="netBtn" aria-haspopup="true" aria-expanded="false"><img class="chain" id="netLogo" src="chains/persistence.svg" alt="" width="24" height="24"><span id="netName">Persistence</span><svg class="chev" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></button>
         <div class="pop" id="netMenu" hidden>
           <p class="pop-h">Select network</p>
-          <button class="net-opt" data-net="persistence"><span class="dot">P</span>Persistence<svg class="tick" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></button>
-          <button class="net-opt" data-net="bnb"><span class="dot y">B</span>BNB Smart Chain<svg class="tick" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></button>
+          <button class="net-opt" data-net="persistence"><img class="chain" src="chains/persistence.svg" alt="" width="30" height="30">Persistence<svg class="tick" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></button>
+          <button class="net-opt" data-net="bnb"><img class="chain" src="chains/bnb.svg" alt="" width="30" height="30">BNB Smart Chain<svg class="tick" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></button>
         </div>
       </div>
       <div class="menu-wrap" id="walletArea"></div>
