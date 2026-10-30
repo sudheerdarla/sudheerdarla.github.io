@@ -207,6 +207,8 @@ th.r, td.r { text-align: right; }
 .modal:focus { outline: none; }
 .m-head { display: flex; align-items: flex-start; gap: 14px; padding: 22px 24px; border-bottom: 1px solid var(--line); }
 .m-head .t { flex: 1; min-width: 0; }
+.m-head .btn.sample { flex: none; }
+@media (max-width: 520px) { .m-head .btn.sample span, .m-head .btn.sample { min-width: 42px; padding: 0; font-size: 0; gap: 0; } }
 .m-head h2 { font-size: 18px; font-weight: 700; }
 .m-head p { color: var(--mut); margin-top: 2px; }
 .m-head .hic { width: 44px; height: 44px; border-radius: 11px; display: grid; place-items: center; background: var(--blue-s); color: var(--blue); flex: none; }
@@ -241,6 +243,10 @@ textarea.ta:focus { border-color: var(--blue); box-shadow: 0 0 0 3px var(--blue-
 .drop { display: flex; align-items: center; gap: 14px; padding: 18px; border: 1.5px dashed #cdd4e1; border-radius: 12px; background: var(--soft); cursor: pointer; text-align: left; width: 100%; }
 .drop:hover, .drop.over { border-color: var(--blue); background: var(--blue-s); }
 .drop .ic { width: 44px; height: 44px; border-radius: 50%; background: #fff; display: grid; place-items: center; color: var(--blue); border: 1px solid var(--line); flex: none; }
+.btn.sample { border-style: dashed; color: var(--blue); }
+.btn.sample:hover { background: var(--blue-s); border-color: #bcd0f8; }
+.ob-head .btn.sample { margin-left: 12px; }
+.link.sample-file { margin-top: 8px; font-size: 13px; }
 .drop b { font-weight: 600; } .drop b span { color: var(--blue); } .drop small { display: block; color: var(--mut); }
 .file { display: flex; align-items: center; gap: 12px; padding: 12px 14px; border: 1px solid var(--line); border-radius: 12px; }
 .file .pdf { width: 40px; height: 40px; border-radius: 9px; background: var(--red-s); color: var(--red); display: grid; place-items: center; font-size: 11px; font-weight: 700; flex: none; }
@@ -271,6 +277,11 @@ textarea.ta:focus { border-color: var(--blue); box-shadow: 0 0 0 3px var(--blue-
 .memo .code .cp { width: 28px; height: 28px; border: 0; }
 
 /* trade detail */
+.td-page { overflow: hidden; }
+.td-page .td-body { overflow: visible; grid-template-columns: minmax(0, 1fr) 380px; }
+.td-page .td-main { overflow: visible; }
+.td-head .back { width: 42px; height: 42px; border: 1px solid var(--line); border-radius: 10px; display: grid; place-items: center; color: var(--ink2); flex: none; }
+.td-head .back:hover { background: var(--soft); }
 .td-head { display: flex; gap: 14px; align-items: flex-start; padding: 22px 28px; border-bottom: 1px solid var(--line); }
 .td-head .t { flex: 1; min-width: 0; }
 .oid { display: flex; align-items: center; gap: 6px; color: var(--mut); }
@@ -535,7 +546,7 @@ textarea.ta:focus { border-color: var(--blue); box-shadow: 0 0 0 3px var(--blue-
   .search { width: auto; } .search span, .search kbd { display: none; }
   .flow-body, .flow.in-shell .flow-body, .ob, .acct { grid-template-columns: 1fr; }
   .sum, .ob-side { position: static; }
-  .td-body { grid-template-columns: minmax(0, 1fr); overflow: auto; }
+  .td-body, .td-page .td-body { grid-template-columns: minmax(0, 1fr); overflow: auto; }
   .td-main { min-width: 0; overflow: visible; border-right: 0; border-bottom: 1px solid var(--line); }
   .wiz hr { width: 24px; } .wiz span b { display: none; }
 }

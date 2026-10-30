@@ -50,6 +50,7 @@
     file: '<path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5"/>',
     star: '<path d="m12 3 2.8 5.7 6.2.9-4.5 4.4 1 6.2L12 17.3 6.5 20.2l1-6.2L3 9.6l6.2-.9z"/>',
     sign: '<path d="M3 17c3 0 4-8 7-8s1 8 4 8 3-4 5-4 2 2 2 2"/><path d="M3 21h18"/>',
+    spark: '<path d="M12 3v4M12 17v4M3 12h4M17 12h4M5.6 5.6l2.8 2.8M15.6 15.6l2.8 2.8M5.6 18.4l2.8-2.8M15.6 8.4l2.8-2.8"/>',
     out: '<path d="M10 4H6a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h4M15 8l4 4-4 4M19 12H9"/>'
   };
   function ic(n, cls) { return '<svg class="i' + (cls ? ' ' + cls : '') + '" viewBox="0 0 24 24" aria-hidden="true">' + P[n] + '</svg>'; }
@@ -185,6 +186,11 @@
     return e ? dFmt(e.at) : '';
   }
 
+  /* ---------- sample data (prototype shortcut on every form) ---------- */
+  function sampleBtn(action, extra) { return '<button type="button" class="btn sec sample" data-a="' + action + '"' + (extra || '') + '>' + ic('spark', 'sm') + 'Fill sample</button>'; }
+  function sampleFile(action, extra) { return '<button type="button" class="link sample-file" data-a="' + action + '"' + (extra || '') + '>' + ic('file', 'sm') + 'Use sample file</button>'; }
+  function sampled() { toast('Sample data filled', 'Review it, then continue', { icon: 'spark', blue: true }); }
+
   /* ---------- toasts ---------- */
   function toast(title, msg, opt) {
     opt = opt || {};
@@ -269,7 +275,6 @@
   function closeModal() {
     if (!$('#layer').innerHTML) return;
     $('#layer').innerHTML = '';
-    if (/^#\/trades\/./.test(location.hash)) { history.replaceState(null, '', '#/trades'); }
     if (lastFocus && document.body.contains(lastFocus)) lastFocus.focus();
   }
   function confirmBox(title, text, okLabel, onOk, danger) {
@@ -300,21 +305,22 @@
     var r = route(), p = r[0];
     if (soft) { // background update: refresh without losing focus in forms
       if (p === 'order' || p === 'onboarding') return;
-      if (document.activeElement && /INPUT|TEXTAREA|SELECT/.test(document.activeElement.tagName) && $('#layer').innerHTML) return;
+      if (document.activeElement && /INPUT|TEXTAREA|SELECT/.test(document.activeElement.tagName)) return;
     }
     if (p === 'order') return renderOrder(r[1]);
     if (p === 'onboarding') return renderOnboarding();
+    if (p === 'trades' && r[1] && !trade(r[1])) { location.hash = '#/trades'; return; }
     var views = { dashboard: vDashboard, trades: vTrades, transactions: vTxns, account: vAccount, settings: vSettings };
     var v = views[p] || vDashboard;
     var y = window.scrollY;
-    app.innerHTML = shell(p, v());
+    if (p === 'trades' && r[1]) { var t = trade(r[1]); app.innerHTML = shell(p, vTradeRoom(t), ['Trade room', t.commodity + ' · ' + t.from.country + ' to ' + t.to.country]); }
+    else app.innerHTML = shell(p, v());
     if (soft) window.scrollTo(0, y);
     after[p] && after[p]();
-    if (p === 'trades' && r[1]) { if ($('#layer .td') && soft) refreshTrade(r[1]); else if (!$('#layer .td')) openTrade(r[1]); }
   }
   var after = {};
 
-  function shell(p, body) {
+  function shell(p, body, hdr) {
     var badge = S.trades.filter(needsMe).length, unread = S.notifs.filter(function (n) { return !n.read; }).length;
     var cur = p === 'order' ? 'trades' : p;
     function nl(k, label, icon, extra) { return '<a href="#/' + k + '" class="' + (cur === k ? 'on' : '') + '"' + (cur === k ? ' aria-current="page"' : '') + '>' + ic(icon) + label + (extra || '') + '</a>'; }
@@ -326,6 +332,7 @@
       settings: ['Settings', 'Notifications, security and display preferences.'],
       order: [orderForm && orderForm.id ? 'Edit draft order' : 'New sell order', 'List a commodity shipment and choose how buyers can reach you.']
     }[p] || ['', ''];
+    if (hdr) titles = hdr;
     return '<div class="shell"><aside class="side" id="side" aria-label="Main">' +
       '<a class="logo" href="#/dashboard" aria-label="COMDEX home">' + LOGO + 'COMDEX</a>' +
       '<nav class="nav">' + nl('dashboard', 'Dashboard', 'grid') + nl('trades', 'Trades', 'swap', badge ? '<span class="badge" aria-label="' + badge + ' need action">' + badge + '</span>' : '') + nl('transactions', 'Transactions', 'dollar') + nl('account', 'Account', 'user') + '</nav>' +
@@ -467,19 +474,10 @@
   }
 
   /* ---------- trade detail (deal room) ---------- */
-  var tdTab = 'summary';
-  function openTrade(id) {
-    var t = trade(id); if (!t) { location.hash = '#/trades'; return; }
-    if (location.hash !== '#/trades/' + id) history.replaceState(null, '', '#/trades/' + id);
-    tdTab = 'summary';
-    modal('<div class="td" style="display:contents">' + tradeHtml(t) + '</div>', 'xl');
-    $('#layer .modal').style.height = 'min(900px, calc(100vh - 48px))';
-  }
-  function refreshTrade(id) {
-    var t = trade(id), box = $('#layer .td'); if (!t || !box) return;
-    var sc = $('.td-main', box), st = sc ? sc.scrollTop : 0;
-    box.innerHTML = tradeHtml(t); var n = $('.td-main', box); if (n) n.scrollTop = st;
-  }
+  var tdTab = 'summary', tdId = null;
+  function vTradeRoom(t) { if (tdId !== t.id) { tdId = t.id; tdTab = 'summary'; } return '<div class="card td td-page">' + tradeHtml(t) + '</div>'; }
+  function openTrade(id) { if (location.hash !== '#/trades/' + id) location.hash = '#/trades/' + id; else render(); }
+  function refreshTrade(id) { var t = trade(id), box = $('.td'); if (t && box) box.innerHTML = tradeHtml(t); }
   function tradeHtml(t) {
     var s = ST[t.status], done = s.done;
     var prog = STAGES.map(function (l, i) {
@@ -487,9 +485,9 @@
       var d = i < done ? stageDate(t, i) : i === done ? (t.status === 'review' ? 'Verifying documents' : t.status === 'draft' ? 'Not placed yet' : 'In progress') : '';
       return '<div class="' + cls + '"><i>' + (i < done ? ic('check') : '') + '</i><b>' + l + '</b><small>' + (d || '&nbsp;') + '</small></div>';
     }).join('');
-    return '<div class="td-head"><div class="t"><div class="oid">Order ' + t.id + '<button class="cp" data-a="copy" data-v="' + t.id + '" aria-label="Copy order ID">' + ic('copy', 'sm') + '</button></div>' +
+    return '<div class="td-head"><a class="back" href="#/trades" aria-label="Back to trades">' + ic('left') + '</a><div class="t"><div class="oid">Order ' + t.id + '<button class="cp" data-a="copy" data-v="' + t.id + '" aria-label="Copy order ID">' + ic('copy', 'sm') + '</button></div>' +
       '<div class="route"><span>' + esc(t.from.country) + '</span>' + ic('right') + '<span>' + esc(t.to.country) + '</span><span class="pill ' + s.c + '" style="font-size:13px">' + s.l + '</span></div></div>' +
-      '<button class="btn sec" data-a="dlSummary" data-id="' + t.id + '">' + ic('down', 'sm') + '<span>Download summary</span></button><button class="x" data-a="close" aria-label="Close">' + ic('x') + '</button></div>' +
+      '<button class="btn sec" data-a="dlSummary" data-id="' + t.id + '">' + ic('down', 'sm') + '<span>Download summary</span></button></div>' +
       '<div class="prog" aria-label="Trade progress">' + prog + '</div>' +
       '<div class="td-body"><div class="td-main"><div class="tabs" role="tablist">' + [['summary', 'Trade summary'], ['obl', 'OBL details'], ['commodity', 'Commodity details']].map(function (x) {
         return '<button role="tab" aria-selected="' + (tdTab === x[0]) + '" data-a="tdTab" data-v="' + x[0] + '" class="' + (tdTab === x[0] ? 'on' : '') + '">' + x[1] + '</button>';
@@ -612,7 +610,7 @@
     var st = { copied: false, txid: '', amt: '', file: null };
     var bank = [['Account holder', 'COMDEX Company PTE Limited'], ['Account number', '09238409283'], ['SWIFT code', 'DBSSGSGSG'], ['Bank', 'DBS Bank Ltd., Singapore']];
     function done() { return (st.copied ? 1 : 0) + (st.txid.length >= 6 && num(st.amt) > 0 ? 1 : 0) + (st.file ? 1 : 0); }
-    modal('<div class="m-head"><span class="hic">' + ic('wallet') + '</span><div class="t"><h2>Add funds to your wallet</h2><p>Make a bank transfer to COMDEX, then share the details below so we can match and credit it.</p></div><button class="x" data-a="close" aria-label="Close">' + ic('x') + '</button></div>' +
+    modal('<div class="m-head"><span class="hic">' + ic('wallet') + '</span><div class="t"><h2>Add funds to your wallet</h2><p>Make a bank transfer to COMDEX, then share the details below so we can match and credit it.</p></div>' + sampleBtn('fSample') + '<button class="x" data-a="close" aria-label="Close">' + ic('x') + '</button></div>' +
       '<div class="m-body"><div class="steps-v">' +
       '<div class="sv on" id="s1"><span class="n">1</span><div><h3>Transfer to COMDEX’s bank account</h3><div class="kv"><div class="kv-h">' + ic('bank', 'sm') + 'Bank transfer details<button class="link" id="cpAll">' + ic('copy', 'sm') + 'Copy all</button></div>' +
         bank.map(function (b) { return '<div class="kv-r"><span>' + b[0] + '</span><b>' + b[1] + '</b><button class="cp" data-cp="' + b[1] + '" aria-label="Copy ' + b[0] + '">' + ic('copy', 'sm') + '</button></div>'; }).join('') + '</div>' +
@@ -630,10 +628,11 @@
     }
     function rc() {
       $('#rcpt').innerHTML = st.file ? '<div class="file"><span class="pdf">PDF</span><div class="m"><b>' + esc(st.file.name) + '</b><small>' + Math.max(1, Math.round(st.file.size / 1024)) + ' KB · ready to submit</small></div><button class="act" id="rmF" aria-label="Remove file">' + ic('x', 'sm') + '</button></div>'
-        : '<label class="drop" id="drop"><span class="ic">' + ic('up') + '</span><span><b>Drop your receipt here, or <span>browse</span></b><small>PDF only · COMDEX must be named as the beneficiary</small></span><input type="file" accept="application/pdf,.pdf" class="sr" id="fileIn"></label><p class="msg" id="fErr" style="color:var(--red);font-size:12.5px;margin-top:6px" hidden></p>';
+        : '<label class="drop" id="drop"><span class="ic">' + ic('up') + '</span><span><b>Drop your receipt here, or <span>browse</span></b><small>PDF only · COMDEX must be named as the beneficiary</small></span><input type="file" accept="application/pdf,.pdf" class="sr" id="fileIn"></label>' + sampleFile('fSampleFile') + '<p class="msg" id="fErr" style="color:var(--red);font-size:12.5px;margin-top:6px" hidden></p>';
       if (st.file) $('#rmF').onclick = function () { st.file = null; rc(); upd(); };
       else {
         var drop = $('#drop'), inp = $('#fileIn');
+        $('#layer [data-a="fSampleFile"]').onclick = sampleRcpt;
         function take(f) { if (!f) return; if (!/\.pdf$/i.test(f.name) && f.type !== 'application/pdf') { $('#fErr').hidden = false; $('#fErr').textContent = '“' + f.name + '” isn’t a PDF. Export the receipt as PDF and try again.'; return; } st.file = { name: f.name, size: f.size }; rc(); upd(); }
         inp.onchange = function () { take(inp.files[0]); };
         drop.ondragover = function (e) { e.preventDefault(); drop.classList.add('over'); }; drop.ondragleave = function () { drop.classList.remove('over'); };
@@ -644,6 +643,8 @@
     $$('#layer [data-cp]').forEach(function (b) { b.onclick = function () { copy(b.dataset.cp, b); st.copied = true; upd(); }; });
     $('#cpAll').onclick = function () { copy(bank.map(function (b) { return b[0] + ': ' + b[1]; }).join('\n') + '\nReference: ' + S.user.id); st.copied = true; this.innerHTML = ic('check', 'sm') + 'Copied'; upd(); };
     $('#txid').oninput = function () { st.txid = this.value.trim(); upd(); };
+    function sampleRcpt() { st.file = { name: 'DBS_Transfer_Receipt.pdf', size: 188416 }; rc(); upd(); }
+    $('#layer [data-a="fSample"]').onclick = function () { st.copied = true; st.txid = 'DBS2610300417'; st.amt = '250,000.00'; $('#txid').value = st.txid; $('#amt').value = st.amt; sampleRcpt(); sampled(); };
     $('#amt').oninput = function () { st.amt = this.value; upd(); };
     $('#amt').onblur = function () { var n = num(this.value); if (n) this.value = n.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }); };
     $('#subF').onclick = function () {
@@ -658,7 +659,7 @@
 
   /* ---------- invite / help / command palette ---------- */
   function invite() {
-    modal('<div class="m-head"><span class="hic">' + ic('uplus') + '</span><div class="t"><h2>Invite a trader</h2><p>They’ll join ABC Traders and appear under Pending approval until you approve them.</p></div><button class="x" data-a="close" aria-label="Close">' + ic('x') + '</button></div>' +
+    modal('<div class="m-head"><span class="hic">' + ic('uplus') + '</span><div class="t"><h2>Invite a trader</h2><p>They’ll join ABC Traders and appear under Pending approval until you approve them.</p></div>' + sampleBtn('iSample') + '<button class="x" data-a="close" aria-label="Close">' + ic('x') + '</button></div>' +
       '<form class="m-body" id="invF" novalidate><div class="g2"><div class="f"><label for="iN">Full name <span class="req">*</span></label><div class="inp"><input id="iN" autocomplete="off" autofocus></div></div><div class="f"><label for="iE">Work email <span class="req">*</span></label><div class="inp"><input id="iE" type="email" autocomplete="off" placeholder="name@abctraders.sg"></div></div></div><p class="msg" id="iErr" style="color:var(--red);font-size:12.5px;margin-top:8px" hidden></p></form>' +
       '<div class="m-foot"><span class="l"></span><button class="btn sec" data-a="close">Cancel</button><button class="btn pri" id="iGo">' + ic('mail', 'sm') + 'Send invite</button></div>');
     function go(e) {
@@ -670,11 +671,13 @@
       toast('Invite sent', n + ' will appear under Pending approval', { icon: 'mail', blue: true });
     }
     $('#iGo').onclick = go; $('#invF').onsubmit = go;
+    $('#layer [data-a="iSample"]').onclick = function () { $('#iN').value = 'Daniel Koh'; $('#iE').value = 'daniel.koh@abctraders.sg'; $('#iErr').hidden = true; $$('#layer .inp.err').forEach(function (x) { x.classList.remove('err'); }); sampled(); };
   }
   function help() {
-    modal('<div class="m-head"><span class="hic">' + ic('chat') + '</span><div class="t"><h2>Help &amp; support</h2><p>Our trade desk replies within one business day. Urgent settlement issues are handled first.</p></div><button class="x" data-a="close" aria-label="Close">' + ic('x') + '</button></div>' +
+    modal('<div class="m-head"><span class="hic">' + ic('chat') + '</span><div class="t"><h2>Help &amp; support</h2><p>Our trade desk replies within one business day. Urgent settlement issues are handled first.</p></div>' + sampleBtn('hSample') + '<button class="x" data-a="close" aria-label="Close">' + ic('x') + '</button></div>' +
       '<div class="m-body" style="display:grid;gap:14px"><div class="f"><label for="hT">Topic</label><div class="inp"><select id="hT"><option>A trade or settlement</option><option>Wallet and deposits</option><option>Verification (KYC)</option><option>Something else</option></select>' + ic('chevd', 'sm') + '</div></div><div class="f"><label for="hM">Message</label><textarea class="ta" id="hM" placeholder="Include the order ID if it’s about a trade"></textarea></div></div>' +
       '<div class="m-foot"><span class="l"></span><button class="btn sec" data-a="close">Cancel</button><button class="btn pri" id="hGo">Send message</button></div>');
+    $('#layer [data-a="hSample"]').onclick = function () { $('#hT').value = 'A trade or settlement'; $('#hM').value = 'Hi team, order k29fm4ra (Copper cathodes, Singapore to Rotterdam) has a counter-offer from Van Dijk Metals. Can you confirm escrow is ready before we accept?'; $('#hM').style.borderColor = ''; sampled(); };
     $('#hGo').onclick = function () { if (!$('#hM').value.trim()) { $('#hM').focus(); $('#hM').style.borderColor = 'var(--red)'; return; } closeModal(); toast('Message sent', 'We’ll reply by email within one business day', { icon: 'mail', blue: true }); };
   }
   function cmd() {
@@ -721,7 +724,7 @@
     var steps = ['Commodity details', 'OBL details', 'Confirm'];
     app.innerHTML = shell('order', '<div class="flow in-shell"><header class="flow-top card"><button class="back" data-a="oBack" aria-label="Back">' + ic('left') + '</button>' +
       '<nav class="wiz" aria-label="Steps">' + steps.map(function (s, i) { var n = i + 1; return (i ? '<hr>' : '') + '<span class="' + (n === oStep ? 'on' : n < oStep ? 'done' : '') + '"' + (n === oStep ? ' aria-current="step"' : '') + '><i>' + (n < oStep ? ic('check') : n) + '</i><b>' + s + '</b></span>'; }).join('') + '</nav>' +
-      '<button class="btn sec" data-a="oDraft">Save draft</button><button class="x" data-a="oClose" aria-label="Close">' + ic('x') + '</button></header>' +
+      sampleBtn('oSample') + '<button class="btn sec" data-a="oDraft">Save draft</button><button class="x" data-a="oClose" aria-label="Close">' + ic('x') + '</button></header>' +
       '<div class="flow-body"><div class="col" id="oMain">' + (oStep === 1 ? oStep1(F) : oStep === 2 ? oStep2(F) : oStep3(F)) + '</div><aside class="sum" id="oSum">' + oSummary(F) + '</aside></div></div>');
     bindOrder();
   }
@@ -753,7 +756,7 @@
     return '<section class="card sec"><div class="sec-h"><span class="hic">' + ic('doc') + '</span><div><h2>Original bill of lading</h2><p>The OBL is the title document. COMDEX records it on-chain so ownership moves with the trade.</p></div></div>' +
       '<div class="g2">' + fld('obl.no', 'OBL number', o.no, { req: true, ph: 'e.g. SGSIN2611208' }) + fld('obl.carrier', 'Carrier', o.carrier, { req: true, ph: 'e.g. Maersk' }) + fld('obl.vessel', 'Vessel name', o.vessel, { req: true, ph: 'e.g. Maersk Kensington' }) + fld('obl.issued', 'Date of issue', o.issued, { req: true, type: 'date' }) + '</div>' +
       '<div class="f" style="margin-top:20px"><span class="lab">Upload OBL <span style="color:var(--red)">*</span></span>' + (o.file ? '<div class="file"><span class="pdf">PDF</span><div class="m"><b>' + esc(o.file) + '</b><small>' + (o.size || 240) + ' KB · uploaded</small></div><button class="act" data-a="oRmFile" aria-label="Remove file">' + ic('x', 'sm') + '</button></div>'
-        : '<label class="drop" id="oDrop"><span class="ic">' + ic('up') + '</span><span><b>Drop the scanned OBL here, or <span>browse</span></b><small>PDF only · all pages, including endorsements</small></span><input type="file" accept="application/pdf,.pdf" class="sr" id="oFile"></label>') + '<span class="msg" data-msg="obl.file" hidden></span></div></section>' +
+        : '<label class="drop" id="oDrop"><span class="ic">' + ic('up') + '</span><span><b>Drop the scanned OBL here, or <span>browse</span></b><small>PDF only · all pages, including endorsements</small></span><input type="file" accept="application/pdf,.pdf" class="sr" id="oFile"></label>' + sampleFile('oSampleFile')) + '<span class="msg" data-msg="obl.file" hidden></span></div></section>' +
       '<section class="card sec"><div class="note">' + ic('info', 'sm') + '<span>' + (F.listing === 'settlement' ? 'You chose <b>Trade settlement</b>: COMDEX checks this OBL against the carrier before your order goes live.' : 'You chose <b>Trade discovery</b>: buyers verify this OBL themselves, so make sure the scan is complete and legible.') + '</span></div></section>';
   }
   function oStep3(F) {
@@ -844,8 +847,9 @@
     { t: 'Blockchain account', s: 'Your COMDEX ID', ic: 'key' }, { t: 'Service agreement', s: 'Sign the terms', ic: 'sign' }, { t: 'Final review', s: 'Submit for approval', ic: 'checks' }
   ];
   var ownerEdit = -1, ownerAdd = false;
+  var SAMPLE_FILES = { coi: 'Certificate_of_Incorporation.pdf', moa: 'Memorandum_and_Articles.pdf', poa: 'Proof_of_Address_DBS.pdf', passport: 'Passport_Arjun_Rao.pdf' };
   function obField(k, label, o) { o = o || {}; var v = S.kyc.d[k] || ''; return '<div class="f"><label for="k_' + k + '">' + label + (o.req ? ' <span class="req">*</span>' : '') + '</label><div class="inp">' + (o.pre ? '<span class="ic">' + ic(o.pre, 'sm') + '</span>' : '') + (o.opts ? '<select id="k_' + k + '" data-k="' + k + '">' + o.opts.map(function (x) { return '<option' + (x === v ? ' selected' : '') + '>' + x + '</option>'; }).join('') + '</select>' + ic('chevd', 'sm') : '<input id="k_' + k + '" data-k="' + k + '" value="' + esc(v) + '"' + (o.ph ? ' placeholder="' + esc(o.ph) + '"' : '') + (o.type ? ' type="' + o.type + '"' : '') + (o.max ? ' maxlength="' + o.max + '"' : '') + ' autocomplete="off">' + (o.max ? '<span style="color:var(--dim);font-size:13px" data-count="' + k + '">' + v.length + '/' + o.max + '</span>' : '')) + '</div>' + (o.help ? '<span class="help">' + o.help + '</span>' : '') + '<span class="msg" data-kmsg="' + k + '" hidden></span></div>'; }
-  function obUpload(k, label, sub) { var f = S.kyc.files[k]; return '<div class="f"><span class="lab">' + label + ' <span style="color:var(--red)">*</span></span>' + (f ? '<div class="file"><span class="pdf">PDF</span><div class="m"><b>' + esc(f) + '</b><small>Uploaded · ' + sub + '</small></div><button class="act" data-a="kRm" data-k="' + k + '" aria-label="Remove ' + esc(f) + '">' + ic('x', 'sm') + '</button></div>' : '<label class="drop"><span class="ic">' + ic('up') + '</span><span><b>Upload ' + label.toLowerCase() + ', or <span>browse</span></b><small>' + sub + '</small></span><input type="file" class="sr" accept=".pdf,.png,.jpg,.jpeg" data-kf="' + k + '"></label>') + '<span class="msg" data-kmsg="file_' + k + '" hidden></span></div>'; }
+  function obUpload(k, label, sub) { var f = S.kyc.files[k]; return '<div class="f"><span class="lab">' + label + ' <span style="color:var(--red)">*</span></span>' + (f ? '<div class="file"><span class="pdf">PDF</span><div class="m"><b>' + esc(f) + '</b><small>Uploaded · ' + sub + '</small></div><button class="act" data-a="kRm" data-k="' + k + '" aria-label="Remove ' + esc(f) + '">' + ic('x', 'sm') + '</button></div>' : '<label class="drop"><span class="ic">' + ic('up') + '</span><span><b>Upload ' + label.toLowerCase() + ', or <span>browse</span></b><small>' + sub + '</small></span><input type="file" class="sr" accept=".pdf,.png,.jpg,.jpeg" data-kf="' + k + '"></label>' + sampleFile('kSampleFile', ' data-k="' + k + '"')) + '<span class="msg" data-kmsg="file_' + k + '" hidden></span></div>'; }
   function obBody(n) {
     var k = S.kyc;
     if (n === 3) {
@@ -903,7 +907,7 @@
         return '<button class="' + (d ? 'd ' : '') + (on ? 'on' : '') + '" data-a="kGo" data-v="' + id + '"' + (reach ? '' : ' disabled') + (on ? ' aria-current="step"' : '') + '><i>' + (d ? ic('check') : id) + '</i><span><b>' + x.t + '</b>' + (d || on ? '<small>' + x.s + '</small>' : '') + '</span>' + (d ? '<em>Done</em>' : '') + '</button>';
       }).join('') + '</nav>' +
       '<div class="ob-help"><span class="ic">' + ic('chat', 'sm') + '</span><div><b>Questions about KYC?</b><a href="#" data-a="help">Talk to our onboarding team</a></div></div></aside>' +
-      '<section class="card ob-main"><div class="ob-head"><span class="hic">' + ic(s.ic) + '</span><div><small>STEP ' + n + ' OF 9</small><h2>' + s.t + '</h2></div><span class="req">* Required</span></div>' +
+      '<section class="card ob-main"><div class="ob-head"><span class="hic">' + ic(s.ic) + '</span><div><small>STEP ' + n + ' OF 9</small><h2>' + s.t + '</h2></div><span class="req">* Required</span>' + (!locked && n >= 3 && n <= 8 ? sampleBtn('kSample') : '') + '</div>' +
       '<div class="ob-body"' + (locked && n !== 9 ? ' style="pointer-events:none;opacity:.6"' : '') + '>' + obBody(n) + '</div>' +
       '<div class="ob-foot"><button class="btn sec" data-a="kBack"' + (n <= 3 ? ' disabled' : '') + '>' + ic('left', 'sm') + 'Back</button><span class="saved">' + ic('cloud', 'sm') + 'Saved · ' + ago(k.savedAt) + '</span>' +
       (n < 9 ? '<span class="nx">Next: ' + OB[n].t + '</span><button class="btn pri" data-a="kNext"' + (locked ? ' disabled' : '') + '>Continue' + ic('right', 'sm') + '</button>' : k.status === 'progress' ? '<span class="nx"></span><button class="btn pri" data-a="kSubmit">Submit for review' + ic('right', 'sm') + '</button>' : '<span class="nx"></span><a class="btn pri" href="#/dashboard">Go to dashboard</a>') + '</div></section></div></div>';
@@ -941,7 +945,7 @@
     exportTraders: function () { download('comdex-traders.csv', 'Name,Trader ID,Email,Trades,Receivables,Payables,Status\n' + S.traders.map(function (t) { return [t.name, t.id, t.email, t.trades, t.rec, t.pay, t.st].join(','); }).join('\n'), 'text/csv'); toast('Export ready', 'comdex-traders.csv downloaded', { icon: 'down', blue: true }); },
     news: function () { toast('Market news', 'Full articles open in the COMDEX news reader, which isn’t part of this prototype.', { icon: 'info', blue: true }); },
     openTrade: function (el) { location.hash = '#/trades/' + el.dataset.id; },
-    tdTab: function (el) { tdTab = el.dataset.v; refreshTrade(route()[1]); var b = $('#layer [data-a="tdTab"][data-v="' + tdTab + '"]'); if (b) b.focus(); },
+    tdTab: function (el) { tdTab = el.dataset.v; refreshTrade(route()[1]); var b = $('[data-a="tdTab"][data-v="' + tdTab + '"]'); if (b) b.focus(); },
     copy: function (el) { copy(el.dataset.v, el); },
     fakeDoc: function (el, e) { e.preventDefault(); var n = el.dataset.v; download(n.replace(/\.pdf$/, '') + '.txt', n + '\n\nPlaceholder for the document stored with this trade on COMDEX. In the product this opens the signed PDF.'); toast('Downloading ' + n, 'Prototype file, standing in for the real PDF', { icon: 'down', blue: true }); },
     dlSummary: function (el) {
@@ -956,7 +960,7 @@
         t.agreed = o.amount; t.status = 'payment';
         t.act.push({ at: Date.now(), ic: 'check', t: 'You accepted the buyer’s counter-offer', sub: 'Contract signed at ' + money(o.amount, 2) + ' / MT. Your earlier offers were withdrawn.', file: 'Signed_Contract.pdf' });
         t.docs.push({ name: 'Signed_Contract.pdf', sub: 'Signed by both parties' });
-        job('receipt', { id: t.id }, 6000); save(); render(); openTrade(t.id);
+        job('receipt', { id: t.id }, 6000); save(); render();
         toast('Counter-offer accepted', 'Waiting for ' + t.buyer.name + ' to pay into escrow');
       });
     },
@@ -975,7 +979,7 @@
       o.st = 'Declined'; t.offers.forEach(function (x) { if (x.by === 'you' && x.st === 'Active') x.st = 'Withdrawn'; });
       t.offers.push({ at: Date.now(), by: 'you', amount: v, doc: 'Contract_v' + (t.offers.filter(function (x) { return x.by === 'you'; }).length + 1) + '.pdf', st: 'Pending' });
       t.status = 'awaiting'; t.act.push({ at: Date.now(), ic: 'swap', t: 'You sent a counter-offer', sub: money(v, 2) + ' / MT, ' + money(v * t.qty, 2) + ' total.' });
-      job('buyerAccepts', { id: t.id, amount: v }, 5000); save(); render(); openTrade(t.id);
+      job('buyerAccepts', { id: t.id, amount: v }, 5000); save(); render();
       toast('Counter sent', t.buyer.name + ' will be notified', { icon: 'mail', blue: true });
     },
     declineOffer: function (el) {
@@ -983,7 +987,7 @@
       confirmBox('Decline this counter-offer?', 'The order goes back to listed, and ' + t.buyer.name + ' can make a new offer.', 'Decline offer', function () {
         t.offers.forEach(function (x) { if (x.by === 'buyer' && x.st === 'Pending') x.st = 'Declined'; }); t.status = 'listed';
         t.act.push({ at: Date.now(), ic: 'x', t: 'You declined the counter-offer', sub: 'Order is listed again at ' + money(t.price, 2) + ' / MT.' });
-        save(); render(); openTrade(t.id); toast('Counter-offer declined', 'Your order is listed again', { icon: 'x', blue: true });
+        save(); render(); toast('Counter-offer declined', 'Your order is listed again', { icon: 'x', blue: true });
       }, true);
     },
     confirmPay: function (el) {
@@ -994,7 +998,7 @@
         t.fb = { theirs: { stars: 5, text: 'Clear documents and a fast confirmation. Would trade again.' } };
         S.txns.push({ id: 'TX-' + (90413 + S.txns.length), type: 'Settlement', ref: t.commodity + ' · ' + t.id.slice(0, 8), amount: total(t), st: 'Settled', at: Date.now() });
         S.team.unshift({ who: S.user.name, t: 'settled a trade with', obj: t.buyer.name, at: Date.now(), ic: 'check' });
-        save(); render(); openTrade(t.id); toast('Trade completed', money(total(t), 2) + ' released to your wallet');
+        save(); render(); toast('Trade completed', money(total(t), 2) + ' released to your wallet');
       });
     },
     rate: function (el) { var t = trade(el.dataset.id), n = +el.dataset.v; t.fb = t.fb || {}; t.fb.mine = { stars: n, text: n >= 4 ? 'Smooth negotiation and quick payment.' : n === 3 ? 'Fine overall, a little slow on documents.' : 'Delays on payment and documents.' }; save(); refreshTrade(t.id); toast('Thanks for the feedback', 'It’s added to ' + t.buyer.name + '’s reputation'); },
@@ -1005,6 +1009,14 @@
     oInvite: function () { var m = (orderForm.invite || '').trim(); if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(m)) { showErr('invite', 'Enter a valid email address.'); return; } if (orderForm.invited.indexOf(m) < 0) orderForm.invited.push(m); orderForm.invite = ''; renderOrder(); toast('Invite queued', m + ' gets access when you publish', { icon: 'mail', blue: true }); },
     oUninvite: function (el) { orderForm.invited.splice(+el.dataset.i, 1); renderOrder(); },
     oRmFile: function () { delete orderForm.obl.file; renderOrder(); },
+    oSampleFile: function () { orderForm.obl.file = 'OBL_SGSIN2611208.pdf'; orderForm.obl.size = 248; renderOrder(); },
+    oSample: function () {
+      var F = orderForm;
+      if (oStep === 1) Object.assign(F, { listing: 'settlement', visibility: 'private', invite: '', invited: F.invited.indexOf('desk@vandijkmetals.nl') < 0 ? F.invited.concat(['desk@vandijkmetals.nl']) : F.invited, commodity: 'Copper cathodes', blName: 'Copper cathodes, Grade A', quality: '99.99% Cu', term: 'CIF', qty: '500', price: '8450', fromPort: 'Singapore', fromC: 'Singapore', toPort: 'Rotterdam', toC: 'Netherlands', shipFrom: '2026-11-20', shipBy: '2026-11-28' });
+      if (oStep === 2) F.obl = { no: 'SGSIN2611208', carrier: 'Maersk', vessel: 'Maersk Kensington', issued: '2026-10-24', file: 'OBL_SGSIN2611208.pdf', size: 248 };
+      if (oStep === 3) F.agree = true;
+      renderOrder(); sampled();
+    },
     oGo: function (el) { oStep = +el.dataset.v; renderOrder(); window.scrollTo(0, 0); },
     oNext: function () {
       if (!validate(oStep)) return;
@@ -1023,6 +1035,17 @@
     kSubmit: function () { if (!obValid(9, true)) return; S.kyc.done[9] = true; S.kyc.status = 'review'; S.kyc.submittedAt = Date.now(); job('kycReview', {}, 9000); save(); renderOnboarding(); toast('Submitted for review', 'We’ll notify you when your organization is verified', { long: true }); },
     kZone: function (el) { S.kyc.d.zone = el.dataset.v; S.kyc.savedAt = Date.now(); save(); renderOnboarding(); $('[data-a="kZone"][data-v="' + el.dataset.v + '"]').focus(); },
     kRm: function (el) { delete S.kyc.files[el.dataset.k]; save(); renderOnboarding(); },
+    kSampleFile: function (el) { S.kyc.files[el.dataset.k] = SAMPLE_FILES[el.dataset.k]; S.kyc.savedAt = Date.now(); save(); renderOnboarding(); },
+    kSample: function () {
+      var k = S.kyc, d = k.d, n = k.cur;
+      if (n === 3) { Object.assign(d, { legal: 'ABC Traders Pte. Ltd.', short: 'ABC', address: '1 Raffles Place, #20-01, One Raffles Place Tower 2', postal: '048616', inc: '2014-03-12' }); k.owners = [{ name: 'Rahul Mehta', nat: 'Singaporean', role: 'Director', pct: 60 }, { name: 'Lin Wei', nat: 'Malaysian', role: 'Shareholder', pct: 40 }]; ownerEdit = -1; ownerAdd = false; }
+      if (n === 4) ['coi', 'moa', 'poa'].forEach(function (f) { k.files[f] = SAMPLE_FILES[f]; });
+      if (n === 5) Object.assign(d, { bank: 'DBS Bank Ltd.', holder: d.legal || 'ABC Traders Pte. Ltd.', acct: '0729384102', swift: 'DBSSSGSG', bccy: 'USD' });
+      if (n === 6) { Object.assign(d, { aname: 'Arjun Rao', anat: 'Singaporean', arole: 'Director' }); k.files.passport = SAMPLE_FILES.passport; }
+      if (n === 7 && !k.chain) k.chain = 'comdex1' + uid(32).toLowerCase();
+      if (n === 8) Object.assign(d, { agree: true, signer: d.aname || 'Arjun Rao' });
+      k.savedAt = Date.now(); save(); renderOnboarding(); sampled();
+    },
     kChain: function (el) { el.disabled = true; el.innerHTML = '<span class="i" style="width:16px;height:16px;border:2px solid rgba(255,255,255,.4);border-top-color:#fff;border-radius:50%;animation:spin .7s linear infinite"></span>Creating…'; setTimeout(function () { S.kyc.chain = 'comdex1' + uid(32).toLowerCase(); S.kyc.savedAt = Date.now(); save(); renderOnboarding(); toast('Blockchain account created', 'Your COMDEX ID is ready'); }, 1200); },
     oAdd: function () { ownerAdd = true; ownerEdit = -1; renderOnboarding(); var n = $('#ow_n'); if (n) n.focus(); },
     oEdit: function (el) { ownerEdit = +el.dataset.i; ownerAdd = false; renderOnboarding(); var n = $('#ow_n'); if (n) n.focus(); },
