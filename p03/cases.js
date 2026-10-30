@@ -162,8 +162,7 @@
         { label: 'Overview', title: 'One closed-loop system of record for a trade.',
           lede: 'COMDEX brings discovery, negotiation and settlement into one product, so a trader can find a counterparty, agree terms and settle with confidence without leaving it.',
           blocks: [{ type: 'lists', groups: [
-            { title: 'What I designed', items: ['Marketing website', 'Discovery: markets, orders and new listings', 'Settlement: Deal Room, escrow and title transfer', 'Finance: sell offers and finance requests', 'Public block explorer'] },
-            { title: 'How I worked', muted: true, items: ['With 1 PM and 3 engineers', 'Tested flows with traders', 'Five core flows handed off as hi-fi'] }] }] },
+            { title: 'What I designed', items: ['Marketing website', 'Discovery: markets, orders and new listings', 'Settlement: Deal Room, escrow and title transfer', 'Finance: sell offers and finance requests', 'Public block explorer'] }] }] },
         { label: 'Problem', title: 'Global trade ran on inboxes, not infrastructure.',
           lede: 'Deals were stitched together from emails, calls, PDFs and manual checks, so terms and settlement were slow and trust between counterparties was hard to establish.',
           blocks: [{ type: 'table', head: ['Pain point', 'Design response'], rows: [
@@ -177,15 +176,9 @@
             { tag: 'Phase 3', title: 'Develop', list: ['Mock-ups', 'Lo-fi prototype', 'Tests with traders'] },
             { tag: 'Phase 4', title: 'Deliver', list: ['Hi-fi prototype', 'Engineering handoff'] }] }] },
         { label: 'Structure', title: 'One closed loop, from sign-up to settlement.',
-          lede: 'Seven steps cover the whole deal, so a trader never leaves COMDEX to finish one.',
-          blocks: [{ type: 'flow', legend: 'Marked steps are where the old process lost days, and the core of the redesign.', rows: [
-            ['Sign in', ['Log in or sign up', 'COMDEX ID', 'KYC']],
-            ['Hub', ['Discovery', 'Settlement', 'Finance']],
-            ['Discovery', ['Dashboard', 'Markets', 'Orders', 'New sell order']],
-            ['Create order', ['Commodity', 'Documents', 'Confirm']],
-            ['Deal Room', ['Negotiate', 'Counter', 'Accept', 'Documents'], true],
-            ['Settlement', ['Escrow', 'dUSD payment', 'Title transfer'], true],
-            ['Finance', ['Sell offer', 'Order book', 'Finance request']]] }] },
+          lede: 'One sign-in, one verified company, then five areas off the dashboard. A trader can find a deal, negotiate it and settle it without leaving COMDEX.',
+          blocks: [
+            { type: 'figure', img: { src: 'p03/comdex-flow.png', w: 3200, h: 3158, alt: 'COMDEX user flow: onboarding splits into create account or log in, both lead to verifying the company with KYC and a COMDEX ID, then the dashboard. From the dashboard, five areas: Discovery (markets, filters, open orders, order details), New sell order (listing type, commodity and shipment, bill of lading upload, review and publish), Deal Room (offers, counter, accept or decline, contract documents, activity timeline), Settlement (add funds in dUSD, buyer pays into escrow, confirm and release, on-chain title transfer) and Finance (sell offer, order book, finance request). Deal Room and Settlement are highlighted as the core of the redesign.' } }] },
         { label: 'Key decisions', title: 'Three screens that made the loop work.',
           blocks: [
             { type: 'decision', label: 'Decision A', title: 'One verified record for every counterparty.',
