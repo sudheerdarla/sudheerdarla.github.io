@@ -173,15 +173,10 @@
             { title: 'A fund is a network, not a folder', text: 'People, money, documents and tasks all hang off the fund they belong to.' },
             { title: 'Nothing should block the flow', text: 'If someone else owes a piece, hand it to them and keep going.' },
             { title: 'Teach the domain in the interface', text: 'Fund terms are dense. Each number carries a short explanation, and steps unlock in the order the rules require.' }] }] },
-        { label: 'Structure', title: 'Six journeys cover the product.',
-          lede: 'The product grew in stages, from sign-in to capital and day-to-day operations. Every main path was designed end to end.',
-          blocks: [{ type: 'flow', rows: [
-            ['First visit', ['Register', 'Set up two-factor', 'Sign in', 'Empty fund list']],
-            ['Stand up a fund', ['Fund list', 'Fund details', 'Documents and investors', 'Fund goes live'], true],
-            ['Build the network', ['Fund', 'Add team and advisers', 'Add investors and companies', 'Fund network'], true],
-            ['Set up ownership', ['Analytics', 'Define unit classes', 'Issue units', 'Capital calls'], true],
-            ['Run the fund', ['Management', 'Documents', 'Tasks', 'Delegations'], true],
-            ['Return visit', ['Sign in', 'Two-factor check', 'Overview of each fund']]], legend: 'Key journeys covered below' }] },
+        { label: 'Structure', title: 'Every screen hangs off the fund.',
+          lede: 'Before designing screens I mapped the whole product: how people get in, what sits across all funds, and what lives inside each one. Every task, document and person has one home, so nothing ends up in a generic inbox.',
+          blocks: [
+            { type: 'figure', img: { src: 'p03/captl-ia-brand.png', w: 3200, h: 4092, alt: 'CAPTL information architecture: from the website through register and two-factor setup to sign in, then into four areas. Workspace holds activities, updates and calendar. Funds holds fund management and the fund network. Each fund holds overview, management, constituents and analytics. Account holds settings, docs and support.' } }] },
         { label: 'Key decisions', title: 'Five decisions that shaped the product.',
           blocks: [
             { type: 'decision', label: 'Decision A', title: 'Create a fund without waiting on paperwork.',
