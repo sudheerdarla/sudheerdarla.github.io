@@ -1,0 +1,423 @@
+/* Case study content + one shared renderer.
+   Every study uses the same sections in the same order; only the content inside each section differs. */
+(function () {
+  var IMG = '../img/';
+
+  var CASES = {
+    saifuro: {
+      name: 'Saifuro Console', tag: '(concept design)',
+      kicker: ['Case study', 'AI agent payments'],
+      title: 'Let agents pay. Keep the final say.',
+      lede: 'AI agents are starting to buy things on their own: data, compute, flights. Saifuro Console is a concept for the control panel behind that. Teams give each agent a budget, a vendor list and approval rules, so small payments settle on their own and big ones wait for a person. I designed it and built it as a working prototype.',
+      facts: [['Role', 'Product designer and builder'], ['Year', '2026'], ['Platform', 'Web console, desktop first'], ['Type', 'Self-initiated concept, not affiliated with Saifuro']],
+      hero: { src: 'p02/saifuro-login.jpg', dark: 'p02/saifuro-login-dark.jpg', w: 2880, h: 1800, alt: 'The Saifuro log-in page: the headline Let your agents pay. Keep the final say, a one-line summary and the log-in card over a still field of payment symbols, with a dark preview of the dashboard below.' },
+      stats: [['5', 'Core surfaces: overview, approvals, agents, activity, settings'], ['4', 'Steps to create an agent with its own key and limits'], ['6', 'Policy checks shown on every approval request']],
+      sections: [
+        { label: 'Overview', title: 'A spend control panel for teams running AI agents.',
+          lede: 'The console answers one question at a glance: what needs me right now, and how are my agents spending? Everything else, from creating an agent to exporting a log for finance, is one step away.',
+          blocks: [{ type: 'lists', groups: [
+            { title: 'What I designed and built', items: ['Sign-up with Google or work email, log in, single sign-on and a guided tour on first login', 'Overview with approvals, spend and budget by agent', 'Approval review with policy checks and keyboard shortcuts', 'Four-step agent setup with a one-time key', 'Activity log with search, filters and CSV export', 'Approvers, alerts and light and dark themes'] },
+            { title: 'Out of scope', muted: true, items: ['Real payments and wallets', 'Saifuro’s actual product or data', 'Back-end and payment-rail integrations'] }] }] },
+        { label: 'Problem', title: 'Agents can spend money. Teams can’t see or stop it.',
+          blocks: [
+            { type: 'quote', text: '“I want our agents to buy what they need, but I need to know nothing big happens without me.”', cite: 'The job a team lead comes with' },
+            { type: 'cards', cols: 2, title: 'Why it is hard', items: [
+              { title: 'Spending happens without a person.', text: 'An agent can pay a vendor in seconds. Without limits, one bad loop can drain a budget.' },
+              { title: 'Approvals arrive without context.', text: 'A request that just says “$312 to LexCorpus” is hard to judge. People need the reason and the effect on budget.' },
+              { title: 'Requests can’t wait forever.', text: 'An agent is blocked while it waits. Unanswered requests need a clear deadline and outcome.' },
+              { title: 'Finance needs a record.', text: 'Every payment, approved or blocked, has to be traceable to the rule that decided it.' }] }] },
+        { label: 'Users', title: 'Three roles, one console.',
+          blocks: [{ type: 'cards', cols: 3, items: [
+            { tag: 'Owner', title: 'Sets up agents and rules.', text: 'Creates agents, sets budgets and vendor lists, and decides who can approve what.' },
+            { tag: 'Approver', title: 'Decides requests up to a limit.', text: 'Reviews payments above an agent’s auto-approve limit, here or in Slack.' },
+            { tag: 'Viewer', title: 'Watches spend, changes nothing.', text: 'Finance and leads who need visibility without the power to approve.' }] }] },
+        { label: 'Structure', title: 'Every payment follows the same path.',
+          lede: 'A payment attempt is checked against the agent’s rules. Small ones settle, big ones wait for a person, and anything outside the rules is blocked. Every outcome lands in the activity log.',
+          blocks: [{ type: 'flow', legend: 'Marked steps are where a person stays in control.', rows: [
+            ['Agent requests', ['Vendor', 'Amount', 'Reason']],
+            ['Policy checks', ['Agent active', 'Vendor allowed', 'Rail allowed', 'Per-payment cap', 'Daily budget']],
+            ['Auto-approve', ['Under the limit', 'Settles on its own']],
+            ['Needs a person', ['Over the limit', 'Waits in Approvals', 'Slack or email alert'], true],
+            ['Decision', ['Approve', 'Decline with reason', 'Expires after timeout'], true],
+            ['Record', ['Activity log', 'Rule that decided it', 'CSV export']]] }] },
+        { label: 'Key decisions', title: 'Four decisions that keep people in charge.',
+          blocks: [
+            { type: 'decision', label: 'Decision A', title: 'Put approvals first, sorted by urgency.',
+              text: 'The overview opens on what needs a person. The request closest to expiring is always on top, with its time left and any risk flags beside it.',
+              images: [{ src: 'p02/saifuro-overview.jpg', dark: 'p02/saifuro-overview-dark.jpg', w: 2880, h: 1800, alt: 'The Saifuro overview: a needs-your-approval list with time left and risk flags, spend and approval stats, and spend over the last 24 hours.' }],
+              points: [['Urgency is visible', 'A countdown turns red when a request is about to expire.'], ['Risk is flagged', 'Tags like “Agent paused” or “Leaves 10% of budget” appear before you open anything.'], ['Numbers that matter', 'Spent today, waiting on you, and payments your rules blocked.']] },
+            { type: 'decision', label: 'Decision B', title: 'Show the evidence, not just the amount.',
+              text: 'Opening a request shows every policy check, the agent’s own reason and the effect on its daily budget, so a decision takes seconds instead of a Slack thread.',
+              video: { src: 'saifuro-approve.mp4', poster: 'saifuro-approve-poster.jpg', w: 1440, h: 900, label: 'Screen recording: the cursor opens a pending $312.40 request, checks pass, the payment is approved, the next request for travel-desk is approved, and the overview drops to one pending approval.' },
+              points: [['Checks in plain words', 'Each rule reads as a sentence, and the one that triggered review is marked.'], ['Fast for repeat users', 'A to approve, D to decline, J and K to move between requests.'], ['Safe declines', 'Declining asks for a reason the agent receives, with an undo.']] },
+            { type: 'decision', label: 'Decision C', title: 'Make limits a sentence, not a form.',
+              text: 'Creating an agent takes four steps: details, limits, vendors and review. Presets give a sensible start, and every number is summarised in one plain sentence before it goes live.',
+              images: [{ src: 'p02/saifuro-limits.jpg', dark: 'p02/saifuro-limits-dark.jpg', w: 2880, h: 1800, alt: 'The limits step of the new agent wizard: Light, Standard, Heavy and Custom presets, daily budget, max per payment and ask-me-above fields.' }, { src: 'p02/saifuro-vendors.jpg', dark: 'p02/saifuro-vendors-dark.jpg', w: 2880, h: 1800, alt: 'The vendors step: a grid of selectable vendors with their API domains and a count of selected vendors.' }],
+              points: [['Presets first', 'Light, Standard and Heavy cover most agents. Custom is there when needed.'], ['Every field explains itself', 'Helper text says what happens when a payment goes over each limit.'], ['Allowlist by default', 'Payments to any vendor not on the list are blocked.']] },
+            { type: 'decision', label: 'Decision D', title: 'Treat the agent key like a password.',
+              text: 'The key is shown once, at the end of setup, with a clear warning, a copy button and the code needed to use it. Leaving the page without saving it asks for confirmation.',
+              images: [{ src: 'p02/saifuro-key.jpg', dark: 'p02/saifuro-key-dark.jpg', w: 2880, h: 1800, alt: 'The agent created screen: a summary sentence of its limits, a warning to copy the key now, the key with a copy button, a stored-safely checkbox and a code snippet.' }],
+              points: [['Shown once', 'The warning explains why, and how to rotate the key if it is lost.'], ['Ready to use', 'A short code snippet shows exactly where the key goes.'], ['No silent loss', 'Navigating away before confirming triggers a warning.']] }] },
+        { label: 'Outcome', title: 'A working prototype, end to end.',
+          lede: 'Everything in this case study works in the browser with sample data: sign up (one click fills in sample details), take the tour, approve and decline requests, create an agent, export the log and switch themes.',
+          blocks: [
+            { type: 'figure', img: { src: 'p02/saifuro-outcome.jpg', w: 2880, h: 1800, alt: 'The Saifuro dashboard in dark mode: spend and approval stats, spend over the last 24 hours, budget by agent and recent activity.' }, caption: 'Overview: what needs you, and how every agent is spending.' },
+            { type: 'cards', cols: 3, items: [
+              { title: 'Agent pages', text: 'Each agent has its own spend, rules, vendors and pending requests, with pause and edit controls.' },
+              { title: 'Approvers with limits', text: 'Owners, approvers with a spending limit, and viewers who can only look.' },
+              { title: 'Keyboard first', text: 'A command menu jumps to any page, agent or action, and shortcuts cover every review.' }] },
+            { type: 'cta', label: 'Open the live prototype', href: '../s02/#login' }] },
+        { label: 'Learnings', title: 'What designing for agents taught me.',
+          blocks: [{ type: 'numbered', items: [
+            ['Automation needs a clear off switch.', 'People trust agents more when limits, pauses and deadlines are always visible.'],
+            ['Context beats speed.', 'The fastest approval is the one where all the evidence is already on screen.'],
+            ['Write rules as sentences.', 'A limit summarised in plain words is checked more carefully than a row of numbers.']] }] }
+      ]
+    },
+
+    pstake: {
+      name: 'PSTAKE Finance',
+      kicker: ['Case study', 'Web3', 'Liquid staking'],
+      title: 'Unlocking liquidity for staked assets.',
+      lede: 'PSTAKE Finance lets people stake their crypto and still use it. More than $30M in assets went through the platform. My job was to make it obvious which network you are on, which asset you picked and what that asset is doing right now, so nobody needs to be a crypto expert to use it.',
+      facts: [['Role', 'Product designer: Brand, Site, IA, Key flows'], ['Year', '2022, Dubai'], ['Platform', 'Desktop Web App'], ['Scope', 'Dashboard, Network, Stake, Unstake, DeFi']],
+      hero: { src: 'p02/pstake-hero.jpg', w: 2880, h: 1800, alt: 'The PSTAKE stake screen: OSMO staked for stkOSMO with the exchange rate and network fee, a Liquid Stake button, APY and total value unlocked cards, a network selector showing Persistence and BNB Smart Chain, Flash and Regular unstaking methods, and a stake confirmation.' },
+      stats: [['$30M+', 'Staked assets value unlocked'], ['5', 'Product areas I designed end to end'], ['2', 'Ways to exit, each with its time and fee shown upfront']],
+      sections: [
+        { label: 'Overview', title: 'One app to Stake, Unstake, Earn and track your crypto.',
+          lede: 'Before PSTAKE, people jumped between staking sites, swap apps, block explorers and spreadsheets. PSTAKE put all of it in one place. Every balance shows what it is doing, and every button tells you what will happen.',
+          blocks: [{ type: 'lists', groups: [
+            { title: 'What I designed', items: ['Switching between networks', 'Staking and Unstaking (wait 14 days, or exit instantly for a fee)', 'The DeFi tab: creating and joining pools', 'How rewards and past activity are shown'] },
+            { title: 'Not my part', muted: true, items: ['Smart contracts', 'How APY is calculated', 'Which networks launched'] }] }] },
+        { label: 'Problem', title: 'People wanted their staked assets to earn. Instead they needed five apps to do it.',
+          blocks: [
+            { type: 'quote', text: '“I just want this token to earn something.” That one simple goal meant five apps and a manual checklist.' },
+            { type: 'cards', cols: 2, title: 'Why it was hard', items: [
+              { title: 'You can’t see what your assets are doing.', text: 'Available, staked, unstaking, in a pool, or earned as rewards: it all looks like “my assets”, but each one behaves differently.' },
+              { title: 'Unstaking takes time.', text: 'The normal exit takes 14 days. The instant exit costs a fee. If nobody tells you that, it looks like your assets have disappeared.' },
+              { title: 'Each network has its own balance.', text: 'Your assets live on a specific network. Showing one total for the whole wallet hides where things actually are.' },
+              { title: 'DeFi brings new words and new risks.', text: 'Pools work differently from staking, so they can’t hide behind the same “Earn” button.' }] }] },
+        { label: 'Pain points', title: 'Six moments where people got stuck.',
+          lede: 'Each one came from missing information on the screen. Each one got a direct fix.',
+          blocks: [{ type: 'cards', cols: 3, items: [
+            { tag: 'What next?', title: 'Tokens sitting idle, with no clear next step in the app.', foot: 'A stake card with a MAX button, and a DeFi suggestion after staking.' },
+            { tag: 'After signing', title: '“I signed. Now what?” The transaction was pending, with no explanation.', foot: 'A confirmation that tells you the exact balance you now have.' },
+            { tag: 'Waiting period', title: 'Unstaked yesterday, but the balance hasn’t changed. It’s still in the 14-day wait.', foot: 'Each exit option shows its wait time and fee before you choose.' },
+            { tag: 'Wrong network', title: 'The same token exists on two networks, and people used the wrong one.', foot: 'The current network is always on screen, and switching takes one click.' },
+            { tag: 'Rewards', title: 'Rewards were there, but people didn’t know whether to claim, leave or restake them.', foot: 'A position card that splits your balance by what it is doing.' },
+            { tag: 'Earnings', title: 'Pool earnings and staking rewards were mixed together.', foot: 'DeFi got its own tab, with its own simple wording.' }] }] },
+        { label: 'Structure', title: 'Four questions, always in the same order.',
+          lede: 'Every screen answers: Where am I? What do I have? What is it doing? What can I do next?',
+          blocks: [{ type: 'columns', items: [
+            { title: 'Network', sub: 'Where am I?', items: ['Persistence', 'BNB Smart Chain'] },
+            { title: 'Asset', sub: 'What do I have?', items: ['OSMO', 'stkOSMO', 'ATOM', 'stkATOM'] },
+            { title: 'State', sub: 'What is it doing?', items: ['Available', 'Staked', 'Unstaking', 'In a pool', 'Rewards'] },
+            { title: 'Action', sub: 'What can I do next?', items: ['Stake', 'Unstake (14 days or instant)', 'Add to a pool', 'Claim', 'Restake'], strong: true }] }] },
+        { label: 'Key decisions', title: 'Three decisions that made it easy to read.',
+          blocks: [
+            { type: 'decision', label: 'Decision A', title: 'Show the result before asking for action.',
+              text: 'The stake screen reads like a receipt, top to bottom: what you put in, what you get back, what it costs, and where that leaves you.',
+              images: [{ src: 'p02/pstake-stake.jpg', w: 1600, h: 1120, alt: 'The stake screen: OSMO in, stkOSMO out with balances and a MAX button, the exchange rate and network fee, and the Liquid Stake button.' }],
+              points: [['In, then out', 'What you stake sits above what you receive, with your balance and a MAX button.'], ['Costs before you sign', 'The rate, expected rewards and network fee all sit above the button.'], ['One main button', 'Liquid Stake is the only bold button, and it only turns on once the amount is valid.'], ['Earnings in view', 'APY and total value unlocked sit right below, so you never open another tab to check.']] },
+            { type: 'decision', label: 'Decision B', title: 'Make unstaking clear, not scary.',
+              text: 'Waiting days for your assets feels like losing them. So the exit screen shows the time and fee of each option before you commit.',
+              images: [{ src: 'p02/pstake-unstake.jpg', w: 2880, h: 1800, alt: 'The unstake screen: the exchange rate above the Flash and Regular unstake method cards, each with its time, fee and what you receive.' }],
+              points: [['Two clear options', 'Flash and Regular Unstake are shown side by side, each with its time and fee.'], ['Rate first', 'The current exchange rate is shown first, so the amount you get back is never a surprise.'], ['No accidents', 'The button stays off until you enter an amount.']] },
+            { type: 'decision', label: 'Decision C', title: 'Always show which network you are on.',
+              text: 'Your assets and actions depend on the network. So the current network and your connected wallet stay visible, and changing either one is a deliberate step.',
+              images: [{ src: 'p02/pstake-menus.jpg', w: 2880, h: 1800, alt: 'The wallet menu open from the header: the connected address and network, balance, copy address, view on explorer and disconnect.' }, { src: 'p02/pstake-wallet.jpg?v=2', w: 2880, h: 1800, alt: 'The connect wallet dialog, with popular wallets grouped above more wallets and the one already linked tagged Connected.' }],
+              points: [['Network in the header', 'The header shows the current network, and the menu marks it with a check.'], ['Wallet tools together', 'Balance, copy address and explorer link sit together. Disconnect is kept apart.'], ['Easy to connect', 'Wallets are grouped, and the one you already use is marked Connected.']] }] },
+        { label: 'Brand and design system', title: 'I built the brand and the system behind every screen.',
+          lede: 'I owned the PSTAKE brand and its design system: the colours, type and shared components that every screen is built from. One system kept staking, unstaking and DeFi feeling like one product.',
+          blocks: [{ type: 'system',
+            colors: [['Night', '#0E0D12', 'bg/base', 'App background'], ['Surface', '#18171D', 'bg/surface', 'Panels and cards'], ['Raised', '#201E26', 'bg/raised', 'Inputs, menus, chips'], ['Coral', '#E15365', 'accent/primary', 'The one primary action'], ['Mint', '#3CC47C', 'status/positive', 'Yield and success'], ['Fog', '#8E8C96', 'text/secondary', 'Labels and helper text']],
+            typo: [['Display', '32', '40', 'Bold', '33.99 OSMO'], ['Title', '20', '28', 'Semibold', 'Select network'], ['Body', '14', '20', 'Regular', 'Estimated annual yield'], ['Label', '11', '16', 'Mono, caps', 'Unstaking method']],
+            principles: [['Dark and calm', 'A quiet dark base, so balances and states stand out.'], ['One coral action', 'Coral marks the single next step on each screen.'], ['Numbers first', 'Amounts are the largest text, labels stay small.']] }] },
+        { label: 'Outcome', title: 'People trusted it with more than $30M.',
+          lede: 'More than $30M in staked assets went through PSTAKE. Each of the six moments where people got stuck now has a clear answer on screen.',
+          blocks: [{ type: 'cards', cols: 2, items: [
+            { title: 'Every balance has a status', text: 'Available, staked, unstaking, in a pool and rewards are shown separately, so you always know what your money is doing.' },
+            { title: 'Exits are upfront', text: 'Both ways to unstake show how long they take and what they cost before you sign.' },
+            { title: 'The network is always visible', text: 'The current network and wallet sit in the header, so nothing happens on the wrong one.' },
+            { title: 'DeFi without the fear', text: 'People can stake, join pools and earn rewards with confidence.' }] },
+            { type: 'cta', label: 'Open the live prototype', href: '../pstake01/' }] },
+        { label: 'Learnings', title: 'What I would bring to any product that handles money.',
+          blocks: [{ type: 'numbered', items: [
+            ['Show the state, then ask for action.', 'Tell people what their money is doing before you ask what they want to do with it.'],
+            ['Make the way out clear.', 'Show the time and fee of every exit, so waiting never feels like losing assets.'],
+            ['Keep the context visible.', 'If actions depend on the network, keep the network on screen and easy to switch.'],
+            ['Don’t mix different things.', 'Staking and pools have different risks, so they need different words, not one shared “Earn” button.']] }] }
+      ]
+    },
+
+    comdex: {
+      name: 'COMDEX',
+      kicker: ['Case study', 'Fintech', 'B2B commodity trading'],
+      title: 'One platform for global commodity trade, from discovery to settlement.',
+      lede: 'Commodity deals in a $17T market still run on emails, calls and PDFs. I designed COMDEX end to end: one desktop product that works like a trading terminal and takes a deal from discovery to settlement.',
+      facts: [['Role', 'Product designer'], ['Team', '1 PM, 3 engineers'], ['Year', '2019'], ['Platform', 'Desktop web app']],
+      hero: { src: 'p02/comdex-dash.jpg', w: 2880, h: 1800, alt: 'The COMDEX trader dashboard: wallet balance, receivables and payables, a buy versus sell volume chart, trade statistics, team activity, market news and a table of traders.' },
+      stats: [['$10M+', 'Pilot trade volume processed on the platform'], ['Days to 1', 'A multi-day email and PDF loop became one Deal Room session'], ['3 + 1', 'Product modules, plus a public block explorer']],
+      sections: [
+        { label: 'Overview', title: 'One closed-loop system of record for a trade.',
+          lede: 'COMDEX brings discovery, negotiation and settlement into one product, so a trader can find a counterparty, agree terms and settle with confidence without leaving it.',
+          blocks: [{ type: 'lists', groups: [
+            { title: 'What I designed', items: ['Marketing website', 'Discovery: markets, orders and new listings', 'Settlement: Deal Room, escrow and title transfer', 'Finance: sell offers and finance requests', 'Public block explorer'] },
+            { title: 'How I worked', muted: true, items: ['With 1 PM and 3 engineers', 'Tested flows with traders', 'Five core flows handed off as hi-fi'] }] }] },
+        { label: 'Problem', title: 'Global trade ran on inboxes, not infrastructure.',
+          lede: 'Deals were stitched together from emails, calls, PDFs and manual checks, so terms and settlement were slow and trust between counterparties was hard to establish.',
+          blocks: [{ type: 'table', head: ['Pain point', 'Design response'], rows: [
+            ['Paper title in transit', 'On-chain title and a document pack, kept in the Deal Room'],
+            ['Correspondent-bank delays', 'Escrow and dUSD, so capital is not stuck overnight'],
+            ['Unknown counterparties', 'One COMDEX ID with reusable KYC and reputation']] }] },
+        { label: 'Process', title: 'From research to handoff in four phases.',
+          blocks: [{ type: 'cards', cols: 4, items: [
+            { tag: 'Phase 1', title: 'Discover', list: ['Market and gap research', 'Competitor review', 'User personas'] },
+            { tag: 'Phase 2', title: 'Define', list: ['Constraints', 'Problem statement', 'User flows'] },
+            { tag: 'Phase 3', title: 'Develop', list: ['Mock-ups', 'Lo-fi prototype', 'Tests with traders'] },
+            { tag: 'Phase 4', title: 'Deliver', list: ['Hi-fi prototype', 'Engineering handoff'] }] }] },
+        { label: 'Structure', title: 'One closed loop, from sign-up to settlement.',
+          lede: 'Seven steps cover the whole deal, so a trader never leaves COMDEX to finish one.',
+          blocks: [{ type: 'flow', legend: 'Marked steps are where the old process lost days, and the core of the redesign.', rows: [
+            ['Sign in', ['Log in or sign up', 'COMDEX ID', 'KYC']],
+            ['Hub', ['Discovery', 'Settlement', 'Finance']],
+            ['Discovery', ['Dashboard', 'Markets', 'Orders', 'New sell order']],
+            ['Create order', ['Commodity', 'Documents', 'Confirm']],
+            ['Deal Room', ['Negotiate', 'Counter', 'Accept', 'Documents'], true],
+            ['Settlement', ['Escrow', 'dUSD payment', 'Title transfer'], true],
+            ['Finance', ['Sell offer', 'Order book', 'Finance request']]] }] },
+        { label: 'Key decisions', title: 'Three screens that made the loop work.',
+          blocks: [
+            { type: 'decision', label: 'Decision A', title: 'One verified record for every counterparty.',
+              text: 'A single COMDEX ID powers KYC, settlement and compliance from one source of truth.',
+              images: [{ src: 'p02/comdex-kyc.jpg', w: 2880, h: 1800, alt: 'Trader onboarding: a setup progress stepper on the left and the organization profile form on the right, with registration zone, legal details and beneficial owners.' }],
+              points: [['Guided stepper', 'Traders always see what is verified and what is left.'], ['Verify once, reuse everywhere', 'The COMDEX ID follows the trader into every deal and counterparty check.']] },
+            { type: 'decision', label: 'Decision B', title: 'Lead with the choice that cannot be undone.',
+              text: 'The new sell order asks for the listing type first, and the rest of the form follows from it.',
+              images: [{ src: 'p02/comdex-order.jpg', w: 2880, h: 1800, alt: 'The new sell order form: listing type cards, commodity and shipment details, and a live order summary with the total shipment value.' }],
+              points: [['Listing type first', 'It is the one choice that cannot be undone, so everything below adapts to it.'], ['Fields mirror trade documents', 'Traders fill in what they already know from paper, with no new mental model.'], ['Running total, always visible', 'The order value updates live, so there are no surprises at confirmation.']] },
+            { type: 'decision', label: 'Decision C', title: 'Fiat in, trading unlocked.',
+              text: 'Deposits no longer wait 24 hours on a correspondent bank.',
+              images: [{ src: 'p02/comdex-fiat.jpg', w: 2880, h: 1800, alt: 'The add funds dialog: bank transfer details with copy buttons, a reference for the transfer memo, a transaction ID field and a receipt upload.' }],
+              points: [['Bank details, ready to copy', 'Laid out like the wire slip traders already send.'], ['A reference ties the wire to you', 'No back and forth to match a payment to an account.'], ['Upload proof, start trading', 'Funds unlock as dUSD instead of waiting on a correspondent bank.']] }] },
+        { label: 'Outcome', title: 'Days of email became one session.',
+          blocks: [
+            { type: 'compare', before: 'A multi-day loop of emails, PDFs and correspondent banks.', after: 'A single Deal Room session to negotiate, document and settle in one place.' },
+            { type: 'figure', img: { src: 'p02/comdex-trade.jpg', w: 2880, h: 1800, alt: 'A completed trade from Malaysia to Hong Kong: order progress, trade summary with feedback from both parties, an activity timeline, the final sale price and the contract documents.' }, caption: 'A completed trade: progress, summary, timeline and contract documents in one view.' },
+            { type: 'chips', title: 'What I would do next', items: ['Mobile companion app', 'Counterparty reputation graph', 'Live bank-rail status'] },
+            { type: 'cta', label: 'Open the live prototype', href: '../comdex01/' }] },
+        { label: 'Learnings', title: 'What I would carry into any complex B2B product.',
+          blocks: [{ type: 'numbered', items: [
+            ['Lead with the irreversible choice.', 'Ask for the listing type first, then let the form follow from it.'],
+            ['Borrow the industry’s documents.', 'Reuse them as the interface pattern instead of inventing a new one.'],
+            ['Identity is the happy path.', 'Treat reusable identity and running totals as part of the core flow, not edge cases.'],
+            ['Design settlement with discovery.', 'Do both in the same pass, or the product splits into two apps.']] }] }
+      ]
+    },
+
+    captl: {
+      name: 'CAPTL',
+      kicker: ['Case study', 'Fintech', 'Private equity'],
+      title: 'One place to run an investment fund.',
+      lede: 'People who run investment funds juggle money, investors, legal papers and a team across spreadsheets and email. CAPTL puts all of it in one app, so nothing gets lost and nothing gets stuck.',
+      facts: [['Role', 'Product designer: brand, site, IA, key flows'], ['Team', '3 engineers'], ['Year', '2020'], ['Platform', 'Web, desktop first']],
+      hero: { src: 'p03/captl-dashboard.jpg', w: 2880, h: 1800, alt: 'The CAPTL fund dashboard: cards for fund size, money promised, money paid out, money collected and money still to collect, a spending donut chart and return numbers.' },
+      stats: [['12', 'Product screens and surfaces designed, from brand to task handoff'], ['6', 'Main user journeys designed end to end'], ['4', 'Types of people served: fund manager, fund team, investors and operations']],
+      sections: [
+        { label: 'Overview', title: 'What CAPTL does.',
+          lede: 'A fund manager collects money from investors, invests it in companies, and later returns the profits. CAPTL is the app they use to run that fund from start to finish.',
+          blocks: [{ type: 'steps', items: [['Sign in', 'Safely, with a second check'], ['Create', 'Set up a new fund'], ['Add people', 'Investors and the companies you back'], ['Track', 'See how the fund is doing'], ['Collect', 'Ask investors for money when needed'], ['Hand off', 'Give tasks to your team or lawyers']] }] },
+        { label: 'Problem', title: 'Running a fund was messy.',
+          blocks: [{ type: 'cards', cols: 2, items: [
+            { title: 'No single view', text: 'A manager couldn’t open one screen and see all their funds and how each was doing.' },
+            { title: 'Investors lived in spreadsheets', text: 'Investor details and the companies a fund backed sat in separate files, not with the fund.' },
+            { title: 'Setting up a fund was slow', text: 'It needed legal papers that were often late, and one missing paper held everything up.' },
+            { title: 'Tasks got lost in email', text: 'Nobody could see who owed what, or by when.' }] }] },
+        { label: 'Users', title: 'Who uses it.',
+          blocks: [{ type: 'cards', cols: 2, items: [
+            { tag: 'Fund manager', text: 'Runs one or more funds. Needs a quick view of each fund and a fast way to get work done.' },
+            { tag: 'Fund team', text: 'Helps run the fund. Needs to know which documents are missing and which tasks are theirs.' },
+            { tag: 'Investors', text: 'Put money into the fund. Need updates and their documents in one place.' },
+            { tag: 'Lawyers and operations', text: 'Outside the firm. Need to receive a clear task and finish it.' }] }] },
+        { label: 'Key decisions', title: 'Four design decisions.',
+          blocks: [
+            { type: 'decision', label: 'Decision 1', title: 'Never let one missing document block you.',
+              text: 'Setting up a fund needs legal documents, and they’re often late because a lawyer still has them. So each document can be uploaded now or handed to someone else. The app creates a task for that person, and the manager carries on.',
+              images: [{ src: 'p03/captl-create.jpg', w: 2880, h: 1800, alt: 'Creating a fund, step 2 of 2: each legal document has Delegate and Upload buttons, with a checklist on the right.' }],
+              points: [['Upload or delegate', 'Every document has both buttons side by side.'], ['A clear checklist', 'The right-hand list shows what’s done and what’s still needed.'], ['Nothing is lost', 'Going back keeps everything already entered.']] },
+            { type: 'decision', label: 'Decision 2', title: 'Show the whole fund on one screen.',
+              text: 'The dashboard answers the questions a manager asks first: how big is the fund, how much money has come in, how much has gone out, and how is it performing. A short summary, not a wall of charts.',
+              images: [{ src: 'p03/captl-dashboard.jpg', w: 2880, h: 1800, alt: 'The fund dashboard with money cards across the top, a spending donut chart and six return numbers.' }],
+              points: [['Money first', 'Five cards across the top cover the money in and out.'], ['Explained numbers', 'Every return number has a ? that explains it in plain words.'], ['Where the money went', 'The donut shows what the fund has spent and on what.']] },
+            { type: 'decision', label: 'Decision 3', title: 'Zero isn’t the same as broken.',
+              text: 'A new fund has no returns yet, so its numbers are zero. Users read that as an error. Now a new fund shows a dash and a short note: zeros are normal before the first money comes in.',
+              images: [{ src: 'p03/captl-newfund.jpg', w: 2880, h: 1800, alt: 'The dashboard for a brand-new fund: return numbers show a dash marked Early-fund state, with a note saying zeros early on are expected.' }],
+              points: [['A dash, not a zero', 'Empty numbers look intentional, not broken.'], ['A short note', 'One sentence tells the user this is normal.'], ['Builds trust', 'In a money product, looking broken costs trust.']] },
+            { type: 'decision', label: 'Decision 4', title: 'Guide people step by step, in the right order.',
+              text: 'Some things must happen in a set order. You can’t give out shares in a fund before you’ve decided what kinds of shares exist. So the app shows the steps, locks the next one until the first is done, and lets you hand any step to someone else.',
+              images: [{ src: 'p03/captl-steps.jpg', w: 2880, h: 1800, alt: 'Setting up who owns what: step 1 is open, step 2 is locked until step 1 is done, with an Assign task button on the side.' }, { src: 'p03/captl-assign.jpg', w: 2880, h: 1800, alt: 'The Assign task window: a task name, who it goes to and a due date.' }],
+              points: [['Locked until ready', 'Step 2 opens only when step 1 is done, so mistakes can’t happen.'], ['Hand off any step', 'Assign task sends work to a teammate or a lawyer, with a due date.'], ['Everyone is notified', 'The person gets an email, and the task is tracked in the app.']] }] },
+        { label: 'Outcome', title: 'One app instead of many tools.',
+          blocks: [
+            { type: 'cards', cols: 3, items: [
+              { title: 'Everything in one place', text: 'Funds, investors, documents and tasks live in one app.' },
+              { title: 'Funds set up faster', text: 'A manager can create a fund and add investors without waiting on every document.' },
+              { title: 'Work has an owner', text: 'Every task shows who owns it and when it’s due.' }] },
+            { type: 'chips', title: 'What I designed', items: ['Brand', 'Website', 'Sign-in and second check', 'Dashboard', 'Create a fund', 'Add investors and companies', 'Who owns what', 'Fund network', 'Fund management', 'Assign tasks'] },
+            { type: 'cta', label: 'Open the live prototype', href: '../captl01/' }] },
+        { label: 'Learnings', title: 'What I learned.',
+          blocks: [{ type: 'numbered', items: [
+            ['An empty screen should say what to do next.', 'A first-time user is prompted to create their first fund, not left on a blank page.'],
+            ['Keep everything attached to the fund.', 'People, documents and tasks are easier to find when they all hang off one fund.'],
+            ['Every step should be shareable.', 'If a step can’t be handed to someone, the work leaves the app and gets lost in email.']] }] }
+      ]
+    }
+  };
+
+  /* ---------- Renderer ---------- */
+  function esc(s) { return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;'); }
+  function isDark() { return document.documentElement.getAttribute('data-theme') === 'dark'; }
+  function img(i, lazy) {
+    var src = IMG + (i.dark && isDark() ? i.dark : i.src);
+    var themed = i.dark ? ' data-light="' + IMG + i.src + '" data-dark="' + IMG + i.dark + '"' : '';
+    return '<button type="button" class="cs-zoom" data-full="' + src + '" aria-label="View larger image">' +
+      '<img src="' + src + '"' + themed + (i.dark ? ' class="is-framed"' : i.bare ? ' class="is-bare"' : '') + ' width="' + i.w + '" height="' + i.h + '" alt="' + esc(i.alt) + '" decoding="async"' + (lazy ? ' loading="lazy"' : ' fetchpriority="high"') + '>' +
+      '<span class="cs-zoom-hint" aria-hidden="true">' + ZOOM + '</span></button>';
+  }
+  var ZOOM = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg>';
+  var LOGO = '<span class="ds-word" role="img" aria-label="PSTAKE">PSTAKE</span>';
+  var CHECK = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>';
+  var DASH = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true" focusable="false"><path d="M6 12h12"/></svg>';
+  var ARROW = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 12h14M13 6l6 6-6 6"/></svg>';
+  var OUT = '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M7 17L17 7M8 7h9v9"/></svg>';
+
+  var B = {
+    lists: function (b) {
+      return '<div class="cs-lists">' + b.groups.map(function (g) {
+        return '<div class="cs-list' + (g.muted ? ' is-muted' : '') + '"><h3 class="cs-label">' + g.title + '</h3><ul>' + g.items.map(function (t) {
+          return '<li><span>' + t + '</span>' + (g.muted ? DASH : CHECK) + '</li>';
+        }).join('') + '</ul></div>';
+      }).join('') + '</div>';
+    },
+    quote: function (b) { return '<blockquote class="cs-quote"><p>' + b.text + '</p>' + (b.cite ? '<footer>' + b.cite + '</footer>' : '') + '</blockquote>'; },
+    cards: function (b) {
+      return (b.title ? '<p class="cs-label cs-block-title">' + b.title + '</p>' : '') + '<ul class="cs-cards c' + b.cols + '">' + b.items.map(function (c) {
+        return '<li class="cs-card">' + (c.tag ? '<p class="cs-label">' + c.tag + '</p>' : '') +
+          (c.title ? '<h3>' + c.title + '</h3>' : '') + (c.text ? '<p>' + c.text + '</p>' : '') +
+          (c.list ? '<ul class="cs-dots">' + c.list.map(function (t) { return '<li>' + t + '</li>'; }).join('') + '</ul>' : '') +
+          (c.foot ? '<div class="cs-card-foot"><p class="cs-label">Design response</p><p>' + c.foot + '</p></div>' : '') + '</li>';
+      }).join('') + '</ul>';
+    },
+    table: function (b) {
+      return '<table class="cs-table"><thead><tr><th scope="col">' + b.head[0] + '</th><th scope="col">' + b.head[1] + '</th></tr></thead><tbody>' +
+        b.rows.map(function (r) { return '<tr><th scope="row">' + r[0] + '</th><td>' + r[1] + '</td></tr>'; }).join('') + '</tbody></table>';
+    },
+    columns: function (b) {
+      return '<ol class="cs-columns">' + b.items.map(function (c) {
+        return '<li class="cs-col' + (c.strong ? ' is-strong' : '') + '"><div class="cs-col-head"><h3>' + c.title + '</h3><p>' + c.sub + '</p></div><ul>' +
+          c.items.map(function (t) { return '<li>' + t + '</li>'; }).join('') + '</ul></li>';
+      }).join('') + '</ol>';
+    },
+    flow: function (b) {
+      return '<ol class="cs-flow">' + b.rows.map(function (r) {
+        return '<li class="cs-flow-row' + (r[2] ? ' is-key' : '') + '"><h3>' + r[0] + (r[2] ? '<span class="sr"> (key step)</span>' : '') + '</h3><ol>' +
+          r[1].map(function (t) { return '<li>' + t + '</li>'; }).join('') + '</ol></li>';
+      }).join('') + '</ol>' + (b.legend ? '<p class="cs-legend"><span aria-hidden="true"></span>' + b.legend + '</p>' : '');
+    },
+    steps: function (b) {
+      return '<ol class="cs-steps">' + b.items.map(function (s) { return '<li><h3>' + s[0] + '</h3><p>' + s[1] + '</p></li>'; }).join('') + '</ol>';
+    },
+    decision: function (b) {
+      return '<div class="cs-decision"><h3>' + b.title + '</h3><p class="cs-text">' + b.text + '</p>' +
+        (b.video ? '<figure class="cs-figure cs-video"><video poster="' + IMG + b.video.poster + '" width="' + b.video.w + '" height="' + b.video.h + '" autoplay muted loop playsinline controls preload="metadata" aria-label="' + b.video.label + '"><source src="' + IMG + b.video.src + '" type="video/mp4"><source src="' + IMG + b.video.src.replace('.mp4', '.webm') + '" type="video/webm"></video></figure>' :
+        '<div class="cs-shots' + (b.images.length > 1 ? ' two' : '') + '">' + b.images.map(function (i) { return '<figure class="cs-figure">' + img(i, true) + '</figure>'; }).join('') + '</div>') +
+        '<ol class="cs-points' + (b.points.length === 4 ? ' four' : '') + '">' + b.points.map(function (p) {
+          return '<li><h4>' + p[0] + '</h4><p>' + p[1] + '</p></li>';
+        }).join('') + '</ol></div>';
+    },
+    compare: function (b) {
+      return '<div class="cs-compare"><div><p class="cs-label">Before</p><p>' + b.before + '</p></div>' +
+        '<span class="cs-compare-arrow">' + ARROW + '</span><div class="is-after"><p class="cs-label">After</p><p>' + b.after + '</p></div></div>';
+    },
+    figure: function (b) { return '<figure class="cs-figure">' + img(b.img, true) + (b.caption ? '<figcaption>' + b.caption + '</figcaption>' : '') + '</figure>'; },
+    chips: function (b) {
+      return '<div class="cs-chips"><h3 class="cs-label">' + b.title + '</h3><ul>' + b.items.map(function (t) { return '<li>' + t + '</li>'; }).join('') + '</ul></div>';
+    },
+    system: function (b) {
+      function cell(n, name, variants, body, wide) {
+        return '<div class="ds-cell' + (wide ? ' is-wide' : '') + '"><div class="ds-cell-head"><b>' + name + '</b><em>' + variants + '</em></div><div class="ds-canvas">' + body + '</div></div>';
+      }
+      function cap(t) { return '<span class="ds-cap">' + t + '</span>'; }
+      var colors = b.colors.map(function (c) {
+        return '<li><span class="ds-sw" style="background:' + c[1] + '"></span><div class="ds-sw-meta"><b>' + c[0] + '</b><code>' + c[2].replace('/', '/<wbr>') + '</code><span>' + c[1] + '</span></div><p>' + c[3] + '</p></li>';
+      }).join('');
+      var typo = b.typo.map(function (t, i) {
+        return '<tr><td><span class="ds-ts ds-ts' + i + '">' + t[4] + '</span></td><th scope="row">' + t[0] + '</th><td>' + t[1] + '/' + t[2] + '</td><td>' + t[3] + '</td></tr>';
+      }).join('');
+      var caret = '<svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>';
+      var comps =
+        cell('01', 'Button', 'Primary, secondary, disabled',
+          '<div class="ds-stack is-v"><div class="ds-col"><span class="ds-btn is-pri">Liquid Stake</span>' + cap('Primary') + '</div><div class="ds-col"><span class="ds-btn">Connect wallet</span>' + cap('Secondary') + '</div><div class="ds-col"><span class="ds-btn is-off">Enter an amount</span>' + cap('Disabled') + '</div></div>') +
+        cell('02', 'Segmented control', 'Selected, default',
+          '<div class="ds-seg"><span class="is-on">Stake</span><span>Unstake</span></div>') +
+        cell('03', 'Chips', 'Network, token, tag',
+          '<div class="ds-stack"><span class="ds-chip"><i style="background:#E15365">P</i>Persistence' + caret + '</span><span class="ds-chip"><i style="background:#7761F3">O</i>OSMO' + caret + '</span><span class="ds-tag">MAX</span></div>') +
+        cell('04', 'Amount field', 'Input with balance',
+          '<div class="ds-field"><div class="ds-field-top"><span>You stake</span><span>Available <b>4.7346 OSMO</b> <span class="ds-tag">MAX</span></span></div><div class="ds-field-main"><span class="ds-chip"><i style="background:#7761F3">O</i>OSMO' + caret + '</span><span class="ds-amt">4</span></div><div class="ds-field-sub">≈ $3.06</div></div>') +
+        cell('05', 'Option card', 'Selected, default',
+          '<div class="ds-opts"><div class="ds-opt is-sel"><span class="ds-radio"></span><div><b>Flash Unstake</b><small>Instantly · 0.5% fee</small></div><div class="ds-opt-r"><b>~99.50 ATOM</b><small>You receive</small></div></div><div class="ds-opt"><span class="ds-radio"></span><div><b>Regular Unstake</b><small>21–25 days · 0% fee</small></div><div class="ds-opt-r"><b>~100.00 ATOM</b><small>You receive</small></div></div></div>', true) +
+        cell('06', 'Stat', 'Metric with helper',
+          '<div class="ds-stat"><small>APY</small><b>9.92%</b><small>Estimated annual yield</small></div>') +
+        cell('07', 'Toast', 'Success',
+          '<div class="ds-toast"><span class="ds-ok"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span><div><b>Stake confirmed</b><small>3.998656 stkOSMO added to your balance</small></div></div>');
+      return '<div class="ds" role="group" aria-label="PSTAKE brand and design system">' +
+        '<div class="ds-top"><span class="ds-top-logo">' + LOGO.replace('role="img" aria-label="PSTAKE"', 'aria-hidden="true"') + '</span><span class="ds-top-r">Design system</span></div>' +
+        '<div class="ds-part"><p class="ds-h">Brand</p><div class="ds-brand">' +
+          '<div class="ds-logo is-dark">' + LOGO + '<em>On dark</em></div>' +
+          '<div class="ds-logo is-light">' + LOGO + '<em>On light</em></div></div></div>' +
+        '<div class="ds-part"><p class="ds-h">Colour</p><ul class="ds-colors">' + colors + '</ul></div>' +
+        '<div class="ds-part"><p class="ds-h">Type</p><table class="ds-type"><thead><tr><th scope="col"><span class="sr">Sample</span></th><th scope="col">Style</th><th scope="col">Size/Line</th><th scope="col">Weight</th></tr></thead><tbody>' + typo + '</tbody></table></div>' +
+        '<div class="ds-part"><p class="ds-h">Components</p><div class="ds-cells" aria-hidden="true">' + comps + '</div>' +
+        '<p class="sr">Components: primary, secondary and disabled buttons; a stake and unstake segmented control; network and token chips with a MAX tag; an amount field with available balance; selected and default unstaking option cards; an APY stat; a stake confirmed toast.</p></div>' +
+        '</div>' +
+        '<ul class="ds-principles">' + b.principles.map(function (p, i) { return '<li><h3>' + p[0] + '</h3><p>' + p[1] + '</p></li>'; }).join('') + '</ul>';
+    },
+    cta: function (b) { return '<div class="cs-btns"><a class="cs-btn is-primary" href="' + b.href + '" target="_blank" rel="noopener">' + b.label + ' ' + OUT + '<span class="sr"> (opens in a new tab)</span></a></div>'; },
+    numbered: function (b) {
+      return '<ol class="cs-numbered">' + b.items.map(function (r) { return '<li><h3>' + r[0] + '</h3><p>' + r[1] + '</p></li>'; }).join('') + '</ol>';
+    }
+  };
+
+  function render(key) {
+    var c = CASES[key];
+    var h = '<article class="cs" aria-labelledby="cs-title">';
+    h += '<header class="cs-hero"><p class="cs-kicker">' + c.name + (c.tag ? ' <em class="cs-tag">' + c.tag + '</em>' : '') + '<span>' + c.kicker.slice(1).map(function (k, i) { return i && !/^[A-Z0-9]{2}/.test(k) ? k.charAt(0).toLowerCase() + k.slice(1) : k; }).join(', ') + '</span></p>' +
+      '<h1 id="cs-title" tabindex="-1">' + c.title + '</h1><p class="cs-intro">' + c.lede + '</p>' +
+      '<dl class="cs-facts">' + c.facts.map(function (f) { return '<div><dt>' + f[0] + '</dt><dd>' + f[1] + '</dd></div>'; }).join('') + '</dl></header>';
+    h += '<figure class="cs-figure cs-hero-figure' + (c.hero.bare ? ' is-bare' : '') + '">' + img(c.hero, false) + '</figure>';
+    h += '<ul class="cs-stats" aria-label="Key figures">' + c.stats.map(function (s) { return '<li><strong>' + s[0] + '</strong><span>' + s[1] + '</span></li>'; }).join('') + '</ul>';
+    c.sections.forEach(function (s, i) {
+      var id = key + '-s' + (i + 1);
+      h += '<section class="cs-sec" aria-labelledby="' + id + '"><header class="cs-sec-head"><p class="cs-num">' + s.label + '</p>' +
+        '<h2 id="' + id + '">' + s.title + '</h2>' + (s.lede ? '<p class="cs-text">' + s.lede + '</p>' : '') + '</header>' +
+        s.blocks.map(function (b) { return B[b.type](b); }).join('') + '</section>';
+    });
+    h += '<footer class="cs-end"><h2>Thanks for reading.</h2><p class="cs-text">I design trust-heavy, multi-step products that people depend on: staking, trading and fund operations.</p>' +
+      '<div class="cs-btns"><a class="cs-btn is-primary" href="mailto:sudheer.darla11@gmail.com">Email me<span class="sr"> (opens your email app)</span></a>' +
+      '<a class="cs-btn" href="https://www.linkedin.com/in/sudheerdarla/" target="_blank" rel="noopener">LinkedIn ' + OUT + '<span class="sr"> (opens in a new tab)</span></a>' +
+      '<a class="cs-btn" href="https://x.com/sudheerdarla_" target="_blank" rel="noopener">X ' + OUT + '<span class="sr"> (opens in a new tab)</span></a></div></footer>';
+    return h + '</article>';
+  }
+
+  window.CASES = CASES;
+  window.renderCase = render;
+  /* Swap themed screenshots (light and dark) when the theme changes */
+  function swapThemed() {
+    var d = isDark();
+    document.querySelectorAll('img[data-dark]').forEach(function (el) {
+      var want = el.getAttribute(d ? 'data-dark' : 'data-light');
+      if (el.getAttribute('src') !== want) { el.setAttribute('src', want); var z = el.closest('.cs-zoom'); if (z) z.setAttribute('data-full', want); }
+    });
+  }
+  if ('MutationObserver' in window) new MutationObserver(swapThemed).observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+})();
