@@ -1,9 +1,9 @@
 /* Likes and comments for blog posts, stored in Supabase.
-   Paste the project URL and the public "anon" key below. Until both are set,
-   the like button and comments stay hidden and the page works as before. */
+   The URL and publishable key below are public by design: the database only
+   lets visitors call get_likes, set_like, get_comments and add_comment. */
 (function () {
-  var SUPABASE_URL = '';
-  var SUPABASE_KEY = '';
+  var SUPABASE_URL = 'https://gcwdqsguqyzqihlvxuge.supabase.co';
+  var SUPABASE_KEY = 'sb_publishable_UMhs7Uhbq0hEGB4mObIZew_Je02Mszb';
 
   var root = document.querySelector('[data-post]');
   if (!root || !SUPABASE_URL || !SUPABASE_KEY) return;
@@ -21,7 +21,7 @@
   function rpc(fn, args) {
     return fetch(SUPABASE_URL.replace(/\/$/, '') + '/rest/v1/rpc/' + fn, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json', apikey: SUPABASE_KEY, Authorization: 'Bearer ' + SUPABASE_KEY },
+      headers: { 'Content-Type': 'application/json', apikey: SUPABASE_KEY },
       body: JSON.stringify(args)
     }).then(function (r) {
       return r.json().then(function (d) { if (!r.ok) throw new Error((d && d.message) || 'Request failed'); return d; });
