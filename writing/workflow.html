@@ -110,7 +110,7 @@
     .c-submit:disabled { opacity: .6; cursor: progress; }
     .c-status { font-size: 14px; color: var(--muted); }
     .c-note { font-size: 13px; line-height: 18px; color: var(--muted); }
-    /* Share */
+    /* Like row */
     .actions { margin-top: var(--s-4xl); display: flex; align-items: center; gap: var(--s-sm); flex-wrap: wrap; }
     .act { display: inline-flex; align-items: center; gap: 8px; min-height: 40px; padding: 0 14px; border: 1px solid var(--line-1); border-radius: var(--r-md); background: var(--bg); font-size: 14px; line-height: 20px; color: var(--fg-1); text-decoration: none; transition: border-color .15s var(--ease-out), background-color .15s var(--ease-out); }
     .act:hover { border-color: var(--fg); }
@@ -251,14 +251,8 @@
       </ul>
       <p>That’s what I’m holding on to.</p>
     </article>
-    <div class="actions" aria-label="Like and share this post" data-post="workflow">
+    <div class="actions" aria-label="Like this post" data-post="workflow">
       <button class="act like" type="button" id="like" aria-pressed="false" hidden><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" aria-hidden="true"><path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10z"/></svg><span>Like</span><span class="like-count" id="like-count"></span></button>
-      <span class="act-label">Share</span>
-      <button class="act" type="button" id="share-native" hidden><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12v7a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-7M16 6l-4-4-4 4M12 2v13"/></svg>Share</button>
-      <button class="act" type="button" id="share-copy"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.5.5l3-3a5 5 0 0 0-7-7l-1.7 1.7M14 11a5 5 0 0 0-7.5-.5l-3 3a5 5 0 0 0 7 7l1.7-1.7"/></svg><span>Copy link</span></button>
-      <a class="act" id="share-li" target="_blank" rel="noopener" href="#">LinkedIn<span class="sr"> (opens in a new tab)</span></a>
-      <a class="act" id="share-x" target="_blank" rel="noopener" href="#">X<span class="sr"> (opens in a new tab)</span></a>
-      <span class="share-status" id="share-status" role="status" aria-live="polite"></span>
     </div>
     <section class="comments" id="comments" aria-labelledby="c-title" hidden>
       <h2 id="c-title">Comments <span id="c-count"></span></h2>
@@ -300,24 +294,7 @@
       lb.addEventListener('click', function (e) { if (e.target === lb || e.target.tagName === 'FIGURE') close(); });
     })();
   </script>
-  <script>
-    /* Share: native share sheet where the device has one, plus copy link, LinkedIn and X */
-    (function () {
-      var url = location.href.split('#')[0], title = document.title.replace(/ — .*$/, '');
-      var st = document.getElementById('share-status');
-      document.getElementById('share-li').href = 'https://www.linkedin.com/sharing/share-offsite/?url=' + encodeURIComponent(url);
-      document.getElementById('share-x').href = 'https://x.com/intent/post?text=' + encodeURIComponent(title) + '&url=' + encodeURIComponent(url);
-      var nat = document.getElementById('share-native');
-      if (navigator.share) { nat.hidden = false; nat.addEventListener('click', function () { navigator.share({ title: title, url: url }).catch(function () {}); }); }
-      document.getElementById('share-copy').addEventListener('click', function () {
-        var b = this.querySelector('span');
-        function ok() { b.textContent = 'Copied'; st.textContent = 'Link copied'; setTimeout(function () { b.textContent = 'Copy link'; st.textContent = ''; }, 2000); }
-        if (navigator.clipboard) navigator.clipboard.writeText(url).then(ok, function () { prompt('Copy this link', url); });
-        else prompt('Copy this link', url);
-      });
-    })();
-  </script>
-  <script src="engage.js?v=2" defer></script>
+  <script src="engage.js?v=3" defer></script>
   <script src="../app.js?v=10" defer></script>
 </body>
 </html>
