@@ -129,15 +129,15 @@
   var assetTabs = document.querySelector('[data-assets]');
   if (receipt && assetTabs) {
     var DATA = {
-      btc: { sample: false, title: 'Bitcoin · public trade', chip: 'Recorded example', icon: '₿', name: 'Bitcoin', type: 'BTC perpetual',
+      btc: { sample: false, title: 'Bitcoin · public trade', chip: 'Recorded example', logo: 'bitcoin.svg', name: 'Bitcoin', type: 'BTC perpetual',
         desc: 'A BTC perpetual buy recorded on Hyperliquid. Check the price, size and time yourself.',
         price: '$78,630.00', size: '0.0141 BTC', notional: '≈ $1,108.68', time: '09 Sep 2026, 20:38:52 IST', hash: '0x1449d17524…e39abd42',
         note: 'Trade price from the public feed. The explorer shows the submitted order, including its limit price.' },
-      eth: { sample: true, title: 'Ethereum · illustrative trade', chip: 'Illustrative example', icon: 'Ξ', name: 'Ethereum', type: 'ETH perpetual',
+      eth: { sample: true, title: 'Ethereum · illustrative trade', chip: 'Illustrative example', logo: 'ethereum.png', name: 'Ethereum', type: 'ETH perpetual',
         desc: 'An ETH perpetual buy, shown as an illustration of the receipt. A recorded public trade will replace it.',
         price: '$3,412.00', size: '0.325 ETH', notional: '≈ $1,108.90', time: 'Sample, not a real fill', hash: 'Sample, not a real transaction',
         note: 'Illustrative values for layout only. They are not a recorded trade.' },
-      sol: { sample: true, title: 'Solana · illustrative trade', chip: 'Illustrative example', icon: '◎', name: 'Solana', type: 'SOL perpetual',
+      sol: { sample: true, title: 'Solana · illustrative trade', chip: 'Illustrative example', logo: 'solana.svg', name: 'Solana', type: 'SOL perpetual',
         desc: 'A SOL perpetual buy, shown as an illustration of the receipt. A recorded public trade will replace it.',
         price: '$178.50', size: '6.2 SOL', notional: '≈ $1,106.70', time: 'Sample, not a real fill', hash: 'Sample, not a real transaction',
         note: 'Illustrative values for layout only. They are not a recorded trade.' }
@@ -145,11 +145,14 @@
     var fields = {};
     receipt.querySelectorAll('[data-r]').forEach(function (el) { fields[el.getAttribute('data-r')] = el; });
     var chipEl = receipt.querySelector('[data-r-chip]');
+    var iconEl = receipt.querySelector('[data-r-icon]');
     var linkEl = receipt.querySelector('[data-r-link]');
     var current = 'btc';
     var paint = function (key) {
       var d = DATA[key];
       Object.keys(fields).forEach(function (k) { fields[k].textContent = d[k]; });
+      iconEl.src = 'assets/logos/' + d.logo;
+      iconEl.classList.toggle('is-tall', d.logo.slice(-4) === '.png');
       chipEl.classList.toggle('chip-recorded--sample', d.sample);
       linkEl.hidden = d.sample;
     };

@@ -158,6 +158,9 @@ button, input { font: inherit; color: inherit; }
 .marquee__group { display: flex; flex-wrap: wrap; justify-content: center; gap: 14px 44px; flex: none; padding: 0 22px; list-style: none; margin: 0; }
 .mq-item { display: inline-flex; align-items: center; gap: 10px; white-space: nowrap; }
 .marquee .mq-badge { width: 30px; height: 30px; border-radius: 9px; font-size: 13px; }
+.mq-logo { display: inline-flex; align-items: center; justify-content: center; flex: none; width: 30px; height: 30px; }
+.mq-logo img { width: 26px; height: 26px; object-fit: contain; }
+.mq-logo--tall img { width: auto; height: 26px; }
 .mq-name { font-size: 15px; font-weight: 500; color: var(--ink); letter-spacing: -0.1px; }
 .mq-tick { font-size: 10px; line-height: 15px; font-weight: 500; letter-spacing: .4px; text-transform: uppercase; color: var(--muted); }
 
@@ -517,3 +520,7 @@ button, input { font: inherit; color: inherit; }
 /* Brand guidelines v01: tabular figures on every number so prices do not jump as they tick */
 .market__price, .market__chg, .receipt__price, .facts dd, .tx__hash, .lev__num, .lev__scale,
 .evt, .mock__bar, .instrument, .field, .cta__note { font-variant-numeric: tabular-nums; }
+
+.receipt__icon--logo { background: var(--soft); box-shadow: inset 0 0 0 1px var(--line-2); }
+.receipt__icon--logo img { width: 28px; height: 28px; object-fit: contain; }
+.receipt__icon--logo img.is-tall { width: auto; height: 28px; }
