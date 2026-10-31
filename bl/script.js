@@ -25,6 +25,31 @@
     }, 2200);
   }
 
+  // Fade cards (and section headings) up from below as they scroll into view.
+  // Siblings in the same grid get a short stagger so a row cascades in.
+  if ('IntersectionObserver' in window && !reduceMotion) {
+    var targets = document.querySelectorAll(
+      '.card, .split-head, .collage__title, .duo__copy, .section .display, .eyebrow + .display'
+    );
+    var groups = new Map();
+    targets.forEach(function (el) {
+      if (el.closest('.hero') || el.parentElement.closest('[data-reveal]')) return;
+      el.setAttribute('data-reveal', '');
+      var n = groups.get(el.parentElement) || 0;
+      el.style.setProperty('--reveal-delay', Math.min(n, 4) * 90 + 'ms');
+      groups.set(el.parentElement, n + 1);
+    });
+    document.documentElement.classList.add('js-reveal');
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (!entry.isIntersecting) return;
+        entry.target.classList.add('is-in');
+        io.unobserve(entry.target);
+      });
+    }, { rootMargin: '0px 0px -10% 0px', threshold: 0.12 });
+    document.querySelectorAll('[data-reveal]').forEach(function (el) { io.observe(el); });
+  }
+
   // Segmented controls and tabs: single selection.
   document.querySelectorAll('[data-seg]').forEach(function (group) {
     group.addEventListener('click', function (e) {

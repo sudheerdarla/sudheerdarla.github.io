@@ -420,7 +420,37 @@ button, input { font: inherit; color: inherit; }
   .footer__line { flex-direction: column; }
 }
 
+/* Motion: scroll reveal + hover micro-interactions */
+:root { --ease-out: cubic-bezier(.22, 1, .36, 1); }
+
+/* Hidden only when JS has confirmed it can reveal them (class set on <html>). */
+.js-reveal [data-reveal] {
+  opacity: 0;
+  translate: 0 32px;
+  transition: opacity .7s var(--ease-out), translate .7s var(--ease-out);
+  transition-delay: var(--reveal-delay, 0ms);
+}
+.js-reveal [data-reveal].is-in { opacity: 1; translate: 0 0; }
+
+/* Cards lift a little on hover (pointer devices only). */
+.card { transition: transform .3s var(--ease-out), box-shadow .3s var(--ease-out); }
+.btn { transition: background-color .15s ease, transform .2s var(--ease-out), box-shadow .2s ease; }
+.btn-outline { transition: background-color .15s ease, transform .2s var(--ease-out); }
+.step__icon { transition: transform .35s var(--ease-out); }
+@media (hover: hover) and (pointer: fine) {
+  .market:hover, .feature:hover, .step:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 18px 36px -16px rgba(20, 17, 14, 0.26), 0 0 0 0.5px rgba(74, 74, 74, 0.25);
+  }
+  .step:hover .step__icon { transform: rotate(-8deg) scale(1.08); }
+  .btn:hover, .btn-outline:hover { transform: translateY(-1px); }
+}
+.btn:active, .btn-outline:active { transform: translateY(1px) scale(.98); }
+
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   .evt { transition: none; }
+  .js-reveal [data-reveal] { opacity: 1; translate: none; transition: none; }
+  .card, .btn, .btn-outline, .step__icon { transition: none; }
+  .market:hover, .feature:hover, .step:hover, .btn:hover, .btn-outline:hover { transform: none; }
 }
