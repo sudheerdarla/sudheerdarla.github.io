@@ -116,6 +116,13 @@ button, input { font: inherit; color: inherit; }
   background: radial-gradient(closest-side, rgba(192, 230, 255, .9), rgba(215, 202, 242, .45) 50%, rgba(255, 255, 255, 0));
   animation: hero-breathe 14s ease-in-out infinite; }
 
+/* Dot grid in white, strongest around the bottom centre and fading out with distance */
+.hero__dots { inset: 0;
+  background: radial-gradient(circle at center, #fff 0 2px, transparent 2.5px) 0 0 / 22px 22px;
+  -webkit-mask-image: radial-gradient(ellipse 75% 100% at 50% 100%, #000 0, rgba(0, 0, 0, .7) 50%, transparent 100%);
+          mask-image: radial-gradient(ellipse 75% 100% at 50% 100%, #000 0, rgba(0, 0, 0, .7) 50%, transparent 100%);
+  opacity: .95; animation: hero-dots 9s ease-in-out infinite alternate; }
+
 /* Evenly spaced rays and rings from one origin (centre of this square sits on the hero's bottom edge) */
 .hero__rays { --size: max(2400px, 200vw); left: 50%; bottom: 0; width: var(--size); height: var(--size); translate: -50% 50%;
   background:
@@ -133,6 +140,7 @@ button, input { font: inherit; color: inherit; }
   animation: hero-ripple 10s cubic-bezier(.22, 1, .36, 1) infinite; }
 .hero__ripple--2 { animation-delay: 5s; }
 
+@keyframes hero-dots { from { opacity: .6; } to { opacity: 1; } }
 @keyframes hero-sway { from { rotate: -1.5deg; } to { rotate: 1.5deg; } }
 @keyframes hero-breathe { 0%, 100% { opacity: .85; scale: 1; } 50% { opacity: 1; scale: 1.06; } }
 @keyframes hero-ripple { 0% { opacity: 0; transform: scale(.15); } 12% { opacity: .55; } 100% { opacity: 0; transform: scale(1); } }
@@ -508,7 +516,7 @@ button, input { font: inherit; color: inherit; }
 
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
-  .hero__glow, .hero__rays, .hero__ripple { animation: none; }
+  .hero__glow, .hero__dots, .hero__rays, .hero__ripple { animation: none; }
   .hero__ripple { display: none; }
   .evt { transition: none; }
   .js-reveal [data-reveal] { opacity: 1; translate: none; transition: none; }
