@@ -150,11 +150,27 @@ button, input { font: inherit; color: inherit; }
 
 /* Asset strip */
 .assets-strip { border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
-.assets-strip__list {
-  display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 12px 18px;
-  padding-top: 28px; padding-bottom: 28px;
-  font-size: 13px; letter-spacing: 1.3px; text-transform: uppercase; color: var(--muted);
-}
+.assets-strip { overflow: hidden; }
+
+/* Scrolling markets strip. script.js clones the group to fill the width and
+   sets --gw (one group's width) and --dur; without JS it is a static, wrapped list. */
+.marquee { padding: 22px 0; }
+.marquee__inner { display: flex; width: max-content; max-width: 100%; margin: 0 auto; }
+.marquee__group { display: flex; flex-wrap: wrap; justify-content: center; gap: 14px 44px; flex: none; padding: 0 22px; list-style: none; margin: 0; }
+.mq-item { display: inline-flex; align-items: center; gap: 10px; white-space: nowrap; }
+.marquee .mq-badge { width: 30px; height: 30px; border-radius: 9px; font-size: 13px; }
+.mq-name { font-size: 15px; font-weight: 500; color: var(--ink); letter-spacing: -0.1px; }
+.mq-tick { font-family: var(--mono); font-size: 12px; letter-spacing: .6px; text-transform: uppercase; color: var(--muted); }
+
+.marquee.is-live { -webkit-mask-image: linear-gradient(to right, transparent, #000 10%, #000 90%, transparent);
+                           mask-image: linear-gradient(to right, transparent, #000 10%, #000 90%, transparent); }
+.marquee.is-live .marquee__inner { max-width: none; margin: 0; animation: marquee var(--dur, 40s) linear infinite; }
+.marquee.is-live .marquee__group { flex-wrap: nowrap; justify-content: flex-start; gap: 44px; padding: 0 22px; }
+.marquee.is-live:hover .marquee__inner { animation-play-state: paused; }
+.mq-item { transition: opacity .2s ease; }
+.marquee.is-live:hover .mq-item { opacity: .55; }
+.marquee.is-live .mq-item:hover { opacity: 1; }
+@keyframes marquee { to { transform: translateX(calc(var(--gw, 0px) * -1)); } }
 
 /* Activity */
 .activity { background: var(--soft); border-bottom: 1px solid var(--line-2); overflow: hidden; }

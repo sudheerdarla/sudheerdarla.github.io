@@ -25,6 +25,32 @@
     }, 2200);
   }
 
+  // Markets strip: clone the list to fill the width and scroll it left, seamlessly.
+  var marquee = document.querySelector('[data-marquee]');
+  if (marquee && !reduceMotion) {
+    var inner = marquee.querySelector('.marquee__inner');
+    var group = inner.querySelector('.marquee__group');
+    var build = function () {
+      inner.querySelectorAll('.marquee__group[data-clone]').forEach(function (c) { c.remove(); });
+      marquee.classList.add('is-live');
+      var gw = group.offsetWidth;
+      if (!gw) return;
+      var copies = Math.ceil(marquee.clientWidth / gw) + 1;
+      for (var n = 0; n < copies; n++) {
+        var c = group.cloneNode(true);
+        c.setAttribute('aria-hidden', 'true');
+        c.setAttribute('data-clone', '');
+        inner.appendChild(c);
+      }
+      marquee.style.setProperty('--gw', gw + 'px');
+      marquee.style.setProperty('--dur', (gw / 45).toFixed(1) + 's'); // ~45px per second
+    };
+    var settle = function () { document.fonts && document.fonts.ready ? document.fonts.ready.then(build) : build(); };
+    settle();
+    var rt;
+    window.addEventListener('resize', function () { clearTimeout(rt); rt = setTimeout(build, 200); });
+  }
+
   // Fade cards (and section headings) up from below as they scroll into view.
   // Siblings in the same grid get a short stagger so a row cascades in.
   if ('IntersectionObserver' in window && !reduceMotion) {
