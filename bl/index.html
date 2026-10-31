@@ -307,35 +307,35 @@
           <p class="eyebrow">Beyond the confirmation screen</p>
           <h2 class="display display--48">A trade you can check.</h2>
           <p class="lede">Trades leave a public trail. Inspect the reported price, size and time, then open the related order on Hyperliquid.</p>
-          <div class="tabs" role="tablist" aria-label="Asset" data-seg>
-            <button type="button" role="tab" aria-selected="true">BTC</button>
-            <button type="button" role="tab" aria-selected="false">ETH</button>
-            <button type="button" role="tab" aria-selected="false">SOL</button>
+          <div class="tabs" role="tablist" aria-label="Asset" data-seg data-assets>
+            <button type="button" role="tab" aria-selected="true" data-asset="btc">BTC</button>
+            <button type="button" role="tab" aria-selected="false" data-asset="eth">ETH</button>
+            <button type="button" role="tab" aria-selected="false" data-asset="sol">SOL</button>
           </div>
           <p class="small">Public market example, not a BL customer order. BL’s execution-receipt format is still being developed.</p>
         </div>
-        <article class="card panel">
+        <article class="card panel" data-receipt aria-live="polite">
           <header class="card__head">
-            <div class="receipt__top"><h3 class="card__title">Bitcoin · public trade</h3><span class="chip-recorded"><img src="assets/live-dot.svg" width="6" height="6" alt="">Recorded example</span></div>
-            <p class="card__desc">A BTC perpetual buy recorded on Hyperliquid. Check the price, size and time yourself.</p>
+            <div class="receipt__top"><h3 class="card__title" data-r="title">Bitcoin · public trade</h3><span class="chip-recorded" data-r-chip><img src="assets/live-dot.svg" width="6" height="6" alt=""><span data-r="chip">Recorded example</span></span></div>
+            <p class="card__desc" data-r="desc">A BTC perpetual buy recorded on Hyperliquid. Check the price, size and time yourself.</p>
           </header>
           <div class="panel__ui panel__ui--receipt">
             <div class="receipt__asset">
-              <div class="receipt__id"><span class="receipt__icon">₿</span><div><p class="receipt__name">Bitcoin</p><p class="receipt__type">BTC perpetual</p></div></div>
+              <div class="receipt__id"><span class="receipt__icon" data-r="icon">₿</span><div><p class="receipt__name" data-r="name">Bitcoin</p><p class="receipt__type" data-r="type">BTC perpetual</p></div></div>
               <span class="pill pill--mint">Buy</span>
             </div>
-            <div><p class="receipt__label">Trade price</p><p class="receipt__price">$78,630.00</p></div>
+            <div><p class="receipt__label">Trade price</p><p class="receipt__price" data-r="price">$78,630.00</p></div>
             <dl class="facts">
-              <div><dt>Size</dt><dd>0.0141 BTC</dd></div>
-              <div><dt>Notional</dt><dd>≈ $1,108.68</dd></div>
+              <div><dt>Size</dt><dd data-r="size">0.0141 BTC</dd></div>
+              <div><dt>Notional</dt><dd data-r="notional">≈ $1,108.68</dd></div>
               <div><dt>Side</dt><dd>Buy · market</dd></div>
-              <div><dt>Execution time</dt><dd>09 Sep 2026, 20:38:52 IST</dd></div>
+              <div><dt>Execution time</dt><dd data-r="time">09 Sep 2026, 20:38:52 IST</dd></div>
             </dl>
             <div class="tx">
-              <div><p class="tx__label">Transaction</p><p class="tx__hash">0x1449d17524…e39abd42</p></div>
-              <a class="tx__link" href="https://app.hyperliquid.xyz/explorer" target="_blank" rel="noopener">View on Hyperliquid&nbsp;&nbsp;↗</a>
+              <div><p class="tx__label">Transaction</p><p class="tx__hash" data-r="hash">0x1449d17524…e39abd42</p></div>
+              <a class="tx__link" data-r-link href="https://app.hyperliquid.xyz/explorer" target="_blank" rel="noopener">View on Hyperliquid&nbsp;&nbsp;↗</a>
             </div>
-            <p class="small">Trade price from the public feed. The explorer shows the submitted order, including its limit price.</p>
+            <p class="small" data-r="note">Trade price from the public feed. The explorer shows the submitted order, including its limit price.</p>
           </div>
         </article>
       </div>
@@ -352,9 +352,9 @@
           <p class="split-head__copy split-head__copy--rupees"><span>Fund from your Indian bank account.</span> Withdraw in rupees.</p>
         </div>
         <ol class="steps">
-          <li class="card step"><div class="step__top"><span class="step__icon step__icon--peach">₹</span><span class="step__num">01</span></div><h3 class="card__title">Deposit in rupees</h3><p class="card__desc">Fund your BL account from your Indian bank account.</p></li>
-          <li class="card step"><div class="step__top"><span class="step__icon step__icon--lilac">↗</span><span class="step__num">02</span></div><h3 class="card__title">Trade global markets</h3><p class="card__desc">Equities, indices, commodities and crypto from one account, 24/7.</p></li>
-          <li class="card step"><div class="step__top"><span class="step__icon step__icon--mint">₹</span><span class="step__num">03</span></div><h3 class="card__title">Withdraw in rupees</h3><p class="card__desc">Move your balance back to your bank, in INR.</p></li>
+          <li class="card step"><div class="step__top"><span class="step__icon step__icon--peach"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v11m0 0l-4-4m4 4l4-4"/><path d="M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2"/></svg></span></div><h3 class="card__title">Deposit in rupees</h3><p class="card__desc">Fund your BL account from your Indian bank account.</p></li>
+          <li class="card step"><div class="step__top"><span class="step__icon step__icon--lilac"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18"/><path d="M12 3c2.5 2.6 3.8 5.6 3.8 9S14.5 18.4 12 21c-2.5-2.6-3.8-5.6-3.8-9S9.5 5.6 12 3z"/></svg></span></div><h3 class="card__title">Trade global markets</h3><p class="card__desc">Equities, indices, commodities and crypto from one account, 24/7.</p></li>
+          <li class="card step"><div class="step__top"><span class="step__icon step__icon--mint"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 14V3m0 0L8 7m4-4l4 4"/><path d="M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2"/></svg></span></div><h3 class="card__title">Withdraw in rupees</h3><p class="card__desc">Move your balance back to your bank, in INR.</p></li>
         </ol>
         <p class="footnote">One account, from your first deposit to your next withdrawal. Transfer availability and processing times depend on banking partners.</p>
       </div>
@@ -372,7 +372,7 @@
             <summary>What can I trade on BL?</summary>
             <p>Global equities, indices, commodities, digital assets and, soon, pre-IPO markets, all as perpetual contracts from one account.</p>
           </details>
-          <details open>
+          <details>
             <summary>Am I buying company shares?</summary>
             <p>No. Equity-linked markets give you trading exposure to a price, not ownership of shares, votes or dividends.</p>
           </details>

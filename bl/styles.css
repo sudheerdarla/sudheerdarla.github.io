@@ -335,6 +335,9 @@ button, input { font: inherit; color: inherit; }
 .tabs button { padding: 6px 14px; border: 0; border-radius: 999px; background: #fff; font-size: 13px; color: var(--text); cursor: pointer; box-shadow: 0 0 0 0.5px rgba(74, 74, 74, 0.2); }
 .tabs button[aria-selected="true"] { background: var(--ink); color: #fff; box-shadow: none; }
 .receipt__top { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.chip-recorded.chip-recorded--sample { color: var(--indigo); }
+[data-receipt] { transition: opacity .18s ease, transform .18s ease; }
+[data-receipt].is-swapping { opacity: 0; transform: translateY(6px); }
 .chip-recorded { display: inline-flex; align-items: center; gap: 6px; padding: 4px 10px; border-radius: 999px; background: #fff; font-size: 12px; font-weight: 500; color: var(--green); white-space: nowrap; }
 .receipt__asset { display: flex; align-items: center; justify-content: space-between; }
 .receipt__id { display: flex; align-items: center; gap: 14px; }
@@ -364,7 +367,10 @@ button, input { font: inherit; color: inherit; }
 .step__icon--peach { background: var(--peach); }
 .step__icon--lilac { background: var(--lilac); }
 .step__icon--mint { background: var(--mint); }
-.step__num { font-size: 13px; color: var(--faint); }
+.step__icon--peach { color: var(--orange); }
+.step__icon--lilac { color: var(--indigo); }
+.step__icon--mint { color: var(--green); }
+.step__icon svg { width: 24px; height: 24px; }
 
 /* FAQ */
 .faq { display: flex; align-items: flex-start; gap: 80px; }
@@ -507,3 +513,4 @@ button, input { font: inherit; color: inherit; }
   .card, .btn, .btn-outline, .step__icon { transition: none; }
   .market:hover, .feature:hover, .step:hover, .btn:hover, .btn-outline:hover { transform: none; }
 }
+.tx__link[hidden]{display:none}

@@ -122,6 +122,47 @@
     update();
   }
 
+  // "A trade you can check": the asset tabs swap the receipt card.
+  // BTC is a real recorded trade. ETH and SOL are labelled illustrations until
+  // real recorded trades are added here.
+  var receipt = document.querySelector('[data-receipt]');
+  var assetTabs = document.querySelector('[data-assets]');
+  if (receipt && assetTabs) {
+    var DATA = {
+      btc: { sample: false, title: 'Bitcoin · public trade', chip: 'Recorded example', icon: '₿', name: 'Bitcoin', type: 'BTC perpetual',
+        desc: 'A BTC perpetual buy recorded on Hyperliquid. Check the price, size and time yourself.',
+        price: '$78,630.00', size: '0.0141 BTC', notional: '≈ $1,108.68', time: '09 Sep 2026, 20:38:52 IST', hash: '0x1449d17524…e39abd42',
+        note: 'Trade price from the public feed. The explorer shows the submitted order, including its limit price.' },
+      eth: { sample: true, title: 'Ethereum · illustrative trade', chip: 'Illustrative example', icon: 'Ξ', name: 'Ethereum', type: 'ETH perpetual',
+        desc: 'An ETH perpetual buy, shown as an illustration of the receipt. A recorded public trade will replace it.',
+        price: '$3,412.00', size: '0.325 ETH', notional: '≈ $1,108.90', time: 'Sample, not a real fill', hash: 'Sample, not a real transaction',
+        note: 'Illustrative values for layout only. They are not a recorded trade.' },
+      sol: { sample: true, title: 'Solana · illustrative trade', chip: 'Illustrative example', icon: '◎', name: 'Solana', type: 'SOL perpetual',
+        desc: 'A SOL perpetual buy, shown as an illustration of the receipt. A recorded public trade will replace it.',
+        price: '$178.50', size: '6.2 SOL', notional: '≈ $1,106.70', time: 'Sample, not a real fill', hash: 'Sample, not a real transaction',
+        note: 'Illustrative values for layout only. They are not a recorded trade.' }
+    };
+    var fields = {};
+    receipt.querySelectorAll('[data-r]').forEach(function (el) { fields[el.getAttribute('data-r')] = el; });
+    var chipEl = receipt.querySelector('[data-r-chip]');
+    var linkEl = receipt.querySelector('[data-r-link]');
+    var current = 'btc';
+    var paint = function (key) {
+      var d = DATA[key];
+      Object.keys(fields).forEach(function (k) { fields[k].textContent = d[k]; });
+      chipEl.classList.toggle('chip-recorded--sample', d.sample);
+      linkEl.hidden = d.sample;
+    };
+    assetTabs.addEventListener('click', function (e) {
+      var btn = e.target.closest('button[data-asset]');
+      if (!btn || btn.getAttribute('data-asset') === current) return;
+      current = btn.getAttribute('data-asset');
+      if (reduceMotion) { paint(current); return; }
+      receipt.classList.add('is-swapping');
+      setTimeout(function () { paint(current); receipt.classList.remove('is-swapping'); }, 180);
+    });
+  }
+
   // Waitlist form (no backend yet): validate and confirm.
   var form = document.querySelector('[data-signup]');
   if (form) {
