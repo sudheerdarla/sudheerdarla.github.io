@@ -99,9 +99,44 @@ button, input { font: inherit; color: inherit; }
 
 /* Hero */
 .hero {
-  background: url("assets/hero-bg.svg") center bottom / cover no-repeat, #fff;
+  position: relative;
+  background: linear-gradient(to bottom, #fff 0%, #f7f5fc 60%, #eaf4ff 100%);
   overflow: hidden;
 }
+.hero__inner { position: relative; z-index: 1; }
+
+/* Hero background: every layer is anchored to the bottom-centre of the hero,
+   so it looks the same at any width. Only transform/opacity animate. */
+.hero__bg { position: absolute; inset: 0; z-index: 0; pointer-events: none; overflow: hidden;
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0, #000 42%);
+          mask-image: linear-gradient(to bottom, transparent 0, #000 42%); }
+.hero__bg i { position: absolute; display: block; }
+
+/* Soft glow behind the CTAs */
+.hero__glow { left: 50%; bottom: 0; width: min(1100px, 150vw); aspect-ratio: 11 / 7; translate: -50% 50%;
+  background: radial-gradient(closest-side, rgba(192, 230, 255, .9), rgba(215, 202, 242, .45) 50%, rgba(255, 255, 255, 0));
+  animation: hero-breathe 14s ease-in-out infinite; }
+
+/* Evenly spaced rays and rings from one origin (centre of this square sits on the hero's bottom edge) */
+.hero__rays { --size: max(2400px, 200vw); left: 50%; bottom: 0; width: var(--size); height: var(--size); translate: -50% 50%;
+  background:
+    repeating-radial-gradient(circle at 50% 50%, transparent 0 199px, rgba(185, 167, 242, .3) 199px 200px),
+    repeating-conic-gradient(from 0deg at 50% 50%,
+      rgba(127, 179, 245, .2) 0 .12deg, transparent .12deg 3deg,
+      rgba(155, 140, 240, .2) 3deg 3.12deg, transparent 3.12deg 6deg);
+  -webkit-mask-image: radial-gradient(circle at 50% 50%, #000 0, rgba(0, 0, 0, .6) 22%, transparent 46%);
+          mask-image: radial-gradient(circle at 50% 50%, #000 0, rgba(0, 0, 0, .6) 22%, transparent 46%);
+  animation: hero-sway 36s ease-in-out infinite alternate; }
+
+/* One slow ripple every so often, like liquidity spreading out */
+.hero__ripple { left: 50%; bottom: 0; width: 1700px; aspect-ratio: 1; translate: -50% 50%; border-radius: 50%;
+  border: 1px solid rgba(155, 140, 240, .45); opacity: 0; transform: scale(.15);
+  animation: hero-ripple 10s cubic-bezier(.22, 1, .36, 1) infinite; }
+.hero__ripple--2 { animation-delay: 5s; }
+
+@keyframes hero-sway { from { rotate: -1.5deg; } to { rotate: 1.5deg; } }
+@keyframes hero-breathe { 0%, 100% { opacity: .85; scale: 1; } 50% { opacity: 1; scale: 1.06; } }
+@keyframes hero-ripple { 0% { opacity: 0; transform: scale(.15); } 12% { opacity: .55; } 100% { opacity: 0; transform: scale(1); } }
 .hero__inner { display: flex; flex-direction: column; align-items: center; gap: 28px; text-align: center; padding-top: 150px; padding-bottom: 97px; }
 .hero__title { font-size: 80px; line-height: 84px; letter-spacing: -2px; }
 .hero__sub { font-size: 19px; line-height: 29px; color: var(--text); }
@@ -449,6 +484,8 @@ button, input { font: inherit; color: inherit; }
 
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
+  .hero__glow, .hero__rays, .hero__ripple { animation: none; }
+  .hero__ripple { display: none; }
   .evt { transition: none; }
   .js-reveal [data-reveal] { opacity: 1; translate: none; transition: none; }
   .card, .btn, .btn-outline, .step__icon { transition: none; }
