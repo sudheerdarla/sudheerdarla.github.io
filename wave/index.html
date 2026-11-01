@@ -27,7 +27,7 @@
     img { display: block; max-width: 100%; }
 
     /* ---------- Hero (wave sits behind nav + copy + product) ---------- */
-    .hero { position: relative; overflow: hidden; isolation: isolate; }
+    .hero { position: relative; overflow: hidden; isolation: isolate; display: flex; flex-direction: column; min-height: 100vh; min-height: 100svh; }
     .waves { position: absolute; inset: 0; z-index: -1; width: 100%; height: 100%; display: block; }
     .wrap { max-width: 1440px; margin: 0 auto; padding-inline: max(16px, min(240px, 16.67vw)); }
 
@@ -45,19 +45,20 @@
     .btn--dark { background: #121417; color: #fff; padding: 9px 17px 9px 18px; }
     .btn--light { background: #fff; color: var(--ink); padding: 8px 13px 8px 12px; }
 
-    .hero__copy { display: flex; align-items: center; justify-content: space-between; gap: 32px; flex-wrap: wrap; padding-top: 118px; }
+    /* Spare viewport height is split above and below the copy; the card stays anchored to the bottom edge */
+    .hero__copy { width: 100%; display: flex; align-items: center; justify-content: space-between; gap: 32px; flex-wrap: wrap; margin-block: auto; padding-block: 118px 36px; }
     .hero__title { margin: 0; font-family: var(--font-display); font-weight: 600; font-size: clamp(38px, 4.2vw, 50px); line-height: 1.04; letter-spacing: -0.04em; color: var(--ink); }
     .hero__side { display: flex; flex-direction: column; align-items: flex-end; gap: 22px; }
     .hero__side p { margin: 0; max-width: 300px; text-align: right; font-size: 15px; line-height: 22px; color: var(--ink-2); }
 
-    .product { max-width: 1252px; margin: 36px auto 0; padding-inline: 16px; }
+    .product { width: 100%; max-width: 1252px; margin: 0 auto; padding-inline: 16px; }
     .product__frame { border: 6px solid var(--card-border); border-bottom: 0; border-radius: 20px 20px 0 0; overflow: hidden; background: #fff; }
     .product__frame img { -webkit-mask-image: linear-gradient(180deg, #000 82%, transparent); mask-image: linear-gradient(180deg, #000 82%, transparent); }
     .product__frame img { width: 100%; height: auto; }
 
     @media (max-width: 860px) {
       .nav__links { display: none; }
-      .hero__copy { padding-top: 64px; }
+      .hero__copy { padding-block: 64px 32px; }
       .hero__side { align-items: flex-start; }
       .hero__side p { text-align: left; }
     }
