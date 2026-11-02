@@ -78,12 +78,10 @@
     /* ---------- Motion ---------- */
     :root { --ease: cubic-bezier(.22, 1, .36, 1); }
 
-    /* Micro-interactions: nav underline, logo nudge, arrow slide, press feedback */
+    /* Micro-interactions: nav underline, arrow slide, press feedback */
     .nav__links a, .nav__login { position: relative; transition: color .2s ease; }
     .nav__links a::after, .nav__login::after { content: ""; position: absolute; left: 0; right: 0; bottom: -5px; height: 1px; background: currentColor; transform: scaleX(0); transform-origin: right center; transition: transform .4s var(--ease); }
     .nav__links a:hover::after, .nav__login:hover::after, .nav__links a:focus-visible::after, .nav__login:focus-visible::after { transform: scaleX(1); transform-origin: left center; }
-    .nav__brand img { transform-origin: left center; transition: transform .5s var(--ease); }
-    .nav__brand:hover img { transform: scale(1.04); }
     .btn svg { transition: transform .35s var(--ease); }
     .btn:hover svg { transform: translateX(3px); }
     .btn:active { transform: translateY(0) scale(.96); filter: brightness(.96); }
@@ -248,7 +246,7 @@
       colorCount: 4, scale: 1.08, intensity: 0.62, paramA: 0.5, warp: 0.24, detail: 2.912,
       contrast: 1.158, brightness: 0, saturation: 1, hue: 0, vignette: 0, blur: 0, grain: 0.042,
       seed: 1, rotate: 4.0841, offsetX: 0, offsetY: 0, drift: 0,
-      cursorEnabled: true, cursorEffect: 2, cursorStrength: 0.5, cursorRadius: 0.46, oklab: 0, timeScale: 0.86
+      cursorEnabled: false, cursorEffect: 2, cursorStrength: 0.5, cursorRadius: 0.46, oklab: 0, timeScale: 0.86
     };
 
     var canvas = document.getElementById("waves");
@@ -284,21 +282,9 @@
     var raf = 0, inView = true, visible = document.visibilityState === "visible";
     var start = performance.now();
 
-    /* Cursor: the waves swirl gently around the pointer (mouse only, off for reduced motion).
-       Position and strength are eased so the effect melts in and out instead of snapping. */
-    var cur = { tx: 0, ty: 0, x: 0, y: 0, p: 0, target: 0 };
-    var finePointer = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
-    if (U.cursorEnabled && finePointer && !reduceMotion) {
-      var heroEl = document.getElementById("top");
-      heroEl.addEventListener("pointermove", function (e) {
-        var r = canvas.getBoundingClientRect();
-        cur.tx = ((e.clientX - r.left) / r.width) * 2 - 1;
-        cur.ty = -(((e.clientY - r.top) / r.height) * 2 - 1);
-        if (!cur.target) { cur.x = cur.tx; cur.y = cur.ty; }
-        cur.target = 1;
-      });
-      heroEl.addEventListener("pointerleave", function () { cur.target = 0; });
-    } else { U.cursorEnabled = false; }
+    /* Cursor effect on the background removed */
+    var cur = { x: 0, y: 0, p: 0 };
+    U.cursorEnabled = false;
 
     function resize() {
       var r = canvas.getBoundingClientRect();
