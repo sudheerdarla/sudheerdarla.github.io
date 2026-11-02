@@ -4,10 +4,10 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Trading Hero Backgrounds</title>
-  <meta name="description" content="Three animated hero backgrounds for a trading platform landing page: Aurora Flow, Liquidity Globe and Market Grid.">
+  <meta name="description" content="Seven animated hero backgrounds for a trading platform landing page.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Host+Grotesk:wght@500;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
   <style>
     :root {
       --bg: #04060c;
@@ -20,12 +20,17 @@
       --down: #ff5c7a;
       --accent: #2ee6b0;
       --accent-ink: #03140f;
-      --font: "Geist", "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
-      --mono: "Geist Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+      --font: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+      --display: "Host Grotesk", "Inter", system-ui, sans-serif;
+      --mono: "Inter", system-ui, sans-serif; /* numbers use Inter with tabular figures */
       --ease: cubic-bezier(.22, 1, .36, 1);
     }
     html[data-bg="globe"] { --bg: #030712; --accent: #5b9dff; --accent-ink: #020a1a; }
     html[data-bg="grid"]  { --bg: #020403; --accent: #39f5a0; --accent-ink: #021208; }
+    html[data-bg="depth"] { --bg: #05070a; --accent: #22d3a0; --accent-ink: #02130d; }
+    html[data-bg="ridges"] { --bg: #07050b; --accent: #ffb547; --accent-ink: #1a0f00; }
+    html[data-bg="volume"] { --bg: #05040d; --accent: #9b8cff; --accent-ink: #0b0620; }
+    html[data-bg="heatmap"] { --bg: #03050c; --accent: #ffcf4a; --accent-ink: #1a1200; }
 
     * { box-sizing: border-box; }
     html, body { margin: 0; background: var(--bg); transition: background-color .7s ease; }
@@ -47,7 +52,7 @@
 
     .nav { border-bottom: 1px solid var(--line); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); }
     .nav__inner { height: 64px; display: flex; align-items: center; justify-content: space-between; gap: 24px; }
-    .brand { display: flex; align-items: center; gap: 10px; font-weight: 600; font-size: 17px; letter-spacing: -0.02em; }
+    .brand { font-family: var(--display); display: flex; align-items: center; gap: 10px; font-weight: 600; font-size: 17px; letter-spacing: -0.02em; }
     .brand svg { width: 26px; height: 26px; color: var(--accent); transition: color .7s ease; }
     .nav__links { display: flex; gap: 28px; font-size: 14px; color: var(--ink-2); }
     .nav__links a:hover, .nav__login:hover { color: var(--ink); }
@@ -69,18 +74,18 @@
     .live { position: relative; width: 8px; height: 8px; border-radius: 50%; background: var(--up); }
     .live::after { content: ""; position: absolute; inset: -4px; border-radius: 50%; border: 1px solid var(--up); animation: ping 2s var(--ease) infinite; }
     @keyframes ping { from { transform: scale(.4); opacity: 1; } to { transform: scale(1.6); opacity: 0; } }
-    h1 { margin: 22px 0 18px; font-weight: 600; font-size: clamp(40px, 6.2vw, 76px); line-height: 1.0; letter-spacing: -0.045em; text-wrap: balance; }
+    h1 { font-family: var(--display); margin: 22px 0 18px; font-weight: 600; font-size: clamp(40px, 6.2vw, 76px); line-height: 1.0; letter-spacing: -0.045em; text-wrap: balance; }
     h1 em { font-style: normal; color: var(--accent); transition: color .7s ease; }
     .lede { margin: 0 0 32px; max-width: 520px; font-size: clamp(16px, 1.4vw, 18px); line-height: 1.55; color: var(--ink-2); text-wrap: pretty; }
     .ctas { display: flex; flex-wrap: wrap; gap: 12px; }
     .stats { display: flex; flex-wrap: wrap; gap: 12px 36px; margin-top: 44px; padding-top: 22px; border-top: 1px solid var(--line); max-width: 520px; }
-    .stat b { display: block; font-family: var(--mono); font-weight: 500; font-size: 20px; letter-spacing: -0.02em; font-variant-numeric: tabular-nums; }
+    .stat b { display: block; font-family: var(--display); font-weight: 600; font-size: 22px; letter-spacing: -0.02em; font-variant-numeric: tabular-nums; }
     .stat span { font-size: 13px; color: var(--ink-3); }
 
     /* ---------- Ticker ---------- */
     .ticker { position: absolute; left: 0; right: 0; bottom: 0; height: 44px; border-top: 1px solid var(--line); background: color-mix(in srgb, var(--bg) 60%, transparent); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); overflow: hidden; display: flex; align-items: center;
       -webkit-mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent); mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent); }
-    .ticker__track { display: flex; gap: 40px; padding-left: 40px; white-space: nowrap; font-family: var(--mono); font-size: 12.5px; animation: marquee 60s linear infinite; }
+    .ticker__track { display: flex; gap: 40px; padding-left: 40px; white-space: nowrap; font-family: var(--mono); font-variant-numeric: tabular-nums; font-size: 12.5px; animation: marquee 60s linear infinite; }
     .ticker__track span b { color: var(--ink); font-weight: 500; margin-right: 8px; }
     .ticker__track span { color: var(--ink-3); }
     .ticker__track .u { color: var(--up); }
@@ -88,9 +93,10 @@
     @keyframes marquee { to { transform: translateX(-50%); } }
 
     /* ---------- Background switcher ---------- */
-    .switcher { position: fixed; left: 50%; bottom: 60px; transform: translateX(-50%); z-index: 20; display: flex; align-items: center; gap: 4px; padding: 5px; border-radius: 999px; border: 1px solid rgba(255,255,255,.14); background: rgba(10, 13, 20, .72); backdrop-filter: blur(14px) saturate(1.4); -webkit-backdrop-filter: blur(14px) saturate(1.4); box-shadow: 0 12px 40px rgba(0,0,0,.45); }
+    .switcher { position: fixed; left: 50%; bottom: 60px; transform: translateX(-50%); z-index: 20; max-width: calc(100vw - 32px); overflow-x: auto; scrollbar-width: none; display: flex; align-items: center; gap: 4px; padding: 5px; border-radius: 999px; border: 1px solid rgba(255,255,255,.14); background: rgba(10, 13, 20, .72); backdrop-filter: blur(14px) saturate(1.4); -webkit-backdrop-filter: blur(14px) saturate(1.4); box-shadow: 0 12px 40px rgba(0,0,0,.45); }
     .switcher__label { padding: 0 10px 0 12px; font-size: 12px; color: var(--ink-3); letter-spacing: .02em; }
-    .switcher button { white-space: nowrap; display: flex; align-items: center; gap: 8px; height: 34px; padding: 0 14px 0 10px; border: 0; border-radius: 999px; background: transparent; color: var(--ink-2); font-size: 13px; cursor: pointer; transition: background-color .25s ease, color .25s ease; }
+    .switcher::-webkit-scrollbar { display: none; }
+    .switcher button { flex: none; white-space: nowrap; display: flex; align-items: center; gap: 8px; height: 34px; padding: 0 14px 0 10px; border: 0; border-radius: 999px; background: transparent; color: var(--ink-2); font-size: 13px; cursor: pointer; transition: background-color .25s ease, color .25s ease; }
     .switcher button:hover { color: var(--ink); background: rgba(255,255,255,.06); }
     .switcher button[aria-pressed="true"] { background: rgba(255,255,255,.12); color: var(--ink); }
     .switcher kbd { display: inline-grid; place-items: center; width: 18px; height: 18px; border-radius: 5px; border: 1px solid rgba(255,255,255,.16); font-family: var(--mono); font-size: 10.5px; color: var(--ink-3); }
@@ -161,7 +167,11 @@
     <span class="switcher__label">Background</span>
     <button type="button" data-bg="aurora" aria-pressed="true"><kbd>1</kbd>Aurora</button>
     <button type="button" data-bg="globe" aria-pressed="false"><kbd>2</kbd>Globe</button>
-    <button type="button" data-bg="grid" aria-pressed="false"><kbd>3</kbd>Market grid</button>
+    <button type="button" data-bg="grid" aria-pressed="false"><kbd>3</kbd>Grid</button>
+    <button type="button" data-bg="depth" aria-pressed="false"><kbd>4</kbd>Depth</button>
+    <button type="button" data-bg="ridges" aria-pressed="false"><kbd>5</kbd>Ridges</button>
+    <button type="button" data-bg="volume" aria-pressed="false"><kbd>6</kbd>Volume</button>
+    <button type="button" data-bg="heatmap" aria-pressed="false"><kbd>7</kbd>Heatmap</button>
   </div>
   <aside class="credit" id="credit" aria-live="polite"></aside>
 
@@ -335,7 +345,7 @@
             }
           }
           /* hubs */
-          ctx.font = "500 " + (10 * D) + "px 'Geist Mono', monospace"; ctx.textBaseline = "middle";
+          ctx.font = "500 " + (10 * D) + "px Inter, sans-serif"; ctx.textBaseline = "middle";
           for (var h = 0; h < hubs.length; h++) {
             var hb = hubs[h]; project(hb.v, P);
             hb.pulse = Math.max(0, hb.pulse - dt * .9);
@@ -474,7 +484,7 @@
           ctx.fillStyle = "rgb(" + tagCol + ")"; ctx.beginPath(); ctx.arc(right, ly, 3 * D, 0, Math.PI * 2); ctx.fill();
           if (W / D < 700) return;
           var label = (lcN.c * 1000).toLocaleString("en-US", { maximumFractionDigits: 0 });
-          ctx.font = "500 " + (11 * D) + "px 'Geist Mono', monospace"; ctx.textBaseline = "middle";
+          ctx.font = "500 " + (11 * D) + "px Inter, sans-serif"; ctx.textBaseline = "middle";
           var tw = ctx.measureText(label).width + 14 * D, tx = right + 14 * D;
           ctx.fillStyle = "rgb(" + tagCol + ")"; ctx.beginPath();
           if (ctx.roundRect) ctx.roundRect(tx, ly - 10 * D, tw, 20 * D, 4 * D); else ctx.rect(tx, ly - 10 * D, tw, 20 * D);
@@ -484,13 +494,268 @@
       };
     }
 
+    /* =========================================================
+       4. ORDER BOOK DEPTH: breathing bid/ask walls around the spread
+       ========================================================= */
+    function Depth(canvas) {
+      var ctx = canvas.getContext("2d"), W = 0, H = 0, D = 1, prints = [], nextPrint = 0, last = 0;
+      var LV = 64;
+      function book(side, t, seed) {
+        var cum = [], s = 0;
+        for (var i = 0; i < LV; i++) {
+          var n = vnoise(i * .13 + seed, t * .35 + seed, seed);
+          var wall = Math.pow(vnoise(i * .045 + seed * 3, t * .08, seed + 7), 6) * 9;
+          s += .25 + n * .9 + wall + i * .012;
+          cum.push(s);
+        }
+        return cum;
+      }
+      function drawSide(cum, mid, base, step, k, dir, rgb, alphaMul, gap) {
+        ctx.beginPath(); ctx.moveTo(mid + dir * gap, base);
+        var py = base;
+        for (var i = 0; i < LV; i++) {
+          var x = mid + dir * (gap + i * step), y = base - cum[i] * k;
+          ctx.lineTo(x, py); ctx.lineTo(x, y); py = y;
+        }
+        var ex = mid + dir * (gap + LV * step);
+        ctx.lineTo(ex, py);
+        ctx.save();
+        var g = ctx.createLinearGradient(0, base - cum[LV - 1] * k, 0, base);
+        g.addColorStop(0, "rgba(" + rgb + "," + (.42 * alphaMul).toFixed(3) + ")"); g.addColorStop(1, "rgba(" + rgb + ",0)");
+        ctx.strokeStyle = "rgba(" + rgb + "," + (.95 * alphaMul).toFixed(3) + ")"; ctx.lineWidth = 1.6 * D;
+        ctx.shadowColor = "rgba(" + rgb + "," + (.9 * alphaMul).toFixed(3) + ")"; ctx.shadowBlur = 14 * D * alphaMul;
+        ctx.stroke(); ctx.shadowBlur = 0;
+        ctx.lineTo(ex, base); ctx.closePath(); ctx.fillStyle = g; ctx.fill();
+        ctx.restore();
+      }
+      return {
+        dprCap: 2,
+        resize: function (w, h, d) { W = w; H = h; D = d; },
+        frame: function (t) {
+          var dt = Math.min(.05, t - last); last = t;
+          ctx.clearRect(0, 0, W, H);
+          var wide = W / D > 900, mid = (wide ? .66 : .5) * W + Math.sin(t * .4) * 6 * D, base = H * .86;
+          /* price-level gridlines */
+          ctx.lineWidth = 1;
+          for (var y = base; y > H * .1; y -= 48 * D) { ctx.strokeStyle = "rgba(255,255,255,.035)"; ctx.beginPath(); ctx.moveTo(0, y + .5); ctx.lineTo(W, y + .5); ctx.stroke(); }
+          var step = (wide ? (W - mid) : mid) / LV * 1.02, gap = 6 * D;
+          var bids = book(0, t, 1.3), asks = book(0, t, 8.7), top = Math.max(bids[LV - 1], asks[LV - 1]);
+          var k = (H * .62) / top;
+          /* ghost layer behind for depth */
+          drawSide(book(0, t - 2, 1.3), mid, base, step * 1.08, k * .78, -1, "34,211,160", .22, gap);
+          drawSide(book(0, t - 2, 8.7), mid, base, step * 1.08, k * .78, 1, "255,92,122", .22, gap);
+          drawSide(bids, mid, base, step, k, -1, "34,211,160", 1, gap);
+          drawSide(asks, mid, base, step, k, 1, "255,92,122", 1, gap);
+          /* fade the far bid side out so it stays clear of the headline */
+          if (wide) {
+            ctx.save(); ctx.globalCompositeOperation = "destination-out";
+            var fo = ctx.createLinearGradient(W * .3, 0, W * .55, 0); fo.addColorStop(0, "rgba(0,0,0,1)"); fo.addColorStop(1, "rgba(0,0,0,0)");
+            ctx.fillStyle = fo; ctx.fillRect(0, 0, W * .55, H); ctx.restore();
+          }
+          /* spread marker */
+          ctx.setLineDash([3 * D, 5 * D]); ctx.strokeStyle = "rgba(255,255,255,.35)"; ctx.lineWidth = 1 * D;
+          ctx.beginPath(); ctx.moveTo(mid, H * .12); ctx.lineTo(mid, base); ctx.stroke(); ctx.setLineDash([]);
+          ctx.fillStyle = "rgba(255,255,255,.6)"; ctx.font = "500 " + (11 * D) + "px Inter, sans-serif"; ctx.textAlign = "center";
+          ctx.fillText("SPREAD 0.01", mid, H * .12 - 10 * D); ctx.textAlign = "left";
+          ctx.fillStyle = "rgba(255,255,255,.12)"; ctx.fillRect(0, base, W, 1 * D);
+          /* trade prints popping at the spread */
+          if (!reduced && t > nextPrint) { var side = Math.random() < .5 ? -1 : 1; prints.push({ x: mid + side * rand(4, 40) * D, y: base - rand(10, H * .25), r: rand(3, 14) * D, life: 0, col: side < 0 ? "34,211,160" : "255,92,122" }); nextPrint = t + rand(.08, .35); }
+          for (var i = prints.length - 1; i >= 0; i--) {
+            var p = prints[i]; p.life += dt * .7; p.y -= dt * 22 * D;
+            if (p.life >= 1) { prints.splice(i, 1); continue; }
+            ctx.strokeStyle = "rgba(" + p.col + "," + (1 - p.life).toFixed(3) + ")"; ctx.lineWidth = 1.2 * D;
+            ctx.beginPath(); ctx.arc(p.x, p.y, p.r * (.4 + p.life), 0, Math.PI * 2); ctx.stroke();
+          }
+        },
+        destroy: function () {}
+      };
+    }
+
+    /* =========================================================
+       5. PRICE RIDGES: stacked perspective price lines (ridgeline)
+       ========================================================= */
+    function Ridges(canvas) {
+      var ctx = canvas.getContext("2d"), W = 0, H = 0, D = 1, K = 30, M = 140;
+      function v(r, u, t) {
+        var x = u * 5 - t * .22, y = r * .37;
+        var s = vnoise(x, y, 1) * .55 + vnoise(x * 2.6, y, 2) * .28 + vnoise(x * 7, y, 3) * .17;
+        var bell = Math.exp(-Math.pow((u - .62) * 3.2, 2));
+        return Math.pow(s, 1.6) * (.35 + 1.4 * bell);
+      }
+      return {
+        dprCap: 2,
+        resize: function (w, h, d) { W = w; H = h; D = d; },
+        frame: function (t) {
+          ctx.clearRect(0, 0, W, H);
+          var cx = W * (W / D > 900 ? .58 : .5), y0 = H * .22, span = H * .72, live = Math.floor(K * .62);
+          for (var r = 0; r < K; r++) {
+            var depth = r / (K - 1), s = .45 + .55 * depth, by = y0 + Math.pow(depth, 1.35) * span;
+            var amp = 150 * D * s, width = W * 1.35 * s;
+            ctx.beginPath();
+            for (var i = 0; i <= M; i++) {
+              var u = i / M, x = cx + (u - .5) * width, y = by - v(r, u, t) * amp;
+              if (i) ctx.lineTo(x, y); else ctx.moveTo(x, y);
+            }
+            /* occlude lines behind */
+            ctx.lineTo(cx + width / 2, by + 4 * D); ctx.lineTo(cx - width / 2, by + 4 * D); ctx.closePath();
+            ctx.fillStyle = "#07050b"; ctx.fill();
+            var isLive = r === live, a = isLive ? .95 : (.12 + .55 * depth);
+            var g = ctx.createLinearGradient(cx - width / 2, 0, cx + width / 2, 0);
+            var c1 = isLive ? "255,181,71" : "255,120,90", c2 = isLive ? "255,230,160" : "190,110,255";
+            g.addColorStop(0, "rgba(" + c2 + ",0)"); g.addColorStop(.35, "rgba(" + c1 + "," + (a * .7).toFixed(3) + ")");
+            g.addColorStop(.7, "rgba(" + c2 + "," + a.toFixed(3) + ")"); g.addColorStop(1, "rgba(" + c2 + ",0)");
+            ctx.strokeStyle = isLive ? g : g; ctx.lineWidth = (isLive ? 2.2 : 1.1) * D * s;
+            if (isLive) { ctx.shadowColor = "rgba(255,181,71,.9)"; ctx.shadowBlur = 16 * D; }
+            ctx.stroke(); ctx.shadowBlur = 0;
+            if (isLive) {
+              var ux = .82, lx = cx + (ux - .5) * width, ly = by - v(r, ux, t) * amp, pulse = (Math.sin(t * 3) + 1) / 2;
+              ctx.fillStyle = "rgba(255,181,71," + (.2 + .2 * pulse).toFixed(3) + ")"; ctx.beginPath(); ctx.arc(lx, ly, (6 + 6 * pulse) * D, 0, Math.PI * 2); ctx.fill();
+              ctx.fillStyle = "#ffe2a8"; ctx.beginPath(); ctx.arc(lx, ly, 3 * D, 0, Math.PI * 2); ctx.fill();
+            }
+          }
+          var sky = ctx.createLinearGradient(0, 0, 0, H * .45);
+          sky.addColorStop(0, "rgba(7,5,11,1)"); sky.addColorStop(1, "rgba(7,5,11,0)");
+          ctx.fillStyle = sky; ctx.fillRect(0, 0, W, H * .45);
+        },
+        destroy: function () {}
+      };
+    }
+
+    /* =========================================================
+       6. VOLUME SKYLINE: scrolling glass volume bars under a spotlight
+       ========================================================= */
+    function Volume(canvas) {
+      var ctx = canvas.getContext("2d"), W = 0, H = 0, D = 1, bars = [], born = 0, PERIOD = .45, ema = 0;
+      function nb(i) { var spike = Math.random() < .08 ? rand(.5, 1) : 0; return { v: Math.min(1, .12 + Math.pow(Math.random(), 2.2) * .5 + spike), g: 0 }; }
+      for (var i = 0; i < 240; i++) { var b = nb(i); b.g = 1; bars.push(b); }
+      return {
+        dprCap: 2,
+        resize: function (w, h, d) { W = w; H = h; D = d; },
+        frame: function (t) {
+          ctx.clearRect(0, 0, W, H);
+          /* spotlight */
+          var sx = W * (W / D > 900 ? .68 : .5);
+          var sg = ctx.createRadialGradient(sx, -H * .1, 0, sx, -H * .1, H * 1.1);
+          sg.addColorStop(0, "rgba(139,123,255,.30)"); sg.addColorStop(.45, "rgba(80,200,255,.06)"); sg.addColorStop(1, "rgba(0,0,0,0)");
+          ctx.fillStyle = sg; ctx.fillRect(0, 0, W, H);
+          if (!reduced && t - born > PERIOD) { born = t; bars.push(nb()); if (bars.length > 400) bars.shift(); }
+          var prog = reduced ? 0 : Math.min(1, (t - born) / PERIOD);
+          var sp = (W / D > 700 ? 16 : 11) * D, bw = sp * .62, base = H * .84, maxH = H * .5;
+          var count = Math.min(bars.length, Math.ceil(W / sp) + 2), pts = [];
+          for (var ci = 0; ci < count; ci++) {
+            var B = bars[bars.length - 1 - ci]; B.g = Math.min(1, B.g + .04);
+            var x = W - 40 * D - (ci + prog) * sp, h = B.v * maxH * (1 - Math.pow(1 - B.g, 3));
+            var u = x / W, fade = Math.max(0, Math.min(1, (u - .2) / .5)), light = Math.exp(-Math.pow((x - sx) / (W * .35), 2));
+            var a = .12 + .7 * fade * (.45 + .55 * light);
+            var g = ctx.createLinearGradient(0, base - h, 0, base);
+            g.addColorStop(0, "rgba(" + (u > .6 ? "120,220,255" : "160,140,255") + "," + a.toFixed(3) + ")");
+            g.addColorStop(1, "rgba(139,123,255," + (a * .1).toFixed(3) + ")");
+            ctx.fillStyle = g; ctx.fillRect(x - bw / 2, base - h, bw, h);
+            ctx.fillStyle = "rgba(230,235,255," + Math.min(1, a * 1.3).toFixed(3) + ")"; ctx.fillRect(x - bw / 2, base - h, bw, 1.5 * D);
+            /* reflection */
+            var rg = ctx.createLinearGradient(0, base, 0, base + h * .35);
+            rg.addColorStop(0, "rgba(139,123,255," + (a * .25).toFixed(3) + ")"); rg.addColorStop(1, "rgba(139,123,255,0)");
+            ctx.fillStyle = rg; ctx.fillRect(x - bw / 2, base + 2 * D, bw, h * .35);
+            pts.push([x, base - h]);
+          }
+          /* smoothed volume-weighted line over the bars */
+          ctx.beginPath(); var e = pts.length ? pts[pts.length - 1][1] : 0;
+          for (var j = pts.length - 1; j >= 0; j--) { e = e + .12 * (pts[j][1] - e); if (j === pts.length - 1) ctx.moveTo(pts[j][0], e - 30 * D); else ctx.lineTo(pts[j][0], e - 30 * D); }
+          var lg = ctx.createLinearGradient(W * .2, 0, W, 0); lg.addColorStop(0, "rgba(120,220,255,0)"); lg.addColorStop(1, "rgba(120,220,255,.85)");
+          ctx.strokeStyle = lg; ctx.lineWidth = 1.6 * D; ctx.shadowColor = "rgba(120,220,255,.9)"; ctx.shadowBlur = 12 * D; ctx.stroke(); ctx.shadowBlur = 0;
+          ctx.fillStyle = "rgba(255,255,255,.14)"; ctx.fillRect(0, base, W, 1 * D);
+        },
+        destroy: function () {}
+      };
+    }
+
+    /* =========================================================
+       7. LIQUIDITY HEATMAP: order-book heatmap with the price threading through
+       ========================================================= */
+    function Heatmap(canvas) {
+      var ctx = canvas.getContext("2d"), W = 0, H = 0, D = 1, CELL = 4;
+      var off = document.createElement("canvas"), octx = off.getContext("2d"), buf = document.createElement("canvas"), bctx = buf.getContext("2d");
+      var rows = 0, cols = 0, col = 0, price = 0, home = .55, vel = 0, walls = [], hist = [], trades = [], acc = 0, last = 0, TICK = .06;
+      var stops = [[0, 3, 6, 16], [.3, 12, 40, 96], [.55, 18, 150, 190], [.78, 250, 196, 60], [1, 255, 250, 235]];
+      function cmap(v) {
+        v = Math.max(0, Math.min(1, v));
+        for (var i = 1; i < stops.length; i++) if (v <= stops[i][0]) {
+          var a = stops[i - 1], b = stops[i], f = (v - a[0]) / (b[0] - a[0]);
+          return [a[1] + (b[1] - a[1]) * f, a[2] + (b[2] - a[2]) * f, a[3] + (b[3] - a[3]) * f];
+        }
+        return stops[4].slice(1);
+      }
+      function spawnWall() { var side = Math.random() < .5 ? -1 : 1; return { row: price + side * rand(6, rows * .45), s: rand(.15, .75), w: rand(.6, 1.8) }; }
+      function tick() {
+        /* price: mean-reverting random walk */
+        vel = vel * .9 + rand(-1, 1) * .55 + (rows * home - price) * .0025;
+        price = Math.max(4, Math.min(rows - 4, price + vel));
+        for (var i = walls.length - 1; i >= 0; i--) { var w = walls[i]; if (Math.abs(w.row - price) < 2.5) w.s *= .82; if (w.s < .05) walls.splice(i, 1); }
+        while (walls.length < Math.max(10, rows / 10)) walls.push(spawnWall());
+        var img = octx.createImageData(1, rows), d = img.data;
+        for (var r = 0; r < rows; r++) {
+          var v = .14 * vnoise(r * .18, col * .025, 3) + .1 * vnoise(r * .6, col * .1, 9);
+          for (var k = 0; k < walls.length; k++) { var dr = (r - walls[k].row) / walls[k].w; v += walls[k].s * Math.exp(-dr * dr); }
+          v *= .35 + .65 * Math.min(1, Math.abs(r - price) / 6);
+          var c = cmap(v * .85), o = (rows - 1 - r) * 4; d[o] = c[0]; d[o + 1] = c[1]; d[o + 2] = c[2]; d[o + 3] = 255;
+        }
+        bctx.clearRect(0, 0, cols, rows); bctx.drawImage(off, -1, 0);
+        octx.clearRect(0, 0, cols, rows); octx.drawImage(buf, 0, 0); octx.putImageData(img, cols - 1, 0);
+        hist.push(price); if (hist.length > cols + 2) hist.shift();
+        if (Math.random() < .18) trades.push({ c: col, p: price, s: rand(.3, 1), side: vel >= 0 ? 1 : -1 });
+        while (trades.length && trades[0].c < col - cols - 2) trades.shift();
+        col++;
+      }
+      return {
+        dprCap: 2,
+        resize: function (w, h, d) {
+          W = w; H = h; D = d;
+          var nr = Math.ceil(h / (CELL * d)), nc = Math.ceil(w / (CELL * d)) + 2;
+          if (nr === rows && nc === cols) return;
+          rows = nr; cols = nc; off.width = buf.width = cols; off.height = buf.height = rows;
+          home = w / d > 900 ? .55 : .28; price = rows * home; walls = []; hist = []; trades = [];
+          for (var i = 0; i < cols; i++) tick();
+        },
+        frame: function (t) {
+          var dt = Math.min(.05, t - last); last = t;
+          if (!reduced) { acc += dt; while (acc > TICK) { tick(); acc -= TICK; } }
+          var cw = W / (cols - 2), rh = H / rows, shift = (acc / TICK) * cw;
+          ctx.imageSmoothingEnabled = true;
+          ctx.clearRect(0, 0, W, H);
+          ctx.globalAlpha = .72; ctx.drawImage(off, -shift, 0, cols * cw, H); ctx.globalAlpha = 1;
+          function X(c) { return (c - (col - cols)) * cw - shift + cw / 2; }
+          function Y(p) { return H - (p + .5) * rh; }
+          /* trade bubbles */
+          for (var i = 0; i < trades.length; i++) {
+            var tr = trades[i], x = X(tr.c);
+            ctx.fillStyle = tr.side > 0 ? "rgba(34,211,160,.45)" : "rgba(255,92,122,.45)";
+            ctx.beginPath(); ctx.arc(x, Y(tr.p), (2 + tr.s * 7) * D, 0, Math.PI * 2); ctx.fill();
+          }
+          /* price trace */
+          ctx.beginPath();
+          for (var j = 0; j < hist.length; j++) { var hx = X(col - hist.length + j), hy = Y(hist[j]); if (j) ctx.lineTo(hx, hy); else ctx.moveTo(hx, hy); }
+          ctx.strokeStyle = "rgba(255,255,255,.95)"; ctx.lineWidth = 1.6 * D; ctx.shadowColor = "rgba(255,230,160,.9)"; ctx.shadowBlur = 10 * D; ctx.stroke(); ctx.shadowBlur = 0;
+          var lx = X(col - 1), ly = Y(hist[hist.length - 1]);
+          ctx.fillStyle = "#fff"; ctx.beginPath(); ctx.arc(lx, ly, 3.2 * D, 0, Math.PI * 2); ctx.fill();
+          /* dark falloff on the copy side */
+          var g = ctx.createLinearGradient(0, 0, W * .65, 0); g.addColorStop(0, "rgba(3,5,12,.88)"); g.addColorStop(1, "rgba(3,5,12,0)");
+          ctx.fillStyle = g; ctx.fillRect(0, 0, W * .65, H);
+        },
+        destroy: function () {}
+      };
+    }
+
     /* ---------------- Switcher + render loop ---------------- */
     var variants = {
       aurora: { make: Aurora, title: "Aurora Flow", note: "Domain-warped WebGL gradient whose ribbon follows a rising market curve. Draws on the dark mesh-gradient canvases common on exchange and payments sites." },
       globe:  { make: Globe,  title: "Liquidity Globe", note: "Dotted earth with buy and sell order flow arcing between exchange hubs. Draws on the global-network heroes trending on fintech sites." },
-      grid:   { make: Grid,   title: "Market Grid", note: "Perspective floor, light beams on a grid wall and a live candlestick feed. Draws on black-and-neon trading sites and grid-beam developer heroes." }
+      grid:   { make: Grid,   title: "Market Grid", note: "Perspective floor, light beams on a grid wall and a live candlestick feed. Draws on black-and-neon trading sites and grid-beam developer heroes." },
+      depth:  { make: Depth,  title: "Order Book Depth", note: "Bid and ask walls breathing around the spread, with trade prints popping at the mid. Turns the exchange depth chart into a hero backdrop." },
+      ridges: { make: Ridges, title: "Price Ridges", note: "Dozens of price lines stacked in perspective, with one live series glowing. A ridgeline take on the data-art heroes used by analytics and fintech brands." },
+      volume: { make: Volume, title: "Volume Skyline", note: "Glass volume bars scroll under a soft spotlight, with reflections and a smoothed volume line. Draws on spotlight-and-glass product heroes." },
+      heatmap:{ make: Heatmap,title: "Liquidity Heatmap", note: "Order-book liquidity over time as a heatmap, with the price threading through and trade bubbles. Inspired by pro order-flow terminals." }
     };
-    var order = ["aurora", "globe", "grid"];
+    var order = ["aurora", "globe", "grid", "depth", "ridges", "volume", "heatmap"];
     var active = null, leaving = [], start = performance.now(), raf = 0;
 
     function size(entry) {
@@ -502,7 +767,10 @@
       if (!variants[name]) name = "aurora";
       if (active && active.name === name) return;
       document.documentElement.setAttribute("data-bg", name);
-      document.querySelectorAll(".switcher button").forEach(function (b) { b.setAttribute("aria-pressed", b.dataset.bg === name ? "true" : "false"); });
+      document.querySelectorAll(".switcher button").forEach(function (b) {
+        var on = b.dataset.bg === name; b.setAttribute("aria-pressed", on ? "true" : "false");
+        if (on && b.scrollIntoView) b.scrollIntoView({ block: "nearest", inline: "center" });
+      });
       document.getElementById("credit").innerHTML = "<b>" + variants[name].title + "</b>" + variants[name].note;
       try { localStorage.setItem("hero-bg", name); } catch (e) {}
       if (push && history.replaceState) history.replaceState(null, "", "#" + name);
@@ -530,9 +798,10 @@
     document.addEventListener("keydown", function (e) {
       if (e.metaKey || e.ctrlKey || e.altKey || /input|textarea/i.test(e.target.tagName)) return;
       var i = order.indexOf(active ? active.name : "aurora");
-      if (e.key >= "1" && e.key <= "3") select(order[+e.key - 1], true);
-      else if (e.key === "ArrowRight") select(order[(i + 1) % 3], true);
-      else if (e.key === "ArrowLeft") select(order[(i + 2) % 3], true);
+      var n = order.length;
+      if (e.key >= "1" && e.key <= String(n)) select(order[+e.key - 1], true);
+      else if (e.key === "ArrowRight") select(order[(i + 1) % n], true);
+      else if (e.key === "ArrowLeft") select(order[(i + n - 1) % n], true);
     });
     window.addEventListener("hashchange", function () { select(location.hash.slice(1), false); });
 
