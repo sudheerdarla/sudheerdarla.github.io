@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html lang="en" data-bg="aurora">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Trading Hero Backgrounds</title>
+  <meta name="description" content="Three animated hero backgrounds for a trading platform landing page: Aurora Flow, Liquidity Globe and Market Grid.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #04060c;
+      --ink: #f3f5f8;
+      --ink-2: rgba(243, 245, 248, 0.72);
+      --ink-3: rgba(243, 245, 248, 0.5);
+      --line: rgba(255, 255, 255, 0.09);
+      --glass: rgba(14, 18, 28, 0.55);
+      --up: #22d3a0;
+      --down: #ff5c7a;
+      --accent: #2ee6b0;
+      --accent-ink: #03140f;
+      --font: "Geist", "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+      --mono: "Geist Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+      --ease: cubic-bezier(.22, 1, .36, 1);
+    }
+    html[data-bg="globe"] { --bg: #030712; --accent: #5b9dff; --accent-ink: #020a1a; }
+    html[data-bg="grid"]  { --bg: #020403; --accent: #39f5a0; --accent-ink: #021208; }
+
+    * { box-sizing: border-box; }
+    html, body { margin: 0; background: var(--bg); transition: background-color .7s ease; }
+    body { font-family: var(--font); color: var(--ink); -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+    a { color: inherit; text-decoration: none; }
+    button { font: inherit; color: inherit; }
+    :focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 6px; }
+
+    /* ---------- Hero shell ---------- */
+    .hero { position: relative; isolation: isolate; overflow: hidden; min-height: 100vh; min-height: 100svh; display: flex; flex-direction: column; }
+    .stage { position: absolute; inset: 0; z-index: -2; }
+    .stage canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; opacity: 0; transition: opacity .8s ease; }
+    .stage canvas.on { opacity: 1; }
+    /* legibility scrim on the copy side */
+    .hero::before { content: ""; position: absolute; inset: 0; z-index: -1; pointer-events: none;
+      background: linear-gradient(90deg, color-mix(in srgb, var(--bg) 70%, transparent) 0%, color-mix(in srgb, var(--bg) 25%, transparent) 45%, transparent 70%),
+                  linear-gradient(180deg, color-mix(in srgb, var(--bg) 55%, transparent) 0%, transparent 18%, transparent 78%, color-mix(in srgb, var(--bg) 80%, transparent) 100%); }
+    .wrap { width: 100%; max-width: 1280px; margin: 0 auto; padding-inline: clamp(16px, 4vw, 48px); }
+
+    .nav { border-bottom: 1px solid var(--line); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); }
+    .nav__inner { height: 64px; display: flex; align-items: center; justify-content: space-between; gap: 24px; }
+    .brand { display: flex; align-items: center; gap: 10px; font-weight: 600; font-size: 17px; letter-spacing: -0.02em; }
+    .brand svg { width: 26px; height: 26px; color: var(--accent); transition: color .7s ease; }
+    .nav__links { display: flex; gap: 28px; font-size: 14px; color: var(--ink-2); }
+    .nav__links a:hover, .nav__login:hover { color: var(--ink); }
+    .nav__actions { display: flex; align-items: center; gap: 18px; font-size: 14px; color: var(--ink-2); }
+
+    .btn { display: inline-flex; align-items: center; gap: 8px; height: 40px; padding: 0 18px; border-radius: 999px; font-weight: 500; font-size: 14px; white-space: nowrap; border: 1px solid transparent; transition: transform .2s var(--ease), background-color .7s ease, box-shadow .3s ease, border-color .2s ease; }
+    .btn:hover { transform: translateY(-1px); }
+    .btn:active { transform: scale(.97); }
+    .btn--primary { background: var(--accent); color: var(--accent-ink); box-shadow: 0 0 0 0 transparent; }
+    .btn--primary:hover { box-shadow: 0 8px 32px color-mix(in srgb, var(--accent) 45%, transparent); }
+    .btn--ghost { border-color: rgba(255,255,255,.18); background: rgba(255,255,255,.04); color: var(--ink); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); }
+    .btn--ghost:hover { border-color: rgba(255,255,255,.34); }
+    .btn--lg { height: 48px; padding: 0 22px; font-size: 15px; }
+    .btn svg { width: 14px; height: 14px; transition: transform .3s var(--ease); }
+    .btn:hover svg { transform: translateX(3px); }
+
+    .copy { margin-block: auto; padding-block: 72px 150px; max-width: 640px; }
+    .eyebrow { display: inline-flex; align-items: center; gap: 10px; padding: 6px 12px 6px 8px; border-radius: 999px; border: 1px solid var(--line); background: var(--glass); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); font-size: 13px; color: var(--ink-2); }
+    .live { position: relative; width: 8px; height: 8px; border-radius: 50%; background: var(--up); }
+    .live::after { content: ""; position: absolute; inset: -4px; border-radius: 50%; border: 1px solid var(--up); animation: ping 2s var(--ease) infinite; }
+    @keyframes ping { from { transform: scale(.4); opacity: 1; } to { transform: scale(1.6); opacity: 0; } }
+    h1 { margin: 22px 0 18px; font-weight: 600; font-size: clamp(40px, 6.2vw, 76px); line-height: 1.0; letter-spacing: -0.045em; text-wrap: balance; }
+    h1 em { font-style: normal; color: var(--accent); transition: color .7s ease; }
+    .lede { margin: 0 0 32px; max-width: 520px; font-size: clamp(16px, 1.4vw, 18px); line-height: 1.55; color: var(--ink-2); text-wrap: pretty; }
+    .ctas { display: flex; flex-wrap: wrap; gap: 12px; }
+    .stats { display: flex; flex-wrap: wrap; gap: 12px 36px; margin-top: 44px; padding-top: 22px; border-top: 1px solid var(--line); max-width: 520px; }
+    .stat b { display: block; font-family: var(--mono); font-weight: 500; font-size: 20px; letter-spacing: -0.02em; font-variant-numeric: tabular-nums; }
+    .stat span { font-size: 13px; color: var(--ink-3); }
+
+    /* ---------- Ticker ---------- */
+    .ticker { position: absolute; left: 0; right: 0; bottom: 0; height: 44px; border-top: 1px solid var(--line); background: color-mix(in srgb, var(--bg) 60%, transparent); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); overflow: hidden; display: flex; align-items: center;
+      -webkit-mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent); mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent); }
+    .ticker__track { display: flex; gap: 40px; padding-left: 40px; white-space: nowrap; font-family: var(--mono); font-size: 12.5px; animation: marquee 60s linear infinite; }
+    .ticker__track span b { color: var(--ink); font-weight: 500; margin-right: 8px; }
+    .ticker__track span { color: var(--ink-3); }
+    .ticker__track .u { color: var(--up); }
+    .ticker__track .d { color: var(--down); }
+    @keyframes marquee { to { transform: translateX(-50%); } }
+
+    /* ---------- Background switcher ---------- */
+    .switcher { position: fixed; left: 50%; bottom: 60px; transform: translateX(-50%); z-index: 20; display: flex; align-items: center; gap: 4px; padding: 5px; border-radius: 999px; border: 1px solid rgba(255,255,255,.14); background: rgba(10, 13, 20, .72); backdrop-filter: blur(14px) saturate(1.4); -webkit-backdrop-filter: blur(14px) saturate(1.4); box-shadow: 0 12px 40px rgba(0,0,0,.45); }
+    .switcher__label { padding: 0 10px 0 12px; font-size: 12px; color: var(--ink-3); letter-spacing: .02em; }
+    .switcher button { white-space: nowrap; display: flex; align-items: center; gap: 8px; height: 34px; padding: 0 14px 0 10px; border: 0; border-radius: 999px; background: transparent; color: var(--ink-2); font-size: 13px; cursor: pointer; transition: background-color .25s ease, color .25s ease; }
+    .switcher button:hover { color: var(--ink); background: rgba(255,255,255,.06); }
+    .switcher button[aria-pressed="true"] { background: rgba(255,255,255,.12); color: var(--ink); }
+    .switcher kbd { display: inline-grid; place-items: center; width: 18px; height: 18px; border-radius: 5px; border: 1px solid rgba(255,255,255,.16); font-family: var(--mono); font-size: 10.5px; color: var(--ink-3); }
+    .switcher button[aria-pressed="true"] kbd { border-color: var(--accent); color: var(--accent); }
+    .credit { position: fixed; right: 16px; top: 76px; z-index: 20; max-width: 260px; padding: 10px 12px; border-radius: 12px; border: 1px solid var(--line); background: rgba(10,13,20,.6); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); font-size: 12px; line-height: 1.45; color: var(--ink-3); }
+    .credit b { display: block; color: var(--ink); font-weight: 500; font-size: 13px; margin-bottom: 2px; }
+
+    @media (max-width: 900px) {
+      .nav__links { display: none; }
+      .credit { display: none; }
+    }
+    @media (max-width: 560px) {
+      .nav__login { display: none; }
+      .copy { padding-block: 48px 150px; }
+      .switcher__label { display: none; }
+      .switcher button { padding: 0 10px 0 8px; font-size: 12px; }
+      .stats { gap: 12px 24px; }
+      .stat b { font-size: 17px; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .ticker__track, .live::after { animation: none; }
+      .stage canvas { transition: none; }
+    }
+  </style>
+</head>
+<body>
+  <section class="hero" aria-label="Hero">
+    <div class="stage" id="stage" aria-hidden="true"></div>
+
+    <header class="nav">
+      <div class="wrap nav__inner">
+        <a class="brand" href="#">
+          <svg viewBox="0 0 32 32" fill="none" aria-hidden="true"><path d="M4 22 L11 14 L17 19 L28 7" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/><circle cx="28" cy="7" r="3" fill="currentColor"/></svg>
+          Northline
+        </a>
+        <nav class="nav__links" aria-label="Primary">
+          <a href="#">Markets</a><a href="#">Trade</a><a href="#">Pricing</a><a href="#">API</a><a href="#">Learn</a>
+        </nav>
+        <div class="nav__actions">
+          <a class="nav__login" href="#">Log in</a>
+          <a class="btn btn--primary" href="#">Open account</a>
+        </div>
+      </div>
+    </header>
+
+    <div class="wrap">
+      <div class="copy">
+        <span class="eyebrow"><span class="live" aria-hidden="true"></span>Markets open · 14,000+ instruments</span>
+        <h1>Trade every market from <em>one screen.</em></h1>
+        <p class="lede">Stocks, ETFs, crypto, FX and commodities in one account, with deep liquidity, smart order routing and fees from 0.01%.</p>
+        <div class="ctas">
+          <a class="btn btn--primary btn--lg" href="#">Start trading
+            <svg viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M1 7h11M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+          <a class="btn btn--ghost btn--lg" href="#">View live markets</a>
+        </div>
+        <div class="stats">
+          <div class="stat"><b>$4.2B</b><span>Daily volume</span></div>
+          <div class="stat"><b>2.1M</b><span>Active traders</span></div>
+          <div class="stat"><b>38ms</b><span>Median execution</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="ticker" aria-hidden="true"><div class="ticker__track" id="ticker"></div></div>
+  </section>
+
+  <div class="switcher" role="group" aria-label="Hero background">
+    <span class="switcher__label">Background</span>
+    <button type="button" data-bg="aurora" aria-pressed="true"><kbd>1</kbd>Aurora</button>
+    <button type="button" data-bg="globe" aria-pressed="false"><kbd>2</kbd>Globe</button>
+    <button type="button" data-bg="grid" aria-pressed="false"><kbd>3</kbd>Market grid</button>
+  </div>
+  <aside class="credit" id="credit" aria-live="polite"></aside>
+
+  <script>
+  (function () {
+    "use strict";
+    var reduced = window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches;
+    var stage = document.getElementById("stage");
+
+    /* ---------------- Ticker ---------------- */
+    var syms = [["AAPL", 228.41, 0.84], ["NVDA", 141.12, 2.31], ["BTC", 98420, 1.12], ["ETH", 3612.5, -0.64], ["EUR/USD", 1.0864, 0.08], ["TSLA", 251.3, -1.42], ["XAU", 2734.2, 0.37], ["NIFTY 50", 24318, 0.52], ["MSFT", 431.9, 0.21], ["SOL", 187.44, 3.08], ["USD/JPY", 152.31, -0.19], ["BRENT", 74.12, -0.88]];
+    var html = syms.map(function (s) {
+      var up = s[2] >= 0;
+      return "<span><b>" + s[0] + "</b>" + s[1].toLocaleString("en-US") + " <span class=\"" + (up ? "u" : "d") + "\">" + (up ? "▲ +" : "▼ ") + s[2].toFixed(2) + "%</span></span>";
+    }).join("");
+    document.getElementById("ticker").innerHTML = html + html;
+
+    /* ---------------- Shared helpers ---------------- */
+    function hash3(x, y, z) { var n = Math.sin(x * 127.1 + y * 311.7 + z * 74.7) * 43758.5453; return n - Math.floor(n); }
+    function vnoise(x, y, z) {
+      var ix = Math.floor(x), iy = Math.floor(y), iz = Math.floor(z), fx = x - ix, fy = y - iy, fz = z - iz;
+      var ux = fx * fx * (3 - 2 * fx), uy = fy * fy * (3 - 2 * fy), uz = fz * fz * (3 - 2 * fz);
+      function l(a, b, t) { return a + (b - a) * t; }
+      return l(l(l(hash3(ix, iy, iz), hash3(ix + 1, iy, iz), ux), l(hash3(ix, iy + 1, iz), hash3(ix + 1, iy + 1, iz), ux), uy),
+               l(l(hash3(ix, iy, iz + 1), hash3(ix + 1, iy, iz + 1), ux), l(hash3(ix, iy + 1, iz + 1), hash3(ix + 1, iy + 1, iz + 1), ux), uy), uz);
+    }
+    function rand(a, b) { return a + Math.random() * (b - a); }
+    function easeInOut(t) { return t < .5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2; }
+
+    /* =========================================================
+       1. AURORA FLOW: WebGL domain-warped gradient ribbon
+       ========================================================= */
+    function Aurora(canvas) {
+      var gl = canvas.getContext("webgl", { antialias: false, premultipliedAlpha: false }) || canvas.getContext("experimental-webgl");
+      if (!gl) { canvas.style.background = "radial-gradient(80% 60% at 70% 40%, #1b3f6b, #04060c 70%)"; return { resize: function () {}, frame: function () {}, destroy: function () {} }; }
+      var vs = "attribute vec2 p;void main(){gl_Position=vec4(p,0.,1.);}";
+      var fs = [
+        "precision highp float;uniform vec2 r;uniform float t;",
+        "float h(vec2 p){return fract(sin(dot(p,vec2(127.1,311.7)))*43758.5453);}",
+        "float n(vec2 p){vec2 i=floor(p),f=fract(p),u=f*f*(3.-2.*f);return mix(mix(h(i),h(i+vec2(1,0)),u.x),mix(h(i+vec2(0,1)),h(i+vec2(1,1)),u.x),u.y);}",
+        "float fbm(vec2 p){float v=0.,a=.5;for(int i=0;i<5;i++){v+=a*n(p);p=p*2.03+vec2(1.7,9.2);a*=.5;}return v;}",
+        "void main(){",
+        " vec2 uv=gl_FragCoord.xy/r;vec2 p=(gl_FragCoord.xy-.5*r)/r.y;float s=t*.045;",
+        " vec2 q=vec2(fbm(p*1.3+vec2(s,-s)),fbm(p*1.3+vec2(-s,s)+3.1));",
+        " float f=fbm(p*1.1+1.8*q+vec2(s*2.,0.));",
+        /* a rising market curve warped by noise forms the aurora spine */
+        " float spine=.32*(p.x+.2)+.12*sin(p.x*2.4+t*.22)+.28*(q.x-.5);",
+        " float d=p.y-spine;",
+        " float ribbon=exp(-d*d*9.)*(.6+.8*f);",
+        " float halo=exp(-d*d*1.6);",
+        " vec3 teal=vec3(.08,.92,.68),blue=vec3(.12,.42,1.),violet=vec3(.52,.28,1.),bg=vec3(.012,.02,.045);",
+        " vec3 hue=mix(blue,teal,smoothstep(.25,.75,uv.x+.3*(f-.5)));hue=mix(hue,violet,smoothstep(.55,.95,f));",
+        " vec3 col=bg+hue*ribbon*.75+mix(blue,violet,uv.y)*halo*.18*f;",
+        /* light curtains hanging under the ribbon */
+        " float rays=fbm(vec2(p.x*9.+q.y*2.,t*.08));col+=hue*rays*rays*exp(-max(-d,0.)*3.5)*step(d,0.)*.55*halo;",
+        /* faint chart grid that only appears inside the glow */
+        " vec2 g=abs(fract(gl_FragCoord.xy/56.)-.5);float grid=smoothstep(.49,.5,max(g.x,g.y));col+=grid*.05*(.25+halo);",
+        " col*=1.-.6*pow(length(uv-vec2(.6,.5)),1.6);",
+        " col+=(h(gl_FragCoord.xy+fract(t*7.))-.5)*.03;",
+        " gl_FragColor=vec4(col,1.);}"
+      ].join("\n");
+      function sh(type, src) { var s = gl.createShader(type); gl.shaderSource(s, src); gl.compileShader(s); return s; }
+      var prog = gl.createProgram();
+      gl.attachShader(prog, sh(gl.VERTEX_SHADER, vs)); gl.attachShader(prog, sh(gl.FRAGMENT_SHADER, fs)); gl.linkProgram(prog); gl.useProgram(prog);
+      var buf = gl.createBuffer(); gl.bindBuffer(gl.ARRAY_BUFFER, buf);
+      gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1, -1, 3, -1, -1, 3]), gl.STATIC_DRAW);
+      var loc = gl.getAttribLocation(prog, "p"); gl.enableVertexAttribArray(loc); gl.vertexAttribPointer(loc, 2, gl.FLOAT, false, 0, 0);
+      var uR = gl.getUniformLocation(prog, "r"), uT = gl.getUniformLocation(prog, "t");
+      return {
+        dprCap: 1.25,
+        resize: function (w, h) { gl.viewport(0, 0, w, h); gl.uniform2f(uR, w, h); },
+        frame: function (t) { gl.uniform1f(uT, t + 20); gl.drawArrays(gl.TRIANGLES, 0, 3); },
+        destroy: function () { var ext = gl.getExtension("WEBGL_lose_context"); if (ext) ext.loseContext(); }
+      };
+    }
+
+    /* =========================================================
+       2. LIQUIDITY GLOBE: dotted earth with order-flow arcs
+       ========================================================= */
+    function Globe(canvas) {
+      var ctx = canvas.getContext("2d"), W = 0, H = 0, D = 1, cx, cy, R;
+      var N = 4200, pts = [];
+      for (var i = 0; i < N; i++) {
+        var y = 1 - 2 * (i + .5) / N, rr = Math.sqrt(1 - y * y), th = i * 2.399963;
+        var x = Math.cos(th) * rr, z = Math.sin(th) * rr;
+        var land = vnoise(x * 2.2 + 5, y * 2.2, z * 2.2) * .65 + vnoise(x * 5 + 1, y * 5, z * 5) * .35;
+        pts.push([x, y, z, land]);
+      }
+      /* top 42% of noise values become "land", so coverage is stable regardless of the noise range */
+      var cut = pts.map(function (q) { return q[3]; }).sort(function (a, b) { return a - b; })[Math.floor(N * .58)];
+      pts.forEach(function (q) { q[3] = q[3] > cut ? 1 : 0; });
+      var hubs = [["NYC", 40.7, -74], ["LDN", 51.5, -.1], ["BOM", 19.07, 72.88], ["TYO", 35.68, 139.69], ["HKG", 22.3, 114.2], ["SIN", 1.35, 103.8], ["FRA", 50.1, 8.68], ["GRU", -23.55, -46.63], ["SYD", -33.87, 151.2], ["DXB", 25.2, 55.27], ["CHI", 41.88, -87.63], ["ZRH", 47.37, 8.54], ["SEL", 37.57, 126.98], ["JNB", -26.2, 28.05]].map(function (hb) {
+        var la = hb[1] * Math.PI / 180, lo = -hb[2] * Math.PI / 180;
+        return { code: hb[0], v: [Math.cos(la) * Math.cos(lo), Math.sin(la), Math.cos(la) * Math.sin(lo)], pulse: 0 };
+      });
+      var arcs = [], nextArc = 0, rot = 0, tilt = -0.32, last = 0;
+      function project(v, out) {
+        var ca = Math.cos(rot), sa = Math.sin(rot), cb = Math.cos(tilt), sb = Math.sin(tilt);
+        var x = v[0] * ca + v[2] * sa, z = -v[0] * sa + v[2] * ca, y = v[1] * cb - z * sb; z = v[1] * sb + z * cb;
+        out[0] = cx + x * R; out[1] = cy - y * R; out[2] = z; return out;
+      }
+      function makeArc() {
+        var a = hubs[(Math.random() * hubs.length) | 0], b = a;
+        while (b === a) b = hubs[(Math.random() * hubs.length) | 0];
+        var dot = a.v[0] * b.v[0] + a.v[1] * b.v[1] + a.v[2] * b.v[2], ang = Math.acos(Math.max(-1, Math.min(1, dot))), sn = Math.sin(ang);
+        var path = [], M = 70, alt = .04 + .2 * ang / Math.PI;
+        for (var k = 0; k <= M; k++) {
+          var s = k / M, wa = Math.sin((1 - s) * ang) / sn, wb = Math.sin(s * ang) / sn, lift = 1 + alt * Math.sin(Math.PI * s);
+          path.push([(a.v[0] * wa + b.v[0] * wb) * lift, (a.v[1] * wa + b.v[1] * wb) * lift, (a.v[2] * wa + b.v[2] * wb) * lift]);
+        }
+        var r = Math.random();
+        return { path: path, to: b, life: 0, dur: rand(1.8, 3.2), col: r < .55 ? "46,230,176" : r < .85 ? "91,157,255" : "255,92,122" };
+      }
+      var P = [0, 0, 0];
+      function visible(p) { var dx = p[0] - cx, dy = p[1] - cy; return p[2] > 0 || dx * dx + dy * dy > R * R; }
+      return {
+        dprCap: 2,
+        resize: function (w, h, d) {
+          W = w; H = h; D = d; var cw = w / d, ch = h / d;
+          if (cw > 900) { R = Math.min(ch * .42, cw * .28) * d; cx = w * .7; cy = h * .55; }
+          else { R = Math.min(cw * .72, ch * .5) * d; cx = w * .5; cy = h * .98; }
+        },
+        frame: function (t) {
+          var dt = Math.min(.05, t - last); last = t;
+          rot = t * .07;
+          ctx.clearRect(0, 0, W, H);
+          /* atmosphere */
+          var g = ctx.createRadialGradient(cx, cy, R * .85, cx, cy, R * 1.5);
+          g.addColorStop(0, "rgba(60,120,255,.20)"); g.addColorStop(.35, "rgba(46,230,176,.06)"); g.addColorStop(1, "rgba(0,0,0,0)");
+          ctx.fillStyle = g; ctx.fillRect(0, 0, W, H);
+          var core = ctx.createRadialGradient(cx - R * .3, cy - R * .35, 0, cx, cy, R);
+          core.addColorStop(0, "rgba(30,60,130,.35)"); core.addColorStop(1, "rgba(6,12,30,.85)");
+          ctx.fillStyle = core; ctx.beginPath(); ctx.arc(cx, cy, R, 0, Math.PI * 2); ctx.fill();
+          /* dots */
+          var ds = 2 * D;
+          for (var i = 0; i < N; i++) {
+            var q = pts[i]; project(q, P);
+            if (P[2] <= 0) continue;
+            var a = q[3] ? (.35 + .65 * P[2]) : .12 * P[2];
+            ctx.fillStyle = q[3] ? "rgba(170,210,255," + a.toFixed(3) + ")" : "rgba(120,150,210," + a.toFixed(3) + ")";
+            var s = q[3] ? ds * (.7 + .5 * P[2]) : ds * .7;
+            ctx.fillRect(P[0] - s / 2, P[1] - s / 2, s, s);
+          }
+          /* rim light */
+          ctx.strokeStyle = "rgba(120,170,255,.35)"; ctx.lineWidth = 1 * D;
+          ctx.beginPath(); ctx.arc(cx, cy, R, 0, Math.PI * 2); ctx.stroke();
+          /* arcs */
+          if (!reduced && t > nextArc && arcs.length < 14) { arcs.push(makeArc()); nextArc = t + rand(.12, .45); }
+          if (reduced && !arcs.length) for (var r0 = 0; r0 < 10; r0++) { var ra = makeArc(); ra.life = rand(.3, .6); arcs.push(ra); }
+          ctx.lineCap = "round";
+          for (var j = arcs.length - 1; j >= 0; j--) {
+            var A = arcs[j]; if (!reduced) A.life += dt / A.dur;
+            if (A.life >= 1) { A.to.pulse = 1; arcs.splice(j, 1); continue; }
+            var head = easeInOut(Math.min(1, A.life * 1.5)), tail = easeInOut(Math.max(0, (A.life - .3) / .7));
+            var M = A.path.length - 1, i0 = Math.floor(tail * M), i1 = Math.ceil(head * M);
+            ctx.lineWidth = 1.4 * D;
+            for (var k = i0; k < i1; k++) {
+              var p1 = project(A.path[k], [0, 0, 0]), p2 = project(A.path[k + 1], [0, 0, 0]);
+              if (!visible(p1) || !visible(p2)) continue;
+              var f = (k - i0) / Math.max(1, i1 - i0);
+              ctx.strokeStyle = "rgba(" + A.col + "," + (f * .9).toFixed(3) + ")";
+              ctx.beginPath(); ctx.moveTo(p1[0], p1[1]); ctx.lineTo(p2[0], p2[1]); ctx.stroke();
+            }
+            if (head < 1) {
+              var hp = project(A.path[i1], [0, 0, 0]);
+              if (visible(hp)) {
+                var hg = ctx.createRadialGradient(hp[0], hp[1], 0, hp[0], hp[1], 8 * D);
+                hg.addColorStop(0, "rgba(" + A.col + ",1)"); hg.addColorStop(1, "rgba(" + A.col + ",0)");
+                ctx.fillStyle = hg; ctx.beginPath(); ctx.arc(hp[0], hp[1], 8 * D, 0, Math.PI * 2); ctx.fill();
+              }
+            }
+          }
+          /* hubs */
+          ctx.font = "500 " + (10 * D) + "px 'Geist Mono', monospace"; ctx.textBaseline = "middle";
+          for (var h = 0; h < hubs.length; h++) {
+            var hb = hubs[h]; project(hb.v, P);
+            hb.pulse = Math.max(0, hb.pulse - dt * .9);
+            if (P[2] <= .05) continue;
+            var al = Math.min(1, P[2] * 1.6);
+            if (hb.pulse > 0) {
+              ctx.strokeStyle = "rgba(46,230,176," + (hb.pulse * al).toFixed(3) + ")"; ctx.lineWidth = 1.2 * D;
+              ctx.beginPath(); ctx.arc(P[0], P[1], (3 + (1 - hb.pulse) * 16) * D, 0, Math.PI * 2); ctx.stroke();
+            }
+            ctx.fillStyle = "rgba(255,255,255," + al.toFixed(3) + ")";
+            ctx.beginPath(); ctx.arc(P[0], P[1], 2.4 * D, 0, Math.PI * 2); ctx.fill();
+            ctx.fillStyle = "rgba(200,220,255," + (al * .75).toFixed(3) + ")";
+            ctx.fillText(hb.code, P[0] + 7 * D, P[1]);
+          }
+        },
+        destroy: function () {}
+      };
+    }
+
+    /* =========================================================
+       3. MARKET GRID: perspective floor, light beams, live candles
+       ========================================================= */
+    function Grid(canvas) {
+      var ctx = canvas.getContext("2d"), W = 0, H = 0, D = 1;
+      var candles = [], price = 100, drift = 0, PERIOD = 1.1, born = 0, lo = 0, hi = 0, ema = [], last = 0;
+      function newCandle(o) { return { o: o, h: o, l: o, c: o, v: rand(.3, 1) }; }
+      for (var i = 0; i < 260; i++) {
+        if (i % 40 === 0) drift = rand(-.25, .32);
+        var c = newCandle(price);
+        for (var k = 0; k < 8; k++) { price += drift * .12 + rand(-1, 1) * .55; c.h = Math.max(c.h, price); c.l = Math.min(c.l, price); }
+        c.c = price; candles.push(c);
+      }
+      var beams = [];
+      function spawnBeam() { var vert = Math.random() < .5; return { vert: vert, line: (Math.random() * 40) | 0, pos: -0.2, speed: rand(.12, .3), dir: Math.random() < .5 ? 1 : -1 }; }
+      for (var b = 0; b < 5; b++) { var bm = spawnBeam(); bm.pos = Math.random(); beams.push(bm); }
+      return {
+        dprCap: 2,
+        resize: function (w, h, d) { W = w; H = h; D = d; },
+        frame: function (t) {
+          var dt = Math.min(.05, t - last); last = t;
+          ctx.clearRect(0, 0, W, H);
+          var horizon = H * .7, cell = 56 * D;
+          /* back wall grid */
+          ctx.lineWidth = 1;
+          for (var x = (W / 2) % cell; x < W; x += cell) {
+            var gy = ctx.createLinearGradient(0, 0, 0, horizon);
+            gy.addColorStop(0, "rgba(57,245,160,0)"); gy.addColorStop(1, "rgba(57,245,160,.07)");
+            ctx.strokeStyle = gy; ctx.beginPath(); ctx.moveTo(x + .5, 0); ctx.lineTo(x + .5, horizon); ctx.stroke();
+          }
+          for (var y = horizon; y > 0; y -= cell) {
+            ctx.strokeStyle = "rgba(57,245,160," + (.07 * y / horizon).toFixed(3) + ")";
+            ctx.beginPath(); ctx.moveTo(0, y + .5); ctx.lineTo(W, y + .5); ctx.stroke();
+          }
+          /* beams travelling along the wall grid */
+          for (var bi = 0; bi < beams.length; bi++) {
+            var B = beams[bi]; if (!reduced) B.pos += B.speed * dt;
+            if (B.pos > 1.2) { beams[bi] = spawnBeam(); continue; }
+            var len = 140 * D, p = B.dir > 0 ? B.pos : 1 - B.pos, gr;
+            if (B.vert) {
+              var bx = (W / 2) % cell + (B.line % Math.ceil(W / cell)) * cell + .5, by = p * horizon;
+              gr = ctx.createLinearGradient(bx, by - len * B.dir, bx, by);
+              gr.addColorStop(0, "rgba(57,245,160,0)"); gr.addColorStop(1, "rgba(150,255,210,.75)");
+              ctx.strokeStyle = gr; ctx.lineWidth = 1.2 * D; ctx.beginPath(); ctx.moveTo(bx, by - len * B.dir); ctx.lineTo(bx, by); ctx.stroke();
+            } else {
+              var rowY = horizon - ((B.line % Math.max(1, Math.floor(horizon / cell))) + 1) * cell + .5, bxx = p * W;
+              gr = ctx.createLinearGradient(bxx - len * B.dir, rowY, bxx, rowY);
+              gr.addColorStop(0, "rgba(57,245,160,0)"); gr.addColorStop(1, "rgba(150,255,210,.75)");
+              ctx.strokeStyle = gr; ctx.lineWidth = 1.2 * D; ctx.beginPath(); ctx.moveTo(bxx - len * B.dir, rowY); ctx.lineTo(bxx, rowY); ctx.stroke();
+            }
+          }
+          /* perspective floor */
+          var fh = H - horizon, cxp = W / 2, phase = reduced ? 0 : (t * .6) % 1;
+          for (var n = 1; n < 26; n++) {
+            var z = n - phase; if (z < .2) continue;
+            var yy = horizon + fh / z * .9; if (yy > H) continue;
+            ctx.strokeStyle = "rgba(57,245,160," + (Math.min(1, 1.6 / z) * .22).toFixed(3) + ")";
+            ctx.beginPath(); ctx.moveTo(0, yy); ctx.lineTo(W, yy); ctx.stroke();
+          }
+          var spread = 90 * D;
+          for (var m = -24; m <= 24; m++) {
+            var gf = ctx.createLinearGradient(0, horizon, 0, H);
+            gf.addColorStop(0, "rgba(57,245,160,0)"); gf.addColorStop(1, "rgba(57,245,160,.22)");
+            ctx.strokeStyle = gf; ctx.beginPath(); ctx.moveTo(cxp + m * spread * .06, horizon); ctx.lineTo(cxp + m * spread * 1.6, H); ctx.stroke();
+          }
+          var hg = ctx.createRadialGradient(cxp, horizon, 0, cxp, horizon, W * .55);
+          hg.addColorStop(0, "rgba(57,245,160,.22)"); hg.addColorStop(1, "rgba(57,245,160,0)");
+          ctx.save(); ctx.translate(0, horizon); ctx.scale(1, .18); ctx.translate(0, -horizon);
+          ctx.fillStyle = hg; ctx.fillRect(0, horizon - W * .55, W, W * 1.1); ctx.restore();
+          ctx.fillStyle = "rgba(150,255,210,.5)"; ctx.fillRect(0, horizon, W, 1 * D);
+
+          /* live candle feed */
+          if (!reduced) {
+            if (t - born > PERIOD) { born = t; if (Math.random() < .04) drift = rand(-.3, .35); candles.push(newCandle(candles[candles.length - 1].c)); if (candles.length > 400) candles.shift(); }
+            var lc = candles[candles.length - 1];
+            if (Math.random() < .5) { lc.c += drift * .05 + rand(-1, 1) * .35; lc.h = Math.max(lc.h, lc.c); lc.l = Math.min(lc.l, lc.c); lc.v += .01; }
+          }
+          var prog = reduced ? 0 : Math.min(1, (t - born) / PERIOD);
+          var sp = (W / D > 700 ? 18 : 12) * D, cw = sp * .58, right = W - 96 * D, top = H * .14, bot = horizon - 40 * D;
+          var count = Math.min(candles.length, Math.ceil(right / sp) + 2), vmin = Infinity, vmax = -Infinity;
+          for (var ci = 0; ci < count; ci++) { var cc = candles[candles.length - 1 - ci]; vmin = Math.min(vmin, cc.l); vmax = Math.max(vmax, cc.h); }
+          if (!hi) { lo = vmin; hi = vmax; }
+          lo += (vmin - lo) * .05; hi += (vmax - hi) * .05;
+          var pad = (hi - lo) * .08, L = lo - pad, Hh = hi + pad;
+          function Y(v) { return bot - (v - L) / (Hh - L) * (bot - top); }
+          /* EMA line */
+          var alpha = 2 / 22, e = candles[Math.max(0, candles.length - count - 30)].c;
+          for (var ei = Math.max(0, candles.length - count - 30); ei < candles.length - count; ei++) e = e + alpha * (candles[ei].c - e);
+          ctx.beginPath();
+          for (ci = count - 1; ci >= 0; ci--) {
+            var C = candles[candles.length - 1 - ci]; e = e + alpha * (C.c - e);
+            var xx = right - (ci + prog) * sp; if (ci === count - 1) ctx.moveTo(xx, Y(e)); else ctx.lineTo(xx, Y(e));
+          }
+          var eg = ctx.createLinearGradient(W * .3, 0, W * .8, 0); eg.addColorStop(0, "rgba(160,130,255,.08)"); eg.addColorStop(1, "rgba(160,130,255,.6)");
+          ctx.strokeStyle = eg; ctx.lineWidth = 1.5 * D; ctx.shadowColor = "rgba(160,130,255,.8)"; ctx.shadowBlur = 10 * D; ctx.stroke(); ctx.shadowBlur = 0;
+          for (ci = 0; ci < count; ci++) {
+            var K = candles[candles.length - 1 - ci], xc = right - (ci + prog) * sp, up = K.c >= K.o;
+            var fade = Math.max(0, Math.min(1, (xc / W - .38) / .42));
+            fade = fade * fade * (W / D > 700 ? 1 : .45);
+            var col = up ? "34,211,160" : "255,92,122";
+            ctx.fillStyle = ctx.strokeStyle = "rgba(" + col + "," + (.07 + .78 * fade).toFixed(3) + ")";
+            ctx.lineWidth = 1 * D;
+            ctx.beginPath(); ctx.moveTo(xc, Y(K.h)); ctx.lineTo(xc, Y(K.l)); ctx.stroke();
+            var y1 = Y(Math.max(K.o, K.c)), y2 = Y(Math.min(K.o, K.c));
+            ctx.fillRect(xc - cw / 2, y1, cw, Math.max(1 * D, y2 - y1));
+            /* volume */
+            var vh = K.v * 26 * D;
+            ctx.fillStyle = "rgba(" + col + "," + (.08 + .22 * fade).toFixed(3) + ")";
+            ctx.fillRect(xc - cw / 2, horizon - vh - 4 * D, cw, vh);
+          }
+          /* last price line + tag */
+          var lcN = candles[candles.length - 1], ly = Y(lcN.c), isUp = lcN.c >= lcN.o, tagCol = isUp ? "34,211,160" : "255,92,122";
+          ctx.setLineDash([4 * D, 4 * D]); ctx.strokeStyle = "rgba(" + tagCol + ",.6)"; ctx.lineWidth = 1 * D;
+          ctx.beginPath(); ctx.moveTo(0, ly); ctx.lineTo(right + 12 * D, ly); ctx.stroke(); ctx.setLineDash([]);
+          var pulse = (Math.sin(t * 4) + 1) / 2;
+          ctx.fillStyle = "rgba(" + tagCol + "," + (.25 * pulse + .1).toFixed(3) + ")"; ctx.beginPath(); ctx.arc(right, ly, (6 + pulse * 6) * D, 0, Math.PI * 2); ctx.fill();
+          ctx.fillStyle = "rgb(" + tagCol + ")"; ctx.beginPath(); ctx.arc(right, ly, 3 * D, 0, Math.PI * 2); ctx.fill();
+          if (W / D < 700) return;
+          var label = (lcN.c * 1000).toLocaleString("en-US", { maximumFractionDigits: 0 });
+          ctx.font = "500 " + (11 * D) + "px 'Geist Mono', monospace"; ctx.textBaseline = "middle";
+          var tw = ctx.measureText(label).width + 14 * D, tx = right + 14 * D;
+          ctx.fillStyle = "rgb(" + tagCol + ")"; ctx.beginPath();
+          if (ctx.roundRect) ctx.roundRect(tx, ly - 10 * D, tw, 20 * D, 4 * D); else ctx.rect(tx, ly - 10 * D, tw, 20 * D);
+          ctx.fill(); ctx.fillStyle = "#03120b"; ctx.fillText(label, tx + 7 * D, ly + .5 * D);
+        },
+        destroy: function () {}
+      };
+    }
+
+    /* ---------------- Switcher + render loop ---------------- */
+    var variants = {
+      aurora: { make: Aurora, title: "Aurora Flow", note: "Domain-warped WebGL gradient whose ribbon follows a rising market curve. Draws on the dark mesh-gradient canvases common on exchange and payments sites." },
+      globe:  { make: Globe,  title: "Liquidity Globe", note: "Dotted earth with buy and sell order flow arcing between exchange hubs. Draws on the global-network heroes trending on fintech sites." },
+      grid:   { make: Grid,   title: "Market Grid", note: "Perspective floor, light beams on a grid wall and a live candlestick feed. Draws on black-and-neon trading sites and grid-beam developer heroes." }
+    };
+    var order = ["aurora", "globe", "grid"];
+    var active = null, leaving = [], start = performance.now(), raf = 0;
+
+    function size(entry) {
+      var d = Math.min(window.devicePixelRatio || 1, entry.r.dprCap || 2);
+      var w = Math.max(1, Math.round(stage.clientWidth * d)), h = Math.max(1, Math.round(stage.clientHeight * d));
+      if (entry.c.width !== w || entry.c.height !== h) { entry.c.width = w; entry.c.height = h; entry.r.resize(w, h, d); }
+    }
+    function select(name, push) {
+      if (!variants[name]) name = "aurora";
+      if (active && active.name === name) return;
+      document.documentElement.setAttribute("data-bg", name);
+      document.querySelectorAll(".switcher button").forEach(function (b) { b.setAttribute("aria-pressed", b.dataset.bg === name ? "true" : "false"); });
+      document.getElementById("credit").innerHTML = "<b>" + variants[name].title + "</b>" + variants[name].note;
+      try { localStorage.setItem("hero-bg", name); } catch (e) {}
+      if (push && history.replaceState) history.replaceState(null, "", "#" + name);
+      var c = document.createElement("canvas"); stage.appendChild(c);
+      var entry = { name: name, c: c, r: variants[name].make(c) };
+      size(entry);
+      if (active) { var old = active; old.c.classList.remove("on"); leaving.push(old); setTimeout(function () { old.r.destroy(); old.c.remove(); leaving.splice(leaving.indexOf(old), 1); }, 850); }
+      active = entry;
+      entry.r.frame((performance.now() - start) / 1000);
+      requestAnimationFrame(function () { c.classList.add("on"); });
+      if (reduced) loop();
+    }
+    function loop() {
+      var t = (performance.now() - start) / 1000;
+      if (active) { size(active); active.r.frame(t); }
+      for (var i = 0; i < leaving.length; i++) leaving[i].r.frame(t);
+      if (!reduced) raf = requestAnimationFrame(loop);
+    }
+    window.addEventListener("resize", function () { if (reduced && active) { size(active); active.r.frame(1); } });
+    document.addEventListener("visibilitychange", function () {
+      if (reduced) return;
+      if (document.hidden) cancelAnimationFrame(raf); else raf = requestAnimationFrame(loop);
+    });
+    document.querySelectorAll(".switcher button").forEach(function (b) { b.addEventListener("click", function () { select(b.dataset.bg, true); }); });
+    document.addEventListener("keydown", function (e) {
+      if (e.metaKey || e.ctrlKey || e.altKey || /input|textarea/i.test(e.target.tagName)) return;
+      var i = order.indexOf(active ? active.name : "aurora");
+      if (e.key >= "1" && e.key <= "3") select(order[+e.key - 1], true);
+      else if (e.key === "ArrowRight") select(order[(i + 1) % 3], true);
+      else if (e.key === "ArrowLeft") select(order[(i + 2) % 3], true);
+    });
+    window.addEventListener("hashchange", function () { select(location.hash.slice(1), false); });
+
+    var initial = location.hash.slice(1);
+    if (!variants[initial]) { try { initial = localStorage.getItem("hero-bg"); } catch (e) { initial = null; } }
+    select(initial || "aurora", false);
+    if (!reduced) raf = requestAnimationFrame(loop);
+  })();
+  </script>
+</body>
+</html>
