@@ -1,0 +1,473 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Dragonfly — ASCII scroll</title>
+<meta name="description" content="A 3D scene re-drawn as ASCII characters, anchored to the page as you scroll.">
+<style>
+  :root{--accent:#ff4d17;--bg:#050505;--fg:#d9d9d9;--mute:#7a7a7a;--line:#262626}
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{background:var(--bg)}
+  body{background:var(--bg);color:var(--fg);font-family:"Helvetica Neue",Helvetica,Arial,sans-serif;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+  .mono{font:11px/1.2 ui-monospace,Menlo,Consolas,monospace;letter-spacing:.08em;text-transform:uppercase}
+
+  /* The one fixed canvas. All 3D lives here; DOM "placeholders" (.gl) tell it where to draw. */
+  #gl{position:fixed;inset:0;width:100vw;height:100vh;display:block;z-index:0;pointer-events:none}
+  main{position:relative;z-index:1}
+
+  header{position:fixed;z-index:5;top:14px;left:50%;transform:translateX(-50%);display:flex;gap:26px;align-items:center;
+    padding:11px 18px;border:1px solid var(--line);background:rgba(8,8,8,.72);backdrop-filter:blur(6px)}
+  header a{color:var(--fg);text-decoration:none}
+  header a:hover{color:var(--accent)}
+  header .dots{color:var(--accent);letter-spacing:.2em}
+
+  .hero{position:relative;height:100vh;display:grid;place-items:center}
+  .hero h1{font-weight:400;font-size:clamp(52px,15.5vw,230px);letter-spacing:-.045em;line-height:.9;color:var(--accent);text-align:center}
+  .hero .hint{position:absolute;bottom:26px;left:0;right:0;text-align:center;color:var(--mute)}
+  .corner{position:absolute;font-size:clamp(22px,4vw,44px);color:var(--fg)}
+  .corner.tl{top:18px;left:20px}.corner.tr{top:18px;right:20px}.corner.bl{bottom:18px;left:20px}.corner.br{bottom:18px;right:20px}
+
+  .gl{pointer-events:none}   /* placeholders: empty boxes the WebGL scene is pinned to */
+
+  .sec{padding:22vh 6vw}
+  .idx{color:var(--accent);margin-bottom:22px;display:block}
+  .big{font-size:clamp(26px,4.2vw,64px);line-height:1.08;letter-spacing:-.02em;max-width:18em;font-weight:400}
+  .big em{font-style:normal;color:var(--mute)}
+
+  .rows{margin-top:10vh;border-top:1px solid var(--line)}
+  .row{display:flex;justify-content:space-between;gap:20px;padding:22px 0;border-bottom:1px solid var(--line);font-size:clamp(16px,2vw,26px)}
+  .row span:last-child{color:var(--mute)}
+
+  .stage{position:relative;min-height:130vh;display:grid;place-items:center}
+  .stage .gl{width:min(64vmin,620px);height:min(64vmin,620px)}
+  .stage .tag{position:absolute;color:var(--mute)}
+  .stage .tag.l{left:6vw;top:50%}.stage .tag.r{right:6vw;top:50%;text-align:right}
+
+  footer{padding:8vh 6vw 6vh;display:flex;justify-content:space-between;color:var(--mute)}
+  .nogl #gl{display:none}
+  @media (max-width:640px){header{gap:14px;padding:10px 12px}header .hide-s{display:none}}
+</style>
+</head>
+<body>
+<canvas id="gl"></canvas>
+
+<header class="mono">
+  <a href="#top">Home</a><a href="#about">About</a><a href="#method">Method</a><a href="#lantern">Lantern</a>
+  <span class="dots hide-s">••••••</span>
+</header>
+
+<main id="top">
+  <section class="hero">
+    <div class="gl" data-model="dragonfly" style="position:absolute;inset:0"></div>
+    <span class="corner tl">D</span><span class="corner tr">F</span><span class="corner bl">L</span><span class="corner br">Y</span>
+    <h1>DRAGONFLY</h1>
+    <div class="hint mono">Move the cursor &middot; Scroll</div>
+  </section>
+
+  <section class="sec" id="about">
+    <span class="idx mono">01 &mdash; About</span>
+    <p class="big">The whole 3D scene is drawn off-screen, then re-drawn as text. <em>Brightness picks the character, edges and the cursor add colour.</em></p>
+  </section>
+
+  <section class="sec" id="method">
+    <span class="idx mono">02 &mdash; Method</span>
+    <p class="big">One fixed canvas. Empty boxes in the page tell it where each model lives.</p>
+    <div class="rows">
+      <div class="row"><span>Render the scene to a texture</span><span>WebGL</span></div>
+      <div class="row"><span>Snap pixels to a coarse grid</span><span>granularity</span></div>
+      <div class="row"><span>Brightness &rarr; character from a glyph atlas</span><span>luma ramp</span></div>
+      <div class="row"><span>Edges + cursor trail in accent colour</span><span>sobel-ish</span></div>
+    </div>
+  </section>
+
+  <section class="stage" id="lantern">
+    <div class="gl" data-model="lantern"></div>
+    <span class="tag l mono">Scroll to reveal</span><span class="tag r mono">Models swap per section</span>
+  </section>
+
+  <section class="sec" id="contact">
+    <span class="idx mono">03 &mdash; Contact</span>
+    <p class="big">Swap this copy for your own. <em>The 3D follows the layout.</em></p>
+  </section>
+
+  <section class="stage" id="lotus">
+    <div class="gl" data-model="lotus"></div>
+  </section>
+
+  <footer class="mono"><span>&copy; 2026</span><span>Back to top &uarr;</span></footer>
+</main>
+
+<script>
+(() => {
+'use strict';
+
+/* ───────────────────────── Config (tweak me) ───────────────────────── */
+const CFG = {
+  granularity: () => (innerWidth < 640 ? 8 : 11),   // px per character cell
+  color:  [0.85, 0.85, 0.85],                       // glyph colour
+  accent: [1.0, 0.30, 0.09],                        // cursor / edge accent
+  bg:     [0.02, 0.02, 0.02],
+  flicker: 0.35,                                    // 0..1 random glyph flicker
+  smooth: 0.1                                       // scroll smoothing (0..1, lower = floatier)
+};
+
+const canvas = document.getElementById('gl');
+const gl = canvas.getContext('webgl', { antialias: false, alpha: false, powerPreference: 'high-performance' });
+if (!gl) { document.body.classList.add('nogl'); return; }
+
+/* ───────────────────────── Tiny matrix lib (column-major) ───────────────────────── */
+const M = {
+  id: () => new Float32Array([1,0,0,0, 0,1,0,0, 0,0,1,0, 0,0,0,1]),
+  mul(a, b) { const o = new Float32Array(16);
+    for (let c = 0; c < 4; c++) for (let r = 0; r < 4; r++) {
+      let s = 0; for (let k = 0; k < 4; k++) s += a[k*4+r] * b[c*4+k]; o[c*4+r] = s; } return o; },
+  T(x, y, z) { const m = M.id(); m[12] = x; m[13] = y; m[14] = z; return m; },
+  S(s) { const m = M.id(); m[0] = m[5] = m[10] = s; return m; },
+  Rx(a) { const c = Math.cos(a), s = Math.sin(a), m = M.id(); m[5] = c; m[6] = s; m[9] = -s; m[10] = c; return m; },
+  Ry(a) { const c = Math.cos(a), s = Math.sin(a), m = M.id(); m[0] = c; m[2] = -s; m[8] = s; m[10] = c; return m; },
+  Rz(a) { const c = Math.cos(a), s = Math.sin(a), m = M.id(); m[0] = c; m[1] = s; m[4] = -s; m[5] = c; return m; },
+  persp(f, asp, n, fa) { const t = 1 / Math.tan(f / 2), m = new Float32Array(16);
+    m[0] = t / asp; m[5] = t; m[10] = (fa + n) / (n - fa); m[11] = -1; m[14] = 2 * fa * n / (n - fa); return m; }
+};
+const chain = (...ms) => ms.reduce((a, b) => M.mul(a, b));
+const clamp = (x, a, b) => Math.min(b, Math.max(a, x));
+const smooth01 = x => { x = clamp(x, 0, 1); return x * x * (3 - 2 * x); };
+
+/* ───────────────────────── Procedural geometry (triangle soup) ───────────────────────── */
+function sphere(rx, ry, rz, seg = 16, rings = 10) {
+  const p = [], n = [];
+  const at = (i, j) => { const th = i / rings * Math.PI, ph = j / seg * Math.PI * 2;
+    const ux = Math.sin(th) * Math.cos(ph), uy = Math.cos(th), uz = Math.sin(th) * Math.sin(ph);
+    let nx = ux / rx, ny = uy / ry, nz = uz / rz; const l = Math.hypot(nx, ny, nz) || 1;
+    return [[ux*rx, uy*ry, uz*rz], [nx/l, ny/l, nz/l]]; };
+  for (let i = 0; i < rings; i++) for (let j = 0; j < seg; j++) {
+    const a = at(i,j), b = at(i+1,j), c = at(i+1,j+1), d = at(i,j+1);
+    for (const q of [a,b,c, a,c,d]) { p.push(...q[0]); n.push(...q[1]); } }
+  return { p, n };
+}
+// tapered tube along +Y from y=0 (radius r0) to y=len (radius r1)
+function cyl(r0, r1, len, seg = 10) {
+  const p = [], n = [], sl = (r0 - r1) / len;
+  const at = (j, top) => { const a = j / seg * Math.PI * 2, c = Math.cos(a), s = Math.sin(a), r = top ? r1 : r0, l = Math.hypot(1, sl);
+    return [[c*r, top ? len : 0, s*r], [c/l, sl/l, s/l]]; };
+  for (let j = 0; j < seg; j++) {
+    const a = at(j,0), b = at(j+1,0), c = at(j+1,1), d = at(j,1);
+    for (const q of [a,b,c, a,c,d]) { p.push(...q[0]); n.push(...q[1]); } }
+  return { p, n };
+}
+// flat leaf-shaped wing in the XY plane, root at x=0, extending to side*len
+function wing(len, wid, side, seg = 28) {
+  const p = [], n = [], pt = i => { const th = i / seg * Math.PI * 2;
+    return [side * len / 2 * (1 + Math.cos(th)), wid / 2 * Math.sin(th) * (1 - 0.3 * Math.cos(th)), 0]; };
+  for (let i = 0; i < seg; i++) { for (const q of [[side*len/2,0,0], pt(i), pt(i+1)]) { p.push(...q); n.push(0,0,1); } }
+  return { p, n };
+}
+const mesh = g => { const pb = gl.createBuffer(), nb = gl.createBuffer();
+  gl.bindBuffer(gl.ARRAY_BUFFER, pb); gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(g.p), gl.STATIC_DRAW);
+  gl.bindBuffer(gl.ARRAY_BUFFER, nb); gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(g.n), gl.STATIC_DRAW);
+  return { pb, nb, count: g.p.length / 3 }; };
+
+/* ───────────────────────── Models ───────────────────────── */
+// part = { g: mesh, base: brightness, m: static matrix | dyn: t => matrix }
+function buildDragonfly() {
+  const parts = [], add = (g, m, base, dyn) => parts.push({ g: mesh(g), m, base, dyn });
+  add(sphere(.72, 1.0, .65), M.T(0, .4, 0), .8);                       // thorax
+  add(sphere(.55, .5, .52), M.T(0, 1.6, 0), .9);                     // head
+  add(sphere(.34, .34, .34, 10, 8), M.T(-.4, 1.72, .15), 1);              // eyes
+  add(sphere(.34, .34, .34, 10, 8), M.T( .4, 1.72, .15), 1);
+  for (let i = 0; i < 9; i++) {                                         // segmented abdomen
+    const r0 = .4 - i * .028, r1 = .4 - (i + 1) * .028;
+    add(cyl(r0, r1, .5), M.T(0, -.2 - i * .56 - .5, 0), .55 + (i % 2) * .2); }
+  const defs = [{ ry: .85, len: 4.5, wid: 1.0, sweep: .12, ph: 0 }, { ry: .1, len: 4.3, wid: 1.3, sweep: -.06, ph: Math.PI }];
+  for (const side of [-1, 1]) for (const w of defs) {
+    const root = t => chain(M.T(side * .35, w.ry, 0), M.Ry(side * Math.sin(t * 9 + w.ph) * .32), M.Rz(-side * w.sweep));
+    add(wing(w.len, w.wid, side), null, .42, root);
+    add(cyl(.05, .035, w.len * .7, 6), null, 1, t => chain(root(t), M.T(0, w.wid * .28, 0), M.Rz(-side * Math.PI / 2)));
+    add(cyl(.035, .03, w.len * .62, 6), null, .9, t => chain(root(t), M.T(0, -w.wid * .05, 0), M.Rz(-side * Math.PI / 2)));
+  }
+  return { parts, center: [0, -1.6, 0], size: 9 };
+}
+function buildLantern() {
+  const parts = [], add = (g, m, base) => parts.push({ g: mesh(g), m, base });
+  add(sphere(.8, 1.0, .8), M.T(0, 0, 0), 1);                            // glowing core
+  add(cyl(1.9, .15, 1.0), M.T(0, 1.9, 0), .85);                         // roof
+  add(cyl(.15, 1.7, .9), M.T(0, -2.8, 0), .85);                         // base
+  for (let i = 0; i < 8; i++) { const a = i / 8 * Math.PI * 2;          // cage ribs
+    add(cyl(.11, .11, 3.8, 6), M.T(Math.cos(a) * 1.55, -1.9, Math.sin(a) * 1.55), .95); }
+  for (const y of [-1.9, 0, 1.9]) add(cyl(1.65, 1.65, .16, 24), M.T(0, y - .08, 0), .7);   // rings
+  add(cyl(.06, .06, 1.4, 6), M.T(0, 2.9, 0), 1);                        // hanger
+  add(sphere(.3, .3, .3, 10, 8), M.T(0, 4.5, 0), 1);
+  add(cyl(.07, .07, 1.5, 6), M.T(0, -4.3, 0), 1);                       // tassel
+  add(sphere(.3, .4, .3, 10, 8), M.T(0, -4.4, 0), 1);
+  return { parts, center: [0, .2, 0], size: 9.4 };
+}
+function buildLotus() {
+  const parts = [], add = (g, m, base) => parts.push({ g: mesh(g), m, base });
+  const rings = [{ n: 6, tilt: .3, off: 0, base: .45, s: 1.0 }, { n: 6, tilt: .85, off: .52, base: .7, s: 1.1 }, { n: 8, tilt: 1.35, off: .2, base: 1, s: .95 }];
+  for (const r of rings) for (let i = 0; i < r.n; i++) {
+    add(sphere(.4 * r.s, 1.25 * r.s, .1), chain(M.Ry(i / r.n * Math.PI * 2 + r.off), M.Rx(r.tilt), M.T(0, 1.25 * r.s, 0)), r.base); }
+  add(sphere(.5, .3, .5), M.T(0, .35, 0), 1);
+  for (let i = 0; i < 10; i++) add(cyl(.04, .04, .9, 5), chain(M.Ry(i / 10 * Math.PI * 2), M.Rx(.25), M.T(0, .3, 0)), 1);
+  return { parts, center: [0, 1.0, 0], size: 5.6 };
+}
+const MODELS = { dragonfly: buildDragonfly(), lantern: buildLantern(), lotus: buildLotus() };
+
+/* ───────────────────────── Shaders ───────────────────────── */
+function prog(vs, fs) {
+  const mk = (t, s) => { const sh = gl.createShader(t); gl.shaderSource(sh, s); gl.compileShader(sh);
+    if (!gl.getShaderParameter(sh, gl.COMPILE_STATUS)) throw new Error(gl.getShaderInfoLog(sh)); return sh; };
+  const p = gl.createProgram(); gl.attachShader(p, mk(gl.VERTEX_SHADER, vs)); gl.attachShader(p, mk(gl.FRAGMENT_SHADER, fs)); gl.linkProgram(p);
+  if (!gl.getProgramParameter(p, gl.LINK_STATUS)) throw new Error(gl.getProgramInfoLog(p));
+  return p; }
+
+const sceneP = prog(`
+attribute vec3 aPos; attribute vec3 aNrm;
+uniform mat4 uModel, uVP; varying vec3 vN;
+void main(){ vN = mat3(uModel) * aNrm; gl_Position = uVP * uModel * vec4(aPos, 1.0); }`, `
+precision mediump float;
+varying vec3 vN; uniform float uBase, uReveal;
+void main(){
+  vec3 n = normalize(vN);
+  float mask = n.y * .5 + .5;                 // upward-facing normals appear first
+  if (mask < uReveal) discard;
+  float edge = 1.0 - smoothstep(0.0, .06, mask - uReveal);
+  float d = abs(dot(n, normalize(vec3(-.4, .55, .75))));
+  float g = clamp(uBase * (.28 + .9 * d), 0.0, 1.0);
+  g = mix(g, 1.0, edge * step(.001, uReveal));
+  gl_FragColor = vec4(vec3(g), 1.0);
+}`);
+
+const postP = prog(`
+attribute vec2 aPos; varying vec2 vUv;
+void main(){ vUv = aPos * .5 + .5; gl_Position = vec4(aPos, 0., 1.); }`, `
+precision highp float;
+varying vec2 vUv;
+uniform sampler2D tScene, tAtlas, tTrail;
+uniform vec2 uRes;
+uniform float uGran, uLimit, uSmear, uTime, uFlicker;
+uniform vec3 uColor, uAccent, uBg;
+float hash(float n){ return fract(sin(n) * 43758.5453); }
+float luma(vec3 c){ return dot(c, vec3(.299, .587, .114)); }
+float gray(vec2 uv, vec2 d){
+  float s = luma(texture2D(tScene, uv).rgb) * 2.0;
+  s += luma(texture2D(tScene, uv + vec2(d.x, 0.) * .33).rgb);
+  s += luma(texture2D(tScene, uv - vec2(d.x, 0.) * .33).rgb);
+  s += luma(texture2D(tScene, uv + vec2(0., d.y) * .33).rgb);
+  s += luma(texture2D(tScene, uv - vec2(0., d.y) * .33).rgb);
+  return s / 6.0;
+}
+void main(){
+  // 1. snap to a coarse pixel grid
+  vec2 division = uRes / uGran, d = 1.0 / division;
+  vec2 cell = floor(vUv / d);
+  vec2 uv = d * (cell + .5);
+  float alpha = 1.0;
+
+  // 2. "waterfall" smear: rows rising from the bottom collapse onto one line and fade
+  if (uSmear > 0.0) {
+    float rows = division.y, smearRows = uSmear * rows;
+    float m = clamp((smearRows - cell.y) / max(1.0, smearRows * .8), 0.0, 1.0);
+    m = pow(m, mix(1.5, 3.0, hash(cell.y * 21.0)));
+    float src = min(smearRows + 1.0, rows - 1.0) + .5 - hash(cell.y * 31.0 + cell.x * 13.0) * .6;
+    uv.y = mix(uv.y, d.y * src, m);
+    alpha = mix(1.0, .05, (1.0 - cell.y / rows) * m * uSmear);
+  }
+
+  // 3. brightness + cheap edge detection
+  float g = gray(uv, d);
+  float gLeft = luma(texture2D(tScene, uv - vec2(d.x * .5, 0.)).rgb), gr = luma(texture2D(tScene, uv + vec2(d.x * .5, 0.)).rgb);
+  float gd = luma(texture2D(tScene, uv - vec2(0., d.y * .5)).rgb), gu = luma(texture2D(tScene, uv + vec2(0., d.y * .5)).rgb);
+  float edge = smoothstep(.02, .3, length(vec2(gr - gLeft, gu - gd)));
+
+  // 4. pick a glyph: brightness by default, cursor trail overrides it along edges
+  float tr = texture2D(tTrail, vUv).r;
+  float infl = step(.12, tr) * edge;
+  float idx = mix(floor(clamp(g * 1.25, 0.0, 1.0) * (uLimit - 1.0) + .5), floor(tr * (uLimit - 1.0)), infl);
+  float col = mod(idx, 16.0), row = floor(idx / 16.0);
+  vec2 f = fract(vUv / d);
+  float glyph = texture2D(tAtlas, vec2((col + f.x) / 16.0, 1.0 - (row + 1.0 - f.y) / 16.0)).r;
+
+  // 5. flicker + colour
+  float fl = hash(dot(cell, vec2(12.9898, 78.233)) + floor(uTime * 3.0));
+  glyph *= 1.0 - uFlicker * step(.85, fl) * .7;
+  vec3 c = uColor * glyph;
+  c = mix(c, uAccent * glyph * 1.25, clamp(tr * edge * 2.5, 0.0, 1.0));
+  gl_FragColor = vec4(uBg + c * alpha, 1.0);
+}`);
+
+const sceneLoc = { pos: gl.getAttribLocation(sceneP, 'aPos'), nrm: gl.getAttribLocation(sceneP, 'aNrm'),
+  model: gl.getUniformLocation(sceneP, 'uModel'), vp: gl.getUniformLocation(sceneP, 'uVP'),
+  base: gl.getUniformLocation(sceneP, 'uBase'), reveal: gl.getUniformLocation(sceneP, 'uReveal') };
+const U = n => gl.getUniformLocation(postP, n);
+const postLoc = { pos: gl.getAttribLocation(postP, 'aPos'), tScene: U('tScene'), tAtlas: U('tAtlas'), tTrail: U('tTrail'), res: U('uRes'),
+  gran: U('uGran'), limit: U('uLimit'), smear: U('uSmear'), time: U('uTime'), flicker: U('uFlicker'),
+  color: U('uColor'), accent: U('uAccent'), bg: U('uBg') };
+
+const quad = gl.createBuffer();
+gl.bindBuffer(gl.ARRAY_BUFFER, quad); gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1,-1, 1,-1, -1,1, 1,1]), gl.STATIC_DRAW);
+
+/* ───────────────────────── Glyph atlas: characters sorted by measured ink density ───────────────────────── */
+function buildAtlas() {
+  const CAND = ' .\'`,:;-_~^"!ilI|/\\()[]{}<>+=*?rcvunxzjftLCJUYXZO0Qoabdkhpqwm#MW&8%B@$';
+  const FONT = '700 46px ui-monospace,Menlo,Consolas,"Courier New",monospace';
+  const t = document.createElement('canvas'); t.width = t.height = 64; const c = t.getContext('2d', { willReadFrequently: true });
+  const set = [...new Set(CAND)].map(ch => {
+    c.fillStyle = '#000'; c.fillRect(0, 0, 64, 64); c.fillStyle = '#fff'; c.font = FONT; c.textAlign = 'center'; c.textBaseline = 'middle';
+    c.fillText(ch, 32, 34); const d = c.getImageData(0, 0, 64, 64).data; let s = 0; for (let i = 0; i < d.length; i += 4) s += d[i];
+    return { ch, s }; }).sort((a, b) => a.s - b.s);
+  const a = document.createElement('canvas'); a.width = a.height = 1024; const x = a.getContext('2d');
+  x.fillStyle = '#000'; x.fillRect(0, 0, 1024, 1024); x.fillStyle = '#fff'; x.font = FONT; x.textAlign = 'center'; x.textBaseline = 'middle';
+  set.forEach((g, i) => x.fillText(g.ch, (i % 16) * 64 + 32, Math.floor(i / 16) * 64 + 34));
+  return { canvas: a, count: set.length };
+}
+const atlas = buildAtlas();
+
+gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, true);
+const atlasTex = gl.createTexture();
+gl.bindTexture(gl.TEXTURE_2D, atlasTex);
+gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, atlas.canvas);
+gl.generateMipmap(gl.TEXTURE_2D);
+gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR_MIPMAP_LINEAR);
+gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
+
+/* ───────────────────────── Cursor trail (small 2D canvas → texture) ───────────────────────── */
+const trail = document.createElement('canvas'), tctx = trail.getContext('2d');
+const trailTex = gl.createTexture();
+gl.bindTexture(gl.TEXTURE_2D, trailTex);
+for (const [k, v] of [[gl.TEXTURE_MIN_FILTER, gl.LINEAR], [gl.TEXTURE_MAG_FILTER, gl.LINEAR], [gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE], [gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE]])
+  gl.texParameteri(gl.TEXTURE_2D, k, v);
+const mouse = { x: 0, y: 0, px: 0, py: 0, nx: 0, ny: 0, v: 0, active: false };
+addEventListener('pointermove', e => { mouse.x = e.clientX; mouse.y = e.clientY; mouse.nx = e.clientX / innerWidth * 2 - 1; mouse.ny = e.clientY / innerHeight * 2 - 1;
+  if (!mouse.active) { mouse.px = mouse.x; mouse.py = mouse.y; } mouse.active = true; }, { passive: true });
+document.addEventListener('pointerleave', () => { mouse.active = false; });
+
+function stepTrail() {
+  const tw = trail.width, th = trail.height;
+  tctx.fillStyle = 'rgba(0,0,0,0.07)'; tctx.fillRect(0, 0, tw, th);
+  const dx = mouse.x - mouse.px, dy = mouse.y - mouse.py;
+  mouse.v += (Math.hypot(dx, dy) - mouse.v) * .25;
+  if (mouse.active) {
+    const k = tw / innerWidth, x0 = mouse.px * k, y0 = mouse.py * k, x1 = mouse.x * k, y1 = mouse.y * k;
+    const r = 3 + clamp(mouse.v / 50, 0, 1) * 9, steps = Math.max(1, Math.ceil(Math.hypot(x1 - x0, y1 - y0) / 2));
+    for (let i = 1; i <= steps; i++) { const x = x0 + (x1 - x0) * i / steps, y = y0 + (y1 - y0) * i / steps;
+      const g = tctx.createRadialGradient(x, y, 0, x, y, r); g.addColorStop(0, 'rgba(255,255,255,.85)'); g.addColorStop(1, 'rgba(255,255,255,0)');
+      tctx.fillStyle = g; tctx.beginPath(); tctx.arc(x, y, r, 0, 7); tctx.fill(); }
+  }
+  mouse.px = mouse.x; mouse.py = mouse.y;
+  gl.activeTexture(gl.TEXTURE2); gl.bindTexture(gl.TEXTURE_2D, trailTex);
+  gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, true);
+  gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, trail);
+}
+
+/* ───────────────────────── Render target + resize ───────────────────────── */
+let W = 0, H = 0, pr = 1, rtW = 0, rtH = 0, fbo, sceneTex, depthRb, camZ = 1000;
+const FOV = 30 * Math.PI / 180;
+function resize() {
+  W = innerWidth; H = innerHeight; pr = Math.min(devicePixelRatio || 1, 2);
+  rtW = Math.round(W * pr); rtH = Math.round(H * pr); canvas.width = rtW; canvas.height = rtH;
+  camZ = (H / 2) / Math.tan(FOV / 2);
+  if (!fbo) { fbo = gl.createFramebuffer(); sceneTex = gl.createTexture(); depthRb = gl.createRenderbuffer(); }
+  gl.bindTexture(gl.TEXTURE_2D, sceneTex);
+  gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, rtW, rtH, 0, gl.RGBA, gl.UNSIGNED_BYTE, null);
+  for (const [k, v] of [[gl.TEXTURE_MIN_FILTER, gl.LINEAR], [gl.TEXTURE_MAG_FILTER, gl.LINEAR], [gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE], [gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE]])
+    gl.texParameteri(gl.TEXTURE_2D, k, v);
+  gl.bindRenderbuffer(gl.RENDERBUFFER, depthRb); gl.renderbufferStorage(gl.RENDERBUFFER, gl.DEPTH_COMPONENT16, rtW, rtH);
+  gl.bindFramebuffer(gl.FRAMEBUFFER, fbo);
+  gl.framebufferTexture2D(gl.FRAMEBUFFER, gl.COLOR_ATTACHMENT0, gl.TEXTURE_2D, sceneTex, 0);
+  gl.framebufferRenderbuffer(gl.FRAMEBUFFER, gl.DEPTH_ATTACHMENT, gl.RENDERBUFFER, depthRb);
+  trail.width = 192; trail.height = Math.max(1, Math.round(192 * H / W));
+}
+addEventListener('resize', resize); resize();
+
+/* ───────────────────────── Smooth scroll (Lenis-style, ~20 lines) ───────────────────────── */
+const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches, coarse = matchMedia('(pointer: coarse)').matches;
+const smoothOn = !reduce && !coarse;
+const maxScroll = () => document.documentElement.scrollHeight - innerHeight;
+let target = scrollY, cur = scrollY, wheelAt = 0, lastY = scrollY, vel = 0;
+if (smoothOn) {
+  addEventListener('wheel', e => { if (e.ctrlKey) return; e.preventDefault();
+    target = clamp(target + e.deltaY * (e.deltaMode === 1 ? 32 : 1), 0, maxScroll()); wheelAt = performance.now(); }, { passive: false });
+  document.querySelectorAll('header a').forEach(a => a.addEventListener('click', e => {
+    const el = document.querySelector(a.getAttribute('href')); if (!el) return; e.preventDefault(); wheelAt = performance.now();
+    target = a.getAttribute('href') === '#top' ? 0 : clamp(el.getBoundingClientRect().top + scrollY - (a.getAttribute('href') === '#lantern' ? 0 : 0), 0, maxScroll()); }));
+}
+function tickScroll() {
+  if (!smoothOn) return;
+  if (performance.now() - wheelAt > 200 && Math.abs(scrollY - cur) > 1.5) target = cur = scrollY;   // native jumps (keys, scrollbar)
+  cur += (target - cur) * CFG.smooth; if (Math.abs(target - cur) < .05) cur = target;
+  window.scrollTo(0, cur);
+}
+
+/* ───────────────────────── Scene: pin each model to its placeholder ───────────────────────── */
+const objects = [...document.querySelectorAll('.gl[data-model]')].map(el => ({ el, model: MODELS[el.dataset.model], name: el.dataset.model }));
+
+function drawObject(o, t, sy, vp) {
+  const r = o.el.getBoundingClientRect();
+  if (r.bottom < -H * .3 || r.top > H * 1.3) return 0;
+  const cx = r.left + r.width / 2 - W / 2, cy = H / 2 - (r.top + r.height / 2);
+  let size, reveal = 0, rot, bob = 0;
+  const spin = t * .35 + sy * .0025, m = o.model;
+  if (o.name === 'dragonfly') {
+    size = Math.min(r.width * .82, r.height * 1.25); bob = Math.sin(t * 1.3) * 8;
+    if (sy > H * .98) return 0;
+    const p = clamp(sy / H, 0, 1);
+    rot = chain(M.Rz(-.5 + p * 1.1 + mouse.nx * .08), M.Rx(.5 + Math.sin(t * .8) * .06 - mouse.ny * .15), M.Ry(mouse.nx * .35 + Math.sin(t * .6) * .08));
+  } else {
+    size = Math.min(r.width, r.height) * 1.05;
+    const inP = (H - r.top) / (H * .75), outP = r.bottom / (H * .5);
+    reveal = 1 - Math.min(smooth01(inP), smooth01(outP));
+    if (reveal >= 1) return 0;
+    rot = o.name === 'lantern' ? chain(M.Rx(.15), M.Ry(spin)) : chain(M.Rx(1.0 - mouse.ny * .1), M.Ry(spin * .6));
+  }
+  const s = size / m.size;
+  const base = chain(M.T(cx, cy + bob, 0), M.S(s), rot, M.T(-m.center[0], -m.center[1], -m.center[2]));
+  gl.uniform1f(sceneLoc.reveal, reveal);
+  for (const p of m.parts) {
+    gl.uniformMatrix4fv(sceneLoc.model, false, M.mul(base, p.dyn ? p.dyn(t) : p.m));
+    gl.uniform1f(sceneLoc.base, p.base);
+    gl.bindBuffer(gl.ARRAY_BUFFER, p.g.pb); gl.vertexAttribPointer(sceneLoc.pos, 3, gl.FLOAT, false, 0, 0);
+    gl.bindBuffer(gl.ARRAY_BUFFER, p.g.nb); gl.vertexAttribPointer(sceneLoc.nrm, 3, gl.FLOAT, false, 0, 0);
+    gl.drawArrays(gl.TRIANGLES, 0, p.g.count);
+  }
+  return 1;
+}
+
+function frame(now) {
+  const t = now / 1000;
+  tickScroll();
+  const sy = window.scrollY; vel += ((sy - lastY) - vel) * .2; lastY = sy;
+
+  // pass 1 — 3D scene → texture
+  gl.bindFramebuffer(gl.FRAMEBUFFER, fbo); gl.viewport(0, 0, rtW, rtH);
+  gl.clearColor(0, 0, 0, 1); gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
+  gl.enable(gl.DEPTH_TEST); gl.disable(gl.CULL_FACE);
+  gl.useProgram(sceneP); gl.enableVertexAttribArray(sceneLoc.pos); gl.enableVertexAttribArray(sceneLoc.nrm);
+  const vp = chain(M.persp(FOV, W / H, camZ * .3, camZ * 3), M.T(0, 0, -camZ));
+  gl.uniformMatrix4fv(sceneLoc.vp, false, vp);
+  for (const o of objects) drawObject(o, t, sy, vp);
+
+  // pass 2 — ASCII post-process → screen
+  stepTrail();
+  gl.bindFramebuffer(gl.FRAMEBUFFER, null); gl.viewport(0, 0, rtW, rtH); gl.disable(gl.DEPTH_TEST);
+  gl.useProgram(postP);
+  gl.disableVertexAttribArray(sceneLoc.nrm);
+  gl.bindBuffer(gl.ARRAY_BUFFER, quad); gl.enableVertexAttribArray(postLoc.pos); gl.vertexAttribPointer(postLoc.pos, 2, gl.FLOAT, false, 0, 0);
+  gl.activeTexture(gl.TEXTURE0); gl.bindTexture(gl.TEXTURE_2D, sceneTex); gl.uniform1i(postLoc.tScene, 0);
+  gl.activeTexture(gl.TEXTURE1); gl.bindTexture(gl.TEXTURE_2D, atlasTex);  gl.uniform1i(postLoc.tAtlas, 1);
+  gl.activeTexture(gl.TEXTURE2); gl.bindTexture(gl.TEXTURE_2D, trailTex);  gl.uniform1i(postLoc.tTrail, 2);
+  gl.uniform2f(postLoc.res, W, H);
+  gl.uniform1f(postLoc.gran, CFG.granularity());
+  gl.uniform1f(postLoc.limit, atlas.count);
+  gl.uniform1f(postLoc.smear, sy < H * .98 ? smooth01((sy / H - .12) / .8) : 0);   // hero exits as a waterfall
+  gl.uniform1f(postLoc.time, t);
+  gl.uniform1f(postLoc.flicker, CFG.flicker);
+  gl.uniform3fv(postLoc.color, CFG.color); gl.uniform3fv(postLoc.accent, CFG.accent); gl.uniform3fv(postLoc.bg, CFG.bg);
+  gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
+  requestAnimationFrame(frame);
+}
+requestAnimationFrame(frame);
+})();
+</script>
+</body>
+</html>
