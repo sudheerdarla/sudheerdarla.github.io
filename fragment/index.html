@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Sudheer Darla — Product Designer</title>
-  <meta name="description" content="Hero study: a drifting chain of 3D glass tiles that twist as you scroll.">
+  <meta name="description" content="Hero study: a drifting chain of 3D crypto coins that twist as you scroll.">
   <link rel="icon" href="../favicon-32.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -40,27 +40,41 @@
       transform-style: preserve-3d;
       will-change: transform, opacity;
     }
-    .tile > i {               /* slices that build up the tile's thickness */
-      position: absolute; inset: 0;
-      border-radius: var(--r);
-      background: #1b2125;
-      border: 1px solid rgba(232, 240, 245, var(--rim, .4));
+    /* ---------- Coins ---------- */
+    .tile > i {               /* slices that build up the coin's metal edge */
+      position: absolute; inset: 0; border-radius: 50%;
+      background: hsl(var(--hu) calc(var(--sa) * .6%) calc(var(--b) * .45%));
+      border: 1.5px solid hsl(var(--hu) calc(var(--sa) * .5%) calc(55% + var(--g) * 35%) / var(--rim, .5));
       backface-visibility: visible;
     }
     .tile > .face {
-      position: absolute; inset: 0;
-      border-radius: var(--r);
+      position: absolute; inset: 0; border-radius: 50%;
+      display: grid; place-items: center;
       background:
-        radial-gradient(120% 90% at 30% 20%, hsl(200 8% calc(var(--L) * 1% + 10%)) 0%, transparent 70%),
-        linear-gradient(155deg,
-          hsl(200 9% calc(var(--L) * 1%)) 0%,
-          hsl(200 10% calc(var(--L) * .55%)) 55%,
-          hsl(200 12% calc(var(--L) * .35%)) 100%);
+        radial-gradient(circle at 32% 26%, hsl(var(--hu) calc(var(--sa) * 1%) calc(var(--b) * 1% + var(--L) * .45%) / .95) 0%, transparent 46%),
+        radial-gradient(circle at 50% 50%,
+          hsl(var(--hu) calc(var(--sa) * 1%) calc(var(--b) * .85% + var(--L) * .22%)) 0%,
+          hsl(var(--hu) calc(var(--sa) * .9%) calc(var(--b) * .55% + var(--L) * .12%)) 70%,
+          hsl(var(--hu) calc(var(--sa) * .8%) calc(var(--b) * .3%)) 100%);
       box-shadow:
-        inset 0 0 0 1.5px rgba(240, 246, 250, calc(.25 + var(--g) * .6)),
-        inset 2px 2px 0 rgba(255, 255, 255, calc(.1 + var(--g) * .5)),
-        0 0 calc(var(--g) * 60px) rgba(220, 235, 245, calc(var(--g) * .35));
-      backface-visibility: visible;
+        inset 0 0 0 calc(var(--d) * .045) hsl(var(--hu) calc(var(--sa) * .7%) calc(var(--b) * .7% + var(--L) * .25%)),
+        inset 0 0 0 calc(var(--d) * .052) rgba(255,255,255, calc(.18 + var(--g) * .5)),
+        inset calc(var(--d) * .02) calc(var(--d) * .025) calc(var(--d) * .05) rgba(255,255,255, calc(.12 + var(--g) * .35)),
+        inset calc(var(--d) * -.03) calc(var(--d) * -.04) calc(var(--d) * .08) rgba(0,0,0,.45),
+        0 0 calc(var(--g) * 70px) hsl(var(--hu) calc(var(--sa) * 1%) 60% / calc(var(--g) * .45));
+      backface-visibility: hidden;
+    }
+    .tile > .face.back { transform: translateZ(var(--back)) rotateY(180deg); }
+    .face b {                 /* token symbol, embossed */
+      font-family: var(--font); font-weight: 600; line-height: 1;
+      font-size: calc(var(--d) * .42);
+      color: hsl(var(--hu) calc(var(--sa) * .5%) calc(88% + var(--g) * 10%) / calc(.78 + var(--g) * .22));
+      text-shadow: 0 calc(var(--d) * -.006) 0 rgba(255,255,255,.5), 0 calc(var(--d) * .012) calc(var(--d) * .02) rgba(0,0,0,.55);
+    }
+    .face em {
+      position: absolute; bottom: 17%; font-style: normal; font-size: calc(var(--d) * .055);
+      letter-spacing: .22em; font-weight: 600;
+      color: hsl(var(--hu) calc(var(--sa) * .4%) 92% / .65);
     }
 
     /* ---------- Nav ---------- */
@@ -182,15 +196,38 @@
   (function () {
     var chain = document.getElementById("chain");
     var N = 13;               // tiles in the chain
-    var SLICES = 12;           // thickness layers per tile
+    var SLICES = 14;           // thickness layers per tile
     var tiles = [];
 
+    // Token set: currency symbol, ticker, hue, saturation, base lightness
+    var TOKENS = [
+      ["\u20BF", "BTC",  33, 92, 52],
+      ["\u039E", "ETH",  232, 30, 52],
+      ["\u25CE", "SOL",  268, 70, 46],
+      ["\u20AE", "USDT", 162, 62, 40],
+      ["\u0110", "DOGE", 45, 70, 50],
+      ["\u20B3", "ADA",  218, 70, 44],
+      ["\u2715", "XRP",  210, 8, 40],
+      ["\u0141", "LTC",  212, 18, 58],
+      ["\u25C6", "BNB",  45, 95, 50],
+      ["\u25CF", "DOT",  330, 85, 50],
+      ["\u25B2", "AVAX", 2, 78, 50],
+      ["\u25C7", "TON",  200, 85, 48],
+      ["\u2B21", "LINK", 224, 75, 46]
+    ];
+
     for (var i = 0; i < N; i++) {
+      var tk = TOKENS[i % TOKENS.length];
       var t = document.createElement("div");
       t.className = "tile";
+      t.style.setProperty("--hu", tk[2]);
+      t.style.setProperty("--sa", tk[3]);
+      t.style.setProperty("--b", tk[4]);
       var html = "";
-      for (var s = 0; s < SLICES; s++) html += '<i style="transform:translateZ(' + (-s * 2.6) + 'px)"></i>';
-      html += '<div class="face" style="transform:translateZ(1px)"></div>';
+      for (var s = 0; s < SLICES; s++) html += '<i style="transform:translateZ(calc(var(--step) * ' + (-s) + '))"></i>';
+      var face = '<b>' + tk[0] + '</b><em>' + tk[1] + '</em>';
+      html += '<div class="face" style="transform:translateZ(1px)">' + face + '</div>';
+      html += '<div class="face back">' + face + '</div>';
       t.innerHTML = html;
       chain.appendChild(t);
       tiles.push(t);
@@ -202,10 +239,12 @@
       vw = window.innerWidth; vh = window.innerHeight;
       unit = Math.min(vw / 1440, vh / 900);
       unit = Math.max(unit, vw < 760 ? 0.55 : 0.6);
-      var w = 270 * unit, h = 300 * unit;
-      chain.style.setProperty("--w", w + "px");
-      chain.style.setProperty("--h", h + "px");
-      chain.style.setProperty("--r", (30 * unit) + "px");
+      var d = 250 * unit, step = 2.4 * unit;
+      chain.style.setProperty("--w", d + "px");
+      chain.style.setProperty("--h", d + "px");
+      chain.style.setProperty("--d", d + "px");
+      chain.style.setProperty("--step", step + "px");
+      chain.style.setProperty("--back", (-(SLICES - 1) * step - 1) + "px");
     }
     size(); window.addEventListener("resize", size);
 
@@ -259,7 +298,7 @@
         var glow = Math.exp(-(d * d) / 1.6);
         // tiles facing the viewer read lighter; edge-on tiles read darker
         var facing = Math.abs(Math.cos((ry + 46) * Math.PI / 180));
-        var L = 9 + glow * 70 * (0.55 + 0.45 * facing) + 10 * Math.max(0, Math.sin(k * 0.9));
+        var L = glow * 75 * (0.55 + 0.45 * facing) + 8 * Math.max(0, Math.sin(k * 0.9));
         var rim = 0.3 + glow * 0.5 + (1 - facing) * 0.45;
 
         // fade in/out at the ends so the wrap is invisible
