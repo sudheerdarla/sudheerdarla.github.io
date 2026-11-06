@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sudheer Darla — Product Designer</title>
+  <meta name="description" content="Hero study: a drifting chain of 3D glass tiles that twist as you scroll.">
+  <link rel="icon" href="../favicon-32.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #000;
+      --text: #d4dade;
+      --muted: #aab3b9;
+      --btn: #cfd6da;
+      --font: "Inter Tight", "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+    }
+    * { box-sizing: border-box; }
+    html, body { margin: 0; background: var(--bg); color: var(--text); }
+    body { font-family: var(--font); -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+    a { color: inherit; text-decoration: none; }
+
+    /* ---------- 3D tile stage (fixed behind the hero) ---------- */
+    .stage {
+      position: fixed; inset: 0; z-index: 0;
+      perspective: 1600px; perspective-origin: 50% 40%;
+      overflow: hidden; pointer-events: none;
+    }
+    .chain {
+      position: absolute; left: 50%; top: 42%;
+      width: 0; height: 0;
+      transform-style: preserve-3d;
+    }
+    .tile {
+      position: absolute;
+      width: var(--w); height: var(--h);
+      margin-left: calc(var(--w) / -2); margin-top: calc(var(--h) / -2);
+      transform-style: preserve-3d;
+      will-change: transform, opacity;
+    }
+    .tile > i {               /* slices that build up the tile's thickness */
+      position: absolute; inset: 0;
+      border-radius: var(--r);
+      background: #1b2125;
+      border: 1px solid rgba(232, 240, 245, var(--rim, .4));
+      backface-visibility: visible;
+    }
+    .tile > .face {
+      position: absolute; inset: 0;
+      border-radius: var(--r);
+      background:
+        radial-gradient(120% 90% at 30% 20%, hsl(200 8% calc(var(--L) * 1% + 10%)) 0%, transparent 70%),
+        linear-gradient(155deg,
+          hsl(200 9% calc(var(--L) * 1%)) 0%,
+          hsl(200 10% calc(var(--L) * .55%)) 55%,
+          hsl(200 12% calc(var(--L) * .35%)) 100%);
+      box-shadow:
+        inset 0 0 0 1.5px rgba(240, 246, 250, calc(.25 + var(--g) * .6)),
+        inset 2px 2px 0 rgba(255, 255, 255, calc(.1 + var(--g) * .5)),
+        0 0 calc(var(--g) * 60px) rgba(220, 235, 245, calc(var(--g) * .35));
+      backface-visibility: visible;
+    }
+
+    /* ---------- Nav ---------- */
+    .nav {
+      position: absolute; top: 0; left: 0; right: 0; z-index: 10;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 18px 40px;
+    }
+    .brand { display: flex; align-items: center; gap: 10px; font-weight: 600; font-size: 22px; letter-spacing: -.02em; color: #e6ebee; }
+    .brand svg { width: 22px; height: 22px; }
+    .links { display: flex; align-items: center; gap: 32px; }
+    .links a { font-size: 14px; font-weight: 500; letter-spacing: .1em; text-transform: uppercase; color: #dfe5e8; opacity: .9; transition: opacity .2s; }
+    .links a:hover { opacity: 1; }
+    .pill {
+      display: inline-flex; padding: 4px; border-radius: 999px;
+      border: 1px solid rgba(255,255,255,.18); background: rgba(10,12,14,.6);
+    }
+    .pill a { font-size: 13px; padding: 6px 12px; border-radius: 999px; letter-spacing: .06em; }
+    .pill a.on { background: #d7dde0; color: #0b0d0f; }
+
+    /* ---------- Hero copy ---------- */
+    .hero {
+      position: relative; z-index: 4;
+      min-height: 100vh; min-height: 100svh;
+      display: flex; flex-direction: column; justify-content: flex-end;
+      padding: 0 40px 56px;
+    }
+    h1 {
+      margin: 0 0 40px;
+      font-weight: 300; font-size: clamp(44px, 7.2vw, 112px);
+      line-height: 1.02; letter-spacing: -.035em;
+      color: #cdd4d8;
+    }
+    h1 span { display: block; }
+    .row { display: flex; align-items: center; gap: 48px; flex-wrap: wrap; }
+    .row p { margin: 0; max-width: 360px; font-size: 17px; line-height: 1.45; color: var(--muted); }
+    .btn {
+      display: inline-flex; align-items: center; padding: 15px 22px; border-radius: 8px;
+      background: var(--btn); color: #0b0d0f; font-size: 14px; font-weight: 500;
+      letter-spacing: .12em; text-transform: uppercase; transition: background .2s, transform .2s;
+    }
+    .btn:hover { background: #fff; transform: translateY(-1px); }
+
+    /* entrance */
+    .js .reveal { opacity: 0; transform: translateY(24px); }
+    .ready .reveal { opacity: 1; transform: none; transition: opacity 1s ease, transform 1s cubic-bezier(.2,.7,.2,1); }
+    .ready .reveal:nth-child(2) { transition-delay: .08s; }
+    .ready .reveal:nth-child(3) { transition-delay: .16s; }
+    .ready .row.reveal { transition-delay: .3s; }
+
+    /* ---------- Section after the hero (covers the stage) ---------- */
+    .after {
+      position: relative; z-index: 3; background: var(--bg);
+      padding: 120px 40px 160px;
+      display: grid; grid-template-columns: 220px 1fr; gap: 40px;
+    }
+    .after::before {
+      content: ""; position: absolute; left: 0; right: 0; top: -220px; height: 220px;
+      background: linear-gradient(to bottom, rgba(0,0,0,0), #000); pointer-events: none;
+    }
+    .after .label { font-size: 12px; letter-spacing: .2em; text-transform: uppercase; color: #7f888e; padding-top: 8px; }
+    .after p { margin: 0; max-width: 900px; font-size: clamp(22px, 2.6vw, 36px); line-height: 1.3; font-weight: 300; letter-spacing: -.015em; color: #c9d0d4; }
+
+    @media (max-width: 760px) {
+      .nav { padding: 16px 20px; }
+      .links a:not(.keep) { display: none; }
+      .links { gap: 16px; }
+      .hero { padding: 0 20px 40px; }
+      .row { gap: 24px; }
+      .after { grid-template-columns: 1fr; padding: 80px 20px 120px; }
+    }
+  </style>
+  <script>
+    (function () {
+      var r = document.documentElement; r.classList.add("js");
+      function go() { requestAnimationFrame(function () { requestAnimationFrame(function () { r.classList.add("ready"); }); }); }
+      window.addEventListener("load", go); setTimeout(go, 2500);
+    })();
+  </script>
+</head>
+<body>
+
+  <div class="stage" aria-hidden="true"><div class="chain" id="chain"></div></div>
+
+  <header class="nav">
+    <a class="brand" href="../">
+      <svg viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="11" height="13" rx="3" transform="rotate(-18 8 9)" stroke="#e6ebee" stroke-width="2"/><rect x="10" y="8" width="11" height="13" rx="3" transform="rotate(-18 15 14)" fill="#e6ebee"/></svg>
+      Sudheer
+    </a>
+    <nav class="links">
+      <a href="../">Home</a>
+      <a href="../work.html">Work</a>
+      <a href="../#about">About</a>
+      <a href="mailto:sudheer.darla11@gmail.com">Contact</a>
+      <span class="pill"><a class="on keep" href="../Sudheer_Darla_Resume.pdf">CV</a><a class="keep" href="../work.html">Work</a></span>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero">
+      <h1>
+        <span class="reveal">Zero to one.</span>
+        <span class="reveal">Clear direction.</span>
+        <span class="reveal">Shipped products.</span>
+      </h1>
+      <div class="row reveal">
+        <p>Product design for fintech and Web3 teams, from the first sketch to the version in production.</p>
+        <a class="btn" href="mailto:sudheer.darla11@gmail.com">Start a project</a>
+      </div>
+    </section>
+
+    <section class="after" id="about">
+      <div class="label">About me</div>
+      <p>I'm a product designer with 5+ years of shipping 0–1 fintech and Web3 products. Based in Hyderabad, working remotely with teams anywhere.</p>
+    </section>
+  </main>
+
+  <script>
+  (function () {
+    var chain = document.getElementById("chain");
+    var N = 13;               // tiles in the chain
+    var SLICES = 12;           // thickness layers per tile
+    var tiles = [];
+
+    for (var i = 0; i < N; i++) {
+      var t = document.createElement("div");
+      t.className = "tile";
+      var html = "";
+      for (var s = 0; s < SLICES; s++) html += '<i style="transform:translateZ(' + (-s * 2.6) + 'px)"></i>';
+      html += '<div class="face" style="transform:translateZ(1px)"></div>';
+      t.innerHTML = html;
+      chain.appendChild(t);
+      tiles.push(t);
+    }
+
+    var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    var unit = 1, vw = 1, vh = 1;
+    function size() {
+      vw = window.innerWidth; vh = window.innerHeight;
+      unit = Math.min(vw / 1440, vh / 900);
+      unit = Math.max(unit, vw < 760 ? 0.55 : 0.6);
+      var w = 270 * unit, h = 300 * unit;
+      chain.style.setProperty("--w", w + "px");
+      chain.style.setProperty("--h", h + "px");
+      chain.style.setProperty("--r", (30 * unit) + "px");
+    }
+    size(); window.addEventListener("resize", size);
+
+    // Pointer parallax (eased)
+    var mx = 0, my = 0, tmx = 0, tmy = 0;
+    window.addEventListener("pointermove", function (e) {
+      tmx = e.clientX / vw - 0.5; tmy = e.clientY / vh - 0.5;
+    });
+
+    // Scroll progress across the first viewport (eased)
+    var sp = 0;
+    function scrollP() { return Math.min(Math.max(window.scrollY / vh, 0), 1.4); }
+
+    var offset = 0, last = performance.now();
+    var SPEED = 0.32;          // tiles per second along the chain
+    var GAP = 172;             // spacing along the diagonal (in unit px)
+
+    function frame(now) {
+      var dt = Math.min((now - last) / 1000, 0.05); last = now;
+      if (!reduce) offset += dt * SPEED;
+      mx += (tmx - mx) * 0.05; my += (tmy - my) * 0.05;
+      sp += (scrollP() - sp) * 0.1;
+
+      // direction of the chain: from top-left (far up) to bottom-right
+      var dirX = 0.82, dirY = 0.40, dirZ = -0.30;
+      var gap = GAP * unit;
+      var narrow = vw < 760;
+      var cx = (narrow ? 0.02 : 0.04) * vw;   // chain centre offset
+      var cy = (narrow ? -0.14 : -0.16) * vh;
+
+      for (var i = 0; i < N; i++) {
+        // k runs through the chain; wraps so tiles flow up-left continuously
+        var k = ((i - offset) % N + N) % N;           // 0..N
+        var c = k - N / 2;                              // centred index
+        var x = cx + c * gap * dirX;
+        var y = cy + c * gap * dirY;
+        var z = c * gap * dirZ;
+
+        // scroll twist: tiles turn toward edge-on, staggered along the chain like a wave
+        var tw = Math.min(sp * 1.5, 1.2);
+        var wave = Math.sin(k * 0.55 - sp * 2.2);
+        var twist = tw * (55 + (1 - k / N) * 110) + wave * tw * 16;
+
+        var ry = -46 + twist + mx * 10;
+        var rx = 20 - sp * 6 + my * -8;
+        var rz = -12 - sp * 6;
+
+        // light: a soft spotlight sits a third of the way along the chain
+        var lightPos = N * 0.36 - sp * 1.4;
+        var d = k - lightPos;
+        var glow = Math.exp(-(d * d) / 1.6);
+        // tiles facing the viewer read lighter; edge-on tiles read darker
+        var facing = Math.abs(Math.cos((ry + 46) * Math.PI / 180));
+        var L = 9 + glow * 70 * (0.55 + 0.45 * facing) + 10 * Math.max(0, Math.sin(k * 0.9));
+        var rim = 0.3 + glow * 0.5 + (1 - facing) * 0.45;
+
+        // fade in/out at the ends so the wrap is invisible
+        var fade = Math.min(1, k / 1.2, (N - k) / 1.2);
+
+        var el = tiles[i];
+        el.style.transform =
+          "translate3d(" + x.toFixed(1) + "px," + y.toFixed(1) + "px," + z.toFixed(1) + "px)" +
+          " rotateZ(" + rz.toFixed(2) + "deg) rotateY(" + ry.toFixed(2) + "deg) rotateX(" + rx.toFixed(2) + "deg)";
+        el.style.opacity = Math.max(0, fade).toFixed(3);
+        el.style.setProperty("--L", L.toFixed(1));
+        el.style.setProperty("--g", glow.toFixed(3));
+        el.style.setProperty("--rim", Math.min(rim, 0.95).toFixed(3));
+      }
+
+      // fade the whole stage as the next section arrives
+      document.querySelector(".stage").style.opacity = Math.max(0, 1 - Math.max(0, sp - 0.55) / 0.4).toFixed(3);
+      requestAnimationFrame(frame);
+    }
+    requestAnimationFrame(frame);
+  })();
+  </script>
+</body>
+</html>
