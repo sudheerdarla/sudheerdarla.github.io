@@ -1,5 +1,5 @@
 (function () {
-  var order = ['saifuro', 'pstake', 'comdex', 'captl'];
+  var order = ['agentpay', 'pstake', 'comdex', 'captl'];
   var host = document.getElementById('cs-host');
   var next = document.getElementById('cs-next');
   var links = document.querySelectorAll('[data-cs]');
@@ -71,7 +71,7 @@
     }
   }
 
-  function keyFromHash() { var k = (location.hash || '').slice(1).split('-')[0]; return window.CASES[k] ? k : (current || 'saifuro'); }
+  function keyFromHash() { var k = (location.hash || '').slice(1).split('-')[0]; return window.CASES[k] ? k : (current || 'agentpay'); }
 
   function paint(key) {
     host.innerHTML = window.renderCase(key);

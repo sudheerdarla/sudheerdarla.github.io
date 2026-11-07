@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Saifuro Console</title>
+<title>AgentPay Console</title>
 <meta name="description" content="Concept prototype of an agent-payments control console (v2), by Sudheer Darla.">
 <meta name="robots" content="noindex">
 <meta name="color-scheme" content="light dark">
@@ -755,13 +755,13 @@ html:not([data-theme="dark"]) .lp-win{box-shadow:0 0 0 1px rgba(0,0,0,.14),0 30p
 </style>
 </head>
 <body>
-<div class="note">Concept prototype v2 by <a href="../">Sudheer Darla</a> <span>· based on public info from saifuro.com · not affiliated with Saifuro · all data is fake ·</span> <a href="../s01/">v1</a></div>
+<div class="note">Concept prototype v2 by <a href="../">Sudheer Darla</a> <span>· AgentPay is a fictional product · all data is fake ·</span> <a href="../s01/">v1</a></div>
 
 <header class="top">
   <div class="wrap top-in">
-    <a class="logo" href="#overview" aria-label="Saifuro home">
-      <svg width="24" height="24" viewBox="0 0 24 24" aria-hidden="true"><rect width="24" height="24" rx="6" fill="currentColor"/><path d="M7.5 15.2c.9 1.1 2.4 1.8 4.3 1.8 2.3 0 3.8-1.1 3.8-2.7 0-3.6-7.6-1.9-7.6-5.3 0-1.5 1.4-2.5 3.6-2.5 1.5 0 2.8.5 3.6 1.4" fill="none" stroke="var(--bg1)" stroke-width="2" stroke-linecap="round"/></svg>
-      <span class="hide-sm">Saifuro</span>
+    <a class="logo" href="#overview" aria-label="AgentPay home">
+      <svg width="24" height="24" viewBox="0 0 24 24" aria-hidden="true"><rect width="24" height="24" rx="6" fill="currentColor"/><path d="M7 17.25 12 6.75l5 10.5M8.9 13.5h6.2" stroke-linejoin="round" fill="none" stroke="var(--bg1)" stroke-width="2" stroke-linecap="round"/></svg>
+      <span class="hide-sm">AgentPay</span>
     </a>
     <span class="slash" aria-hidden="true"><svg width="16" height="24" viewBox="0 0 16 24"><path d="M11 3 5 21" stroke="currentColor" stroke-width="1.2"/></svg></span>
     <div class="ws"><span class="av" style="width:20px;height:20px;background:linear-gradient(135deg,#7928ca,#ff0080)"></span><span class="wsn" id="wsName">Acme Research</span><span class="badge b-gray hide-sm" style="height:20px;font-size:11px">Pilot</span></div>
@@ -931,7 +931,7 @@ async function copyText(t){try{await navigator.clipboard.writeText(t);return tru
 /* =========================================================
    State, persistence (per tab session), seed
    ========================================================= */
-const KEY='saifuro-s02-v3';
+const KEY='agentpay-s02-v1';
 const DEF_SETTINGS={window:60, slack:true, channel:'#finance-approvals', email:false};
 let S;
 const UI={auth:null, tour:null, mem:null, loading:true, apTab:'pending', sel:new Set(), act:{q:'',status:'all',agent:'all',page:0}, agQ:'', review:null, wiz:null, edit:null, sd:null};
@@ -1078,7 +1078,7 @@ async function act(btn,fn,{loading='Saving\u2026',retry}={}){
   if(S.failNext){
     S.failNext=false;save();
     if(btn&&btn.isConnected){btn.disabled=false;btn.removeAttribute('aria-busy');btn.innerHTML=orig}
-    toast({type:'error',title:'Couldn\u2019t reach Saifuro',body:'Nothing was changed. Check your connection and try again.',action:retry?{label:'Retry',fn:retry}:null});
+    toast({type:'error',title:'Couldn\u2019t reach AgentPay',body:'Nothing was changed. Check your connection and try again.',action:retry?{label:'Retry',fn:retry}:null});
     renderProto();return false;
   }
   if(btn&&btn.isConnected){btn.removeAttribute('aria-busy')}
@@ -1334,7 +1334,7 @@ function exportCSV(){
   const q=s=>`"${String(s??'').replace(/"/g,'""')}"`;
   const head='id,time_utc,agent,vendor,item,rail,amount_usdc,status,rule,decided_by,reason';
   const csv=[head,...rows.map(e=>[e.id,e.at.toISOString(),e.agentName,e.vendor,e.item,e.rail,e.amount.toFixed(2),STATUS[e.status].label,e.rule,e.decidedBy||(e.status==='expired'?'timeout':'policy'),e.reason||''].map(q).join(','))].join('\n');
-  const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([csv],{type:'text/csv'}));a.download=`saifuro-activity-${new Date().toISOString().slice(0,10)}.csv`;a.click();
+  const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([csv],{type:'text/csv'}));a.download=`agentpay-activity-${new Date().toISOString().slice(0,10)}.csv`;a.click();
   toast({type:'success',title:`Exported ${rows.length} payment${rows.length>1?'s':''}`,body:'CSV ready for finance.'});
 }
 
@@ -1492,7 +1492,7 @@ function exportAudit(){
   const head='payment_id,time_utc,payer_org,agent_id,agent_name,agent_key,payee_host,payee_name,item,amount_usdc,rail,policy,rule,decision,decided_by,decided_via,settlement_status,settled_at_utc,settlement_ref';
   const org=S.org?S.org.name:'';
   const csv=[head,...rows.map(e=>{const a=ag(e.agentId),ok=counts(e);return [e.id,e.at.toISOString(),org,e.agentId,e.agentName,a?'sk_live_••'+a.keyLast4:'',e.vendor,vn(e.vendor),e.item,e.amount.toFixed(2),e.rail,policyOf(a),e.rule,decisionOf(e),e.decidedBy||(e.status==='paid'||e.status==='blocked'?'policy':e.status==='expired'?'timeout':''),e.via||(e.decidedBy?'console':''),ok?'settled':e.status==='pending'?'awaiting decision':'not settled',ok?new Date(+e.at+4000).toISOString():'',ok?txRef(e):''].map(q).join(',')})].join('\n');
-  const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([csv],{type:'text/csv'}));a.download=`saifuro-audit-${new Date().toISOString().slice(0,10)}.csv`;a.click();
+  const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([csv],{type:'text/csv'}));a.download=`agentpay-audit-${new Date().toISOString().slice(0,10)}.csv`;a.click();
   toast({type:'success',title:`Exported ${rows.length} transactions`,body:'Identity, policy, rule, decision and settlement for each.'});
 }
 
@@ -1562,7 +1562,7 @@ V.sales=()=>{
   for(const m of day){const i=23-Math.floor((now-m.at)/HOUR);if(i>=0&&m.status!=='refunded'){b[i].v+=m.amount;b[i].n+=m.units}}
   const top={};for(const m of day){const k=m.agent;(top[k]=top[k]||{a:m.agent,o:m.org,v:0,n:0}).v+=m.amount;top[k].n+=m.units}
   const T=Object.values(top).sort((x,y)=>y.v-x.v);
-  return pageHead('Overview',`Agents call ${esc(SM().api)} around the clock. Saifuro meters each request, applies your pricing and settles to your account.`,`<a class="btn sm" href="#pricing">${ic('sliders')}<span class="hide-sm">Pricing</span></a><a class="btn pri sm" href="#payouts">${ic('download')}Payouts</a>`)+`
+  return pageHead('Overview',`Agents call ${esc(SM().api)} around the clock. AgentPay meters each request, applies your pricing and settles to your account.`,`<a class="btn sm" href="#pricing">${ic('sliders')}<span class="hide-sm">Pricing</span></a><a class="btn pri sm" href="#payouts">${ic('download')}Payouts</a>`)+`
   <div class="wrap body">
     ${od.length?`<div class="nbox n-amber">${ic('alert')}<span><b>${od.length} open dispute${od.length===1?'':'s'}.</b> Refund or answer with evidence before the buyer’s deadline.</span><a class="btn xs nact" href="#disputes">Review</a></div>`:''}
     <section class="card stats" aria-label="Key numbers">
@@ -2005,10 +2005,10 @@ function wizDone(){
     <div class="nbox n-amber">${ic('key')}<span><b>Copy the key now.</b> For your security it\u2019s only shown once. If you lose it, rotate it from the agent page.</span></div>
     ${keyBlock(key,'wz')}
     <div class="field"><span class="lbl">Add it to your agent</span>
-<pre class="code"><span class="k">import</span> { Saifuro } <span class="k">from</span> <span class="s">'@saifuro/sdk'</span>
+<pre class="code"><span class="k">import</span> { AgentPay } <span class="k">from</span> <span class="s">'@agentpay/sdk'</span>
 
-<span class="k">const</span> saifuro = <span class="k">new</span> Saifuro({ key: process.env.SAIFURO_AGENT_KEY })
-<span class="k">const</span> res = <span class="k">await</span> saifuro.fetch(url, { agent: <span class="s">'${a.id}'</span> })</pre></div>
+<span class="k">const</span> agentpay = <span class="k">new</span> AgentPay({ key: process.env.AGENTPAY_AGENT_KEY })
+<span class="k">const</span> res = <span class="k">await</span> agentpay.fetch(url, { agent: <span class="s">'${a.id}'</span> })</pre></div>
   </div><div class="card-f"><button class="btn sm wzGate" ${saved?'':'disabled'} onclick="UI.wiz=null;wizInit();renderView();window.scrollTo({top:0})">${ic('plus')}Create another</button><button class="btn pri sm wzGate" ${saved?'':'disabled'} onclick="UI.wiz=null;go('agents/${a.id}')">Go to agent${ic('arrowR')}</button></div></section>
   </div></div>`;
 }
@@ -2172,7 +2172,7 @@ function initialState(){return {...seed(),team:demoTeam(DEMO_ACCT),accounts:[{..
 const me=()=>(S.team||[]).find(m=>m.me)||{role:'Owner',limit:null,name:'You'};
 const firstName=()=>S.session?S.session.name.split(' ')[0]:'';
 function avG(m,s=32){return `<span class="av" style="width:${s}px;height:${s}px;background:linear-gradient(135deg,${m.grad||gradFor(m.email)})" aria-hidden="true"></span>`}
-const logoSVG=`<svg width="24" height="24" viewBox="0 0 24 24" aria-hidden="true"><rect width="24" height="24" rx="6" fill="currentColor"/><path d="M7.5 15.2c.9 1.1 2.4 1.8 4.3 1.8 2.3 0 3.8-1.1 3.8-2.7 0-3.6-7.6-1.9-7.6-5.3 0-1.5 1.4-2.5 3.6-2.5 1.5 0 2.8.5 3.6 1.4" fill="none" stroke="var(--bg1)" stroke-width="2" stroke-linecap="round"/></svg>`;
+const logoSVG=`<svg width="24" height="24" viewBox="0 0 24 24" aria-hidden="true"><rect width="24" height="24" rx="6" fill="currentColor"/><path d="M7 17.25 12 6.75l5 10.5M8.9 13.5h6.2" stroke-linejoin="round" fill="none" stroke="var(--bg1)" stroke-width="2" stroke-linecap="round"/></svg>`;
 
 function signIn(acct,{via,quiet,isNew}={}){
   if(!S.org||S.org.slug!==acct.slug){
@@ -2223,7 +2223,7 @@ function gotoTeam(){go('settings');setTimeout(()=>{const t=$('#teamCard');if(t)t
    ========================================================= */
 const AUTH_ROUTES=['signup','login','login/sso'];
 const PERSONAL=['gmail.com','yahoo.com','outlook.com','hotmail.com','icloud.com','proton.me','protonmail.com','aol.com','live.com','me.com'];
-const RESERVED=['saifuro','acme','admin','test','demo','app','www','api','login','signup'];
+const RESERVED=['agentpay','acme','admin','test','demo','app','www','api','login','signup'];
 const DEMO_CODE='424242';
 function authInit(mode){UI.auth={mode,step:0,d:{name:'',email:'',pw:'',terms:false,org:'',slug:'',size:'',uses:[],slugTouched:false,google:false,lemail:'',lpw:'',sso:''},errs:{},showPw:false,attempts:0,lockUntil:0,codeTries:0,resendAt:0,forgot:null,sso:false,redirect:false,creating:-1}}
 const isDark=()=>document.documentElement.dataset.theme==='dark';
@@ -2232,8 +2232,8 @@ const slugify=s=>s.toLowerCase().normalize('NFKD').replace(/[^a-z0-9]+/g,'-').re
 function slugState(s){
   if(!s)return {ok:false,msg:''};
   if(!/^[a-z0-9][a-z0-9-]{1,38}[a-z0-9]$/.test(s))return {ok:false,msg:'Use 3 to 40 lowercase letters, numbers or dashes.'};
-  if(RESERVED.includes(s)||S.accounts.some(a=>a.slug===s))return {ok:false,msg:`saifuro.com/${s} is taken.`,taken:true};
-  return {ok:true,msg:`saifuro.com/${s} is available`};
+  if(RESERVED.includes(s)||S.accounts.some(a=>a.slug===s))return {ok:false,msg:`agentpay.app/${s} is taken.`,taken:true};
+  return {ok:true,msg:`agentpay.app/${s} is available`};
 }
 function pwScore(p){if(!p)return 0;let s=0;if(p.length>=8)s++;if(/[a-z]/i.test(p)&&/\d/.test(p))s++;if(p.length>=12)s++;if(/[^a-z0-9]/i.test(p))s++;return Math.max(1,s)}
 const PW_LABEL=['','Too weak','Okay','Strong','Very strong'];
@@ -2247,7 +2247,7 @@ const notInProto=t=>`href="#" onclick="event.preventDefault();toast({title:'${t}
 function loginPage(mode){
   return `<div class="auth lp"><canvas id="bg" aria-hidden="true"></canvas>
   <nav class="lp-nav" aria-label="Site"><div class="wrap">
-    <a class="logo" href="#${mode}" aria-label="Saifuro">${logoSVG}<span>Saifuro</span></a>
+    <a class="logo" href="#${mode}" aria-label="AgentPay">${logoSVG}<span>AgentPay</span></a>
     <div class="r">
       <div class="lp-links">${['Changelog','Docs','Pricing','Security'].map(l=>`<a ${notInProto(l)}>${l}</a>`).join('')}</div>
       ${mode==='signup'?'<a class="btn sm" href="#login">Log in</a>':'<a class="btn sm pri" href="#signup">Sign up</a>'}
@@ -2255,7 +2255,7 @@ function loginPage(mode){
     </div></div></nav>
   <section class="lp-hero">
     <div class="lp-copy">
-      <span class="lp-mark" aria-hidden="true">Saifuro</span>
+      <span class="lp-mark" aria-hidden="true">AgentPay</span>
       <h1>Let your agents pay. Keep the final say.</h1>
       <p class="lede">Budgets, vendor lists and approvals for every AI agent.</p>
       <div class="lp-rails"><span>x402</span><i></i><span>ACP</span><i></i><span>AP2</span><i></i><span>cards</span></div>
@@ -2267,11 +2267,11 @@ function previewHTML(){
   const keep=S;let body='';
   try{S={...seed(),team:demoTeam(DEMO_ACCT),accounts:keep.accounts,org:{name:DEMO_ACCT.org,slug:DEMO_ACCT.slug},session:{email:DEMO_ACCT.email,name:DEMO_ACCT.name},sample:false};body=V.overview()}catch(e){body=''}finally{S=keep}
   const tabs=TABS.map(([r,l],i)=>`<span class="tab ${i===0?'on':''}">${l}${r==='approvals'?'<span class="cnt">3</span>':''}</span>`).join('');
-  return `<section class="lp-shot" aria-label="Preview of the Saifuro dashboard">
+  return `<section class="lp-shot" aria-label="Preview of the AgentPay dashboard">
     <div class="lp-win" data-theme="dark" inert aria-hidden="true">
-      <div class="lp-bar"><i></i><i></i><i></i><span class="lp-url">${ic('lock',12)}app.saifuro.com/acme-research</span><span style="width:52px"></span></div>
+      <div class="lp-bar"><i></i><i></i><i></i><span class="lp-url">${ic('lock',12)}app.agentpay.app/acme-research</span><span style="width:52px"></span></div>
       <div class="lp-app">
-        <header class="top"><div class="wrap top-in"><span class="logo">${logoSVG}<span class="hide-sm">Saifuro</span></span><span class="slash" aria-hidden="true"><svg width="16" height="24" viewBox="0 0 16 24"><path d="M11 3 5 21" stroke="currentColor" stroke-width="1.2"/></svg></span><div class="ws"><span class="av" style="width:20px;height:20px;background:linear-gradient(135deg,#7928ca,#ff0080)"></span><span class="wsn">Acme Research</span><span class="badge b-gray" style="height:20px;font-size:11px">Pilot</span></div>
+        <header class="top"><div class="wrap top-in"><span class="logo">${logoSVG}<span class="hide-sm">AgentPay</span></span><span class="slash" aria-hidden="true"><svg width="16" height="24" viewBox="0 0 16 24"><path d="M11 3 5 21" stroke="currentColor" stroke-width="1.2"/></svg></span><div class="ws"><span class="av" style="width:20px;height:20px;background:linear-gradient(135deg,#7928ca,#ff0080)"></span><span class="wsn">Acme Research</span><span class="badge b-gray" style="height:20px;font-size:11px">Pilot</span></div>
           <div class="top-r"><span class="cmdk">${ic('search',14)}<span class="lbl-t">Search or jump to…</span><kbd>${MAC?'⌘K':'Ctrl K'}</kbd></span><span class="iconbtn">${ic('moon')}</span><span class="av me" style="background:linear-gradient(135deg,#0070f3,#50e3c2)"></span></div></div>
           <nav class="wrap tabs">${tabs}</nav></header>
         ${body}
@@ -2323,7 +2323,7 @@ function authCard(){
       return `<div>${dots(2)}<h2 style="margin-top:14px">Name your organization</h2><p class="sub">Your teammates will join this workspace.</p></div>
       <form novalidate onsubmit="suOrg(event)" oninput="authInput(event)" onchange="authInput(event)">
         ${af('org','Organization name',{val:d.org,ph:'Acme Research',ac:'organization'})}
-        <div class="field"><label class="lbl" for="a-slug">Workspace URL</label><div class="slugrow ${E.slug?'err':''}"><span>saifuro.com/</span><input class="in mono" id="a-slug" name="slug" value="${esc(d.slug)}" autocomplete="off" spellcheck="false" autocapitalize="off"></div>
+        <div class="field"><label class="lbl" for="a-slug">Workspace URL</label><div class="slugrow ${E.slug?'err':''}"><span>agentpay.app/</span><input class="in mono" id="a-slug" name="slug" value="${esc(d.slug)}" autocomplete="off" spellcheck="false" autocapitalize="off"></div>
           ${E.slug?fieldErr(E,'slug'):`<div class="hint" id="slugHint">${slugHint(st)}</div>`}</div>
         <div class="field"><label class="lbl" for="a-size">Team size</label><select class="in ${E.size?'err':''}" id="a-size" name="size"><option value="">Select…</option>${['1–10','11–50','51–200','201–1,000','1,000+'].map(s=>`<option ${d.size===s?'selected':''}>${s}</option>`).join('')}</select>${fieldErr(E,'size')}</div>
         <div class="field"><span class="lbl">What will your agents pay for? <span class="opt">Optional</span></span><div class="qchips">${['APIs and data','Compute','Travel','SaaS tools','Commerce'].map(u=>`<button type="button" class="qchip ${d.uses.includes(u)?'on':''}" aria-pressed="${d.uses.includes(u)}" onclick="toggleUse('${u}')">${u}</button>`).join('')}</div></div>
@@ -2346,11 +2346,11 @@ function authCard(){
     return `<div class="redirect"><span class="spin"></span><div><h2 style="font-size:20px;line-height:28px;letter-spacing:-.4px">Redirecting to ${esc(acct.idp||'your identity provider')}</h2><p class="sub">${esc(acct.org)} uses single sign-on. You’ll come straight back here.</p></div><button class="btn sm" onclick="UI.auth.redirect=null;clearTimeout(UI.auth.rt);renderCard()">Cancel</button></div>`;
   }
   const lockLeft=Math.ceil((A.lockUntil-Date.now())/1000);
-  return `<div><h2>Log in to Saifuro</h2><p class="sub">Welcome back.</p></div>
+  return `<div><h2>Log in to AgentPay</h2><p class="sub">Welcome back.</p></div>
     <div class="seg" role="tablist" style="display:grid;grid-template-columns:1fr 1fr"><button role="tab" aria-selected="${!A.sso}" class="${!A.sso?'on':''}" onclick="UI.auth.sso=false;UI.auth.errs={};renderCard()" style="justify-content:center">${ic('mail',14)}Email</button><button role="tab" aria-selected="${A.sso}" class="${A.sso?'on':''}" onclick="UI.auth.sso=true;UI.auth.errs={};renderCard('#a-sso')" style="justify-content:center">${ic('building',14)}Organization SSO</button></div>
     ${A.sso?`<form novalidate onsubmit="ssoGo(event)" oninput="authInput(event)">
         <p class="muted" style="margin-top:-4px">Use your company’s identity provider.</p>
-        <div class="field"><label class="lbl" for="a-sso">Workspace URL or work email</label><div class="slugrow ${E.sso?'err':''}"><span>saifuro.com/</span><input class="in mono" id="a-sso" name="sso" value="${esc(d.sso)}" placeholder="your-company" autocomplete="off" spellcheck="false" autocapitalize="off"></div>${fieldErr(E,'sso')}</div>
+        <div class="field"><label class="lbl" for="a-sso">Workspace URL or work email</label><div class="slugrow ${E.sso?'err':''}"><span>agentpay.app/</span><input class="in mono" id="a-sso" name="sso" value="${esc(d.sso)}" placeholder="your-company" autocomplete="off" spellcheck="false" autocapitalize="off"></div>${fieldErr(E,'sso')}</div>
         <button class="btn pri block" id="authBtn">${ic('building')}Continue with SSO</button>
         <div class="demo-hint">${ic('info',14)}<span>Demo workspace: <b class="mono" style="color:var(--g1000)">acme-research</b></span><button type="button" class="btn xs" onclick="UI.auth.d.sso='acme-research';renderCard('#authBtn')">Fill</button></div>
       </form>`
@@ -2361,7 +2361,7 @@ function authCard(){
         <button class="btn pri block" id="authBtn" ${lockLeft>0?'disabled':''}>Log in</button>
         <div class="demo-hint">${ic('info',14)}<span>Demo: <b class="mono" style="color:var(--g1000)">dev@acme-research.dev</b> with any 8+ character password</span><button type="button" class="btn xs" onclick="Object.assign(UI.auth.d,{lemail:'dev@acme-research.dev',lpw:'demo-pass-1'});UI.auth.errs={};renderCard('#authBtn')">Fill</button></div>
       </form>`}
-    <p class="auth-foot">New to Saifuro? <a href="#signup">Create a workspace</a></p>`;
+    <p class="auth-foot">New to AgentPay? <a href="#signup">Create a workspace</a></p>`;
 }
 function slugHint(st){return st.msg?`<span class="${st.ok?'t-green':'t-red'}" style="display:flex;gap:6px;align-items:center">${ic(st.ok?'check':'x',14)}${esc(st.msg)}</span>`:'This is the link your teammates use to join.'}
 function authInput(ev){
@@ -2411,7 +2411,7 @@ function fillSignup(){
   let co=cos.find(c=>{const sl=slugify(c);return !S.accounts.some(a=>a.slug===sl||a.email==='sam@'+sl+'.com')&&!RESERVED.includes(sl)});
   if(!co)co='Orbit Labs '+(S.accounts.length+1);
   const sl=slugify(co);
-  Object.assign(A.d,{name:'Sam Rao',email:`sam@${sl}.com`,pw:'Saifuro-2026',terms:true,org:co,slug:sl,size:'11\u201350',slugTouched:false});
+  Object.assign(A.d,{name:'Sam Rao',email:`sam@${sl}.com`,pw:'AgentPay-2026',terms:true,org:co,slug:sl,size:'11\u201350',slugTouched:false});
   A.errs={};renderCard('#authBtn');
 }
 function resendCode(){const A=UI.auth;A.resendAt=Date.now()+30000;A.codeTries=0;A.errs={};renderCard('.otpi');toast({type:'success',title:'New code sent',body:`Check ${A.d.email}. The old code no longer works.`})}
@@ -2451,7 +2451,7 @@ async function loginGo(ev){
   },{loading:'Logging in…',retry:()=>$('#authBtn')?.click()});
 }
 async function ssoGo(ev){
-  ev.preventDefault();const A=UI.auth;let v=(A.d.sso||'').trim().toLowerCase().replace(/^https?:\/\//,'').replace(/^saifuro\.com\//,'').replace(/\/.*$/,'');
+  ev.preventDefault();const A=UI.auth;let v=(A.d.sso||'').trim().toLowerCase().replace(/^https?:\/\//,'').replace(/^agentpay\.app\//,'').replace(/\/.*$/,'');
   if(!v){A.errs={sso:'Enter your workspace URL or work email.'};renderCard();return}
   await act($('#authBtn'),()=>{
     let acct=v.includes('@')?S.accounts.find(a=>a.email.split('@')[1]===v.split('@')[1]):S.accounts.find(a=>a.slug===v);
@@ -2570,7 +2570,7 @@ function stopBg(){if(BG){cancelAnimationFrame(BG.raf);BG.ro.disconnect();BG=null
 function tourSteps(){
   const n=pending().length;
   return [
-    {center:true,first:true,h:`Welcome to Saifuro, ${esc(firstName())}`,p:'Your agents can now pay vendors on their own, inside limits you control. Here’s a one-minute look at how you stay in charge.'},
+    {center:true,first:true,h:`Welcome to AgentPay, ${esc(firstName())}`,p:'Your agents can now pay vendors on their own, inside limits you control. Here’s a one-minute look at how you stay in charge.'},
     {sel:'#needsCard',h:n?'Approvals come first':'Approvals land here',p:n?'When an agent wants to spend more than its auto-approve limit, the request waits here. The most urgent is always on top.':'When an agent wants to spend more than its auto-approve limit, the request waits here for you.'},
     {sel:'#needsCard .prow',h:'Review with full context',p:'Open a request to see which policy checks passed, the agent’s reason and the effect on its budget. Press A to approve or D to decline.'},
     {sel:'#chartCard',h:'Spend at a glance',p:'Hourly spend across all agents for the last 24 hours. Hover any bar for the exact amount.'},
@@ -2751,7 +2751,7 @@ function renderChrome(){
   $('#tabs').innerHTML=(sell?SELL_TABS:TABS).map(([r,l])=>`<a class="tab ${cur===r?'on':''}" href="#${r}" ${cur===r?'aria-current="page"':''}>${l}${badge(r)}</a>`).join('');
   $('#modeSw').innerHTML=modeSwitch();
   document.body.classList.toggle('selling',sell);
-  document.title=(n?`(${n}) `:'')+'Saifuro Console';
+  document.title=(n?`(${n}) `:'')+'AgentPay Console';
 }
 function skeleton(){return `<header class="ph"><div class="wrap ph-in"><div><div class="sk" style="width:200px;height:36px"></div><div class="sk" style="width:340px;max-width:70vw;height:16px;margin-top:14px"></div></div></div></header>
   <div class="wrap body"><section class="card"><div class="card-b" style="display:grid;gap:14px">${'<div class="sk" style="height:44px"></div>'.repeat(3)}</div></section>
@@ -2763,7 +2763,7 @@ function renderView(){
   if(!S.session){
     endTour(true);
     if(!AUTH_ROUTES.includes(r)){history.replaceState(null,'','#'+(location.hash.slice(1)?'login':'signup'));r=route()}
-    stopBg();$('#view').innerHTML=V.auth(r);startBg();renderProto();document.title='Saifuro \u2014 Spend controls for AI agents';return;
+    stopBg();$('#view').innerHTML=V.auth(r);startBg();renderProto();document.title='AgentPay \u2014 Spend controls for AI agents';return;
   }
   if(AUTH_ROUTES.includes(r)){history.replaceState(null,'','#overview');r='overview'}
   if(!S.sell){history.replaceState(null,'','#overview');r='overview'}

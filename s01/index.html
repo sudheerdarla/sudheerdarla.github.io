@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Saifuro Console — concept</title>
+<title>AgentPay Console — concept</title>
 <meta name="description" content="Concept prototype of an agent-payments control console, by Sudheer Darla.">
 <meta name="robots" content="noindex">
 <link rel="icon" href="../favicon-32.png">
@@ -224,11 +224,11 @@ dialog.drawer[open]{display:flex;flex-direction:column;animation:slide .2s ease-
 </style>
 </head>
 <body>
-<div class="note">Concept prototype by <a href="../">Sudheer Darla</a>, based on public info from saifuro.com. Not affiliated with Saifuro. All data is fake.</div>
+<div class="note">Concept prototype by <a href="../">Sudheer Darla</a>, AgentPay is a fictional product. All data is fake.</div>
 
 <div class="app">
   <nav class="side" aria-label="Main">
-    <div class="brand"><i></i>Saifuro</div>
+    <div class="brand"><i></i>AgentPay</div>
     <a class="nav" href="#home" data-r="home">Home</a>
     <a class="nav" href="#approvals" data-r="approvals">Approvals <span class="count" id="holdCount" hidden></span></a>
     <a class="nav" href="#agents" data-r="agents">Agents</a>
@@ -706,7 +706,7 @@ function wizDone(){
       <div class="keybox"><span style="flex:1">${key}</span><button type="button" class="btn sm" onclick="navigator.clipboard&&navigator.clipboard.writeText('${key}');this.textContent='Copied'">Copy</button></div>
       <div class="warnline">Copy it now. For safety, it's only shown once.</div></div>
     <div class="field"><span>Add it to your agent</span>
-<pre class="code">const res = await saifuro.fetch(url, {
+<pre class="code">const res = await agentpay.fetch(url, {
   agent: '${a.id}'
 })</pre></div>
     <div class="wiz-foot"><a class="btn" href="#home" onclick="S.wiz=null">Back to home</a><button type="button" class="btn pri" onclick="S.wiz=null;go('agents/${a.id}')">View agent</button></div>
@@ -728,7 +728,7 @@ function exportCSV(){
   const head = 'id,time,agent,vendor,item,rail,amount_usdc,status,rule,decided_by';
   const q = s => `"${String(s??'').replace(/"/g,'""')}"`;
   const rows = S.ledger.map(e=>[e.id, e.at.toISOString(), agentOf(e).name, e.vendor, e.what, e.rail, e.amount.toFixed(2), STATUS[e.status].label, e.rule, e.decidedBy||'policy'].map(q).join(','));
-  const a=document.createElement('a'); a.href=URL.createObjectURL(new Blob([head+'\n'+rows.join('\n')],{type:'text/csv'})); a.download='saifuro-activity.csv'; a.click();
+  const a=document.createElement('a'); a.href=URL.createObjectURL(new Blob([head+'\n'+rows.join('\n')],{type:'text/csv'})); a.download='agentpay-activity.csv'; a.click();
   toast('Activity exported for finance.');
 }
 function resetDemo(){ seed(); S.wiz=null; S.apTab='waiting'; S.filter='all'; go('home'); render(); toast('Demo data reset.'); }
@@ -746,7 +746,7 @@ function render(){
   $('#view').innerHTML = html;
   document.querySelectorAll('.nav').forEach(n=>n.classList.toggle('on', n.dataset.r===nav));
   const h = waiting().length, c=$('#holdCount'); c.hidden=!h; c.textContent=h;
-  document.title = (h?`(${h}) `:'') + 'Saifuro Console — concept';
+  document.title = (h?`(${h}) `:'') + 'AgentPay Console — concept';
   if(S.review && drawer.open) renderDrawer();
 }
 window.addEventListener('hashchange', ()=>{ render(); $('#view').focus({preventScroll:true}); window.scrollTo(0,0); });

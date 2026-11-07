@@ -1,5 +1,5 @@
 /* Shared "Prototype" menu for the live prototypes (pstake01, comdex01, captl01).
-   Same pattern as the Saifuro console: a pill in the bottom left that jumps to
+   Same pattern as the AgentPay console: a pill in the bottom left that jumps to
    any screen or flow. Each app calls protoMenu(build), where build() returns
    [{ title, items: [{ label, hint, run }] }] and is re-run every time the menu opens. */
 (function () {

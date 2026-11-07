@@ -4,20 +4,20 @@
   var IMG = '../img/';
 
   var CASES = {
-    saifuro: {
-      name: 'Saifuro Console', tag: '(concept design)',
+    agentpay: {
+      name: 'AgentPay Console', tag: '(concept design)',
       kicker: ['Case study', 'AI agent payments'],
       title: 'Let agents pay. Keep the final say.',
-      lede: 'AI agents are starting to buy things on their own: data, compute, flights. Saifuro Console is a concept for the control panel behind that. Teams give each agent a budget, a vendor list and approval rules, so small payments settle on their own and big ones wait for a person. I designed it and built it as a working prototype.',
-      facts: [['Role', 'Product designer and builder'], ['Year', '2026'], ['Platform', 'Web console, desktop first'], ['Type', 'Self-initiated concept, not affiliated with Saifuro']],
-      hero: { src: 'p02/saifuro-login.jpg', dark: 'p02/saifuro-login-dark.jpg', w: 2880, h: 1800, alt: 'The Saifuro log-in page: the headline Let your agents pay. Keep the final say, a one-line summary and the log-in card over a still field of payment symbols, with a dark preview of the dashboard below.' },
+      lede: 'AI agents are starting to buy things on their own: data, compute, flights. AgentPay Console is a concept for the control panel behind that. Teams give each agent a budget, a vendor list and approval rules, so small payments settle on their own and big ones wait for a person. I designed it and built it as a working prototype.',
+      facts: [['Role', 'Product designer and builder'], ['Year', '2026'], ['Platform', 'Web console, desktop first'], ['Type', 'Self-initiated concept, fictional product']],
+      hero: { src: 'p02/agentpay-login.jpg', dark: 'p02/agentpay-login-dark.jpg', w: 2880, h: 1800, alt: 'The AgentPay log-in page: the headline Let your agents pay. Keep the final say, a one-line summary and the log-in card over a still field of payment symbols, with a dark preview of the dashboard below.' },
       stats: [['5', 'Core surfaces: overview, approvals, agents, activity, settings'], ['4', 'Steps to create an agent with its own key and limits'], ['6', 'Policy checks shown on every approval request']],
       sections: [
         { label: 'Overview', title: 'A spend control panel for teams running AI agents.',
           lede: 'The console answers one question at a glance: what needs me right now, and how are my agents spending? Everything else, from creating an agent to exporting a log for finance, is one step away.',
           blocks: [{ type: 'lists', groups: [
             { title: 'What I designed and built', items: ['Sign-up with Google or work email, log in, single sign-on and a guided tour on first login', 'Overview with approvals, spend and budget by agent', 'Approval review with policy checks and keyboard shortcuts', 'Four-step agent setup with a one-time key', 'Activity log with search, filters and CSV export', 'Approvers, alerts and light and dark themes'] },
-            { title: 'Out of scope', muted: true, items: ['Real payments and wallets', 'Saifuro’s actual product or data', 'Back-end and payment-rail integrations'] }] }] },
+            { title: 'Out of scope', muted: true, items: ['Real payments and wallets', 'Real customer or payment data', 'Back-end and payment-rail integrations'] }] }] },
         { label: 'Problem', title: 'Agents can spend money. Teams can’t see or stop it.',
           blocks: [
             { type: 'quote', text: '“I want our agents to buy what they need, but I need to know nothing big happens without me.”', cite: 'The job a team lead comes with' },
@@ -44,24 +44,24 @@
           blocks: [
             { type: 'decision', label: 'Decision A', title: 'Put approvals first, sorted by urgency.',
               text: 'The overview opens on what needs a person. The request closest to expiring is always on top, with its time left and any risk flags beside it.',
-              images: [{ src: 'p02/saifuro-overview.jpg', dark: 'p02/saifuro-overview-dark.jpg', w: 2880, h: 1800, alt: 'The Saifuro overview: a needs-your-approval list with time left and risk flags, spend and approval stats, and spend over the last 24 hours.' }],
+              images: [{ src: 'p02/agentpay-overview.jpg', dark: 'p02/agentpay-overview-dark.jpg', w: 2880, h: 1800, alt: 'The AgentPay overview: a needs-your-approval list with time left and risk flags, spend and approval stats, and spend over the last 24 hours.' }],
               points: [['Urgency is visible', 'A countdown turns red when a request is about to expire.'], ['Risk is flagged', 'Tags like “Agent paused” or “Leaves 10% of budget” appear before you open anything.'], ['Numbers that matter', 'Spent today, waiting on you, and payments your rules blocked.']] },
             { type: 'decision', label: 'Decision B', title: 'Show the evidence, not just the amount.',
               text: 'Opening a request shows every policy check, the agent’s own reason and the effect on its daily budget, so a decision takes seconds instead of a Slack thread.',
-              video: { src: 'saifuro-approve.mp4', poster: 'saifuro-approve-poster.jpg', w: 1440, h: 900, label: 'Screen recording: the cursor opens a pending $312.40 request, checks pass, the payment is approved, the next request for travel-desk is approved, and the overview drops to one pending approval.' },
+              video: { src: 'agentpay-approve.mp4', poster: 'agentpay-approve-poster.jpg', w: 1440, h: 900, label: 'Screen recording: the cursor opens a pending $1,200 request from legal-agent, the policy checks pass, the payment is approved and the overview drops to two pending approvals.' },
               points: [['Checks in plain words', 'Each rule reads as a sentence, and the one that triggered review is marked.'], ['Fast for repeat users', 'A to approve, D to decline, J and K to move between requests.'], ['Safe declines', 'Declining asks for a reason the agent receives, with an undo.']] },
             { type: 'decision', label: 'Decision C', title: 'Make limits a sentence, not a form.',
               text: 'Creating an agent takes four steps: details, limits, vendors and review. Presets give a sensible start, and every number is summarised in one plain sentence before it goes live.',
-              images: [{ src: 'p02/saifuro-limits.jpg', dark: 'p02/saifuro-limits-dark.jpg', w: 2880, h: 1800, alt: 'The limits step of the new agent wizard: Light, Standard, Heavy and Custom presets, daily budget, max per payment and ask-me-above fields.' }, { src: 'p02/saifuro-vendors.jpg', dark: 'p02/saifuro-vendors-dark.jpg', w: 2880, h: 1800, alt: 'The vendors step: a grid of selectable vendors with their API domains and a count of selected vendors.' }],
+              images: [{ src: 'p02/agentpay-limits.jpg', dark: 'p02/agentpay-limits-dark.jpg', w: 2880, h: 1800, alt: 'The limits step of the new agent wizard: Light, Standard, Heavy and Custom presets, daily budget, max per payment and ask-me-above fields.' }, { src: 'p02/agentpay-vendors.jpg', dark: 'p02/agentpay-vendors-dark.jpg', w: 2880, h: 1800, alt: 'The vendors step: a grid of selectable vendors with their API domains and a count of selected vendors.' }],
               points: [['Presets first', 'Light, Standard and Heavy cover most agents. Custom is there when needed.'], ['Every field explains itself', 'Helper text says what happens when a payment goes over each limit.'], ['Allowlist by default', 'Payments to any vendor not on the list are blocked.']] },
             { type: 'decision', label: 'Decision D', title: 'Treat the agent key like a password.',
               text: 'The key is shown once, at the end of setup, with a clear warning, a copy button and the code needed to use it. Leaving the page without saving it asks for confirmation.',
-              images: [{ src: 'p02/saifuro-key.jpg', dark: 'p02/saifuro-key-dark.jpg', w: 2880, h: 1800, alt: 'The agent created screen: a summary sentence of its limits, a warning to copy the key now, the key with a copy button, a stored-safely checkbox and a code snippet.' }],
+              images: [{ src: 'p02/agentpay-key.jpg', dark: 'p02/agentpay-key-dark.jpg', w: 2880, h: 1800, alt: 'The agent created screen: a summary sentence of its limits, a warning to copy the key now, the key with a copy button, a stored-safely checkbox and a code snippet.' }],
               points: [['Shown once', 'The warning explains why, and how to rotate the key if it is lost.'], ['Ready to use', 'A short code snippet shows exactly where the key goes.'], ['No silent loss', 'Navigating away before confirming triggers a warning.']] }] },
         { label: 'Outcome', title: 'A working prototype, end to end.',
           lede: 'Everything in this case study works in the browser with sample data: sign up (one click fills in sample details), take the tour, approve and decline requests, create an agent, export the log and switch themes.',
           blocks: [
-            { type: 'figure', img: { src: 'p02/saifuro-outcome.jpg', w: 2880, h: 1800, alt: 'The Saifuro dashboard in dark mode: spend and approval stats, spend over the last 24 hours, budget by agent and recent activity.' }, caption: 'Overview: what needs you, and how every agent is spending.' },
+            { type: 'figure', img: { src: 'p02/agentpay-outcome.jpg', w: 2880, h: 1800, alt: 'The AgentPay dashboard in dark mode: spend and approval stats, spend over the last 24 hours, budget by agent and recent activity.' }, caption: 'Overview: what needs you, and how every agent is spending.' },
             { type: 'cards', cols: 3, items: [
               { title: 'Agent pages', text: 'Each agent has its own spend, rules, vendors and pending requests, with pause and edit controls.' },
               { title: 'Approvers with limits', text: 'Owners, approvers with a spending limit, and viewers who can only look.' },
