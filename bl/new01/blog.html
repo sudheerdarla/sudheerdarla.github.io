@@ -1,0 +1,150 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Blogs — BharatLiquid</title>
+  <meta name="description" content="Notes from the BharatLiquid team on product, markets and the mechanics of perpetual futures.">
+  <link rel="icon" href="assets/symbol-onyx.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Host+Grotesk:wght@400;500&family=Manrope:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="nav" data-nav>
+    <div class="frame frame--wide nav__inner">
+      <a class="nav__brand" href="index.html" aria-label="BharatLiquid home"><img src="assets/lockup-onyx.svg" width="152" height="26" alt="BharatLiquid"></a>
+      <nav class="nav__links" id="nav-links" aria-label="Primary">
+        <a href="learn.html">Learn</a>
+        <a href="about.html">About</a>
+        <a href="blog.html" aria-current="page">Blogs</a>
+      </nav>
+      <div class="nav__actions">
+        <a class="btn btn--ghost btn--sm nav__support" href="support.html">Support</a>
+        <a class="btn btn--primary btn--sm" href="index.html#waitlist">Join the waitlist</a>
+        <button class="nav__toggle" type="button" aria-expanded="false" aria-controls="nav-links" data-nav-toggle><span class="sr-only">Menu</span><span></span><span></span></button>
+      </div>
+    </div>
+  </header>
+
+  <main id="top">
+    <section class="frame page-head">
+      <p class="label">Blogs</p>
+      <h1 class="title title--xl">Notes from<br><span class="tone">the desk.</span></h1>
+      <p class="lead">Product updates, market walk-throughs and short guides from the team.</p>
+    </section>
+
+    <section class="frame section">
+      <article class="feature-post">
+        <div class="ph ph--feature" role="img" aria-label="Placeholder cover image for the featured post"><span class="ph__tag">Cover</span><span class="ph__name">Featured post</span></div>
+        <div class="feature-post__body">
+          <p class="guide__meta"><span>Featured · Company</span><span>15 Nov 2026 · 6 min</span></p>
+          <h2 class="title">Building an onshore <span class="tone">route to global markets.</span></h2>
+          <p class="lead">Why we started with perpetuals, why INR comes first, and what we are not building.</p>
+          <a class="btn btn--ghost" href="#top">Read the post</a>
+        </div>
+      </article>
+
+      <div class="chips chips--blog" role="group" aria-label="Filter posts" data-filter-posts>
+        <button type="button" aria-pressed="true" data-cat="all">All</button>
+        <button type="button" aria-pressed="false" data-cat="product">Product</button>
+        <button type="button" aria-pressed="false" data-cat="markets">Markets</button>
+        <button type="button" aria-pressed="false" data-cat="guides">Guides</button>
+        <button type="button" aria-pressed="false" data-cat="company">Company</button>
+      </div>
+      <div class="guides" data-posts>
+        <article class="card post" data-cat="product">
+          <div class="ph ph--card" role="img" aria-label="Placeholder cover image"><span class="ph__tag">Cover</span></div>
+          <div class="guide__body">
+            <p class="guide__meta"><span>Product</span><span>12 Nov 2026 · 5 min</span></p>
+            <h3 class="h3">Why every order ticket shows funding and liquidation</h3>
+            <p>We moved three numbers above the Buy button. Here is what changed in testing.</p>
+            <a class="more" href="#top">Read post&nbsp;&nbsp;→</a>
+          </div>
+        </article>
+        <article class="card post" data-cat="markets">
+          <div class="ph ph--card" role="img" aria-label="Placeholder cover image"><span class="ph__tag">Cover</span></div>
+          <div class="guide__body">
+            <p class="guide__meta"><span>Markets</span><span>05 Nov 2026 · 7 min</span></p>
+            <h3 class="h3">Trading NVDA earnings as a perpetual, step by step</h3>
+            <p>A walk through one position: entry, funding paid, and the exit, with every figure in INR.</p>
+            <a class="more" href="#top">Read post&nbsp;&nbsp;→</a>
+          </div>
+        </article>
+        <article class="card post" data-cat="guides">
+          <div class="ph ph--card" role="img" aria-label="Placeholder cover image"><span class="ph__tag">Cover</span></div>
+          <div class="guide__body">
+            <p class="guide__meta"><span>Guides</span><span>29 Oct 2026 · 4 min</span></p>
+            <h3 class="h3">Mark price vs last price: a short field guide</h3>
+            <p>Two prices, two jobs. Why your liquidation never uses the last trade.</p>
+            <a class="more" href="#top">Read post&nbsp;&nbsp;→</a>
+          </div>
+        </article>
+        <article class="card post" data-cat="company">
+          <div class="ph ph--card" role="img" aria-label="Placeholder cover image"><span class="ph__tag">Cover</span></div>
+          <div class="guide__body">
+            <p class="guide__meta"><span>Company</span><span>22 Oct 2026 · 3 min</span></p>
+            <h3 class="h3">Opening the waitlist</h3>
+            <p>What early access includes, who can join, and what we will email you about.</p>
+            <a class="more" href="#top">Read post&nbsp;&nbsp;→</a>
+          </div>
+        </article>
+        <article class="card post" data-cat="markets">
+          <div class="ph ph--card" role="img" aria-label="Placeholder cover image"><span class="ph__tag">Cover</span></div>
+          <div class="guide__body">
+            <p class="guide__meta"><span>Markets</span><span>15 Oct 2026 · 6 min</span></p>
+            <h3 class="h3">Gold at $3,986: reading the XAU funding rate</h3>
+            <p>What a negative funding rate tells you about positioning in gold.</p>
+            <a class="more" href="#top">Read post&nbsp;&nbsp;→</a>
+          </div>
+        </article>
+        <article class="card post" data-cat="guides">
+          <div class="ph ph--card" role="img" aria-label="Placeholder cover image"><span class="ph__tag">Cover</span></div>
+          <div class="guide__body">
+            <p class="guide__meta"><span>Guides</span><span>08 Oct 2026 · 4 min</span></p>
+            <h3 class="h3">IMPS, NEFT or UPI: which rail to use</h3>
+            <p>Limits, timing and when each one makes sense for a deposit.</p>
+            <a class="more" href="#top">Read post&nbsp;&nbsp;→</a>
+          </div>
+        </article>
+      </div>
+      <p class="caption">Sample posts for review. Titles, dates and figures are placeholders.</p>
+    </section>
+
+    <section class="frame band">
+      <div>
+        <h2 class="h3">Ready when you are.</h2>
+        <p>Join the waitlist and we’ll email you when access opens.</p>
+      </div>
+      <a class="btn btn--primary" href="index.html#waitlist">Join the waitlist</a>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="frame">
+      <div class="footer__cols">
+        <nav aria-label="Product"><h3>Product</h3><a href="index.html#markets">Markets</a><a href="index.html#pre-ipo">Pre-IPO</a><a href="index.html#execution">Execution</a><a href="index.html#inr">INR in &amp; out</a></nav>
+        <nav aria-label="Company"><h3>Company</h3><a href="about.html">About</a><a href="learn.html">Learn</a><a href="blog.html">Blogs</a></nav>
+        <nav aria-label="Support"><h3>Support</h3><a href="support.html">Help centre</a><a href="support.html#contact">Contact</a><a href="support.html#contact">Grievance officer</a></nav>
+        <nav aria-label="Legal"><h3>Legal</h3><a href="#top">Privacy policy</a><a href="#top">Terms of use</a><a href="#top">Risk disclosure</a></nav>
+        <nav aria-label="Follow"><h3>Follow</h3>
+          <div class="social">
+            <a href="#top" aria-label="BharatLiquid on X"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path fill="currentColor" d="M18.24 2.25h3.31l-7.23 8.26 8.5 11.24h-6.65l-5.21-6.82-5.97 6.82H1.68l7.73-8.84L1.25 2.25h6.83l4.71 6.23zm-1.16 17.52h1.83L7.08 4.13H5.12z"/></svg></a>
+            <a href="#top" aria-label="BharatLiquid on LinkedIn"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M8 10.5v6M8 7.5v.01M12 16.5v-6M12 13.25c0-1.5 1-2.75 2.5-2.75S17 11.5 17 13v3.5"/></svg></a>
+            <a href="#top" aria-label="BharatLiquid on Instagram"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.3" cy="6.7" r="0.6" fill="currentColor"/></svg></a>
+            <a href="#top" aria-label="BharatLiquid on YouTube"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><rect x="2.5" y="5" width="19" height="14" rx="4"/><path d="M10 9.5v5l4.5-2.5z" fill="currentColor"/></svg></a>
+          </div>
+        </nav>
+      </div>
+      <img class="footer__mark" src="assets/lockup-white.svg" width="380" height="64" alt="">
+      <div class="footer__bottom">
+        <p>Trading perpetual futures involves substantial risk of loss. Market examples are illustrations, not investment recommendations.</p>
+        <p class="footer__legal"><span>© 2026 BharatLiquid Private Limited</span><span>CIN [to confirm] · Registered address [to confirm]</span></p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>

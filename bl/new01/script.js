@@ -59,6 +59,46 @@
     });
   }
 
+  // Blog category filter
+  var postFilter = document.querySelector('[data-filter-posts]');
+  if (postFilter) {
+    var posts = document.querySelectorAll('[data-posts] [data-cat]');
+    postFilter.addEventListener('click', function (e) {
+      var btn = e.target.closest('button');
+      if (!btn) return;
+      var cat = btn.getAttribute('data-cat');
+      postFilter.querySelectorAll('button').forEach(function (b) {
+        b.setAttribute('aria-pressed', String(b === btn));
+      });
+      posts.forEach(function (post) {
+        post.hidden = cat !== 'all' && post.getAttribute('data-cat') !== cat;
+      });
+    });
+  }
+
+  // Help centre search: filter the common questions as you type
+  var search = document.querySelector('[data-search]');
+  if (search) {
+    var field = search.querySelector('input');
+    var questions = document.querySelectorAll('[data-q]');
+    var none = document.querySelector('[data-help-empty]');
+    search.addEventListener('submit', function (e) {
+      e.preventDefault();
+      document.getElementById('help-faq').scrollIntoView();
+    });
+    field.addEventListener('input', function () {
+      var q = field.value.trim().toLowerCase();
+      var shown = 0;
+      questions.forEach(function (d) {
+        var match = !q || d.textContent.toLowerCase().indexOf(q) !== -1;
+        d.hidden = !match;
+        d.open = match && q !== '';
+        if (match) shown++;
+      });
+      none.hidden = shown > 0;
+    });
+  }
+
   // Waitlist form (no backend yet): validate and confirm
   var form = document.querySelector('[data-signup]');
   if (form) {
