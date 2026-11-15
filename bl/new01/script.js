@@ -59,24 +59,6 @@
     });
   }
 
-  // Pre-IPO buy / sell explainer
-  var side = document.querySelector('[data-side]');
-  var sideCopy = document.querySelector('[data-side-copy]');
-  if (side) {
-    var copy = {
-      Buy: 'Buy if you expect the reference valuation to rise. Settled in INR.',
-      Sell: 'Sell if you expect the reference valuation to fall. Settled in INR.'
-    };
-    side.addEventListener('click', function (e) {
-      var btn = e.target.closest('button');
-      if (!btn) return;
-      side.querySelectorAll('button').forEach(function (b) {
-        b.setAttribute('aria-pressed', String(b === btn));
-      });
-      sideCopy.textContent = copy[btn.textContent.trim()];
-    });
-  }
-
   // Waitlist form (no backend yet): validate and confirm
   var form = document.querySelector('[data-signup]');
   if (form) {

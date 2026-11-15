@@ -37,8 +37,8 @@ html { scroll-behavior: smooth; scroll-padding-top: 88px; }
 main { padding-top: 72px; }
 body { margin: 0; background: var(--paper); color: var(--text); font: 16px/1.5 var(--sans); -webkit-font-smoothing: antialiased; }
 img { display: block; max-width: 100%; }
-h1, h2, h3, p, ul, dl, dd { margin: 0; }
-ul { padding: 0; list-style: none; }
+h1, h2, h3, h4, p, ul, ol, dl, dd { margin: 0; }
+ul, ol { padding: 0; list-style: none; }
 a { color: inherit; text-decoration: none; }
 button, input { font: inherit; color: inherit; }
 :focus-visible { outline: 2px solid var(--azure); outline-offset: 2px; }
@@ -98,26 +98,24 @@ button { border-radius: 0 !important; }
 .ph--dark .ph__tag { background: var(--onyx); border-color: var(--charcoal); }
 .ph--dark .ph__name { color: rgba(255, 255, 255, 0.7); }
 
-/* Nav */
-/* At the top the bar spans the page; once scrolled it tightens into an inset, bordered bar */
-.nav { position: fixed; top: 0; left: 0; right: 0; z-index: 10; pointer-events: none; }
+/* Nav: logo and links on the left, actions on the right. On scroll the bar keeps
+   its full width and only gets shorter, translucent and shadowed. */
+.nav { position: fixed; top: 0; left: 0; right: 0; z-index: 10; }
 .nav__inner {
-  position: relative; display: flex; align-items: center; justify-content: space-between; gap: 24px;
-  height: 72px; pointer-events: auto;
-  background: var(--paper); border-bottom: 1px solid var(--line);
-  transition: max-width .35s ease, height .35s ease, margin .35s ease, padding .35s ease, background-color .35s ease, border-color .35s ease, box-shadow .35s ease;
+  position: relative; display: flex; align-items: center; gap: 48px;
+  height: 72px; background: var(--paper); border-bottom: 1px solid var(--line);
+  transition: height .3s ease, background-color .3s ease, box-shadow .3s ease;
 }
 .nav.is-scrolled .nav__inner {
-  max-width: calc(100% - 48px); height: 56px; margin: 12px auto 0; padding: 0 8px 0 20px;
-  background: rgba(255, 255, 255, 0.86); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
-  border: 1px solid var(--line-strong); box-shadow: 0 8px 24px -16px rgba(0, 0, 0, 0.25);
+  height: 60px; background: rgba(255, 255, 255, 0.86);
+  backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+  box-shadow: 0 8px 24px -18px rgba(0, 0, 0, 0.3);
 }
-.nav__brand img { transition: width .35s ease; }
-.nav.is-scrolled .nav__brand img { width: 132px; }
 .nav__brand img { width: 152px; height: auto; }
-.nav__links { display: flex; gap: 32px; font-size: 15px; color: var(--text-2); }
-.nav__links a:hover { color: var(--text); }
-.nav__actions { display: flex; align-items: center; gap: 12px; }
+.nav__links { display: flex; gap: 32px; font-size: 15px; font-weight: 500; color: var(--text); }
+.nav__links a { opacity: .78; transition: opacity .15s ease; }
+.nav__links a:hover { opacity: 1; }
+.nav__actions { display: flex; align-items: center; gap: 8px; margin-left: auto; }
 .nav__toggle { display: none; width: 40px; height: 40px; border: 1px solid var(--line-strong); border-radius: 6px; background: var(--paper); cursor: pointer; flex-direction: column; align-items: center; justify-content: center; gap: 5px; }
 .nav__toggle span:not(.sr-only) { width: 16px; height: 1.5px; background: var(--text); }
 
@@ -176,26 +174,32 @@ button { border-radius: 0 !important; }
 .source { display: flex; align-items: center; gap: 8px; margin-top: 16px; }
 
 /* Audience */
-.audience { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+.audience { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
 .card { border: 1px solid var(--line); border-radius: var(--radius); background: var(--paper); }
 .aud { display: flex; flex-direction: column; overflow: hidden; }
-.ph--card { aspect-ratio: 4 / 3; border: 0; border-bottom: 1px solid var(--line); border-radius: 0; }
-.aud__body { display: flex; flex-direction: column; gap: 8px; padding: 20px 20px 24px; }
-.aud__body p, .company p, .contract p, .flow__card p { color: var(--text-2); }
+.ph--card { aspect-ratio: 16 / 7; border: 0; border-bottom: 1px solid var(--line); border-radius: 0; }
+.aud__body { display: flex; flex-direction: column; gap: 8px; padding: 24px 28px 28px; }
+.aud__body p, .company p { color: var(--text-2); }
 
 /* Pre-IPO */
-.ipo { display: grid; grid-template-columns: 1fr 1fr 1.2fr; gap: 16px; }
-.company, .contract { display: flex; flex-direction: column; gap: 8px; padding: 24px; }
+.ipo { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.company { display: flex; flex-direction: column; gap: 8px; padding: 24px; }
 .company__top { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 56px; }
 .ph--logo { width: 56px; height: 56px; padding: 0; }
 .ph--logo .ph__tag { font-size: 9px; padding: 1px 5px; }
-.contract { background: var(--surface); }
-.side { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 16px; }
-.side button { height: 44px; border: 1px solid var(--line-strong); border-radius: 6px; background: var(--paper); font-weight: 500; cursor: pointer; }
-.side .side__buy[aria-pressed="true"] { border-color: var(--up); color: var(--up); }
-.side .side__sell[aria-pressed="true"] { border-color: var(--down); color: var(--down); }
-.notice { margin-top: auto; padding: 12px 14px; border: 1px solid #ead8b7; border-radius: 6px; background: #fbf5ea; font-size: 14px; color: var(--warn) !important; }
-.notice strong { font-weight: 500; }
+
+/* Pre-IPO explainer: three numbered ideas on a shared rule */
+.story { margin-top: 16px; padding: 40px; border: 1px solid var(--line); border-radius: var(--radius); background: var(--surface); }
+.story__head { display: flex; align-items: baseline; justify-content: space-between; gap: 24px; margin-bottom: 40px; }
+.story__head p { color: var(--text-3); }
+.story__steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px; counter-reset: step; }
+.story__steps li { position: relative; display: flex; flex-direction: column; gap: 10px; padding-top: 28px; border-top: 1px solid var(--line-strong); }
+.story__steps li::before { content: ""; position: absolute; top: -4px; left: 0; width: 7px; height: 7px; background: var(--text); }
+.story__n { font: 500 13px/1 var(--display); letter-spacing: 1px; color: var(--azure); }
+.story__steps h4 { margin: 0; font: 600 20px/1.3 var(--display); letter-spacing: -0.2px; }
+.story__steps p { color: var(--text-2); }
+.story__risk { margin-top: 40px; padding-top: 20px; border-top: 1px solid var(--line); font-size: 14px; color: var(--warn); }
+.story__risk strong { font-weight: 500; }
 
 /* Costs */
 .compare { display: grid; grid-template-columns: 1fr 1fr; border: 1px solid var(--line); border-radius: var(--radius); background: var(--paper); overflow: hidden; }
@@ -236,14 +240,9 @@ button { border-radius: 0 !important; }
 .facts p { font-size: 15px; color: rgba(255, 255, 255, 0.6); }
 .ph--dark { min-height: 360px; }
 
-/* INR flow */
-.flow { display: grid; grid-template-columns: 1fr auto 1fr; align-items: stretch; gap: 16px; }
-.flow__card { display: flex; flex-direction: column; gap: 8px; padding: 28px; }
-.ph--icon { width: 48px; height: 48px; padding: 0; margin-bottom: 24px; }
-.ph--icon .ph__tag { font-size: 9px; padding: 1px 5px; }
-.flow__mid { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px; padding: 0 16px; }
-.flow__arrow { padding: 8px 14px; border: 1px solid var(--line-strong); border-radius: 6px; font: 500 14px/1 var(--display); white-space: nowrap; }
-.flow__rails { font: 500 12px/1 var(--sans); letter-spacing: 1px; color: var(--info); }
+/* INR */
+.ph--diagram { aspect-ratio: 16 / 7; }
+.ph--diagram .ph__note { max-width: 440px; }
 
 /* FAQ */
 .faq { display: grid; grid-template-columns: 1fr 1.6fr; gap: 64px; }
@@ -274,6 +273,9 @@ button { border-radius: 0 !important; }
 .footer .frame { padding-top: 64px; padding-bottom: 32px; }
 .footer__cols { display: grid; grid-template-columns: repeat(4, 1fr); gap: 32px; }
 .footer__cols nav { display: flex; flex-direction: column; gap: 10px; font-size: 15px; }
+.social { display: flex; gap: 8px; }
+.social a { display: inline-flex; align-items: center; justify-content: center; width: 40px; height: 40px; border: 1px solid var(--charcoal); color: rgba(255, 255, 255, 0.75); transition: color .15s ease, border-color .15s ease; }
+.social a:hover { color: var(--paper); border-color: rgba(255, 255, 255, 0.5); }
 .footer__cols h3 { margin-bottom: 4px; font: 500 14px/1.5 var(--sans); color: var(--paper); }
 .footer__cols a:hover { color: var(--paper); }
 .footer__mark { width: 100%; height: auto; margin: 72px 0 40px; opacity: 0.14; }
@@ -287,9 +289,7 @@ button { border-radius: 0 !important; }
   .head { gap: 16px; align-items: start; }
   .board { grid-template-columns: 1fr; }
   .board__list { border-right: 0; border-bottom: 1px solid var(--line); }
-  .audience { grid-template-columns: repeat(2, 1fr); }
-  .ipo { grid-template-columns: 1fr 1fr; }
-  .contract { grid-column: span 2; }
+  .story__steps { grid-template-columns: 1fr; gap: 28px; }
   .faq { grid-template-columns: 1fr; gap: 32px; }
 }
 @media (max-width: 860px) {
@@ -305,8 +305,8 @@ button { border-radius: 0 !important; }
   .compare__side + .compare__side { border-left: 0; border-top: 1px solid var(--line); }
   .stat { grid-template-columns: 1fr; }
   .stat__num { grid-row: auto; font-size: 72px; }
-  .flow { grid-template-columns: 1fr; }
-  .flow__mid { flex-direction: row; flex-wrap: wrap; padding: 8px 0; }
+  .nav__support { display: none; }
+  .ph--diagram { aspect-ratio: 4 / 3; }
   .footer__cols { grid-template-columns: repeat(2, 1fr); }
 }
 @media (max-width: 600px) {
@@ -321,7 +321,8 @@ button { border-radius: 0 !important; }
   .board__list li { grid-template-columns: 36px 1fr auto 60px; gap: 10px; padding: 0 14px; }
   .board__head { grid-template-columns: 1fr auto 60px; padding: 0 14px; }
   .audience, .ipo { grid-template-columns: 1fr; }
-  .contract { grid-column: auto; }
+  .story { padding: 24px; }
+  .story__head { flex-direction: column; gap: 4px; }
   .dark__grid { padding: 32px 20px; }
   .ph--dark { min-height: 240px; }
   .receipt { padding: 20px; }

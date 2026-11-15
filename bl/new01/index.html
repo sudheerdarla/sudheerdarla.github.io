@@ -21,6 +21,7 @@
         <a href="#top">Blogs</a>
       </nav>
       <div class="nav__actions">
+        <a class="btn btn--ghost btn--sm nav__support" href="#faq">Support</a>
         <a class="btn btn--primary btn--sm" href="#waitlist">Join the waitlist</a>
         <button class="nav__toggle" type="button" aria-expanded="false" aria-controls="nav-links" data-nav-toggle><span class="sr-only">Menu</span><span></span><span></span></button>
       </div>
@@ -160,15 +161,31 @@
           <div class="company__top"><div class="ph ph--logo" role="img" aria-label="Placeholder for company logo"><span class="ph__tag">Logo</span></div><span class="badge">Private company</span></div>
           <h3 class="h3">Anthropic</h3><p>AI safety and research company.</p>
         </article>
-        <article class="card contract">
-          <div class="side" role="group" aria-label="Order side" data-side>
-            <button type="button" aria-pressed="true" class="side__buy">Buy</button>
-            <button type="button" aria-pressed="false" class="side__sell">Sell</button>
-          </div>
-          <h3 class="h3">How the contract works</h3>
-          <p data-side-copy>Buy if you expect the reference valuation to rise. Settled in INR.</p>
-          <p class="notice"><strong>Pre-IPO markets can be highly volatile.</strong> Leverage magnifies losses.</p>
-        </article>
+      </div>
+
+      <div class="story">
+        <div class="story__head">
+          <h3 class="h3">How a pre-IPO perpetual works</h3>
+          <p>Three ideas, in the order they matter.</p>
+        </div>
+        <ol class="story__steps">
+          <li>
+            <span class="story__n">01</span>
+            <h4>A price for a private company</h4>
+            <p>The contract tracks a reference valuation, drawn from the company’s latest priced funding round. [Confirm the reference source.]</p>
+          </li>
+          <li>
+            <span class="story__n">02</span>
+            <h4>You take a view</h4>
+            <p>Go long if you think the valuation will rise before it lists. Go short if you think it will fall. You hold a position, not shares.</p>
+          </li>
+          <li>
+            <span class="story__n">03</span>
+            <h4>Settled in rupees</h4>
+            <p>Margin, funding and profit or loss all move through your INR balance. If the company lists, the contract converges to the public price. [Confirm listing rule.]</p>
+          </li>
+        </ol>
+        <p class="story__risk"><strong>Pre-IPO markets can be highly volatile.</strong> Prices can move sharply on little news, and leverage magnifies losses.</p>
       </div>
     </section>
 
@@ -262,22 +279,10 @@
         </div>
         <p class="head__copy">Deposit from your linked Indian bank and withdraw back to it. No FX conversion.</p>
       </div>
-      <div class="flow">
-        <article class="card flow__card">
-          <div class="ph ph--icon" role="img" aria-label="Placeholder icon for bank account"><span class="ph__tag">Icon</span></div>
-          <h3 class="h3">Your bank account</h3>
-          <p>Any linked Indian bank account.</p>
-        </article>
-        <div class="flow__mid" aria-hidden="true">
-          <span class="flow__arrow">Deposit INR →</span>
-          <span class="flow__rails">IMPS · NEFT · UPI</span>
-          <span class="flow__arrow">← Withdraw INR</span>
-        </div>
-        <article class="card flow__card">
-          <div class="ph ph--icon" role="img" aria-label="Placeholder icon for BL account"><span class="ph__tag">Icon</span></div>
-          <h3 class="h3">Your BL account</h3>
-          <p>Trade every market from one INR balance.</p>
-        </article>
+      <div class="ph ph--diagram" role="img" aria-label="Placeholder for the INR deposit and withdrawal mechanism diagram">
+        <span class="ph__tag">Illustration</span>
+        <span class="ph__name">Mechanism diagram</span>
+        <span class="ph__note">Your bank account → IMPS, NEFT or UPI → your BL account (one INR balance) → global markets, and back the same way.</span>
       </div>
       <p class="caption">Via IMPS, NEFT and UPI from your linked Indian bank. Transfer timing depends on the rail and your bank.</p>
     </section>
@@ -322,7 +327,14 @@
         <nav aria-label="Product"><h3>Product</h3><a href="#markets">Markets</a><a href="#pre-ipo">Pre-IPO</a><a href="#execution">Execution</a><a href="#inr">INR in &amp; out</a></nav>
         <nav aria-label="Support"><h3>Support</h3><a href="#faq">Questions</a><a href="#waitlist">Contact</a><a href="#trust">Grievance officer</a></nav>
         <nav aria-label="Legal"><h3>Legal</h3><a href="#top">Privacy policy</a><a href="#top">Terms of use</a><a href="#top">Risk disclosure</a></nav>
-        <nav aria-label="Follow"><h3>Follow</h3><a href="#top">BL on X</a></nav>
+        <nav aria-label="Follow"><h3>Follow</h3>
+          <div class="social">
+            <a href="#top" aria-label="BharatLiquid on X"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path fill="currentColor" d="M18.24 2.25h3.31l-7.23 8.26 8.5 11.24h-6.65l-5.21-6.82-5.97 6.82H1.68l7.73-8.84L1.25 2.25h6.83l4.71 6.23zm-1.16 17.52h1.83L7.08 4.13H5.12z"/></svg></a>
+            <a href="#top" aria-label="BharatLiquid on LinkedIn"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M8 10.5v6M8 7.5v.01M12 16.5v-6M12 13.25c0-1.5 1-2.75 2.5-2.75S17 11.5 17 13v3.5"/></svg></a>
+            <a href="#top" aria-label="BharatLiquid on Instagram"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.3" cy="6.7" r="0.6" fill="currentColor"/></svg></a>
+            <a href="#top" aria-label="BharatLiquid on YouTube"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><rect x="2.5" y="5" width="19" height="14" rx="4"/><path d="M10 9.5v5l4.5-2.5z" fill="currentColor"/></svg></a>
+          </div>
+        </nav>
       </div>
       <img class="footer__mark" src="assets/lockup-white.svg" width="380" height="64" alt="">
       <div class="footer__bottom">
