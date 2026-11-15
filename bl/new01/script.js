@@ -1,25 +1,77 @@
 (function () {
-  // Nav: switch to the inset bar once the page has scrolled
+  // Nav, as on zaro.ai: the rail is transparent at the top and gains a frosted
+  // background and border once the page has scrolled. Its size never changes.
   var nav = document.querySelector('[data-nav]');
   if (nav) {
-    var onScroll = function () { nav.classList.toggle('is-scrolled', window.scrollY > 24); };
+    var onScroll = function () { nav.classList.toggle('is-scrolled', window.scrollY > 64); };
     onScroll();
     window.addEventListener('scroll', onScroll, { passive: true });
-  }
 
-  // Mobile menu
-  var toggle = document.querySelector('[data-nav-toggle]');
-  var links = document.getElementById('nav-links');
-  if (toggle && links) {
-    var setOpen = function (open) {
-      links.classList.toggle('is-open', open);
-      toggle.setAttribute('aria-expanded', String(open));
+    // Desktop dropdown: opens on hover, click or keyboard focus; closes on leave, outside click or Escape
+    var canHover = window.matchMedia('(hover: hover)').matches;
+    var drops = nav.querySelectorAll('[data-dropdown]');
+    var closeDrop = function (item) {
+      item.classList.remove('is-open');
+      item.querySelector('button').setAttribute('aria-expanded', 'false');
     };
-    toggle.addEventListener('click', function () {
-      setOpen(!links.classList.contains('is-open'));
+    var openDrop = function (item) {
+      drops.forEach(function (other) { if (other !== item) closeDrop(other); });
+      item.classList.add('is-open');
+      item.querySelector('button').setAttribute('aria-expanded', 'true');
+    };
+    drops.forEach(function (item) {
+      var btn = item.querySelector('button');
+      var timer, byHover = false;
+      if (canHover) {
+        item.addEventListener('mouseenter', function () { clearTimeout(timer); byHover = true; openDrop(item); });
+        item.addEventListener('mouseleave', function () { timer = setTimeout(function () { closeDrop(item); }, 120); });
+      }
+      btn.addEventListener('click', function () {
+        if (item.classList.contains('is-open') && !byHover) closeDrop(item); else openDrop(item);
+        byHover = false;
+      });
+      item.addEventListener('focusout', function (e) { if (!item.contains(e.relatedTarget)) closeDrop(item); });
+      item.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape') { closeDrop(item); btn.focus(); }
+      });
     });
-    links.addEventListener('click', function (e) {
-      if (e.target.closest('a')) setOpen(false);
+    document.addEventListener('click', function (e) {
+      drops.forEach(function (item) { if (!item.contains(e.target)) closeDrop(item); });
+    });
+
+    // Phone menu: a full-screen sheet
+    var toggle = nav.querySelector('.nav__toggle');
+    var setOpen = function (open) {
+      nav.classList.toggle('is-open', open);
+      toggle.setAttribute('aria-expanded', String(open));
+      document.documentElement.classList.toggle('nav-locked', open);
+      if (!open) {
+        var drop = nav.querySelector('[data-sheet-drop]');
+        if (drop) {
+          drop.setAttribute('aria-expanded', 'false');
+          document.getElementById(drop.getAttribute('aria-controls')).hidden = true;
+        }
+      }
+    };
+    nav.querySelectorAll('[data-nav-toggle]').forEach(function (b) {
+      b.addEventListener('click', function () { setOpen(!nav.classList.contains('is-open')); });
+    });
+    nav.querySelectorAll('.nav__sheet a').forEach(function (a) {
+      a.addEventListener('click', function () { setOpen(false); });
+    });
+    var sheetDrop = nav.querySelector('[data-sheet-drop]');
+    if (sheetDrop) {
+      sheetDrop.addEventListener('click', function () {
+        var open = sheetDrop.getAttribute('aria-expanded') !== 'true';
+        sheetDrop.setAttribute('aria-expanded', String(open));
+        document.getElementById(sheetDrop.getAttribute('aria-controls')).hidden = !open;
+      });
+    }
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && nav.classList.contains('is-open')) setOpen(false);
+    });
+    window.matchMedia('(min-width: 861px)').addEventListener('change', function (e) {
+      if (e.matches) setOpen(false);
     });
   }
 

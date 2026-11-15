@@ -5,7 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>About — BharatLiquid</title>
   <meta name="description" content="BharatLiquid is building one INR account for global perpetual markets, onshore in India.">
-  <link rel="icon" href="assets/symbol-onyx.svg" type="image/svg+xml">
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="assets/favicon-32.png" sizes="32x32" type="image/png">
+  <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Host+Grotesk:wght@400;500&family=Manrope:wght@300;400;500;600&display=swap" rel="stylesheet">
@@ -13,17 +15,43 @@
 </head>
 <body>
   <header class="nav" data-nav>
-    <div class="frame frame--wide nav__inner">
+    <div class="nav__inner">
       <a class="nav__brand" href="index.html" aria-label="BharatLiquid home"><img src="assets/lockup-onyx.svg" width="152" height="26" alt="BharatLiquid"></a>
-      <nav class="nav__links" id="nav-links" aria-label="Primary">
-        <a href="learn.html">Learn</a>
-        <a href="about.html" aria-current="page">About</a>
-        <a href="blog.html">Blogs</a>
+      <nav class="nav__links" aria-label="Primary">
+        <div class="nav__item" data-dropdown>
+          <button class="nav__link" type="button" aria-expanded="false" aria-haspopup="menu" aria-controls="drop-learn">Learn <svg class="nav__chev" viewBox="0 0 12 12" width="10" height="10" aria-hidden="true"><path d="M2 4.5l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.5"/></svg></button>
+          <div class="nav__drop" id="drop-learn"><div class="nav__drop-panel">
+            <a href="learn.html">All guides</a>
+            <a href="learn.html#glossary">Glossary</a>
+            <a href="index.html#faq">Common questions</a>
+          </div></div>
+        </div>
+        <a class="nav__link" href="about.html" aria-current="page">About</a>
+        <a class="nav__link" href="blog.html">Blogs</a>
       </nav>
       <div class="nav__actions">
-        <a class="btn btn--ghost btn--sm nav__support" href="support.html">Support</a>
-        <a class="btn btn--primary btn--sm" href="index.html#waitlist">Join the waitlist</a>
-        <button class="nav__toggle" type="button" aria-expanded="false" aria-controls="nav-links" data-nav-toggle><span class="sr-only">Menu</span><span></span><span></span></button>
+        <a class="nav__link nav__support" href="support.html">Support</a>
+        <a class="btn btn--primary nav__cta" href="index.html#waitlist">Join the waitlist</a>
+        <button class="nav__close" type="button" data-nav-toggle>Close</button>
+        <button class="nav__toggle" type="button" aria-expanded="false" aria-controls="nav-sheet" data-nav-toggle><span class="sr-only">Menu</span><svg class="i-open" viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M3 6h18M3 12h18M3 18h18" fill="none" stroke="currentColor" stroke-width="1.8"/></svg><svg class="i-close" viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M5 5l14 14M19 5L5 19" fill="none" stroke="currentColor" stroke-width="1.8"/></svg></button>
+      </div>
+    </div>
+    <div class="nav__sheet" id="nav-sheet">
+      <ul class="sheet__list">
+        <li>
+          <button class="sheet__link" type="button" aria-expanded="false" aria-controls="sheet-learn" data-sheet-drop>Learn <svg class="nav__chev" viewBox="0 0 12 12" width="10" height="10" aria-hidden="true"><path d="M2 4.5l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.5"/></svg></button>
+          <div class="sheet__sub" id="sheet-learn" hidden>
+            <a href="learn.html">All guides</a>
+            <a href="learn.html#glossary">Glossary</a>
+            <a href="index.html#faq">Common questions</a>
+          </div>
+        </li>
+        <li><a class="sheet__link" href="about.html">About</a></li>
+        <li><a class="sheet__link" href="blog.html">Blogs</a></li>
+      </ul>
+      <div class="sheet__actions">
+        <a class="btn btn--ghost" href="support.html">Support</a>
+        <a class="btn btn--primary" href="index.html#waitlist">Join the waitlist</a>
       </div>
     </div>
   </header>
