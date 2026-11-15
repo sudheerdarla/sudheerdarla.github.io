@@ -1,4 +1,12 @@
 (function () {
+  // Nav: switch to the inset bar once the page has scrolled
+  var nav = document.querySelector('[data-nav]');
+  if (nav) {
+    var onScroll = function () { nav.classList.toggle('is-scrolled', window.scrollY > 24); };
+    onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
+  }
+
   // Mobile menu
   var toggle = document.querySelector('[data-nav-toggle]');
   var links = document.getElementById('nav-links');

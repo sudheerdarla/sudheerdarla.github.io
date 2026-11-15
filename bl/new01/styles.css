@@ -26,13 +26,14 @@
 
   --display: "Manrope", system-ui, sans-serif;
   --sans: "Host Grotesk", system-ui, -apple-system, "Segoe UI", sans-serif;
-  --frame: 1240px;
-  --pad: 40px;
+  --frame: 1920px;
+  --pad: 64px;
   --radius: 8px;
 }
 
 *, *::before, *::after { box-sizing: border-box; }
-html { scroll-behavior: smooth; scroll-padding-top: 72px; }
+html { scroll-behavior: smooth; scroll-padding-top: 88px; }
+main { padding-top: 72px; }
 body { margin: 0; background: var(--paper); color: var(--text); font: 16px/1.5 var(--sans); -webkit-font-smoothing: antialiased; }
 img { display: block; max-width: 100%; }
 h1, h2, h3, p, ul, dl, dd { margin: 0; }
@@ -64,13 +65,17 @@ button, input { font: inherit; color: inherit; }
 .t-up { color: var(--up); }
 .t-warn { color: var(--warn); }
 
-/* Buttons: Dark Azure is reserved for the waitlist action */
-.btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; height: 48px; padding: 0 22px; border: 1px solid transparent; border-radius: 6px; font: 500 15px/1 var(--sans); cursor: pointer; transition: background-color .15s ease, border-color .15s ease; white-space: nowrap; }
+/* Buttons: square, black and white */
+button { border-radius: 0 !important; }
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; height: 48px; padding: 0 22px; border: 1px solid var(--text); border-radius: 0; font: 500 15px/1 var(--sans); cursor: pointer; transition: background-color .15s ease, color .15s ease, border-color .15s ease; white-space: nowrap; }
 .btn--sm { height: 40px; padding: 0 16px; font-size: 14px; }
-.btn--primary { background: var(--azure); color: var(--paper); }
-.btn--primary:hover { background: var(--azure-deep); }
-.btn--ghost { border-color: var(--line-strong); background: var(--paper); color: var(--text); }
-.btn--ghost:hover { border-color: var(--text); }
+.btn--primary { background: var(--text); color: var(--paper); }
+.btn--primary:hover { background: var(--charcoal); border-color: var(--charcoal); }
+.btn--ghost { background: var(--paper); color: var(--text); }
+.btn--ghost:hover { background: var(--text); color: var(--paper); }
+/* On dark surfaces the primary inverts to white */
+.cta .btn--primary { background: var(--paper); color: var(--text); border-color: var(--paper); }
+.cta .btn--primary:hover { background: transparent; color: var(--paper); }
 
 .badge { display: inline-flex; align-items: center; gap: 6px; padding: 4px 10px; border: 1px solid var(--line); border-radius: 4px; background: var(--paper); font: 500 12px/1.4 var(--sans); color: var(--text-2); white-space: nowrap; }
 .badge--azure { border-color: var(--azure-light); color: var(--info); }
@@ -90,8 +95,21 @@ button, input { font: inherit; color: inherit; }
 .ph--dark .ph__name { color: rgba(255, 255, 255, 0.7); }
 
 /* Nav */
-.nav { position: sticky; top: 0; z-index: 10; background: rgba(255, 255, 255, 0.92); backdrop-filter: blur(10px); border-bottom: 1px solid var(--line); }
-.nav__inner { display: flex; align-items: center; justify-content: space-between; gap: 24px; height: 68px; padding: 0 var(--pad); }
+/* At the top the bar spans the page; once scrolled it tightens into an inset, bordered bar */
+.nav { position: fixed; top: 0; left: 0; right: 0; z-index: 10; pointer-events: none; }
+.nav__inner {
+  position: relative; display: flex; align-items: center; justify-content: space-between; gap: 24px;
+  height: 72px; padding: 0 var(--pad); pointer-events: auto;
+  background: var(--paper); border-bottom: 1px solid var(--line);
+  transition: max-width .35s ease, height .35s ease, margin .35s ease, padding .35s ease, background-color .35s ease, border-color .35s ease, box-shadow .35s ease;
+}
+.nav.is-scrolled .nav__inner {
+  max-width: calc(100% - 48px); height: 56px; margin-top: 12px; padding: 0 8px 0 20px;
+  background: rgba(255, 255, 255, 0.86); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--line-strong); box-shadow: 0 8px 24px -16px rgba(0, 0, 0, 0.25);
+}
+.nav__brand img { transition: width .35s ease; }
+.nav.is-scrolled .nav__brand img { width: 132px; }
 .nav__brand img { width: 152px; height: auto; }
 .nav__links { display: flex; gap: 32px; font-size: 15px; color: var(--text-2); }
 .nav__links a:hover { color: var(--text); }
@@ -236,7 +254,7 @@ button, input { font: inherit; color: inherit; }
 .cta__inner { display: flex; flex-direction: column; align-items: center; gap: 24px; padding: 128px var(--pad); text-align: center; background-image: radial-gradient(rgba(191, 216, 227, 0.16) 1px, transparent 1px); background-size: 16px 16px; }
 .cta__inner .title { margin-top: 0; }
 .signup { display: flex; gap: 8px; width: 100%; max-width: 480px; margin-top: 8px; }
-.signup input { flex: 1; min-width: 0; height: 48px; padding: 0 16px; border: 1px solid var(--charcoal); border-radius: 6px; background: var(--onyx-02); color: var(--paper); }
+.signup input { flex: 1; min-width: 0; height: 48px; padding: 0 16px; border: 1px solid var(--charcoal); border-radius: 0; background: var(--onyx-02); color: var(--paper); }
 .signup input::placeholder { color: rgba(255, 255, 255, 0.4); }
 .signup input:focus { outline: none; border-color: var(--azure-light); }
 .signup.is-invalid input { border-color: #e5484d; }
@@ -269,7 +287,7 @@ button, input { font: inherit; color: inherit; }
 }
 @media (max-width: 860px) {
   :root { --pad: 24px; }
-  .nav__links { display: none; position: absolute; top: 68px; left: 0; right: 0; flex-direction: column; gap: 0; padding: 8px var(--pad) 16px; background: var(--paper); border-bottom: 1px solid var(--line); }
+  .nav__links { display: none; position: absolute; top: calc(100% + 1px); left: -1px; right: -1px; border: 1px solid var(--line); flex-direction: column; gap: 0; padding: 8px var(--pad) 16px; background: var(--paper); border-bottom: 1px solid var(--line); }
   .nav__links.is-open { display: flex; }
   .nav__links a { padding: 12px 0; border-bottom: 1px solid var(--line); }
   .nav__toggle { display: inline-flex; }
