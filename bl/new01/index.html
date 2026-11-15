@@ -33,14 +33,14 @@
     <!-- Hero -->
     <section class="frame frame--wide hero">
       <div class="hero__copy">
-        <p class="label">Global perpetuals · Settled in INR</p>
-        <h1 class="title title--xl">Trade the world.<br><span class="tone">From India.</span></h1>
-        <p class="lead">Trade NVDA, XAU and BTC perpetuals in INR. Markets are open 24/7, and every fee is shown before you trade.</p>
+        <div class="hero__intro">
+          <h1 class="title title--xl">Trade the world.<br><span class="tone">From India.</span></h1>
+          <p class="lead">BharatLiquid is one rupee account for global stocks, commodities and crypto. Trade around the clock and see every fee before you place an order.</p>
+        </div>
         <div class="actions">
           <a class="btn btn--primary" href="#waitlist">Join the waitlist</a>
-          <a class="btn btn--ghost" href="#markets">Explore the markets</a>
+          <a class="btn btn--ghost" href="#markets">See how it works</a>
         </div>
-        <p class="fine">Perpetual futures give you exposure to a price, not ownership of shares.</p>
       </div>
       <div class="ph ph--hero" role="img" aria-label="Placeholder for the terminal preview illustration">
         <span class="ph__tag">Illustration</span>
@@ -70,10 +70,10 @@
     <section class="frame section" id="markets">
       <div class="head">
         <div>
-          <p class="label">Markets</p>
+          <p class="label">Meet BharatLiquid</p>
           <h2 class="title">Your markets.<br><span class="tone">All together.</span></h2>
         </div>
-        <p class="head__copy">One account across global equities, indices, commodities and digital assets.</p>
+        <p class="head__copy">NVIDIA, gold, the S&amp;P 500 and Bitcoin, side by side in one account. A single INR balance funds every market, so there is nothing to convert and no second app to open.</p>
       </div>
 
       <div class="chips" role="group" aria-label="Filter markets" data-filter>
@@ -111,6 +111,36 @@
           </div>
         </div>
       </div>
+      <div class="ticker" aria-label="Popular markets, illustrative prices">
+        <div class="ticker__track">
+          <ul class="ticker__list">
+            <li><strong>NVDA</strong><span class="ticker__kind">Stock</span><span class="num">$202.81</span><span class="chg up">+2.80%</span></li>
+            <li><strong>AAPL</strong><span class="ticker__kind">Stock</span><span class="num">$353.40</span><span class="chg up">+0.56%</span></li>
+            <li><strong>MSFT</strong><span class="ticker__kind">Stock</span><span class="num">$512.40</span><span class="chg up">+0.84%</span></li>
+            <li><strong>TSLA</strong><span class="ticker__kind">Stock</span><span class="num">$412.30</span><span class="chg down">−1.42%</span></li>
+            <li><strong>AMZN</strong><span class="ticker__kind">Stock</span><span class="num">$231.90</span><span class="chg up">+0.37%</span></li>
+            <li><strong>BTC</strong><span class="ticker__kind">Crypto</span><span class="num">$78,630.00</span><span class="chg up">+2.11%</span></li>
+            <li><strong>ETH</strong><span class="ticker__kind">Crypto</span><span class="num">$3,412.00</span><span class="chg up">+1.06%</span></li>
+            <li><strong>SOL</strong><span class="ticker__kind">Crypto</span><span class="num">$178.50</span><span class="chg down">−0.92%</span></li>
+            <li><strong>XAU</strong><span class="ticker__kind">Gold</span><span class="num">$3,986.20</span><span class="chg down">−0.56%</span></li>
+            <li><strong>XAG</strong><span class="ticker__kind">Silver</span><span class="num">$48.62</span><span class="chg up">+0.41%</span></li>
+            <li><strong>WTI</strong><span class="ticker__kind">Crude oil</span><span class="num">$61.85</span><span class="chg down">−0.33%</span></li>
+          </ul>
+          <ul class="ticker__list" aria-hidden="true">
+            <li><strong>NVDA</strong><span class="ticker__kind">Stock</span><span class="num">$202.81</span><span class="chg up">+2.80%</span></li>
+            <li><strong>AAPL</strong><span class="ticker__kind">Stock</span><span class="num">$353.40</span><span class="chg up">+0.56%</span></li>
+            <li><strong>MSFT</strong><span class="ticker__kind">Stock</span><span class="num">$512.40</span><span class="chg up">+0.84%</span></li>
+            <li><strong>TSLA</strong><span class="ticker__kind">Stock</span><span class="num">$412.30</span><span class="chg down">−1.42%</span></li>
+            <li><strong>AMZN</strong><span class="ticker__kind">Stock</span><span class="num">$231.90</span><span class="chg up">+0.37%</span></li>
+            <li><strong>BTC</strong><span class="ticker__kind">Crypto</span><span class="num">$78,630.00</span><span class="chg up">+2.11%</span></li>
+            <li><strong>ETH</strong><span class="ticker__kind">Crypto</span><span class="num">$3,412.00</span><span class="chg up">+1.06%</span></li>
+            <li><strong>SOL</strong><span class="ticker__kind">Crypto</span><span class="num">$178.50</span><span class="chg down">−0.92%</span></li>
+            <li><strong>XAU</strong><span class="ticker__kind">Gold</span><span class="num">$3,986.20</span><span class="chg down">−0.56%</span></li>
+            <li><strong>XAG</strong><span class="ticker__kind">Silver</span><span class="num">$48.62</span><span class="chg up">+0.41%</span></li>
+            <li><strong>WTI</strong><span class="ticker__kind">Crude oil</span><span class="num">$61.85</span><span class="chg down">−0.33%</span></li>
+          </ul>
+        </div>
+      </div>
       <p class="source"><span class="dot dot--live"></span>Mark prices from Hyperliquid · 15 Nov 2026, 14:06:39 IST · Illustrative figures.</p>
     </section>
 
@@ -121,24 +151,24 @@
           <p class="label">Who it’s for</p>
           <h2 class="title">Built for traders who<br><span class="tone">know the mechanics.</span></h2>
         </div>
-        <p class="head__copy">For Indian traders who already understand margin, funding and liquidation.</p>
+        <p class="head__copy">If you trade F&amp;O in India, you already know margin, leverage and liquidation. BharatLiquid uses the same ideas, on markets you couldn’t reach before.</p>
       </div>
       <div class="audience">
         <article class="card aud">
           <div class="ph ph--card" role="img" aria-label="Placeholder image for F&amp;O traders"><span class="ph__tag">Image</span></div>
-          <div class="aud__body"><h3 class="h3">F&amp;O traders</h3><p>Global underlyings with the margin clarity you already know. In INR.</p></div>
+          <div class="aud__body"><h3 class="h3">F&amp;O traders</h3><p>Take a view on global names with the margin rules you already use, all in rupees.</p></div>
         </article>
         <article class="card aud">
           <div class="ph ph--card" role="img" aria-label="Placeholder image for crypto perp traders"><span class="ph__tag">Image</span></div>
-          <div class="aud__body"><h3 class="h3">Crypto perp traders</h3><p>Onshore perpetuals. Fees and funding shown before every order.</p></div>
+          <div class="aud__body"><h3 class="h3">Crypto perp traders</h3><p>Perpetuals from an Indian account, with fees and funding shown before every order.</p></div>
         </article>
         <article class="card aud">
           <div class="ph ph--card" role="img" aria-label="Placeholder image for global investors"><span class="ph__tag">Image</span></div>
-          <div class="aud__body"><h3 class="h3">Global investors</h3><p>No FX conversion, no remittance paperwork. INR in, INR out.</p></div>
+          <div class="aud__body"><h3 class="h3">Global investors</h3><p>Reach US stocks and gold without FX conversion or remittance forms. Rupees in, rupees out.</p></div>
         </article>
         <article class="card aud">
           <div class="ph ph--card" role="img" aria-label="Placeholder image for desks and institutions"><span class="ph__tag">Image</span></div>
-          <div class="aud__body"><h3 class="h3">Desks &amp; institutions</h3><p>Documented API and audit-ready statements.</p></div>
+          <div class="aud__body"><h3 class="h3">Desks &amp; institutions</h3><p>A documented API and statements your auditors can read.</p></div>
         </article>
       </div>
     </section>
@@ -147,10 +177,10 @@
     <section class="frame section" id="pre-ipo">
       <div class="head">
         <div>
-          <p class="label">Pre-IPO</p>
+          <p class="label">Coming to BharatLiquid</p>
           <h2 class="title">Private companies.<br><span class="tone">Traded as perpetuals.</span></h2>
         </div>
-        <p class="head__copy">Perpetuals that track a reference valuation. You do not own company shares.</p>
+        <p class="head__copy">Some of the companies people talk about most aren’t listed yet. Pre-IPO perpetuals let you take a view on their valuation, in rupees. You don’t own their shares.</p>
       </div>
       <div class="ipo">
         <article class="card company">
@@ -196,7 +226,7 @@
           <p class="label">Costs</p>
           <h2 class="title">Built for lower<br><span class="tone">trading costs.</span></h2>
         </div>
-        <p class="head__copy">Deeper liquidity narrows the gap between the price you see and the price you get.</p>
+        <p class="head__copy">Every trade has two costs: the fee, and the gap between the price you see and the price you get. BharatLiquid routes to deep order books to keep that gap small.</p>
       </div>
       <div class="compare">
         <div class="compare__side">
@@ -228,9 +258,9 @@
     <!-- Execution -->
     <section class="frame section" id="execution">
       <div class="head head--stack">
-        <p class="label">Execution</p>
+        <p class="label">Proof, not promises</p>
         <h2 class="title">A trade you <span class="tone">can check.</span></h2>
-        <p class="head__copy">Every fill is recorded publicly. Here is a real Bitcoin trade, exactly as it settled.</p>
+        <p class="head__copy">When an order fills, you shouldn’t have to take our word for it. Every fill is recorded publicly. Here is a real Bitcoin trade, exactly as it settled.</p>
       </div>
       <div class="stage">
         <article class="receipt">
@@ -255,7 +285,7 @@
         <div class="dark__grid">
           <div class="dark__copy">
             <h2 class="title title--light">Trust,<br><span class="tone">earned in the open.</span></h2>
-            <p class="lead lead--light">What we can show today, stated plainly.</p>
+            <p class="lead lead--light">How your money is held, and the rules you trade under, stated plainly before you sign up.</p>
             <ul class="facts">
               <li><span class="facts__n">01</span><div><h3>Onshore</h3><p>Indian entity, Indian banking rails. Registration details: [to confirm].</p></div></li>
               <li><span class="facts__n">02</span><div><h3>Segregated funds</h3><p>Client assets held apart from BL’s own book. [Confirm structure].</p></div></li>
@@ -274,10 +304,10 @@
     <section class="frame section" id="inr">
       <div class="head">
         <div>
-          <p class="label">INR in &amp; out</p>
+          <p class="label">Money in &amp; out</p>
           <h2 class="title">Rupees in.<br><span class="tone">Rupees out.</span></h2>
         </div>
-        <p class="head__copy">Deposit from your linked Indian bank and withdraw back to it. No FX conversion.</p>
+        <p class="head__copy">Add money from your Indian bank account and withdraw back to the same account. No currency conversion, no remittance forms.</p>
       </div>
       <div class="ph ph--diagram" role="img" aria-label="Placeholder for the INR deposit and withdrawal mechanism diagram">
         <span class="ph__tag">Illustration</span>
@@ -290,7 +320,7 @@
     <!-- FAQ -->
     <section class="frame section section--tint faq" id="faq">
       <div>
-        <p class="label">FAQ</p>
+        <p class="label">Questions</p>
         <h2 class="title">A little more<br><span class="tone">clarity.</span></h2>
       </div>
       <div class="faq__list">
@@ -324,7 +354,7 @@
   <footer class="footer">
     <div class="frame">
       <div class="footer__cols">
-        <nav aria-label="Product"><h3>Product</h3><a href="#markets">Markets</a><a href="#pre-ipo">Pre-IPO</a><a href="#execution">Execution</a><a href="#inr">INR in &amp; out</a></nav>
+        <nav aria-label="Products"><h3>Products</h3><a href="#markets">Markets</a><a href="learn.html">Futures</a><a href="#top">Invest</a></nav>
         <nav aria-label="Company"><h3>Company</h3><a href="about.html">About</a><a href="learn.html">Learn</a><a href="blog.html">Blogs</a></nav>
         <nav aria-label="Support"><h3>Support</h3><a href="support.html">Help centre</a><a href="support.html#contact">Contact</a><a href="support.html#contact">Grievance officer</a></nav>
         <nav aria-label="Legal"><h3>Legal</h3><a href="#top">Privacy policy</a><a href="#top">Terms of use</a><a href="#top">Risk disclosure</a></nav>
