@@ -54,7 +54,7 @@ button, input { font: inherit; color: inherit; }
 .label { font: 500 14px/1.5 var(--sans); letter-spacing: 1.4px; text-transform: uppercase; color: var(--text-2); }
 .label--sm { font-size: 12px; letter-spacing: 1.2px; color: var(--text-3); }
 .label--light { color: rgba(255, 255, 255, 0.6); }
-.title { margin-top: 12px; font: 500 48px/1.1 var(--display); letter-spacing: -1.2px; }
+.title { margin-top: 0; font: 500 48px/1.1 var(--display); letter-spacing: -1.2px; }
 .title--xl { font-size: 64px; letter-spacing: -1.92px; line-height: 1.05; }
 .title .tone { color: var(--text-3); }
 .title--light { color: var(--paper); }
@@ -142,7 +142,7 @@ button { }
 .ph--hero { aspect-ratio: 5 / 4; max-height: 62vh; width: 100%; }
 
 /* Strip */
-.strip { display: grid; grid-template-columns: 1fr 2fr 1fr; border-bottom: 1px solid var(--line); }
+.strip { display: grid; grid-template-columns: 2fr 1fr; border-bottom: 1px solid var(--line); }
 .strip__group { display: flex; flex-direction: column; gap: 12px; padding: 24px; }
 .strip__group:first-child { padding-left: 0; }
 .strip__group:last-child { padding-right: 0; }
@@ -310,11 +310,11 @@ button { }
 .page-head .title { margin-top: 0; }
 .page-head .lead { max-width: 620px; }
 .band { display: flex; align-items: center; justify-content: space-between; gap: 24px; padding-top: 48px; padding-bottom: 48px; border-bottom: 1px solid var(--line); }
-.band p { margin-top: 4px; color: var(--text-2); }
 .guides { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
 .guide, .post { display: flex; flex-direction: column; overflow: hidden; }
 .guide__body { display: flex; flex: 1; flex-direction: column; gap: 10px; padding: 24px; }
 .guide__body p { color: var(--text-2); }
+.guide__body h3 a:hover { text-decoration: underline; text-underline-offset: 4px; }
 .guide__meta { display: flex; justify-content: space-between; gap: 12px; font: 500 12px/1.5 var(--sans); letter-spacing: 1px; text-transform: uppercase; color: var(--text-3) !important; }
 .more { margin-top: auto; padding-top: 8px; font-weight: 500; }
 .more:hover { text-decoration: underline; text-underline-offset: 4px; }
