@@ -1,0 +1,337 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BharatLiquid — Trade the world. From India.</title>
+  <meta name="description" content="Trade NVDA, XAU and BTC perpetuals in INR. One account for global markets, funded and withdrawn through Indian banking rails.">
+  <link rel="icon" href="assets/symbol-onyx.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Host+Grotesk:wght@400;500&family=Manrope:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="nav" data-nav>
+    <div class="frame nav__inner">
+      <a class="nav__brand" href="#top" aria-label="BharatLiquid home"><img src="assets/lockup-onyx.svg" width="152" height="26" alt="BharatLiquid"></a>
+      <nav class="nav__links" id="nav-links" aria-label="Primary">
+        <a href="#markets">Markets</a>
+        <a href="#pre-ipo">Pre-IPO</a>
+        <a href="#execution">Execution</a>
+        <a href="#inr">INR in &amp; out</a>
+        <a href="#faq">FAQ</a>
+      </nav>
+      <div class="nav__actions">
+        <a class="btn btn--primary btn--sm" href="#waitlist">Join the waitlist</a>
+        <button class="nav__toggle" type="button" aria-expanded="false" aria-controls="nav-links" data-nav-toggle><span class="sr-only">Menu</span><span></span><span></span></button>
+      </div>
+    </div>
+  </header>
+
+  <main id="top">
+    <!-- Hero -->
+    <section class="frame hero">
+      <div class="hero__copy">
+        <p class="label">Global perpetuals · Settled in INR</p>
+        <h1 class="title title--xl">Trade the world.<br><span class="tone">From India.</span></h1>
+        <p class="lead">Trade NVDA, XAU and BTC perpetuals in INR. Markets are open 24/7, and every fee is shown before you trade.</p>
+        <div class="actions">
+          <a class="btn btn--primary" href="#waitlist">Join the waitlist</a>
+          <a class="btn btn--ghost" href="#markets">Explore the markets</a>
+        </div>
+        <p class="fine">Perpetual futures give you exposure to a price, not ownership of shares.</p>
+      </div>
+      <div class="ph ph--hero" role="img" aria-label="Placeholder for the terminal preview illustration">
+        <span class="ph__tag">Illustration</span>
+        <span class="ph__name">Terminal preview</span>
+        <span class="ph__note">Live order ticket and chart. Replaces the globe.</span>
+      </div>
+    </section>
+
+    <!-- Rails strip -->
+    <section class="frame strip" aria-label="Infrastructure">
+      <div class="strip__group">
+        <p class="label label--sm">Execution on</p>
+        <ul class="strip__row"><li>Hyperliquid order books</li></ul>
+      </div>
+      <div class="strip__group strip__group--wide">
+        <p class="label label--sm">INR rails</p>
+        <ul class="strip__row"><li>IMPS</li><li>NEFT</li><li>UPI</li></ul>
+      </div>
+      <div class="strip__group">
+        <p class="label label--sm">Timestamps</p>
+        <ul class="strip__row"><li>IST</li></ul>
+      </div>
+    </section>
+
+    <!-- Markets -->
+    <section class="frame section" id="markets">
+      <div class="head">
+        <div>
+          <p class="label">Markets</p>
+          <h2 class="title">Your markets.<br><span class="tone">All together.</span></h2>
+        </div>
+        <p class="head__copy">One account across global equities, indices, commodities and digital assets.</p>
+      </div>
+
+      <div class="chips" role="group" aria-label="Filter markets" data-filter>
+        <button type="button" aria-pressed="true" data-cat="all">All</button>
+        <button type="button" aria-pressed="false" data-cat="digital">Digital assets</button>
+        <button type="button" aria-pressed="false" data-cat="equities">Global equities</button>
+        <button type="button" aria-pressed="false" data-cat="indices">Indices</button>
+        <button type="button" aria-pressed="false" data-cat="commodities">Commodities</button>
+        <button type="button" aria-pressed="false" data-cat="preipo">Pre-IPO</button>
+      </div>
+
+      <div class="board">
+        <div class="board__list">
+          <div class="board__head"><span>Market</span><span>Mark price</span><span>24h</span></div>
+          <ul data-markets>
+            <li data-cat="equities"><span class="tick">NV</span><span class="mkt"><strong>NVDA</strong><small>NVIDIA · Global equities</small></span><span class="num">$202.81</span><span class="chg up">+2.80%</span></li>
+            <li data-cat="equities"><span class="tick">AA</span><span class="mkt"><strong>AAPL</strong><small>Apple · Global equities</small></span><span class="num">$353.40</span><span class="chg up">+0.56%</span></li>
+            <li data-cat="commodities"><span class="tick">AU</span><span class="mkt"><strong>XAU</strong><small>Gold · Commodities</small></span><span class="num">$3,986.20</span><span class="chg down">−0.56%</span></li>
+            <li data-cat="digital"><span class="tick">₿</span><span class="mkt"><strong>BTC</strong><small>Bitcoin · Digital assets</small></span><span class="num">$78,630.00</span><span class="chg up">+2.11%</span></li>
+            <li data-cat="indices"><span class="tick">SP</span><span class="mkt"><strong>SPX</strong><small>S&amp;P 500 · Indices</small></span><span class="num">6,790.00</span><span class="chg flat">—</span></li>
+            <li data-cat="preipo"><span class="tick">AN</span><span class="mkt"><strong>Anthropic</strong><small>Pre-IPO · Perpetual</small></span><span class="num num--soft">At launch</span><span class="chg flat">—</span></li>
+          </ul>
+          <p class="board__empty" data-empty hidden>No markets in this group yet.</p>
+        </div>
+        <div class="board__chart">
+          <div class="tabs" role="tablist" aria-label="Market view" data-tabs>
+            <button type="button" role="tab" aria-selected="true">Price chart</button>
+            <button type="button" role="tab" aria-selected="false">Order book</button>
+            <button type="button" role="tab" aria-selected="false">Recent trades</button>
+          </div>
+          <div class="ph ph--chart" role="img" aria-label="Placeholder for the market chart">
+            <span class="ph__tag">Chart</span>
+            <span class="ph__name" data-tab-label>Price chart · NVDA-PERP</span>
+            <span class="ph__note">Live data from Hyperliquid.</span>
+          </div>
+        </div>
+      </div>
+      <p class="source"><span class="dot dot--live"></span>Mark prices from Hyperliquid · 15 Nov 2026, 14:06:39 IST · Illustrative figures.</p>
+    </section>
+
+    <!-- Built for -->
+    <section class="frame section section--tint">
+      <div class="head">
+        <div>
+          <p class="label">Who it’s for</p>
+          <h2 class="title">Built for traders who<br><span class="tone">know the mechanics.</span></h2>
+        </div>
+        <p class="head__copy">For Indian traders who already understand margin, funding and liquidation.</p>
+      </div>
+      <div class="audience">
+        <article class="card aud">
+          <div class="ph ph--card" role="img" aria-label="Placeholder image for F&amp;O traders"><span class="ph__tag">Image</span></div>
+          <div class="aud__body"><h3 class="h3">F&amp;O traders</h3><p>Global underlyings with the margin clarity you already know. In INR.</p></div>
+        </article>
+        <article class="card aud">
+          <div class="ph ph--card" role="img" aria-label="Placeholder image for crypto perp traders"><span class="ph__tag">Image</span></div>
+          <div class="aud__body"><h3 class="h3">Crypto perp traders</h3><p>Onshore perpetuals. Fees and funding shown before every order.</p></div>
+        </article>
+        <article class="card aud">
+          <div class="ph ph--card" role="img" aria-label="Placeholder image for global investors"><span class="ph__tag">Image</span></div>
+          <div class="aud__body"><h3 class="h3">Global investors</h3><p>No FX conversion, no remittance paperwork. INR in, INR out.</p></div>
+        </article>
+        <article class="card aud">
+          <div class="ph ph--card" role="img" aria-label="Placeholder image for desks and institutions"><span class="ph__tag">Image</span></div>
+          <div class="aud__body"><h3 class="h3">Desks &amp; institutions</h3><p>Documented API and audit-ready statements.</p></div>
+        </article>
+      </div>
+    </section>
+
+    <!-- Pre-IPO -->
+    <section class="frame section" id="pre-ipo">
+      <div class="head">
+        <div>
+          <p class="label">Pre-IPO</p>
+          <h2 class="title">Private companies.<br><span class="tone">Traded as perpetuals.</span></h2>
+        </div>
+        <p class="head__copy">Perpetuals that track a reference valuation. You do not own company shares.</p>
+      </div>
+      <div class="ipo">
+        <article class="card company">
+          <div class="company__top"><div class="ph ph--logo" role="img" aria-label="Placeholder for company logo"><span class="ph__tag">Logo</span></div><span class="badge">Private company</span></div>
+          <h3 class="h3">OpenAI</h3><p>AI research and deployment company.</p>
+        </article>
+        <article class="card company">
+          <div class="company__top"><div class="ph ph--logo" role="img" aria-label="Placeholder for company logo"><span class="ph__tag">Logo</span></div><span class="badge">Private company</span></div>
+          <h3 class="h3">Anthropic</h3><p>AI safety and research company.</p>
+        </article>
+        <article class="card contract">
+          <div class="side" role="group" aria-label="Order side" data-side>
+            <button type="button" aria-pressed="true" class="side__buy">Buy</button>
+            <button type="button" aria-pressed="false" class="side__sell">Sell</button>
+          </div>
+          <h3 class="h3">How the contract works</h3>
+          <p data-side-copy>Buy if you expect the reference valuation to rise. Settled in INR.</p>
+          <p class="notice"><strong>Pre-IPO markets can be highly volatile.</strong> Leverage magnifies losses.</p>
+        </article>
+      </div>
+    </section>
+
+    <!-- Costs -->
+    <section class="frame section section--tint" id="costs">
+      <div class="head">
+        <div>
+          <p class="label">Costs</p>
+          <h2 class="title">Built for lower<br><span class="tone">trading costs.</span></h2>
+        </div>
+        <p class="head__copy">Deeper liquidity narrows the gap between the price you see and the price you get.</p>
+      </div>
+      <div class="compare">
+        <div class="compare__side">
+          <p class="pill-row"><span class="badge">Thin liquidity</span><span class="badge badge--warn">Wide gap</span></p>
+          <div class="ph ph--depth" role="img" aria-label="Placeholder for thin order book depth illustration"><span class="ph__tag">Illustration</span><span class="ph__name">Order book depth</span></div>
+          <dl class="rows">
+            <div><dt>Price you see</dt><dd>₹ —</dd></div>
+            <div><dt>Price you get</dt><dd>₹ —</dd></div>
+            <div><dt>Difference</dt><dd class="t-warn">Wide gap</dd></div>
+          </dl>
+        </div>
+        <div class="compare__side compare__side--azure">
+          <p class="pill-row"><span class="badge badge--azure">Deep liquidity</span><span class="badge badge--up">Narrow gap</span></p>
+          <div class="ph ph--depth ph--azure" role="img" aria-label="Placeholder for deep order book depth illustration"><span class="ph__tag">Illustration</span><span class="ph__name">Order book depth</span></div>
+          <dl class="rows">
+            <div><dt>Price you see</dt><dd>₹ —</dd></div>
+            <div><dt>Price you get</dt><dd>₹ —</dd></div>
+            <div><dt>Difference</dt><dd class="t-up">Narrow gap</dd></div>
+          </dl>
+        </div>
+      </div>
+      <div class="stat">
+        <p class="stat__copy">Lower all-in cost on perpetuals than the domestic average.</p>
+        <p class="stat__num">12–18%</p>
+        <p class="stat__src">Source: BL historical simulation, May–Jun 2026. Conceptual illustration above, not a savings estimate.</p>
+      </div>
+    </section>
+
+    <!-- Execution -->
+    <section class="frame section" id="execution">
+      <div class="head head--stack">
+        <p class="label">Execution</p>
+        <h2 class="title">A trade you <span class="tone">can check.</span></h2>
+        <p class="head__copy">Every fill is recorded publicly. Here is a real Bitcoin trade, exactly as it settled.</p>
+      </div>
+      <div class="stage">
+        <article class="receipt">
+          <div class="receipt__top"><h3 class="h3">BTC perpetual · Trade receipt</h3><span class="badge"><span class="dot dot--live"></span>Public record</span></div>
+          <dl class="rows rows--receipt">
+            <div><dt>Side</dt><dd class="t-up">+ Buy</dd></div>
+            <div><dt>Trade price</dt><dd>$78,630.00</dd></div>
+            <div><dt>Size</dt><dd>0.0141 BTC</dd></div>
+            <div><dt>Notional</dt><dd>≈ $1,108.68</dd></div>
+            <div><dt>Executed at</dt><dd>09 Sep 2026, 20:38:52 IST</dd></div>
+          </dl>
+          <div class="tx"><span>0x1449d17524…e39abd42</span><a href="https://app.hyperliquid.xyz/explorer" target="_blank" rel="noopener">View transaction on Hyperliquid ↗</a></div>
+        </article>
+      </div>
+      <p class="caption">Example public trade, not a BL customer order. The BL receipt format is in development.</p>
+    </section>
+
+    <!-- Safeguards -->
+    <section class="frame section section--flush" id="trust">
+      <div class="dark">
+        <span class="dark__tab">Safeguards</span>
+        <div class="dark__grid">
+          <div class="dark__copy">
+            <h2 class="title title--light">Trust,<br><span class="tone">earned in the open.</span></h2>
+            <p class="lead lead--light">What we can show today, stated plainly.</p>
+            <ul class="facts">
+              <li><span class="facts__n">01</span><div><h3>Onshore</h3><p>Indian entity, Indian banking rails. Registration details: [to confirm].</p></div></li>
+              <li><span class="facts__n">02</span><div><h3>Segregated funds</h3><p>Client assets held apart from BL’s own book. [Confirm structure].</p></div></li>
+              <li><span class="facts__n">03</span><div><h3>Shown before you trade</h3><p>Fees, funding rate and liquidation price on every order ticket.</p></div></li>
+            </ul>
+          </div>
+          <div class="ph ph--dark" role="img" aria-label="Placeholder for safeguards illustration">
+            <span class="ph__tag">Illustration</span>
+            <span class="ph__name">Account and custody flow</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- INR -->
+    <section class="frame section" id="inr">
+      <div class="head">
+        <div>
+          <p class="label">INR in &amp; out</p>
+          <h2 class="title">Rupees in.<br><span class="tone">Rupees out.</span></h2>
+        </div>
+        <p class="head__copy">Deposit from your linked Indian bank and withdraw back to it. No FX conversion.</p>
+      </div>
+      <div class="flow">
+        <article class="card flow__card">
+          <div class="ph ph--icon" role="img" aria-label="Placeholder icon for bank account"><span class="ph__tag">Icon</span></div>
+          <h3 class="h3">Your bank account</h3>
+          <p>Any linked Indian bank account.</p>
+        </article>
+        <div class="flow__mid" aria-hidden="true">
+          <span class="flow__arrow">Deposit INR →</span>
+          <span class="flow__rails">IMPS · NEFT · UPI</span>
+          <span class="flow__arrow">← Withdraw INR</span>
+        </div>
+        <article class="card flow__card">
+          <div class="ph ph--icon" role="img" aria-label="Placeholder icon for BL account"><span class="ph__tag">Icon</span></div>
+          <h3 class="h3">Your BL account</h3>
+          <p>Trade every market from one INR balance.</p>
+        </article>
+      </div>
+      <p class="caption">Via IMPS, NEFT and UPI from your linked Indian bank. Transfer timing depends on the rail and your bank.</p>
+    </section>
+
+    <!-- FAQ -->
+    <section class="frame section section--tint faq" id="faq">
+      <div>
+        <p class="label">FAQ</p>
+        <h2 class="title">A little more<br><span class="tone">clarity.</span></h2>
+      </div>
+      <div class="faq__list">
+        <details><summary>What can I trade?</summary><p>Perpetual futures on global equities, indices, commodities and digital assets, with pre-IPO markets planned. All from one INR account.</p></details>
+        <details open><summary>Am I buying company shares?</summary><p>No. A perpetual gives you exposure to a price, not ownership of shares, votes or dividends.</p></details>
+        <details><summary>What is a perpetual contract?</summary><p>A futures contract with no expiry date. Funding payments between buyers and sellers keep its price close to the underlying market.</p></details>
+        <details><summary>How do stock-linked markets trade 24/7?</summary><p>The contracts trade on Hyperliquid’s order books around the clock, so prices can move while the underlying exchange is closed.</p></details>
+        <details><summary>How do funding and liquidation work?</summary><p>Funding is paid between long and short positions at set intervals. If your margin falls below the maintenance level, the position is liquidated. Both are shown on the order ticket before you trade.</p></details>
+        <details><summary>Are deposits, withdrawals and trades all in INR?</summary><p>Yes. You deposit and withdraw in rupees, and your statement shows every trade, fee and transfer in INR.</p></details>
+        <details><summary>Is BharatLiquid registered in India?</summary><p>BharatLiquid is an Indian company. Registration details will be published here before launch. [To confirm with legal.]</p></details>
+        <details><summary>Who can join?</summary><p>Indian residents aged 18 or over who complete KYC.</p></details>
+        <details><summary>How is execution handled?</summary><p>Orders execute on Hyperliquid. Every fill leaves a public record you can check.</p></details>
+      </div>
+    </section>
+
+    <!-- Waitlist -->
+    <section class="cta" id="waitlist">
+      <div class="frame cta__inner">
+        <p class="label label--light">BharatLiquid · Early access</p>
+        <h2 class="title title--xl title--light">One account.<br><span class="tone">A world to trade.</span></h2>
+        <form class="signup" data-signup novalidate>
+          <label class="sr-only" for="email">Email address</label>
+          <input id="email" name="email" type="email" autocomplete="email" placeholder="you@email.com" required>
+          <button class="btn btn--primary" type="submit">Join the waitlist</button>
+        </form>
+        <p class="cta__note" data-signup-msg aria-live="polite">We’ll email you when access opens. You must be 18 or older.</p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="frame">
+      <div class="footer__cols">
+        <nav aria-label="Product"><h3>Product</h3><a href="#markets">Markets</a><a href="#pre-ipo">Pre-IPO</a><a href="#execution">Execution</a><a href="#inr">INR in &amp; out</a></nav>
+        <nav aria-label="Support"><h3>Support</h3><a href="#faq">Questions</a><a href="#waitlist">Contact</a><a href="#trust">Grievance officer</a></nav>
+        <nav aria-label="Legal"><h3>Legal</h3><a href="#top">Privacy policy</a><a href="#top">Terms of use</a><a href="#top">Risk disclosure</a></nav>
+        <nav aria-label="Follow"><h3>Follow</h3><a href="#top">BL on X</a></nav>
+      </div>
+      <img class="footer__mark" src="assets/lockup-white.svg" width="380" height="64" alt="">
+      <div class="footer__bottom">
+        <p>Trading perpetual futures involves substantial risk of loss. Market examples are illustrations, not investment recommendations.</p>
+        <p class="footer__legal"><span>© 2026 BharatLiquid Private Limited</span><span>CIN [to confirm] · Registered address [to confirm]</span></p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
