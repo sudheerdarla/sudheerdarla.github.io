@@ -93,8 +93,7 @@ button, input { font: inherit; color: inherit; }
   background-size: var(--cell) var(--cell); background-position: var(--ox) var(--oy);
 }
 .mark { position: absolute; display: grid; place-items: center; width: var(--cell); height: var(--cell); }
-.mark img { width: 26px; height: 26px; opacity: .8; transition: opacity .3s var(--ease), transform .3s var(--ease); }
-.mark--wide img { width: 44px; height: 31px; }
+.mark img { width: auto; height: auto; max-width: 36px; max-height: 26px; opacity: .8; transition: opacity .3s var(--ease), transform .3s var(--ease); }
 .mark.is-on img { opacity: 1; transform: scale(1.06); }
 .mark__info {
   position: absolute; top: calc(100% + 2px); left: 50%; display: flex; align-items: baseline; gap: 8px; transform: translate(-50%, 4px);

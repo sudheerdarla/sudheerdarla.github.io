@@ -167,7 +167,8 @@
     var finePointer = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
     var roving = !finePointer;
     var spots = [];    // touch screens: every usable cell, { col, row, behind }
-    // [icon, name, ticker shown, live market (Hyperliquid coin), wide icon]
+    // [icon, name, ticker shown, live market (Hyperliquid coin)]. Every logo is cropped to its artwork
+    // around its artwork, then sized to the same visual area (a 26px square's worth).
     // Stocks and commodities trade on the "xyz" builder market; crypto on the main one.
     // Pre-IPO names have no live market yet, so they read "Pre-IPO · soon".
     var MARKS = [
@@ -178,7 +179,7 @@
       ['oracle', 'Oracle', 'ORCL', 'xyz:ORCL'], ['alibabadotcom', 'Alibaba', 'BABA', 'xyz:BABA'], ['microstrategy', 'MicroStrategy', 'MSTR', 'xyz:MSTR'],
       ['gold', 'Gold', 'GOLD', 'xyz:GOLD'], ['silver', 'Silver', 'SILVER', 'xyz:SILVER'], ['oil', 'Crude oil', 'OIL', 'xyz:CL'],
       ['bitcoin', 'Bitcoin', 'BTC', 'BTC'], ['ethereum', 'Ethereum', 'ETH', 'ETH'], ['solana', 'Solana', 'SOL', 'SOL'],
-      ['anthropic', 'Anthropic', 'Anthropic', null, true], ['openai', 'OpenAI', 'OpenAI', null], ['spacex', 'SpaceX', 'SpaceX', null]
+      ['anthropic', 'Anthropic', 'Anthropic', null], ['openai', 'OpenAI', 'OpenAI', null], ['spacex', 'SpaceX', 'SpaceX', null]
     ];
     var quotes = {};   // coin -> { px, chg }
     var layer = grid.querySelector('[data-marks]');
@@ -228,10 +229,10 @@
       var mx = OX + col * CELL;
       // Near an edge, the price line hangs inward so it is never cut off
       var edge = mx < 50 ? ' mark--l' : mx + CELL > hw - 50 ? ' mark--r' : '';
-      el.className = 'mark' + (m[4] ? ' mark--wide' : '') + edge + (behind ? ' mark--behind' : '');
+      el.className = 'mark' + edge + (behind ? ' mark--behind' : '');
       el.style.left = mx + 'px';
       el.style.top = OY + row * CELL + 'px';
-      el.innerHTML = '<img src="assets/logos/' + m[0] + '.svg" alt="" width="30" height="30"><span class="mark__info"></span>';
+      el.innerHTML = '<img src="assets/logos/' + m[0] + '.svg" alt=""><span class="mark__info"></span>';
       el.title = m[1];
       layer.appendChild(el);
       var p = { col: col, row: row, el: el, mark: m };
