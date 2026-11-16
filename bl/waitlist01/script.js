@@ -7,11 +7,18 @@
   var grid = document.querySelector('[data-grid]');
   if (hero && grid) {
     var CELL = 80, OX = 64, OY = 41;
+    // [icon, name, ticker shown, live market (Hyperliquid coin), wide icon]
+    // Stocks and commodities trade on the "xyz" builder market; crypto on the main one.
+    // Pre-IPO names have no live market yet, so they read "Pre-IPO · soon".
     var MARKS = [
-      ['anthropic', 'Anthropic', true], ['openai', 'OpenAI'], ['spacex', 'SpaceX'], ['nvidia', 'NVIDIA'],
-      ['apple', 'Apple'], ['tesla', 'Tesla'], ['google', 'Google'], ['meta', 'Meta'],
-      ['amazon', 'Amazon'], ['netflix', 'Netflix'], ['amd', 'AMD'], ['coinbase', 'Coinbase']
+      ['nvidia', 'NVIDIA', 'NVDA', 'xyz:NVDA'], ['apple', 'Apple', 'AAPL', 'xyz:AAPL'], ['tesla', 'Tesla', 'TSLA', 'xyz:TSLA'],
+      ['google', 'Google', 'GOOGL', 'xyz:GOOGL'], ['meta', 'Meta', 'META', 'xyz:META'], ['amazon', 'Amazon', 'AMZN', 'xyz:AMZN'],
+      ['netflix', 'Netflix', 'NFLX', 'xyz:NFLX'], ['amd', 'AMD', 'AMD', 'xyz:AMD'], ['coinbase', 'Coinbase', 'COIN', 'xyz:COIN'],
+      ['gold', 'Gold', 'GOLD', 'xyz:GOLD'], ['silver', 'Silver', 'SILVER', 'xyz:SILVER'], ['oil', 'Crude oil', 'OIL', 'xyz:CL'],
+      ['bitcoin', 'Bitcoin', 'BTC', 'BTC'], ['ethereum', 'Ethereum', 'ETH', 'ETH'], ['solana', 'Solana', 'SOL', 'SOL'],
+      ['anthropic', 'Anthropic', 'Anthropic', null, true], ['openai', 'OpenAI', 'OpenAI', null], ['spacex', 'SpaceX', 'SpaceX', null]
     ];
+    var quotes = {};   // coin -> { px, chg }
     var layer = grid.querySelector('[data-marks]');
     var placed = [];   // { col, row, el }
 
@@ -28,7 +35,7 @@
         return { l: r.left - hb.left - 24, t: r.top - hb.top - 24, r: r.right - hb.left + 24, b: r.bottom - hb.top + 24 };
       });
       var cells = [];
-      for (var row = 0; OY + (row + 1) * CELL <= hb.height - 8; row++) {
+      for (var row = 0; OY + (row + 1) * CELL <= hb.height - 30; row++) { // leave room for the price line
         for (var col = 0; OX + (col + 1) * CELL <= hb.width - 8; col++) {
           var x = OX + col * CELL, y = OY + row * CELL;
           var clear = keepOut.every(function (k) { return x + CELL < k.l || x > k.r || y + CELL < k.t || y > k.b; });
@@ -45,12 +52,46 @@
         el.className = 'mark' + (m[2] ? ' mark--wide' : '');
         el.style.left = OX + spot[0] * CELL + 'px';
         el.style.top = OY + spot[1] * CELL + 'px';
-        el.innerHTML = '<img src="assets/logos/' + m[0] + '.svg" alt="" width="30" height="30">';
+        el.innerHTML = '<img src="assets/logos/' + m[0] + '.svg" alt="" width="30" height="30"><span class="mark__info"></span>';
         el.title = m[1];
         layer.appendChild(el);
-        placed.push({ col: spot[0], row: spot[1], el: el });
+        placed.push({ col: spot[0], row: spot[1], el: el, mark: m });
+        paintMark(placed[placed.length - 1]);
       });
     };
+
+    // Live mark prices and 24h change from Hyperliquid's public API, refreshed every 15s
+    var fmtPx = function (px) {
+      var d = px >= 1000 ? 2 : px >= 1 ? 2 : 4;
+      return '$' + px.toLocaleString('en-US', { minimumFractionDigits: d, maximumFractionDigits: d });
+    };
+    var paintMark = function (p) {
+      var info = p.el.querySelector('.mark__info');
+      var m = p.mark;
+      if (!m[3]) { info.innerHTML = '<b>' + m[2] + '</b><span class="soon">Pre-IPO · soon</span>'; return; }
+      var q = quotes[m[3]];
+      if (!q) { info.innerHTML = '<b>' + m[2] + '</b>'; return; }
+      var sign = q.chg > 0 ? '+' : q.chg < 0 ? '−' : '';
+      info.innerHTML = '<b>' + m[2] + '</b><span>' + fmtPx(q.px) + '</span><span class="' + (q.chg >= 0 ? 'up' : 'down') + '">' + sign + Math.abs(q.chg).toFixed(2) + '%</span>';
+    };
+    var load = function (dex) {
+      return fetch('https://api.hyperliquid.xyz/info', {
+        method: 'POST', headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(dex ? { type: 'metaAndAssetCtxs', dex: dex } : { type: 'metaAndAssetCtxs' })
+      }).then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); }).then(function (d) {
+        d[0].universe.forEach(function (a, i) {
+          var c = d[1][i], px = parseFloat(c.markPx), prev = parseFloat(c.prevDayPx);
+          if (px > 0) quotes[a.name] = { px: px, chg: prev > 0 ? (px / prev - 1) * 100 : 0 };
+        });
+      });
+    };
+    var refresh = function () {
+      if (document.hidden) return;
+      Promise.allSettled([load(''), load('xyz')]).then(function () { placed.forEach(paintMark); });
+    };
+    refresh();
+    setInterval(refresh, 15000);
+    document.addEventListener('visibilitychange', refresh);
 
     // The light glides to the centre of the cell under the pointer
     var target = { x: 0, y: 0 }, now = { x: 0, y: 0 }, active = null, raf = 0;
