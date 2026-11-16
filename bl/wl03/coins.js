@@ -14,10 +14,10 @@ function start() {
 
   // [logo file, coin colour]. Pastel, like the renders in the design.
   const TOKENS = [
-    ['bitcoin', '#A9D3F5'], ['nvidia', '#CFEA7A'], ['apple', '#E6EAEE'], ['ethereum', '#E7CDEF'],
-    ['tesla', '#F7B2A6'], ['gold', '#F2DE9E'], ['google', '#AFE3D3'], ['solana', '#C9BCF6'],
-    ['meta', '#A8C6FF'], ['amazon', '#F9C98F'], ['hyperliquid', '#9FE3E2'], ['anthropic', '#F1C6B2'],
-    ['openai', '#D7DDE4'], ['spacex', '#BFD3EA']
+    ['bitcoin', '#7DBEF0'], ['nvidia', '#B9E04A'], ['apple', '#D3D9E0'], ['ethereum', '#D9B1E8'],
+    ['tesla', '#F59A8A'], ['gold', '#EBCB6E'], ['google', '#86D6BD'], ['solana', '#AE9BF2'],
+    ['meta', '#86AEFB'], ['amazon', '#F6B262'], ['hyperliquid', '#6FD3D2'], ['anthropic', '#E9AA8D'],
+    ['openai', '#C3CBD5'], ['spacex', '#9DB9DE']
   ];
 
   let renderer;
@@ -27,12 +27,13 @@ function start() {
   renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
   renderer.outputColorSpace = THREE.SRGBColorSpace;
   renderer.toneMapping = THREE.ACESFilmicToneMapping;
-  renderer.toneMappingExposure = 1.05;
+  renderer.toneMappingExposure = 0.9;
   host.appendChild(renderer.domElement);
 
   const scene = new THREE.Scene();
   const pmrem = new THREE.PMREMGenerator(renderer);
   scene.environment = pmrem.fromScene(new RoomEnvironment(), 0.04).texture;
+  scene.environmentIntensity = 0.55;
   const key = new THREE.DirectionalLight(0xffffff, 1.4); key.position.set(-1, 1.2, 2); scene.add(key);
   const rim = new THREE.DirectionalLight(0x9fd8ff, 0.7); rim.position.set(1.5, -0.5, 1); scene.add(rim);
   scene.add(new THREE.AmbientLight(0xffffff, 0.25));
@@ -58,8 +59,8 @@ function start() {
   const coins = TOKENS.map(([logo, hex], i) => {
     const color = new THREE.Color(hex);
     const mat = new THREE.MeshPhysicalMaterial({
-      color, roughness: 0.3, metalness: 0.05, clearcoat: 1, clearcoatRoughness: 0.16,
-      iridescence: 0.35, iridescenceIOR: 1.3, sheen: 0.5, sheenColor: new THREE.Color(0xffffff)
+      color, roughness: 0.38, metalness: 0.02, clearcoat: 1, clearcoatRoughness: 0.14,
+      iridescence: 0.25, iridescenceIOR: 1.3, sheen: 0.2, sheenColor: new THREE.Color(0xffffff)
     });
     const pivot = new THREE.Group();
     const coin = new THREE.Group();
@@ -94,9 +95,12 @@ function start() {
       R = Math.min(W * 0.62, H * 0.42); coinR = R * 0.3;
       cx = W / 2; cy = H + R * 0.38;
     } else {
-      // Desktop: centred just past the card's right edge, as in the design (1402 x 715 card)
-      R = H * 0.5; coinR = H * 0.148;
-      cx = W + H * 0.013; cy = H * 0.487;
+      // Desktop: centred just past the card's right edge, as in the design (1402 x 715 card).
+      // Sized by the height, but never wider than the design's share of the card, so the
+      // tokens stay clear of the copy on narrower windows.
+      const base = Math.min(H, W * 0.6);
+      R = base * 0.5; coinR = base * 0.148;
+      cx = W + base * 0.013; cy = H * 0.487;
     }
     ring.position.set(cx - W / 2, H / 2 - cy, 0);
     coins.forEach(c => c.coin.scale.setScalar(coinR));

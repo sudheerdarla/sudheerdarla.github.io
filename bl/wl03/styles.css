@@ -131,7 +131,7 @@ button, input { font: inherit; color: inherit; }
 .coins { position: absolute; inset: 0; z-index: 1; pointer-events: none; opacity: 0; transition: opacity .9s var(--ease); }
 .coins.is-ready { opacity: 1; }
 .coins canvas { display: block; }
-.coins__zone { position: absolute; top: 0; right: 0; bottom: 0; width: calc(var(--hh) * 0.68); pointer-events: none; visibility: hidden; }
+.coins__zone { position: absolute; top: 0; right: 0; bottom: 0; width: min(calc(var(--hh) * 0.68), calc(var(--hw) * 0.41)); pointer-events: none; visibility: hidden; }
 
 /* Footer: same width as the top bar */
 .foot { position: relative; flex: none; display: flex; align-items: center; justify-content: center; height: var(--foot); padding: 0 var(--gutter); }
