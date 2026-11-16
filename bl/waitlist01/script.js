@@ -6,7 +6,8 @@
   var hero = document.querySelector('[data-hero]');
   var grid = document.querySelector('[data-grid]');
   if (hero && grid) {
-    var CELL = 80, OX = 64, OY = 41;
+    var CELL = 80, OX = 64, OY = 41;   // desktop anchors match the Figma cell; phones centre the grid
+    var narrow = window.matchMedia('(max-width: 860px)');
     // [icon, name, ticker shown, live market (Hyperliquid coin), wide icon]
     // Stocks and commodities trade on the "xyz" builder market; crypto on the main one.
     // Pre-IPO names have no live market yet, so they read "Pre-IPO · soon".
@@ -32,6 +33,11 @@
       layer.innerHTML = '';
       placed = [];
       var hb = hero.getBoundingClientRect();
+      if (narrow.matches) { CELL = 64; OX = Math.round((hb.width % CELL) / 2); OY = Math.round((hb.height % CELL) / 2); }
+      else { CELL = 80; OX = 64; OY = 41; }
+      grid.style.setProperty('--cell', CELL + 'px');
+      grid.style.setProperty('--ox', OX + 'px');
+      grid.style.setProperty('--oy', OY + 'px');
       var keepOut = ['.hero__copy', '.ring__img'].map(function (s) {
         var r = document.querySelector(s).getBoundingClientRect();
         return { l: r.left - hb.left - 8, t: r.top - hb.top - 8, r: r.right - hb.left + 8, b: r.bottom - hb.top + 8 };
@@ -51,8 +57,11 @@
         });
         if (!spot) return;
         var el = document.createElement('div');
-        el.className = 'mark' + (m[2] ? ' mark--wide' : '');
-        el.style.left = OX + spot[0] * CELL + 'px';
+        var mx = OX + spot[0] * CELL;
+        // Near an edge, the price line hangs inward so it is never cut off
+        var edge = mx < 50 ? ' mark--l' : mx + CELL > hb.width - 50 ? ' mark--r' : '';
+        el.className = 'mark' + (m[4] ? ' mark--wide' : '') + edge;
+        el.style.left = mx + 'px';
         el.style.top = OY + spot[1] * CELL + 'px';
         el.innerHTML = '<img src="assets/logos/' + m[0] + '.svg" alt="" width="30" height="30"><span class="mark__info"></span>';
         el.title = m[1];
@@ -140,16 +149,25 @@
         grid.classList.add('is-lit');
       });
       hero.addEventListener('pointerleave', function () { grid.classList.remove('is-lit'); setActive(null, null); });
-    } else if (!reduceMotion) {
-      // Touch screens have no hover, so the light visits a mark every few seconds
-      var i = 0;
+    } else {
+      // Touch screens have no hover: the light lands on a random mark every few seconds and
+      // shows its live details, and a tap lights the cell under the finger.
+      var last = null, pausedUntil = 0;
       var tour = function () {
-        if (!placed.length) return;
-        var p = placed[i++ % placed.length];
+        if (!placed.length || Date.now() < pausedUntil || document.hidden) return;
+        var pool = placed.length > 1 ? placed.filter(function (p) { return p !== last; }) : placed;
+        var p = pool[Math.floor(Math.random() * pool.length)];
+        last = p;
         aim(OX + p.col * CELL + CELL / 2, OY + p.row * CELL + CELL / 2, false);
         grid.classList.add('is-lit');
       };
-      setTimeout(function () { tour(); setInterval(tour, 3200); }, 1200);
+      if (!reduceMotion) setTimeout(function () { tour(); setInterval(tour, 2800); }, 900);
+      hero.addEventListener('pointerdown', function (e) {
+        var b = hero.getBoundingClientRect();
+        aim(e.clientX - b.left, e.clientY - b.top, false);
+        grid.classList.add('is-lit');
+        pausedUntil = Date.now() + 5000;
+      });
     }
   }
 
