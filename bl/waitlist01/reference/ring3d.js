@@ -1,8 +1,9 @@
-// The hero ring, rebuilt in 3D so its flaps can turn while the ring itself stays put.
-// It is a ring of thin discs (the "flaps"), each one a cross-section of a torus. The disc
-// group spins about the ring's own axis, so the blades travel around the hole and the
-// silhouette never moves. If WebGL is missing or the viewer prefers less motion, the
-// original render (the <img> inside [data-ring]) stays on screen instead.
+// Reference: the hero ring rebuilt in WebGL so its flaps can turn while the ring stays put.
+// Not used on the live waitlist page, which shows the original render drifting slowly.
+// Open reference/ring3d.html to see it. The ring is a set of thin elliptical discs (the
+// "flaps"), each a cross-section of a torus, spinning slowly about the ring's own axis, so
+// the blades travel around the hole and the outline never moves. Without WebGL, or with
+// reduced motion, the original render (the <img> inside [data-ring]) is shown instead.
 import * as THREE from './vendor/three.module.min.js';
 
 const host = document.querySelector('[data-ring]');

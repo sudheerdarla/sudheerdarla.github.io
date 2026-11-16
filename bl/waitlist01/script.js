@@ -1,5 +1,5 @@
 (function () {
-  // Waitlist dialog (no backend yet): validate and confirm
+  // Waitlist pop-up (no backend yet): validate and confirm
   var dialog = document.getElementById('join');
   if (dialog) {
     var form = dialog.querySelector('[data-signup]');
@@ -8,6 +8,7 @@
     var open = function () {
       if (typeof dialog.showModal === 'function') dialog.showModal(); else dialog.setAttribute('open', '');
       msg.textContent = '';
+      msg.hidden = true;
       form.classList.remove('is-invalid');
       input.focus();
     };
@@ -21,6 +22,7 @@
       e.preventDefault();
       var ok = input.value.trim() !== '' && input.checkValidity();
       form.classList.toggle('is-invalid', !ok);
+      msg.hidden = false;
       msg.textContent = ok ? 'You’re on the list. We’ll email you when access opens.' : 'Enter a valid email address.';
       if (ok) form.reset();
     });
