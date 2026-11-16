@@ -84,7 +84,11 @@
     lang = code;
     loadFont(code);
     document.documentElement.lang = code;
-    document.querySelectorAll('[data-i18n]').forEach(function (el) { el.textContent = t(el.getAttribute('data-i18n')); });
+    var short = smallScreen.matches;
+    document.querySelectorAll('[data-i18n]').forEach(function (el) {
+      var k = short && el.getAttribute('data-i18n-short') || el.getAttribute('data-i18n');
+      el.textContent = t(k);
+    });
     document.querySelectorAll('[data-i18n-html]').forEach(function (el) { el.innerHTML = t(el.getAttribute('data-i18n-html')); });
     document.querySelectorAll('[data-i18n-label]').forEach(function (el) { el.setAttribute('aria-label', t(el.getAttribute('data-i18n-label'))); });
     document.querySelectorAll('.lang__item').forEach(function (b) { b.setAttribute('aria-checked', String(b.getAttribute('data-code') === code)); });
@@ -92,7 +96,20 @@
     if (save) { try { localStorage.setItem('bl-lang', code); } catch (e) {} }
   };
 
+  // One switcher: in the top bar on desktop, moved to the footer's right corner on phones
+  var smallScreen = window.matchMedia('(max-width: 480px)');
+  var phone = window.matchMedia('(max-width: 860px)');
   var switchers = document.querySelectorAll('[data-lang]');
+  var dock = function () {
+    var w = switchers[0];
+    if (!w) return;
+    var home = phone.matches ? document.querySelector('.foot') : document.querySelector('.top__right');
+    if (w.parentNode !== home) home.appendChild(w);
+  };
+  dock();
+  var onChange = function (mq, f) { if (mq.addEventListener) mq.addEventListener('change', f); else mq.addListener(f); };
+  onChange(phone, function () { closeAll(); dock(); });
+  onChange(smallScreen, function () { setLang(lang, false); });
   var closeAll = function (except) {
     switchers.forEach(function (w) {
       if (w === except) return;

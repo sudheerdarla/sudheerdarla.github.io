@@ -12,7 +12,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Host+Grotesk:wght@400;500&family=Manrope:wght@500;600&display=swap" rel="stylesheet">
   <link rel="preload" as="image" href="assets/ribbon-ring.webp">
-  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="styles.css?v=3">
 </head>
 <body>
   <div class="page">
@@ -25,10 +25,10 @@
         <div class="top__right">
           <a class="top__link" href="../new01/learn.html" data-i18n="docs">Docs</a>
           <button class="pill pill--black" type="button" data-join>
-            <span class="nav-full" data-i18n="join">Join Waitlist</span><span class="nav-short" data-i18n="joinShort">Join Waitlist</span>
+            <span data-i18n="join" data-i18n-short="joinShort">Join Waitlist</span>
             <img class="arrow" src="assets/arrow-dark.svg" width="16" height="16" alt="">
           </button>
-          <div class="lang lang--top" data-lang>
+          <div class="lang" data-lang>
           <button class="lang__btn" type="button" aria-haspopup="true" aria-expanded="false" aria-label="Language" data-i18n-label="lang">
             <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.6 3.8 5.6 3.8 9s-1.3 6.4-3.8 9c-2.5-2.6-3.8-5.6-3.8-9S9.5 5.6 12 3z"/></svg>
           </button>
@@ -85,12 +85,6 @@
         <span class="foot__dot" aria-hidden="true">·</span>
         <p>© 2026 Bharat Liquid Private Limited</p>
       </div>
-      <div class="lang lang--foot" data-lang>
-        <button class="lang__btn" type="button" aria-haspopup="true" aria-expanded="false" aria-label="Language" data-i18n-label="lang">
-          <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.6 3.8 5.6 3.8 9s-1.3 6.4-3.8 9c-2.5-2.6-3.8-5.6-3.8-9S9.5 5.6 12 3z"/></svg>
-        </button>
-        <ul class="lang__menu" role="menu" hidden></ul>
-      </div>
     </footer>
   </div>
 
@@ -108,6 +102,6 @@
     <button class="join__x" type="button" data-close aria-label="Close" data-i18n-label="close"><img src="assets/close-x.svg" width="22" height="22" alt=""></button>
   </dialog>
 
-  <script src="script.js"></script>
+  <script src="script.js?v=3"></script>
 </body>
 </html>

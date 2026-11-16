@@ -59,7 +59,6 @@ button, input { font: inherit; color: inherit; }
 .top__right { display: flex; align-items: center; gap: 28px; }
 .top__link { font: 600 var(--fs-ui)/1 var(--display); opacity: .82; transition: opacity .16s var(--ease); }
 .top__link:hover { opacity: 1; }
-.nav-short { display: none; }
 
 /* Hero card. Its height follows the screen (--hh) and its width the window (--hw); the ring
    and glow are sized from those so they keep the proportions of the 1402 x 715 design. */
@@ -151,7 +150,6 @@ button, input { font: inherit; color: inherit; }
 /* Language switcher: a globe button with a small menu. In the top bar on desktop (opens down),
    in the footer's right corner on phones (opens up). */
 .lang { position: relative; z-index: 30; }
-.lang--foot { display: none; }
 .lang__btn {
   display: inline-flex; align-items: center; justify-content: center; width: 34px; height: 34px; padding: 0;
   border: 1px solid rgba(0, 0, 0, 0.14); border-radius: 50%; background: transparent; color: rgba(0, 0, 0, 0.75); cursor: pointer;
@@ -166,7 +164,7 @@ button, input { font: inherit; color: inherit; }
 }
 .lang__menu[hidden] { display: none; }
 @keyframes lang-in { from { opacity: 0; transform: translateY(-4px); } }
-.lang--foot .lang__menu { top: auto; bottom: calc(100% + 8px); }
+.foot .lang__menu { top: auto; bottom: calc(100% + 8px); }
 .lang__item {
   display: flex; align-items: center; gap: 10px; width: 100%; padding: 9px 10px; border: 0; border-radius: 9px;
   background: transparent; cursor: pointer; text-align: left; font: 500 var(--fs-ui)/1.25 var(--sans); color: var(--ink);
@@ -237,9 +235,8 @@ html[lang="te"] .title { font-size: calc(var(--fs-display) * 0.84); }
   .actions { justify-content: center; }
   .foot__inner { justify-content: center; }
   /* The globe moves from the top bar to the footer's right corner */
-  .lang--top { display: none; }
-  .lang--foot { display: block; position: absolute; top: 50%; right: var(--gutter); transform: translateY(-50%); }
-  .lang--foot .lang__btn { width: 30px; height: 30px; }
+  .foot .lang { position: absolute; top: 50%; right: var(--gutter); transform: translateY(-50%); }
+  .foot .lang__btn { width: 30px; height: 30px; }
   html:not([lang="en"]) .built { justify-content: center; }
   html[lang="ta"] .title, html[lang="te"] .title { font-size: calc(var(--fs-display) * 0.74); }
   html[lang="ta"] .lead, html[lang="te"] .lead, html[lang="bn"] .lead { font-size: calc(var(--fs-lead) * 0.92); }
@@ -256,10 +253,8 @@ html[lang="te"] .title { font-size: calc(var(--fs-display) * 0.84); }
   .top__inner { gap: 12px; }
   .top__right { gap: 16px; }
   .pill--black { padding: 0 16px; }
-  /* Longer scripts: a one-word nav button, and Docs only in the hero */
+  /* Longer scripts: Docs only in the hero (the nav button also shortens, in script.js) */
   html:not([lang="en"]) .top__link { display: none; }
-  html:not([lang="en"]) .nav-full { display: none; }
-  html:not([lang="en"]) .nav-short { display: inline; }
   .actions { flex-wrap: wrap; }
   .pill--white, .pill--outline { height: 42px; }
   .foot__inner { font-size: 11px; }
