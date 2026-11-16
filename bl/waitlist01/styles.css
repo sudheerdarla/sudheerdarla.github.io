@@ -46,8 +46,6 @@ button, input { font: inherit; color: inherit; }
 .pill--black:hover { background: #2b2b2b; }
 .pill--white { height: 44px; padding: 0 24px; background: var(--paper); color: var(--ink); }
 .pill--white:hover { background: rgba(255, 255, 255, 0.86); }
-.pill--outline { height: 44px; padding: 0 28px; border-color: rgba(255, 255, 255, 0.65); color: var(--paper); }
-.pill--outline:hover { background: rgba(255, 255, 255, 0.12); border-color: var(--paper); }
 .arrow { transform: scaleX(-1); transition: transform .16s var(--ease); }
 .pill:hover .arrow { transform: scaleX(-1) translate(-2px, -2px); }
 
@@ -57,8 +55,6 @@ button, input { font: inherit; color: inherit; }
 .brand { display: inline-flex; align-items: center; gap: 11px; }
 .brand__mark { transform: rotate(90deg); }
 .top__right { display: flex; align-items: center; gap: 28px; }
-.top__link { font: 600 var(--fs-ui)/1 var(--display); opacity: .82; transition: opacity .16s var(--ease); }
-.top__link:hover { opacity: 1; }
 
 /* Hero card. Its height follows the screen (--hh) and its width the window (--hw); the ring
    and glow are sized from those so they keep the proportions of the 1402 x 715 design. */
@@ -234,6 +230,15 @@ html[lang="te"] .title { font-size: calc(var(--fs-display) * 0.84); }
   .actions { justify-content: center; }
   .foot__inner { justify-content: center; }
   /* The globe moves from the top bar to the footer's right corner */
+  /* The card runs edge to edge from the top; the nav floats over it in white. Only the
+     footer keeps a white strip, and the card's bottom corners stay round. */
+  .top { position: absolute; top: 0; left: 0; right: 0; z-index: 5; }
+  .brand img { filter: invert(1); }
+  .pill--black { background: var(--paper); color: var(--ink); }
+  .pill--black:hover { background: rgba(255, 255, 255, 0.86); }
+  .pill--black .arrow { filter: invert(1); }
+  .hero { --hh: calc(100dvh - var(--foot)); --hw: 100vw; margin: 0; padding-top: var(--bar); border-radius: 0 0 20px 20px; }
+  .fine { max-width: 270px; }
   .foot .lang { position: absolute; top: 50%; right: var(--gutter); transform: translateY(-50%); }
   .foot .lang__btn { width: 30px; height: 30px; }
   html:not([lang="en"]) .built { justify-content: center; }
@@ -252,10 +257,8 @@ html[lang="te"] .title { font-size: calc(var(--fs-display) * 0.84); }
   .top__inner { gap: 12px; }
   .top__right { gap: 16px; }
   .pill--black { padding: 0 16px; }
-  /* Longer scripts: Docs only in the hero (the nav button also shortens, in script.js) */
-  html:not([lang="en"]) .top__link { display: none; }
   .actions { flex-wrap: wrap; }
-  .pill--white, .pill--outline { height: 42px; }
+  .pill--white { height: 42px; }
   .foot__inner { font-size: 11px; }
   .join__form { padding: 44px 24px 32px; }
 }

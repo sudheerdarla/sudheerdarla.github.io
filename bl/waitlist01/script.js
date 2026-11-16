@@ -10,7 +10,7 @@
     en: {
       joinShort: 'Join Waitlist', built: 'Built On', title: 'Global markets.<br>Settled in INR.',
       lead: 'One INR account for global perpetual markets, 24/7, onshore and compliant.',
-      join: 'Join Waitlist', docs: 'Docs', fine: 'Equity-linked markets provide trading exposure, not share ownership.',
+      join: 'Join Waitlist', fine: 'Equity-linked markets provide trading exposure, not share ownership.',
       popTitle: 'Join the waitlist', popSub: 'We’ll email you when access opens.', submit: 'Join Waitlist!',
       ok: 'You’re on the list. We’ll email you when access opens.', bad: 'Enter a valid email address.',
       soon: 'Pre-IPO · soon', email: 'Email address', close: 'Close', lang: 'Language'
@@ -18,7 +18,7 @@
     hi: {
       joinShort: 'जुड़ें', built: 'पर निर्मित', title: 'वैश्विक बाज़ार।<br>INR में सेटलमेंट।',
       lead: 'वैश्विक परपेचुअल बाज़ारों के लिए एक INR खाता, 24/7, भारत में और नियमों के अनुरूप।',
-      join: 'वेटलिस्ट से जुड़ें', docs: 'डॉक्स', fine: 'इक्विटी-लिंक्ड बाज़ार ट्रेडिंग एक्सपोज़र देते हैं, शेयरों का स्वामित्व नहीं।',
+      join: 'वेटलिस्ट से जुड़ें', fine: 'इक्विटी-लिंक्ड बाज़ार ट्रेडिंग एक्सपोज़र देते हैं, शेयरों का स्वामित्व नहीं।',
       popTitle: 'वेटलिस्ट से जुड़ें', popSub: 'एक्सेस खुलते ही हम आपको ईमेल करेंगे।', submit: 'वेटलिस्ट से जुड़ें!',
       ok: 'आप सूची में शामिल हैं। एक्सेस खुलते ही हम आपको ईमेल करेंगे।', bad: 'मान्य ईमेल पता दर्ज करें।',
       soon: 'प्री-IPO · जल्द', email: 'ईमेल पता', close: 'बंद करें', lang: 'भाषा'
@@ -26,7 +26,7 @@
     bn: {
       joinShort: 'যোগ দিন', built: 'দিয়ে তৈরি', title: 'বিশ্ববাজার।<br>INR-এ নিষ্পত্তি।',
       lead: 'বিশ্বের পারপেচুয়াল বাজারের জন্য একটি INR অ্যাকাউন্ট, 24/7, দেশের মধ্যে এবং নিয়ম মেনে।',
-      join: 'ওয়েটলিস্টে যোগ দিন', docs: 'ডকস', fine: 'ইকুইটি-লিঙ্কড বাজার ট্রেডিং এক্সপোজার দেয়, শেয়ারের মালিকানা নয়।',
+      join: 'ওয়েটলিস্টে যোগ দিন', fine: 'ইকুইটি-লিঙ্কড বাজার ট্রেডিং এক্সপোজার দেয়, শেয়ারের মালিকানা নয়।',
       popTitle: 'ওয়েটলিস্টে যোগ দিন', popSub: 'অ্যাক্সেস চালু হলে আমরা আপনাকে ইমেল করব।', submit: 'ওয়েটলিস্টে যোগ দিন!',
       ok: 'আপনি তালিকায় আছেন। অ্যাক্সেস চালু হলে আমরা আপনাকে ইমেল করব।', bad: 'একটি সঠিক ইমেল ঠিকানা লিখুন।',
       soon: 'প্রি-IPO · শীঘ্রই', email: 'ইমেল ঠিকানা', close: 'বন্ধ করুন', lang: 'ভাষা'
@@ -34,7 +34,7 @@
     mr: {
       joinShort: 'सामील व्हा', built: 'वर आधारित', title: 'जागतिक बाजार.<br>INR मध्ये सेटलमेंट.',
       lead: 'जागतिक परपेच्युअल बाजारांसाठी एकच INR खाते, 24/7, भारतातच आणि नियमांनुसार.',
-      join: 'वेटलिस्टमध्ये सामील व्हा', docs: 'डॉक्स', fine: 'इक्विटी-लिंक्ड बाजार ट्रेडिंग एक्सपोजर देतात, शेअर्सची मालकी नाही.',
+      join: 'वेटलिस्टमध्ये सामील व्हा', fine: 'इक्विटी-लिंक्ड बाजार ट्रेडिंग एक्सपोजर देतात, शेअर्सची मालकी नाही.',
       popTitle: 'वेटलिस्टमध्ये सामील व्हा', popSub: 'ॲक्सेस सुरू झाल्यावर आम्ही तुम्हाला ईमेल करू.', submit: 'वेटलिस्टमध्ये सामील व्हा!',
       ok: 'तुम्ही यादीत आहात. ॲक्सेस सुरू झाल्यावर आम्ही तुम्हाला ईमेल करू.', bad: 'वैध ईमेल पत्ता टाका.',
       soon: 'प्री-IPO · लवकरच', email: 'ईमेल पत्ता', close: 'बंद करा', lang: 'भाषा'
@@ -42,7 +42,7 @@
     te: {
       joinShort: 'చేరండి', built: 'పై నిర్మితం', title: 'ప్రపంచ మార్కెట్లు.<br>INRలో సెటిల్‌మెంట్.',
       lead: 'ప్రపంచ పర్పెచ్యువల్ మార్కెట్ల కోసం ఒకే INR ఖాతా, 24/7, భారత్‌లోనే, నిబంధనలకు అనుగుణంగా.',
-      join: 'వెయిట్‌లిస్ట్‌లో చేరండి', docs: 'డాక్స్', fine: 'ఈక్విటీ-లింక్డ్ మార్కెట్లు ట్రేడింగ్ ఎక్స్‌పోజర్ ఇస్తాయి, షేర్ల యాజమాన్యం కాదు.',
+      join: 'వెయిట్‌లిస్ట్‌లో చేరండి', fine: 'ఈక్విటీ-లింక్డ్ మార్కెట్లు ట్రేడింగ్ ఎక్స్‌పోజర్ ఇస్తాయి, షేర్ల యాజమాన్యం కాదు.',
       popTitle: 'వెయిట్‌లిస్ట్‌లో చేరండి', popSub: 'యాక్సెస్ తెరిచినప్పుడు మేము మీకు ఈమెయిల్ చేస్తాము.', submit: 'వెయిట్‌లిస్ట్‌లో చేరండి!',
       ok: 'మీరు జాబితాలో ఉన్నారు. యాక్సెస్ తెరిచినప్పుడు మేము మీకు ఈమెయిల్ చేస్తాము.', bad: 'సరైన ఈమెయిల్ చిరునామా ఇవ్వండి.',
       soon: 'ప్రీ-IPO · త్వరలో', email: 'ఈమెయిల్ చిరునామా', close: 'మూసివేయండి', lang: 'భాష'
@@ -50,7 +50,7 @@
     ta: {
       joinShort: 'சேருங்கள்', built: 'இல் உருவாக்கப்பட்டது', title: 'உலகச் சந்தைகள்.<br>INR-இல் தீர்வு.',
       lead: 'உலகளாவிய பெர்பெச்சுவல் சந்தைகளுக்கு ஒரே INR கணக்கு, 24/7, இந்தியாவிலேயே, விதிகளுக்கு உட்பட்டு.',
-      join: 'வெயிட்லிஸ்டில் சேருங்கள்', docs: 'ஆவணங்கள்', fine: 'ஈக்விட்டி-இணைந்த சந்தைகள் வர்த்தக வெளிப்பாட்டை மட்டுமே தருகின்றன, பங்கு உரிமையை அல்ல.',
+      join: 'வெயிட்லிஸ்டில் சேருங்கள்', fine: 'ஈக்விட்டி-இணைந்த சந்தைகள் வர்த்தக வெளிப்பாட்டை மட்டுமே தருகின்றன, பங்கு உரிமையை அல்ல.',
       popTitle: 'வெயிட்லிஸ்டில் சேருங்கள்', popSub: 'அணுகல் திறந்ததும் உங்களுக்கு மின்னஞ்சல் அனுப்புவோம்.', submit: 'வெயிட்லிஸ்டில் சேருங்கள்!',
       ok: 'நீங்கள் பட்டியலில் உள்ளீர்கள். அணுகல் திறந்ததும் உங்களுக்கு மின்னஞ்சல் அனுப்புவோம்.', bad: 'சரியான மின்னஞ்சல் முகவரியை உள்ளிடுங்கள்.',
       soon: 'ப்ரீ-IPO · விரைவில்', email: 'மின்னஞ்சல் முகவரி', close: 'மூடு', lang: 'மொழி'
@@ -178,7 +178,7 @@
       ['intel', 'Intel', 'INTC', 'xyz:INTC'], ['palantir', 'Palantir', 'PLTR', 'xyz:PLTR'], ['robinhood', 'Robinhood', 'HOOD', 'xyz:HOOD'],
       ['oracle', 'Oracle', 'ORCL', 'xyz:ORCL'], ['alibabadotcom', 'Alibaba', 'BABA', 'xyz:BABA'], ['microstrategy', 'MicroStrategy', 'MSTR', 'xyz:MSTR'],
       ['gold', 'Gold', 'GOLD', 'xyz:GOLD'], ['silver', 'Silver', 'SILVER', 'xyz:SILVER'], ['oil', 'Crude oil', 'OIL', 'xyz:CL'],
-      ['bitcoin', 'Bitcoin', 'BTC', 'BTC'], ['ethereum', 'Ethereum', 'ETH', 'ETH'], ['solana', 'Solana', 'SOL', 'SOL'],
+      ['bitcoin', 'Bitcoin', 'BTC', 'BTC'], ['ethereum', 'Ethereum', 'ETH', 'ETH'], ['solana', 'Solana', 'SOL', 'SOL'], ['hyperliquid', 'Hyperliquid', 'HYPE', 'HYPE'],
       ['anthropic', 'Anthropic', 'Anthropic', null], ['openai', 'OpenAI', 'OpenAI', null], ['spacex', 'SpaceX', 'SpaceX', null]
     ];
     var quotes = {};   // coin -> { px, chg }
@@ -203,13 +203,14 @@
         return { l: r.left - hb.left - 8, t: r.top - hb.top - 8, r: r.right - hb.left + 8, b: r.bottom - hb.top + 8 };
       };
       var copy = box('.hero__copy'), ring = box('.ring__img');
+      var bar = narrow.matches ? box('.top__inner') : { l: 0, t: -1e4, r: 0, b: -1e4 };
       var hits = function (k, x, y) { return !(x + CELL < k.l || x > k.r || y + CELL < k.t || y > k.b); };
       var cells = [];
       spots = [];
       for (var row = 0; OY + (row + 1) * CELL <= hb.height - 30; row++) { // leave room for the price line
         for (var col = 0; OX + (col + 1) * CELL <= hb.width - 8; col++) {
           var x = OX + col * CELL, y = OY + row * CELL;
-          if (hits(ring, x, y)) continue;
+          if (hits(ring, x, y) || hits(bar, x, y)) continue;
           if (roving) spots.push({ col: col, row: row, behind: hits(copy, x, y) });
           else if (!hits(copy, x, y)) cells.push([col, row]);
         }
