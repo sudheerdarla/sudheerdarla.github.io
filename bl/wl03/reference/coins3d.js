@@ -1,4 +1,4 @@
-// BharatLiquid waitlist 03: a ring of satin pastel tokens (Figma 793:5406) rebuilt in 3D.
+// BharatLiquid waitlist 03, reference only: the ring of satin pastel tokens (Figma 793:5406) rebuilt in 3D.
 // The ring turns clockwise around its centre on the card's right edge. Each token turns slowly
 // clockwise on its face and flips over every few seconds, so both sides show. Faces carry a
 // two-tone gradient and the logo engraved as a fine outline, like the renders in the design.
@@ -163,7 +163,7 @@ function start() {
 // (a groove in a deeper shade, lit from the top left), plus a height map for the groove.
 async function face(name, c1, c2) {
   const S = 768;
-  const svgText = await (await fetch('assets/logos/' + name + '.svg')).text();
+  const svgText = await (await fetch('../assets/logos/' + name + '.svg')).text();
   const doc = new DOMParser().parseFromString(svgText, 'image/svg+xml');
   const svg = doc.documentElement;
   const vb = (svg.getAttribute('viewBox') || '0 0 100 100').split(/[\s,]+/).map(Number);

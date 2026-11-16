@@ -202,7 +202,7 @@
         var r = document.querySelector(s).getBoundingClientRect();
         return { l: r.left - hb.left - 8, t: r.top - hb.top - 8, r: r.right - hb.left + 8, b: r.bottom - hb.top + 8 };
       };
-      var copy = box('.hero__copy'), ring = box('.coins__zone');
+      var copy = box('.hero__copy'), ring = box('.ring');
       var bar = narrow.matches ? box('.top__inner') : { l: 0, t: -1e4, r: 0, b: -1e4 };
       var hits = function (k, x, y) { return !(x + CELL < k.l || x > k.r || y + CELL < k.t || y > k.b); };
       var cells = [];
