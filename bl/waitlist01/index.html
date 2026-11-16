@@ -33,9 +33,17 @@
     </header>
 
     <main class="hero" id="top" data-hero>
-      <img class="hero__grad" src="assets/hero-gradient.png" alt="">
+      <img class="hero__grad" src="assets/hero-gradient.webp" alt="">
 
       <div class="glow glow--right" aria-hidden="true" data-glow><img src="assets/glow-right.svg" alt=""></div>
+
+      <!-- Hidden market grid: 80px cells across the whole card, seen only where the light falls.
+           The light settles on the cell under the pointer, with a glimpse of its neighbours.
+           A few company marks sit in random cells, so moving around turns them up. -->
+      <div class="grid" data-grid aria-hidden="true">
+        <div class="grid__lines"></div>
+        <div class="grid__marks" data-marks></div>
+      </div>
 
       <div class="hero__copy">
         <p class="built">

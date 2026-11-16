@@ -75,6 +75,26 @@ button, input { font: inherit; color: inherit; }
 .glow--right { left: 99.3%; top: 54.3%; width: calc(var(--hh) * 2.327); transform: translate(-50%, -50%); }
 @keyframes glow { from { opacity: .78; } to { opacity: 1; } }
 
+/* Hidden market grid. Lines are 1px white at 10%, 80px apart, anchored on the Figma cell
+   (x 784, y 121 in the card). The whole layer is masked to a soft spot around --mx / --my. */
+.grid {
+  --cell: 80px; --ox: 64px; --oy: 41px; --mx: -999px; --my: -999px; --lr: 175px;
+  position: absolute; inset: 0; z-index: 0; pointer-events: none; opacity: 0; transition: opacity .4s var(--ease);
+  -webkit-mask-image: radial-gradient(circle var(--lr) at var(--mx) var(--my), #000 0%, #000 34%, rgba(0, 0, 0, 0.35) 62%, transparent 100%);
+  mask-image: radial-gradient(circle var(--lr) at var(--mx) var(--my), #000 0%, #000 34%, rgba(0, 0, 0, 0.35) 62%, transparent 100%);
+}
+.grid.is-lit { opacity: 1; }
+.grid::before { content: ""; position: absolute; inset: 0; background: radial-gradient(circle 150px at var(--mx) var(--my), rgba(150, 205, 255, 0.07), transparent 70%); }
+.grid__lines {
+  position: absolute; inset: 0;
+  background-image: linear-gradient(to right, rgba(255, 255, 255, 0.1) 0 1px, transparent 1px), linear-gradient(to bottom, rgba(255, 255, 255, 0.1) 0 1px, transparent 1px);
+  background-size: var(--cell) var(--cell); background-position: var(--ox) var(--oy);
+}
+.mark { position: absolute; display: grid; place-items: center; width: var(--cell); height: var(--cell); }
+.mark img { width: 26px; height: 26px; opacity: .8; transition: opacity .3s var(--ease), transform .3s var(--ease); }
+.mark--wide img { width: 44px; height: 31px; }
+.mark.is-on img { opacity: 1; transform: scale(1.06); }
+
 /* Copy */
 .hero__copy { position: absolute; left: calc(8.33% + 119px); top: 50%; display: flex; flex-direction: column; align-items: flex-start; gap: 24px; width: 476px; transform: translateY(-50%); z-index: 2; }
 .built { display: flex; align-items: center; gap: 8px; font: 600 var(--fs-label)/1 var(--display); }
@@ -155,4 +175,5 @@ button, input { font: inherit; color: inherit; }
 
 @media (prefers-reduced-motion: reduce) {
   .ring__float, .ring__turn, .glow img, .join[open], .join[open]::backdrop { animation: none; }
+  .grid, .mark img { transition: none; }
 }
