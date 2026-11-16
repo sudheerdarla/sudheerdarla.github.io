@@ -1,0 +1,142 @@
+/* BharatLiquid waitlist: one-screen hero built from the BL_all Figma frame (750:3027) */
+:root {
+  --ink: #000;
+  --paper: #fff;
+  --azure: #00638e;
+  --display: "Manrope", system-ui, sans-serif;
+  --sans: "Host Grotesk", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --ease: cubic-bezier(.65, 0, .2, 1);
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+html, body { margin: 0; }
+body { background: var(--paper); color: var(--ink); font-family: var(--sans); -webkit-font-smoothing: antialiased; }
+img { display: block; }
+h1, h2, p { margin: 0; }
+a { color: inherit; text-decoration: none; }
+button, input { font: inherit; color: inherit; }
+:focus-visible { outline: 2px solid var(--azure); outline-offset: 3px; }
+.sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+
+.page { display: flex; flex-direction: column; min-height: 100vh; min-height: 100svh; }
+
+/* Pills (buttons) */
+.pill {
+  display: inline-flex; align-items: center; justify-content: center; gap: 8px; border: 1px solid transparent; border-radius: 67px;
+  font: 600 14px/1 var(--display); white-space: nowrap; cursor: pointer;
+  transition: background-color .16s var(--ease), color .16s var(--ease), border-color .16s var(--ease), transform .16s var(--ease);
+}
+.pill:active { transform: translateY(1px); }
+.pill--black { height: 34px; padding: 0 31px; background: var(--ink); color: var(--paper); font-size: 13px; }
+.pill--black:hover { background: #2b2b2b; }
+.pill--white { height: 43px; padding: 0 24px; background: var(--paper); color: var(--ink); }
+.pill--white:hover { background: rgba(255, 255, 255, 0.86); }
+.pill--outline { height: 45px; padding: 0 28px; border-color: rgba(255, 255, 255, 0.65); border-radius: 40px; color: var(--paper); }
+.pill--outline:hover { background: rgba(255, 255, 255, 0.12); border-color: var(--paper); }
+.arrow { transform: scaleX(-1); transition: transform .16s var(--ease); }
+.pill:hover .arrow { transform: scaleX(-1) translate(-2px, -2px); }
+
+/* Top bar */
+.top { flex: none; display: flex; justify-content: center; height: 54px; padding: 8px 19px 0; }
+.top__inner { display: flex; align-items: center; justify-content: space-between; gap: 24px; width: min(941px, 100%); height: 34px; }
+.brand { display: inline-flex; align-items: center; gap: 9px; }
+.brand__mark { transform: rotate(90deg); }
+.top__links { display: flex; align-items: center; gap: 40px; font: 600 13px/1.4 var(--display); white-space: nowrap; }
+.top__links a { opacity: .82; transition: opacity .16s var(--ease); }
+.top__links a:hover { opacity: 1; }
+
+/* Hero card. Its height follows the screen (--hh) and its width the window (--hw); the ring
+   and glows are sized from those so they keep the proportions of the 1402 x 723 design. */
+.hero {
+  position: relative; flex: 1; min-height: 560px; margin: 0 19px; overflow: hidden; border-radius: 20px;
+  --hh: max(560px, calc(100svh - 85px)); --hw: calc(100vw - 38px);
+  background: var(--paper); isolation: isolate; color: var(--paper);
+}
+.hero::before { content: ""; position: absolute; inset: 0; z-index: -2; background: url("assets/texture.png") 0 0 / 514px 514px; opacity: .28; }
+.hero__grad { position: absolute; inset: 0; z-index: -1; width: 100%; height: 100%; object-fit: fill; pointer-events: none; }
+
+/* Glows sit behind the ring; the right one drifts the opposite way to the pointer for depth */
+.glow { position: absolute; pointer-events: none; }
+.glow img { width: 100%; height: auto; max-width: none; animation: glow 9s ease-in-out infinite alternate; }
+.glow--right { left: 99.3%; top: 53.7%; width: calc(var(--hh) * 2.3); transform: translate(-50%, -50%) translate3d(calc(var(--gx, 0) * 1px), calc(var(--gy, 0) * 1px), 0); }
+.glow--left { left: 3.3%; top: 8.1%; width: calc(var(--hh) * 1.274); transform: translate(-50%, -50%); }
+.hero__star { position: absolute; left: calc(83.33% + 28.67px); top: calc(100% - 53px); opacity: .9; }
+@keyframes glow { from { opacity: .78; } to { opacity: 1; } }
+
+/* Copy */
+.hero__copy { position: absolute; left: calc(8.33% + 119px); top: 50%; display: flex; flex-direction: column; align-items: flex-start; gap: 25px; width: 476px; transform: translateY(-50%); z-index: 2; }
+.built { display: flex; align-items: center; gap: 8px; font: 600 10px/1.4 var(--display); }
+.built__chip { display: inline-flex; align-items: center; gap: 4px; padding: 4px 8px; border-radius: 35px; background: var(--azure); }
+.title { font: 600 64px/1.1 var(--display); letter-spacing: -1.6px; }
+.lead { font-size: 20px; line-height: 1.5; color: rgba(255, 255, 255, 0.8); }
+.actions { display: flex; align-items: center; gap: 12px; }
+
+/* The ring: 942 x 867 at x 955 / y -106 in the 1402 x 723 card, so it runs off the top and right edges.
+   Pointer lean is set from script as --tx, --ty, --tr. The three nested layers drift on
+   different, slow cycles so the path never visibly repeats. */
+.ring {
+  --rw: min(calc(var(--hh) * 1.303), calc(var(--hw) * 1.12));
+  position: absolute; z-index: 1; width: var(--rw); aspect-ratio: 1500 / 1381; right: calc(var(--rw) * -0.5256); top: calc(var(--rw) * -0.1125);
+  pointer-events: none; will-change: transform;
+  transform: translate3d(calc(var(--tx, 0) * 1px), calc(var(--ty, 0) * 1px), 0) rotate(calc(var(--tr, 0) * 1deg));
+}
+.ring__x, .ring__y, .ring__turn { width: 100%; height: 100%; will-change: transform; }
+.ring__x { animation: sway-x 11s ease-in-out infinite alternate; }
+.ring__y { animation: sway-y 15s ease-in-out infinite alternate; }
+.ring__turn { animation: turn 19s ease-in-out infinite alternate; }
+.ring img { width: 100%; height: 100%; max-width: none; user-select: none; -webkit-user-drag: none; }
+@keyframes sway-x { from { transform: translateX(-3.4%); } to { transform: translateX(3.4%); } }
+@keyframes sway-y { from { transform: translateY(-3%); } to { transform: translateY(3%); } }
+@keyframes turn { from { transform: rotate(-5deg) scale(1); } to { transform: rotate(6deg) scale(1.045); } }
+
+/* Hairline with two stars under the card */
+.rule { position: relative; flex: none; height: 31px; margin-top: 0; }
+.rule::before { content: ""; position: absolute; left: 0; right: 0; top: 50%; height: 1px; background: rgba(0, 0, 0, 0.08); }
+.rule__star { position: absolute; top: 50%; margin-top: -6.5px; }
+.rule__star--l { left: calc(14.24% - 6.5px); }
+.rule__star--r { left: calc(85.76% - 6.5px); }
+
+/* Waitlist dialog */
+.join { width: min(420px, calc(100vw - 32px)); padding: 0; border: 1px solid rgba(255, 255, 255, 0.14); border-radius: 20px; background: #121212; color: var(--paper); }
+.join::backdrop { background: rgba(0, 0, 0, 0.55); backdrop-filter: blur(4px); }
+.join[open] { animation: pop .2s var(--ease); }
+@keyframes pop { from { opacity: 0; transform: translateY(8px) scale(.98); } }
+.join__form { display: flex; flex-direction: column; gap: 14px; padding: 32px 28px 28px; }
+.join__form h2 { font: 600 28px/1.15 var(--display); letter-spacing: -0.6px; }
+.join__sub { color: rgba(255, 255, 255, 0.6); }
+.join__form input { height: 48px; padding: 0 16px; border: 1px solid rgba(255, 255, 255, 0.2); border-radius: 12px; background: #1b1b1b; color: var(--paper); }
+.join__form input::placeholder { color: rgba(255, 255, 255, 0.4); }
+.join__form input:focus { outline: none; border-color: var(--paper); }
+.join__form.is-invalid input { border-color: var(--paper); box-shadow: 0 0 0 1px var(--paper); }
+.join__submit { height: 48px; }
+.join__msg { min-height: 21px; font-size: 14px; color: rgba(255, 255, 255, 0.7); }
+.join__x { position: absolute; top: 14px; right: 14px; display: inline-flex; align-items: center; justify-content: center; width: 36px; height: 36px; border: 0; border-radius: 50%; background: transparent; color: rgba(255, 255, 255, 0.7); cursor: pointer; }
+.join__x:hover { background: rgba(255, 255, 255, 0.1); color: var(--paper); }
+.join :focus-visible { outline-color: var(--paper); }
+
+/* Tablet and phone: copy first, the ring rises from the bottom corner */
+@media (max-width: 1100px) {
+  .top__inner { width: 100%; }
+  .hero__copy { left: calc(6% + 40px); }
+}
+@media (max-width: 860px) {
+  .top__links { display: none; }
+  .hero { display: flex; flex-direction: column; min-height: 620px; margin: 0 12px; }
+  .hero__copy { position: relative; left: auto; top: auto; width: auto; padding: 52px 24px 0; transform: none; }
+  .title { font-size: clamp(38px, 11vw, 56px); letter-spacing: -1.2px; }
+  .lead { font-size: 18px; }
+  .ring { --rw: min(130vw, 760px); top: auto; right: calc(var(--rw) * -0.3); bottom: calc(var(--rw) * -0.26); }
+  .glow--right { width: 170vw; left: 100%; top: 78%; }
+  .glow--left { width: 110vw; }
+  .hero__star { top: auto; bottom: 36px; left: 62%; }
+  .rule__star--l { left: calc(14% - 6.5px); }
+}
+@media (max-width: 480px) {
+  .top { padding-inline: 12px; }
+  .actions { flex-wrap: wrap; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ring__x, .ring__y, .ring__turn, .glow img, .join[open] { animation: none; }
+  .ring { transform: none; }
+}
