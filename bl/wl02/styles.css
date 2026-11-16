@@ -55,9 +55,7 @@ button, input { font: inherit; color: inherit; }
 .top__inner { display: flex; align-items: center; justify-content: space-between; gap: 24px; width: min(938px, 100%); height: 34px; }
 .brand { display: inline-flex; align-items: center; gap: 11px; }
 .brand__mark { transform: rotate(90deg); }
-/* Figma keeps a slot left of the button: the language globe sits there */
-.top__right { display: flex; align-items: center; gap: 35px; }
-.top .lang { order: -1; }
+.top__right { display: flex; align-items: center; gap: 16px; }
 
 /* Hero card. Its height follows the screen (--hh) and its width the window (--hw); the ring
    and glow are sized from those so they keep the proportions of the 1402 x 715 design. */
@@ -93,8 +91,9 @@ button, input { font: inherit; color: inherit; }
   background-size: var(--cell) var(--cell); background-position: var(--ox) var(--oy);
 }
 .mark { position: absolute; display: grid; place-items: center; width: var(--cell); height: var(--cell); }
-.mark img { width: auto; height: auto; max-width: 36px; max-height: 26px; opacity: .8; transition: opacity .3s var(--ease), transform .3s var(--ease); }
-.mark.is-on img { opacity: 1; transform: scale(1.06); }
+/* Tokens are white at 60%: the grey logo files are turned white by the filter */
+.mark img { width: auto; height: auto; max-width: 36px; max-height: 26px; filter: brightness(0) invert(1); opacity: .6; transition: opacity .3s var(--ease), transform .3s var(--ease); }
+.mark.is-on img { transform: scale(1.06); }
 .mark__info {
   position: absolute; top: calc(100% + 2px); left: 50%; display: flex; align-items: baseline; gap: 8px; transform: translate(-50%, 4px);
   font: 400 var(--fs-label)/1.3 var(--sans); color: rgba(255, 255, 255, 0.82); white-space: nowrap; font-variant-numeric: tabular-nums;
@@ -103,7 +102,6 @@ button, input { font: inherit; color: inherit; }
 .mark.is-on .mark__info { opacity: 1; transform: translate(-50%, 0); }
 /* Behind the hero text the marks are dimmed so the copy stays readable */
 .mark--behind img { opacity: .3; }
-.mark--behind.is-on img { opacity: .42; }
 .mark--behind .mark__info { color: rgba(255, 255, 255, 0.5); }
 .mark--behind .mark__info b { color: rgba(255, 255, 255, 0.6); }
 .mark--behind.is-on .mark__info { opacity: .7; }

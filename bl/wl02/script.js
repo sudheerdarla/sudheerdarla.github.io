@@ -323,7 +323,20 @@
         aim(e.clientX - b.left, e.clientY - b.top, false);
         grid.classList.add('is-lit');
       });
-      hero.addEventListener('pointerleave', function () { grid.classList.remove('is-lit'); setActive(null, null); });
+      // Until the pointer arrives, the light wanders on its own, landing on a random mark every
+      // few seconds (never one of the last few), so the grid shows itself without any hover.
+      var hovering = false, lastIdle = [];
+      var idle = function () {
+        if (hovering || !placed.length || document.hidden) return;
+        var pool = placed.filter(function (p) { return lastIdle.indexOf(p) < 0; });
+        var p = pool[Math.floor(Math.random() * pool.length)] || placed[0];
+        lastIdle.push(p); if (lastIdle.length > Math.min(6, placed.length - 1)) lastIdle.shift();
+        aim(OX + p.col * CELL + CELL / 2, OY + p.row * CELL + CELL / 2, false);
+        grid.classList.add('is-lit');
+      };
+      hero.addEventListener('pointerenter', function () { hovering = true; lastIdle = []; });
+      hero.addEventListener('pointerleave', function () { hovering = false; setActive(null, null); idle(); });
+      if (!reduceMotion) setTimeout(function () { idle(); setInterval(idle, 2800); }, 900);
     } else {
       // Touch screens have no hover: every few seconds a fresh stock appears in a random cell and
       // the light lands on it. The last ten stocks and last four cells are not reused, so it keeps
