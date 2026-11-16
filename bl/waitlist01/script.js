@@ -1,4 +1,141 @@
 (function () {
+  // Languages: English plus the five most spoken in India, each named in its own script.
+  // Drafts for native-speaker review. The legal name in the footer stays in English.
+  var LANGS = [
+    ['en', 'English', ''], ['hi', 'हिन्दी', 'Hindi'], ['bn', 'বাংলা', 'Bengali'],
+    ['mr', 'मराठी', 'Marathi'], ['te', 'తెలుగు', 'Telugu'], ['ta', 'தமிழ்', 'Tamil']
+  ];
+  var FONTS = { hi: 'Noto+Sans+Devanagari', mr: 'Noto+Sans+Devanagari', bn: 'Noto+Sans+Bengali', te: 'Noto+Sans+Telugu', ta: 'Noto+Sans+Tamil' };
+  var T = {
+    en: {
+      joinShort: 'Join Waitlist', built: 'Built On', title: 'Global markets.<br>Settled in INR.',
+      lead: 'One INR account for global perpetual markets, 24/7, onshore and compliant.',
+      join: 'Join Waitlist', docs: 'Docs', fine: 'Equity-linked markets provide trading exposure, not share ownership.',
+      popTitle: 'Join the waitlist', popSub: 'We’ll email you when access opens.', submit: 'Join Waitlist!',
+      ok: 'You’re on the list. We’ll email you when access opens.', bad: 'Enter a valid email address.',
+      soon: 'Pre-IPO · soon', email: 'Email address', close: 'Close', lang: 'Language'
+    },
+    hi: {
+      joinShort: 'जुड़ें', built: 'पर निर्मित', title: 'वैश्विक बाज़ार।<br>INR में सेटलमेंट।',
+      lead: 'वैश्विक परपेचुअल बाज़ारों के लिए एक INR खाता, 24/7, भारत में और नियमों के अनुरूप।',
+      join: 'वेटलिस्ट से जुड़ें', docs: 'डॉक्स', fine: 'इक्विटी-लिंक्ड बाज़ार ट्रेडिंग एक्सपोज़र देते हैं, शेयरों का स्वामित्व नहीं।',
+      popTitle: 'वेटलिस्ट से जुड़ें', popSub: 'एक्सेस खुलते ही हम आपको ईमेल करेंगे।', submit: 'वेटलिस्ट से जुड़ें!',
+      ok: 'आप सूची में शामिल हैं। एक्सेस खुलते ही हम आपको ईमेल करेंगे।', bad: 'मान्य ईमेल पता दर्ज करें।',
+      soon: 'प्री-IPO · जल्द', email: 'ईमेल पता', close: 'बंद करें', lang: 'भाषा'
+    },
+    bn: {
+      joinShort: 'যোগ দিন', built: 'দিয়ে তৈরি', title: 'বিশ্ববাজার।<br>INR-এ নিষ্পত্তি।',
+      lead: 'বিশ্বের পারপেচুয়াল বাজারের জন্য একটি INR অ্যাকাউন্ট, 24/7, দেশের মধ্যে এবং নিয়ম মেনে।',
+      join: 'ওয়েটলিস্টে যোগ দিন', docs: 'ডকস', fine: 'ইকুইটি-লিঙ্কড বাজার ট্রেডিং এক্সপোজার দেয়, শেয়ারের মালিকানা নয়।',
+      popTitle: 'ওয়েটলিস্টে যোগ দিন', popSub: 'অ্যাক্সেস চালু হলে আমরা আপনাকে ইমেল করব।', submit: 'ওয়েটলিস্টে যোগ দিন!',
+      ok: 'আপনি তালিকায় আছেন। অ্যাক্সেস চালু হলে আমরা আপনাকে ইমেল করব।', bad: 'একটি সঠিক ইমেল ঠিকানা লিখুন।',
+      soon: 'প্রি-IPO · শীঘ্রই', email: 'ইমেল ঠিকানা', close: 'বন্ধ করুন', lang: 'ভাষা'
+    },
+    mr: {
+      joinShort: 'सामील व्हा', built: 'वर आधारित', title: 'जागतिक बाजार.<br>INR मध्ये सेटलमेंट.',
+      lead: 'जागतिक परपेच्युअल बाजारांसाठी एकच INR खाते, 24/7, भारतातच आणि नियमांनुसार.',
+      join: 'वेटलिस्टमध्ये सामील व्हा', docs: 'डॉक्स', fine: 'इक्विटी-लिंक्ड बाजार ट्रेडिंग एक्सपोजर देतात, शेअर्सची मालकी नाही.',
+      popTitle: 'वेटलिस्टमध्ये सामील व्हा', popSub: 'ॲक्सेस सुरू झाल्यावर आम्ही तुम्हाला ईमेल करू.', submit: 'वेटलिस्टमध्ये सामील व्हा!',
+      ok: 'तुम्ही यादीत आहात. ॲक्सेस सुरू झाल्यावर आम्ही तुम्हाला ईमेल करू.', bad: 'वैध ईमेल पत्ता टाका.',
+      soon: 'प्री-IPO · लवकरच', email: 'ईमेल पत्ता', close: 'बंद करा', lang: 'भाषा'
+    },
+    te: {
+      joinShort: 'చేరండి', built: 'పై నిర్మితం', title: 'ప్రపంచ మార్కెట్లు.<br>INRలో సెటిల్‌మెంట్.',
+      lead: 'ప్రపంచ పర్పెచ్యువల్ మార్కెట్ల కోసం ఒకే INR ఖాతా, 24/7, భారత్‌లోనే, నిబంధనలకు అనుగుణంగా.',
+      join: 'వెయిట్‌లిస్ట్‌లో చేరండి', docs: 'డాక్స్', fine: 'ఈక్విటీ-లింక్డ్ మార్కెట్లు ట్రేడింగ్ ఎక్స్‌పోజర్ ఇస్తాయి, షేర్ల యాజమాన్యం కాదు.',
+      popTitle: 'వెయిట్‌లిస్ట్‌లో చేరండి', popSub: 'యాక్సెస్ తెరిచినప్పుడు మేము మీకు ఈమెయిల్ చేస్తాము.', submit: 'వెయిట్‌లిస్ట్‌లో చేరండి!',
+      ok: 'మీరు జాబితాలో ఉన్నారు. యాక్సెస్ తెరిచినప్పుడు మేము మీకు ఈమెయిల్ చేస్తాము.', bad: 'సరైన ఈమెయిల్ చిరునామా ఇవ్వండి.',
+      soon: 'ప్రీ-IPO · త్వరలో', email: 'ఈమెయిల్ చిరునామా', close: 'మూసివేయండి', lang: 'భాష'
+    },
+    ta: {
+      joinShort: 'சேருங்கள்', built: 'இல் உருவாக்கப்பட்டது', title: 'உலகச் சந்தைகள்.<br>INR-இல் தீர்வு.',
+      lead: 'உலகளாவிய பெர்பெச்சுவல் சந்தைகளுக்கு ஒரே INR கணக்கு, 24/7, இந்தியாவிலேயே, விதிகளுக்கு உட்பட்டு.',
+      join: 'வெயிட்லிஸ்டில் சேருங்கள்', docs: 'ஆவணங்கள்', fine: 'ஈக்விட்டி-இணைந்த சந்தைகள் வர்த்தக வெளிப்பாட்டை மட்டுமே தருகின்றன, பங்கு உரிமையை அல்ல.',
+      popTitle: 'வெயிட்லிஸ்டில் சேருங்கள்', popSub: 'அணுகல் திறந்ததும் உங்களுக்கு மின்னஞ்சல் அனுப்புவோம்.', submit: 'வெயிட்லிஸ்டில் சேருங்கள்!',
+      ok: 'நீங்கள் பட்டியலில் உள்ளீர்கள். அணுகல் திறந்ததும் உங்களுக்கு மின்னஞ்சல் அனுப்புவோம்.', bad: 'சரியான மின்னஞ்சல் முகவரியை உள்ளிடுங்கள்.',
+      soon: 'ப்ரீ-IPO · விரைவில்', email: 'மின்னஞ்சல் முகவரி', close: 'மூடு', lang: 'மொழி'
+    }
+  };
+  var lang = 'en';
+  var t = function (k) { return (T[lang] && T[lang][k]) || T.en[k]; };
+  var onLang = [];   // repaint hooks (live marks, pop-up message)
+  var loadFont = function (code) {
+    var fam = FONTS[code];
+    if (!fam || document.querySelector('link[data-font="' + fam + '"]')) return;
+    var l = document.createElement('link');
+    l.rel = 'stylesheet';
+    l.href = 'https://fonts.googleapis.com/css2?family=' + fam + ':wght@400;500;600&display=swap';
+    l.setAttribute('data-font', fam);
+    document.head.appendChild(l);
+  };
+  // Each language's name in the menu is drawn in its own script, from a few-glyph font subset
+  var menuFonts = false;
+  var loadMenuFonts = function () {
+    if (menuFonts) return;
+    menuFonts = true;
+    var text = LANGS.map(function (l) { return l[1]; }).join('');
+    var l = document.createElement('link');
+    l.rel = 'stylesheet';
+    l.href = 'https://fonts.googleapis.com/css2?family=Noto+Sans+Devanagari:wght@500&family=Noto+Sans+Bengali:wght@500&family=Noto+Sans+Telugu:wght@500&family=Noto+Sans+Tamil:wght@500&display=swap&text=' + encodeURIComponent(text);
+    document.head.appendChild(l);
+  };
+  var setLang = function (code, save) {
+    if (!T[code]) code = 'en';
+    lang = code;
+    loadFont(code);
+    document.documentElement.lang = code;
+    document.querySelectorAll('[data-i18n]').forEach(function (el) { el.textContent = t(el.getAttribute('data-i18n')); });
+    document.querySelectorAll('[data-i18n-html]').forEach(function (el) { el.innerHTML = t(el.getAttribute('data-i18n-html')); });
+    document.querySelectorAll('[data-i18n-label]').forEach(function (el) { el.setAttribute('aria-label', t(el.getAttribute('data-i18n-label'))); });
+    document.querySelectorAll('.lang__item').forEach(function (b) { b.setAttribute('aria-checked', String(b.getAttribute('data-code') === code)); });
+    onLang.forEach(function (f) { f(); });
+    if (save) { try { localStorage.setItem('bl-lang', code); } catch (e) {} }
+  };
+
+  var switchers = document.querySelectorAll('[data-lang]');
+  var closeAll = function (except) {
+    switchers.forEach(function (w) {
+      if (w === except) return;
+      w.querySelector('.lang__menu').hidden = true;
+      w.querySelector('.lang__btn').setAttribute('aria-expanded', 'false');
+    });
+  };
+  switchers.forEach(function (w) {
+    var btn = w.querySelector('.lang__btn'), menu = w.querySelector('.lang__menu');
+    menu.innerHTML = LANGS.map(function (l) {
+      return '<li role="none"><button class="lang__item" type="button" role="menuitemradio" lang="' + l[0] + '" data-code="' + l[0] + '" aria-checked="false">' +
+        l[1] + (l[2] ? '<small lang="en">' + l[2] + '</small>' : '') + '</button></li>';
+    }).join('');
+    var items = function () { return Array.prototype.slice.call(menu.querySelectorAll('.lang__item')); };
+    btn.addEventListener('click', function () {
+      var opening = menu.hidden;
+      if (opening) loadMenuFonts();
+      closeAll(w);
+      menu.hidden = !opening;
+      btn.setAttribute('aria-expanded', String(opening));
+      if (opening) (menu.querySelector('[aria-checked="true"]') || items()[0]).focus();
+    });
+    menu.addEventListener('click', function (e) {
+      var b = e.target.closest('.lang__item');
+      if (!b) return;
+      setLang(b.getAttribute('data-code'), true);
+      closeAll();
+      btn.focus();
+    });
+    menu.addEventListener('keydown', function (e) {
+      var list = items(), i = list.indexOf(document.activeElement);
+      if (e.key === 'ArrowDown') { e.preventDefault(); list[(i + 1) % list.length].focus(); }
+      else if (e.key === 'ArrowUp') { e.preventDefault(); list[(i - 1 + list.length) % list.length].focus(); }
+      else if (e.key === 'Home') { e.preventDefault(); list[0].focus(); }
+      else if (e.key === 'End') { e.preventDefault(); list[list.length - 1].focus(); }
+      else if (e.key === 'Escape') { e.preventDefault(); closeAll(); btn.focus(); }
+      else if (e.key === 'Tab') closeAll();
+    });
+  });
+  document.addEventListener('pointerdown', function (e) { if (!e.target.closest('[data-lang]')) closeAll(); });
+
+  var saved = 'en';
+  try { saved = localStorage.getItem('bl-lang') || 'en'; } catch (e) {}
   var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   // Hidden market grid. With a mouse, marks sit in random cells clear of the copy and the ring,
@@ -93,7 +230,7 @@
     var paintMark = function (p) {
       var info = p.el.querySelector('.mark__info');
       var m = p.mark;
-      if (!m[3]) { info.innerHTML = '<b>' + m[2] + '</b><span class="soon">Pre-IPO · soon</span>'; return; }
+      if (!m[3]) { info.innerHTML = '<b>' + m[2] + '</b><span class="soon">' + t('soon') + '</span>'; return; }
       var q = quotes[m[3]];
       if (!q) { info.innerHTML = '<b>' + m[2] + '</b>'; return; }
       var sign = q.chg > 0 ? '+' : q.chg < 0 ? '−' : '';
@@ -114,6 +251,7 @@
       if (document.hidden) return;
       Promise.allSettled([load(''), load('xyz')]).then(function () { placed.forEach(paintMark); });
     };
+    onLang.push(function () { placed.forEach(paintMark); });
     refresh();
     setInterval(refresh, 15000);
     document.addEventListener('visibilitychange', refresh);
@@ -148,6 +286,11 @@
 
     place();
     var rt;
+    // A new language changes the size of the copy, so marks are placed again once its font is in
+    onLang.push(function () {
+      clearTimeout(rt);
+      rt = setTimeout(function () { (document.fonts ? document.fonts.ready : Promise.resolve()).then(place); }, 60);
+    });
     window.addEventListener('resize', function () { clearTimeout(rt); rt = setTimeout(place, 200); });
 
     if (finePointer) {
@@ -207,9 +350,12 @@
     var form = dialog.querySelector('[data-signup]');
     var input = form.querySelector('input');
     var msg = form.querySelector('[data-msg]');
+    var msgKey = '';
+    onLang.push(function () { if (msgKey && !msg.hidden) msg.textContent = t(msgKey); });
     var open = function () {
       if (typeof dialog.showModal === 'function') dialog.showModal(); else dialog.setAttribute('open', '');
       msg.textContent = '';
+      msgKey = '';
       msg.hidden = true;
       form.classList.remove('is-invalid');
       input.focus();
@@ -225,8 +371,11 @@
       var ok = input.value.trim() !== '' && input.checkValidity();
       form.classList.toggle('is-invalid', !ok);
       msg.hidden = false;
-      msg.textContent = ok ? 'You’re on the list. We’ll email you when access opens.' : 'Enter a valid email address.';
+      msgKey = ok ? 'ok' : 'bad';
+      msg.textContent = t(msgKey);
       if (ok) form.reset();
     });
   }
+
+  setLang(saved, false);
 })();
