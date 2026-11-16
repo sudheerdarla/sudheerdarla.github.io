@@ -102,6 +102,12 @@ button, input { font: inherit; color: inherit; }
   opacity: 0; transition: opacity .3s var(--ease), transform .3s var(--ease);
 }
 .mark.is-on .mark__info { opacity: 1; transform: translate(-50%, 0); }
+/* Behind the hero text the marks are dimmed so the copy stays readable */
+.mark--behind img { opacity: .3; }
+.mark--behind.is-on img { opacity: .42; }
+.mark--behind .mark__info { color: rgba(255, 255, 255, 0.5); }
+.mark--behind .mark__info b { color: rgba(255, 255, 255, 0.6); }
+.mark--behind.is-on .mark__info { opacity: .7; }
 .mark--l .mark__info { left: 0; transform: translate(0, 4px); }
 .mark--l.is-on .mark__info { transform: translate(0, 0); }
 .mark--r .mark__info { left: auto; right: 0; transform: translate(0, 4px); }

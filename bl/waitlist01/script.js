@@ -1,13 +1,18 @@
 (function () {
   var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  // Hidden market grid. Marks go in random cells clear of the copy and the ring, never side by
-  // side (diagonal neighbours are allowed), so the light keeps turning up a mark or two.
+  // Hidden market grid. With a mouse, marks sit in random cells clear of the copy and the ring,
+  // never side by side, and the pointer's light finds them. On touch screens one mark at a time
+  // appears in a random cell anywhere in the card (dimmed behind the text), with a fresh stock
+  // each time, so the light keeps turning up something new.
   var hero = document.querySelector('[data-hero]');
   var grid = document.querySelector('[data-grid]');
   if (hero && grid) {
     var CELL = 80, OX = 64, OY = 41;   // desktop anchors match the Figma cell; phones centre the grid
     var narrow = window.matchMedia('(max-width: 860px)');
+    var finePointer = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+    var roving = !finePointer;
+    var spots = [];    // touch screens: every usable cell, { col, row, behind }
     // [icon, name, ticker shown, live market (Hyperliquid coin), wide icon]
     // Stocks and commodities trade on the "xyz" builder market; crypto on the main one.
     // Pre-IPO names have no live market yet, so they read "Pre-IPO · soon".
@@ -38,37 +43,46 @@
       grid.style.setProperty('--cell', CELL + 'px');
       grid.style.setProperty('--ox', OX + 'px');
       grid.style.setProperty('--oy', OY + 'px');
-      var keepOut = ['.hero__copy', '.ring__img'].map(function (s) {
+      var box = function (s) {
         var r = document.querySelector(s).getBoundingClientRect();
         return { l: r.left - hb.left - 8, t: r.top - hb.top - 8, r: r.right - hb.left + 8, b: r.bottom - hb.top + 8 };
-      });
+      };
+      var copy = box('.hero__copy'), ring = box('.ring__img');
+      var hits = function (k, x, y) { return !(x + CELL < k.l || x > k.r || y + CELL < k.t || y > k.b); };
       var cells = [];
+      spots = [];
       for (var row = 0; OY + (row + 1) * CELL <= hb.height - 30; row++) { // leave room for the price line
         for (var col = 0; OX + (col + 1) * CELL <= hb.width - 8; col++) {
           var x = OX + col * CELL, y = OY + row * CELL;
-          var clear = keepOut.every(function (k) { return x + CELL < k.l || x > k.r || y + CELL < k.t || y > k.b; });
-          if (clear) cells.push([col, row]);
+          if (hits(ring, x, y)) continue;
+          if (roving) spots.push({ col: col, row: row, behind: hits(copy, x, y) });
+          else if (!hits(copy, x, y)) cells.push([col, row]);
         }
       }
+      if (roving) return; // marks are made one at a time by the tour
       shuffle(cells);
       shuffle(MARKS.slice()).forEach(function (m) {
         var spot = cells.find(function (c) {
           return placed.every(function (p) { return Math.abs(p.col - c[0]) + Math.abs(p.row - c[1]) >= 2; });
         });
-        if (!spot) return;
-        var el = document.createElement('div');
-        var mx = OX + spot[0] * CELL;
-        // Near an edge, the price line hangs inward so it is never cut off
-        var edge = mx < 50 ? ' mark--l' : mx + CELL > hb.width - 50 ? ' mark--r' : '';
-        el.className = 'mark' + (m[4] ? ' mark--wide' : '') + edge;
-        el.style.left = mx + 'px';
-        el.style.top = OY + spot[1] * CELL + 'px';
-        el.innerHTML = '<img src="assets/logos/' + m[0] + '.svg" alt="" width="30" height="30"><span class="mark__info"></span>';
-        el.title = m[1];
-        layer.appendChild(el);
-        placed.push({ col: spot[0], row: spot[1], el: el, mark: m });
-        paintMark(placed[placed.length - 1]);
+        if (spot) placed.push(makeMark(m, spot[0], spot[1], false));
       });
+    };
+    var makeMark = function (m, col, row, behind) {
+      var hw = hero.getBoundingClientRect().width;
+      var el = document.createElement('div');
+      var mx = OX + col * CELL;
+      // Near an edge, the price line hangs inward so it is never cut off
+      var edge = mx < 50 ? ' mark--l' : mx + CELL > hw - 50 ? ' mark--r' : '';
+      el.className = 'mark' + (m[4] ? ' mark--wide' : '') + edge + (behind ? ' mark--behind' : '');
+      el.style.left = mx + 'px';
+      el.style.top = OY + row * CELL + 'px';
+      el.innerHTML = '<img src="assets/logos/' + m[0] + '.svg" alt="" width="30" height="30"><span class="mark__info"></span>';
+      el.title = m[1];
+      layer.appendChild(el);
+      var p = { col: col, row: row, el: el, mark: m };
+      paintMark(p);
+      return p;
     };
 
     // Live mark prices and 24h change from Hyperliquid's public API, refreshed every 15s
@@ -136,7 +150,6 @@
     var rt;
     window.addEventListener('resize', function () { clearTimeout(rt); rt = setTimeout(place, 200); });
 
-    var finePointer = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
     if (finePointer) {
       hero.addEventListener('pointerenter', function (e) {
         var b = hero.getBoundingClientRect();
@@ -150,22 +163,39 @@
       });
       hero.addEventListener('pointerleave', function () { grid.classList.remove('is-lit'); setActive(null, null); });
     } else {
-      // Touch screens have no hover: the light lands on a random mark every few seconds and
-      // shows its live details, and a tap lights the cell under the finger.
-      var last = null, pausedUntil = 0;
-      var tour = function () {
-        if (!placed.length || Date.now() < pausedUntil || document.hidden) return;
-        var pool = placed.length > 1 ? placed.filter(function (p) { return p !== last; }) : placed;
-        var p = pool[Math.floor(Math.random() * pool.length)];
-        last = p;
-        aim(OX + p.col * CELL + CELL / 2, OY + p.row * CELL + CELL / 2, false);
+      // Touch screens have no hover: every few seconds a fresh stock appears in a random cell and
+      // the light lands on it. The last ten stocks and last four cells are not reused, so it keeps
+      // changing. A tap shows a new stock in the tapped cell.
+      var recentMarks = [], recentCells = [], pausedUntil = 0;
+      var pickMark = function () {
+        var pool = MARKS.filter(function (m) { return recentMarks.indexOf(m) < 0; });
+        var m = pool[Math.floor(Math.random() * pool.length)];
+        recentMarks.push(m); if (recentMarks.length > 10) recentMarks.shift();
+        return m;
+      };
+      var show = function (spot) {
+        var old = placed;
+        placed = [makeMark(pickMark(), spot.col, spot.row, spot.behind)];
+        aim(OX + spot.col * CELL + CELL / 2, OY + spot.row * CELL + CELL / 2, false);
         grid.classList.add('is-lit');
+        setTimeout(function () { old.forEach(function (p) { p.el.remove(); }); }, 400);
+      };
+      var tour = function () {
+        if (!spots.length || Date.now() < pausedUntil || document.hidden) return;
+        var pool = spots.filter(function (s) { return recentCells.indexOf(s) < 0; });
+        // Prefer open cells; a cell behind the text comes up about one time in four
+        var open = pool.filter(function (s) { return !s.behind; });
+        if (open.length && Math.random() > 0.25) pool = open;
+        var spot = pool[Math.floor(Math.random() * pool.length)] || spots[0];
+        recentCells.push(spot); if (recentCells.length > 4) recentCells.shift();
+        show(spot);
       };
       if (!reduceMotion) setTimeout(function () { tour(); setInterval(tour, 2800); }, 900);
       hero.addEventListener('pointerdown', function (e) {
         var b = hero.getBoundingClientRect();
-        aim(e.clientX - b.left, e.clientY - b.top, false);
-        grid.classList.add('is-lit');
+        var col = Math.floor((e.clientX - b.left - OX) / CELL), row = Math.floor((e.clientY - b.top - OY) / CELL);
+        var spot = spots.find(function (s) { return s.col === col && s.row === row; });
+        if (spot) show(spot); else { aim(e.clientX - b.left, e.clientY - b.top, false); grid.classList.add('is-lit'); }
         pausedUntil = Date.now() + 5000;
       });
     }
