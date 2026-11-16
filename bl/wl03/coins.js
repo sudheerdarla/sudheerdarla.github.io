@@ -77,7 +77,7 @@ function start() {
     ring.add(pivot);
     face(logo, c1, c2).then(({ map, bump }) => {
       faceMat.color.set(0xffffff);
-      faceMat.map = map; faceMat.bumpMap = bump; faceMat.bumpScale = 1.6; faceMat.needsUpdate = true;
+      faceMat.map = map; faceMat.bumpMap = bump; faceMat.bumpScale = 2.4; faceMat.needsUpdate = true;
       if (paused) render(lastT);
     }).catch(() => {});
     return { pivot, coin, phase: (i / TOKENS.length) * Math.PI * 2, flipAt: (i * 1.37) % 5 };
@@ -114,7 +114,7 @@ function start() {
   const RING_PERIOD = 70;   // seconds per clockwise turn of the ring
   const SPIN_PERIOD = 40;   // seconds per clockwise turn of each token on its face
   const FLIP_EVERY = 5, FLIP_TIME = 1.1;  // each token flips over once every 5s, taking 1.1s
-  const TILT = 0.55, LEAN = 0.3;
+  const TILT = 0.78, LEAN = 0.38;
   const ease = (x) => x < 0.5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2;
   const flipAngle = (t) => {
     const u = t / FLIP_EVERY, k = Math.floor(u), f = (u - k) * FLIP_EVERY;
@@ -199,8 +199,8 @@ async function face(name, c1, c2) {
   const shade = (k) => '#' + mid.clone().multiplyScalar(k).getHexString();
   f.globalAlpha = 0.1; f.drawImage(tint(mask, '#ffffff'), 0, 0);
   f.globalAlpha = 0.55; f.drawImage(tint(line, '#ffffff'), 1.5, 1.5);
-  f.globalAlpha = 0.9; f.drawImage(tint(line, shade(0.72)), 0, 0);
-  f.globalAlpha = 0.35; f.drawImage(tint(line, shade(0.45)), -1, -1);
+  f.globalAlpha = 1; f.drawImage(tint(line, shade(0.66)), 0, 0);
+  f.globalAlpha = 0.45; f.drawImage(tint(line, shade(0.4)), -1, -1);
 
   const bumpC = make(); const b = bumpC.getContext('2d');
   b.fillStyle = '#fff'; b.fillRect(0, 0, S, S); b.filter = 'blur(1.5px)'; b.drawImage(tint(line, '#000'), 0, 0);
