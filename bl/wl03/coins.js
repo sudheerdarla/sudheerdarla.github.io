@@ -98,7 +98,7 @@ function start() {
       // Desktop: centred just past the card's right edge, as in the design (1402 x 715 card).
       // Sized by the height, but never wider than the design's share of the card, so the
       // tokens stay clear of the copy on narrower windows.
-      const base = Math.min(H, W * 0.6);
+      const base = Math.min(H, W * 0.5);
       R = base * 0.5; coinR = base * 0.148;
       cx = W + base * 0.013; cy = H * 0.487;
     }
