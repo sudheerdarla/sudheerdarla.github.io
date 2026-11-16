@@ -1,8 +1,8 @@
 (function () {
   var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  // Hidden market grid. Marks go in random cells clear of the copy and the ring, at least three
-  // cells apart, so the light only ever finds one at a time.
+  // Hidden market grid. Marks go in random cells clear of the copy and the ring, never side by
+  // side (diagonal neighbours are allowed), so the light keeps turning up a mark or two.
   var hero = document.querySelector('[data-hero]');
   var grid = document.querySelector('[data-grid]');
   if (hero && grid) {
@@ -14,6 +14,8 @@
       ['nvidia', 'NVIDIA', 'NVDA', 'xyz:NVDA'], ['apple', 'Apple', 'AAPL', 'xyz:AAPL'], ['tesla', 'Tesla', 'TSLA', 'xyz:TSLA'],
       ['google', 'Google', 'GOOGL', 'xyz:GOOGL'], ['meta', 'Meta', 'META', 'xyz:META'], ['amazon', 'Amazon', 'AMZN', 'xyz:AMZN'],
       ['netflix', 'Netflix', 'NFLX', 'xyz:NFLX'], ['amd', 'AMD', 'AMD', 'xyz:AMD'], ['coinbase', 'Coinbase', 'COIN', 'xyz:COIN'],
+      ['intel', 'Intel', 'INTC', 'xyz:INTC'], ['palantir', 'Palantir', 'PLTR', 'xyz:PLTR'], ['robinhood', 'Robinhood', 'HOOD', 'xyz:HOOD'],
+      ['oracle', 'Oracle', 'ORCL', 'xyz:ORCL'], ['alibabadotcom', 'Alibaba', 'BABA', 'xyz:BABA'], ['microstrategy', 'MicroStrategy', 'MSTR', 'xyz:MSTR'],
       ['gold', 'Gold', 'GOLD', 'xyz:GOLD'], ['silver', 'Silver', 'SILVER', 'xyz:SILVER'], ['oil', 'Crude oil', 'OIL', 'xyz:CL'],
       ['bitcoin', 'Bitcoin', 'BTC', 'BTC'], ['ethereum', 'Ethereum', 'ETH', 'ETH'], ['solana', 'Solana', 'SOL', 'SOL'],
       ['anthropic', 'Anthropic', 'Anthropic', null, true], ['openai', 'OpenAI', 'OpenAI', null], ['spacex', 'SpaceX', 'SpaceX', null]
@@ -32,7 +34,7 @@
       var hb = hero.getBoundingClientRect();
       var keepOut = ['.hero__copy', '.ring__img'].map(function (s) {
         var r = document.querySelector(s).getBoundingClientRect();
-        return { l: r.left - hb.left - 24, t: r.top - hb.top - 24, r: r.right - hb.left + 24, b: r.bottom - hb.top + 24 };
+        return { l: r.left - hb.left - 8, t: r.top - hb.top - 8, r: r.right - hb.left + 8, b: r.bottom - hb.top + 8 };
       });
       var cells = [];
       for (var row = 0; OY + (row + 1) * CELL <= hb.height - 30; row++) { // leave room for the price line
@@ -45,7 +47,7 @@
       shuffle(cells);
       shuffle(MARKS.slice()).forEach(function (m) {
         var spot = cells.find(function (c) {
-          return placed.every(function (p) { return Math.max(Math.abs(p.col - c[0]), Math.abs(p.row - c[1])) >= 3; });
+          return placed.every(function (p) { return Math.abs(p.col - c[0]) + Math.abs(p.row - c[1]) >= 2; });
         });
         if (!spot) return;
         var el = document.createElement('div');
