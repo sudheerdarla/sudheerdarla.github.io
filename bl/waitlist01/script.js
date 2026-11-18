@@ -204,13 +204,14 @@
       };
       var copy = box('.hero__copy'), ring = box('.ring__img');
       var bar = narrow.matches ? box('.top__inner') : { l: 0, t: -1e4, r: 0, b: -1e4 };
+      var foot = box('.foot__inner');   // the footer now sits over the card
       var hits = function (k, x, y) { return !(x + CELL < k.l || x > k.r || y + CELL < k.t || y > k.b); };
       var cells = [];
       spots = [];
       for (var row = 0; OY + (row + 1) * CELL <= hb.height - 30; row++) { // leave room for the price line
         for (var col = 0; OX + (col + 1) * CELL <= hb.width - 8; col++) {
           var x = OX + col * CELL, y = OY + row * CELL;
-          if (hits(ring, x, y) || hits(bar, x, y)) continue;
+          if (hits(ring, x, y) || hits(bar, x, y) || hits(foot, x, y)) continue;
           if (roving) spots.push({ col: col, row: row, behind: hits(copy, x, y) });
           else if (!hits(copy, x, y)) cells.push([col, row]);
         }

@@ -59,9 +59,9 @@ button, input { font: inherit; color: inherit; }
 /* Hero card. Its height follows the screen (--hh) and its width the window (--hw); the ring
    and glow are sized from those so they keep the proportions of the 1402 x 715 design. */
 .hero {
-  --hh: calc(100dvh - var(--bar) - var(--foot));
-  --hw: calc(100vw - 2 * var(--gutter));
-  position: relative; flex: 1; min-height: 0; margin: 0 var(--gutter); overflow: hidden; border-radius: 20px;
+  --hh: calc(100dvh - var(--bar));
+  --hw: 100vw;
+  position: relative; flex: 1; min-height: 0; overflow: hidden; border-radius: 20px 20px 0 0;
   background: var(--paper); isolation: isolate; color: var(--paper);
 }
 .hero::before { content: ""; position: absolute; inset: 0; z-index: -2; background: url("assets/texture.png") 0 0 / 514px 514px; opacity: .28; }
@@ -135,12 +135,17 @@ button, input { font: inherit; color: inherit; }
 @keyframes ring-float { from { transform: translate3d(-2%, -2.4%, 0); } to { transform: translate3d(2%, 2.4%, 0); } }
 @keyframes ring-turn { from { transform: rotate(-5deg); } to { transform: rotate(5deg); } }
 
-/* Footer: same width as the top bar */
-.foot { position: relative; flex: none; display: flex; align-items: center; justify-content: center; height: var(--foot); padding: 0 var(--gutter); }
-.foot__inner { display: flex; align-items: center; justify-content: center; gap: 6px; width: min(938px, 100%); font-size: var(--fs-label); color: rgba(0, 0, 0, 0.55); }
-.foot__dot { color: rgba(0, 0, 0, 0.35); }
-.foot__x { display: inline-flex; align-items: center; justify-content: center; width: 28px; height: 28px; border-radius: 50%; color: rgba(0, 0, 0, 0.7); transition: background-color .16s var(--ease), color .16s var(--ease); }
-.foot__x:hover { background: rgba(0, 0, 0, 0.06); color: var(--ink); }
+/* Footer: same width as the top bar, laid over the bottom of the card in white. A faint shade
+   behind it keeps it readable where the ring or glow passes underneath. */
+.page { position: relative; }
+.foot {
+  position: absolute; left: 0; right: 0; bottom: 0; z-index: 5; display: flex; align-items: center; justify-content: center;
+  height: var(--foot); padding: 0 var(--gutter); background: linear-gradient(to bottom, transparent, rgba(0, 0, 0, 0.28));
+}
+.foot__inner { display: flex; align-items: center; justify-content: center; gap: 6px; width: min(938px, 100%); font-size: var(--fs-label); color: rgba(255, 255, 255, 0.62); }
+.foot__dot { color: rgba(255, 255, 255, 0.35); }
+.foot__x { display: inline-flex; align-items: center; justify-content: center; width: 28px; height: 28px; border-radius: 50%; color: rgba(255, 255, 255, 0.8); transition: background-color .16s var(--ease), color .16s var(--ease); }
+.foot__x:hover { background: rgba(255, 255, 255, 0.12); color: var(--paper); }
 
 /* Language switcher: a globe button with a small menu. In the top bar on desktop (opens down),
    in the footer's right corner on phones (opens up). */
@@ -160,6 +165,9 @@ button, input { font: inherit; color: inherit; }
 .lang__menu[hidden] { display: none; }
 @keyframes lang-in { from { opacity: 0; transform: translateY(-4px); } }
 .foot .lang__menu { top: auto; bottom: calc(100% + 8px); }
+/* In the footer the globe sits on the dark card */
+.foot .lang__btn { border-color: rgba(255, 255, 255, 0.28); color: rgba(255, 255, 255, 0.85); }
+.foot .lang__btn:hover, .foot .lang__btn[aria-expanded="true"] { background: rgba(255, 255, 255, 0.12); border-color: rgba(255, 255, 255, 0.5); color: var(--paper); }
 .lang__item {
   display: flex; align-items: center; gap: 10px; width: 100%; padding: 9px 10px; border: 0; border-radius: 9px;
   background: transparent; cursor: pointer; text-align: left; font: 500 var(--fs-ui)/1.25 var(--sans); color: var(--ink);
@@ -230,14 +238,13 @@ html[lang="te"] .title { font-size: calc(var(--fs-display) * 0.84); }
   .actions { justify-content: center; }
   .foot__inner { justify-content: center; }
   /* The globe moves from the top bar to the footer's right corner */
-  /* The card runs edge to edge from the top; the nav floats over it in white. Only the
-     footer keeps a white strip, and the card's bottom corners stay round. */
+  /* The card fills the whole screen; the nav and footer float over it in white */
   .top { position: absolute; top: 0; left: 0; right: 0; z-index: 5; }
   .brand img { filter: invert(1); }
   .pill--black { background: var(--paper); color: var(--ink); }
   .pill--black:hover { background: rgba(255, 255, 255, 0.86); }
   .pill--black .arrow { filter: invert(1); }
-  .hero { --hh: calc(100dvh - var(--foot)); --hw: 100vw; margin: 0; padding-top: var(--bar); border-radius: 0 0 20px 20px; }
+  .hero { --hh: 100dvh; --hw: 100vw; padding-top: var(--bar); padding-bottom: var(--foot); border-radius: 0; }
   .fine { max-width: 270px; }
   .foot .lang { position: absolute; top: 50%; right: var(--gutter); transform: translateY(-50%); }
   .foot .lang__btn { width: 30px; height: 30px; }
