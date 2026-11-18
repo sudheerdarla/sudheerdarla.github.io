@@ -61,7 +61,7 @@ button, input { font: inherit; color: inherit; }
 .hero {
   --hh: calc(100dvh - var(--bar));
   --hw: 100vw;
-  position: relative; flex: 1; min-height: 0; overflow: hidden; border-radius: 20px 20px 0 0;
+  position: relative; flex: 1; min-height: 0; overflow: hidden;
   background: var(--paper); isolation: isolate; color: var(--paper);
 }
 .hero::before { content: ""; position: absolute; inset: 0; z-index: -2; background: url("assets/texture.png") 0 0 / 514px 514px; opacity: .28; }
